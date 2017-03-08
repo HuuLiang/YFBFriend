@@ -10,6 +10,10 @@
 
 @interface AppDelegate (configuration)
 
+- (void)checkNetworkInfoState;
 - (void)setCommonStyle;
+
+//test
+- (void)showHomeViewController;
 
 @end

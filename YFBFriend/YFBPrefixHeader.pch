@@ -25,11 +25,11 @@
 #import <QBDefines.h>
 
 #import "YFBCommonDef.h"
-#import "JYExtensions.h"
+#import "YFBExtensions.h"
 #import "YFBConfig.h"
-#import "JYConfiguration.h"
-#import "JYUtil.h"
-#import "JYUser.h"
-#import "JYHudManager.h"
+#import "YFBConfiguration.h"
+#import "YFBUtil.h"
+#import "YFBUser.h"
+#import "YFBHudManager.h"
 
 #endif /* YFBPrefixHeader_pch */

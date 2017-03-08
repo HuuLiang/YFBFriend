@@ -9,59 +9,59 @@
 #ifndef YFBCommonDef_h
 #define YFBCommonDef_h
 
-typedef NS_ENUM(NSUInteger, JYDeviceType) {
-    JYDeviceTypeUnknown,
-    JYDeviceType_iPhone4,
-    JYDeviceType_iPhone4S,
-    JYDeviceType_iPhone5,
-    JYDeviceType_iPhone5C,
-    JYDeviceType_iPhone5S,
-    JYDeviceType_iPhone6,
-    JYDeviceType_iPhone6P,
-    JYDeviceType_iPhone6S,
-    JYDeviceType_iPhone6SP,
-    JYDeviceType_iPhoneSE,
-    JYDeviceType_iPhone7,
-    JYDeviceType_iPhone7P,
-    JYDeviceType_iPad = 100
+typedef NS_ENUM(NSUInteger, YFBDeviceType) {
+    YFBDeviceTypeUnknown,
+    YFBDeviceType_iPhone4,
+    YFBDeviceType_iPhone4S,
+    YFBDeviceType_iPhone5,
+    YFBDeviceType_iPhone5C,
+    YFBDeviceType_iPhone5S,
+    YFBDeviceType_iPhone6,
+    YFBDeviceType_iPhone6P,
+    YFBDeviceType_iPhone6S,
+    YFBDeviceType_iPhone6SP,
+    YFBDeviceType_iPhoneSE,
+    YFBDeviceType_iPhone7,
+    YFBDeviceType_iPhone7P,
+    YFBDeviceType_iPad = 100
 };
 
-typedef NS_ENUM(NSUInteger, JYDynamicType) {
-    JYDynamicTypeOnePhoto = 0,  //1张照片
-    JYDynamicTypeTwoPhotos,     //2张照片
-    JYDynamicTypeThreePhotos,   //3张照片
-    JYDynamicTypeVideo,         //视频
-    JYDynamicTypeCount
+typedef NS_ENUM(NSUInteger, YFBDynamicType) {
+    YFBDynamicTypeOnePhoto = 0,  //1张照片
+    YFBDynamicTypeTwoPhotos,     //2张照片
+    YFBDynamicTypeThreePhotos,   //3张照片
+    YFBDynamicTypeVideo,         //视频
+    YFBDynamicTypeCount
 };
 
-typedef NS_ENUM(NSUInteger, JYMineUsersType) {
-    JYMineUsersTypeFollow,//关注
-    JYMineUsersTypeFans, //粉丝
-    JYMineUsersTypeVisitor, //访客
-    JYMineUsersTypeHeader,//头像
-    JYMineUsersTypeCount
+typedef NS_ENUM(NSUInteger, YFBMineUsersType) {
+    YFBMineUsersTypeFollow,//关注
+    YFBMineUsersTypeFans, //粉丝
+    YFBMineUsersTypeVisitor, //访客
+    YFBMineUsersTypeHeader,//头像
+    YFBMineUsersTypeCount
 };
 
-typedef NS_ENUM(NSUInteger, JYUserCreateMessageType) {
-    JYUserCreateMessageTypeGreet,//打招呼
-    JYUserCreateMessageTypeFollow, //关注
-    JYUserCreateMessageTypeChat, //聊天
-    JYUserCreateMessageTypeCount
+typedef NS_ENUM(NSUInteger, YFBUserCreateMessageType) {
+    YFBUserCreateMessageTypeGreet,//打招呼
+    YFBUserCreateMessageTypeFollow, //关注
+    YFBUserCreateMessageTypeChat, //聊天
+    YFBUserCreateMessageTypeCount
 };
 //会员等级
-typedef NS_ENUM(NSUInteger,JYVipType) {
-    JYVipTypeYear = 0,
-    JYVipTypeQuarter = 1,
-    JYVipTypeMonth = 2,
-    JYVipTypePacket =3 //发红包
+typedef NS_ENUM(NSUInteger,YFBVipType) {
+    YFBVipTypeYear = 0,
+    YFBVipTypeQuarter = 1,
+    YFBVipTypeMonth = 2,
+    YFBVipTypePacket =3 //发红包
 };
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
-#define kPaidNotificationName                   @"JYFriendPaidNotification"
-#define kUserLoginNotificationName              @"JYFriendUserLoginNotification"
-#define KUserChangeInfoNotificationName         @"JYFriendUserChangeInfoNotificationName"
-#define KUpdateContactUnReadMessageNotification @"JYUpdateContactUnReadMessageNotification"
+#define kPaidNotificationName                   @"YFBFriendPaidNotification"
+#define kUserLoginNotificationName              @"YFBFriendUserLoginNotification"
+#define KUserChangeInfoNotificationName         @"YFBFriendUserChangeInfoNotificationName"
+#define KUpdateContactUnReadMessageNotification @"YFBUpdateContactUnReadMessageNotification"
 
 #define kDateFormatShort                  @"yyyy-MM-dd"
 #define kDateFormatChina                  @"yyyy年MM月dd日"
@@ -73,21 +73,21 @@ typedef NS_ENUM(NSUInteger,JYVipType) {
 #define kWidth(width)                     kScreenWidth  * width  / 750
 #define kHeight(height)                   kScreenHeight * height / 1334.
 #define kColor(hexString)                 [UIColor colorWithHexString:[NSString stringWithFormat:@"%@",hexString]]
-#define kCurrentUser                      [JYUser currentUser]
+#define kCurrentUser                      [YFBUser currentUser]
 
-//#define JY_SYSTEM_CONTACT_NAME_1          @"CONTACT_NAME_1"
-//#define JY_SYSTEM_CONTACT_NAME_2          @"CONTACT_NAME_2"
-//#define JY_SYSTEM_CONTACT_NAME_3          @"CONTACT_NAME_3"
-//#define JY_SYSTEM_CONTACT_SCHEME_1        @"CONTACT_SCHEME_1"
-//#define JY_SYSTEM_CONTACT_SCHEME_2        @"CONTACT_SCHEME_2"
-//#define JY_SYSTEM_CONTACT_SCHEME_3        @"CONTACT_SCHEME_3"
-#define JY_SYSTEM_IMAGE_TOKEN             @"IMG_REFERER"
-#define JY_SYSTEM_PAYPOINT_INFO           @"VIP_PAY_POINT_INFO_100"
-//#define JY_SYSTEM_PAY_HJ_AMOUNT           @"PAY_MONTH_AMOUNT"
-//#define JY_SYSTEM_PAY_ZS_AMOUNT           @"PAY_ZS_AMOUNT"
-//#define JY_SYSTEM_PAY_AMOUNT              @"PAY_AMOUNT"
-//#define JY_SYSTEM_BAIDUYU_CODE            @"BAIDUYU_CODE"
-//#define JY_SYSTEM_BAIDUYU_URL             @"BAIDUYU_URL"
+//#define YFB_SYSTEM_CONTACT_NAME_1          @"CONTACT_NAME_1"
+//#define YFB_SYSTEM_CONTACT_NAME_2          @"CONTACT_NAME_2"
+//#define YFB_SYSTEM_CONTACT_NAME_3          @"CONTACT_NAME_3"
+//#define YFB_SYSTEM_CONTACT_SCHEME_1        @"CONTACT_SCHEME_1"
+//#define YFB_SYSTEM_CONTACT_SCHEME_2        @"CONTACT_SCHEME_2"
+//#define YFB_SYSTEM_CONTACT_SCHEME_3        @"CONTACT_SCHEME_3"
+#define YFB_SYSTEM_IMAGE_TOKEN             @"IMG_REFERER"
+#define YFB_SYSTEM_PAYPOINT_INFO           @"VIP_PAY_POINT_INFO_100"
+//#define YFB_SYSTEM_PAY_HJ_AMOUNT           @"PAY_MONTH_AMOUNT"
+//#define YFB_SYSTEM_PAY_ZS_AMOUNT           @"PAY_ZS_AMOUNT"
+//#define YFB_SYSTEM_PAY_AMOUNT              @"PAY_AMOUNT"
+//#define YFB_SYSTEM_BAIDUYU_CODE            @"BAIDUYU_CODE"
+//#define YFB_SYSTEM_BAIDUYU_URL             @"BAIDUYU_URL"
 
 
 #endif /* YFBCommonDef_h */

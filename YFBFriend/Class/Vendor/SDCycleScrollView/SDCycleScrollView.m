@@ -580,9 +580,9 @@ NSString * const ID = @"cycleCell";
             @weakify(self);
             [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imagePath] placeholderImage:self.placeholderImage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 @strongify(self);////添加滤镜
-                if (image && self.isNeedBlur && indexPath.item != 0 &&![JYUtil isVip] && ![JYUtil isSendPacketWithUserId:self.userId]) {
-                    imageView.image = [image blurWithIsSmallPicture:NO];
-                }
+//                if (image && self.isNeedBlur && indexPath.item != 0 &&![JYUtil isVip] && ![JYUtil isSendPacketWithUserId:self.userId]) {
+//                    imageView.image = [image blurWithIsSmallPicture:NO];
+//                }
             }];
             
         } else {

@@ -27,12 +27,12 @@
     return 10;
 }
 
-- (BOOL)registerUserWithUserInfo:(JYUser *)user completionHandler:(QBCompletionHandler)handler {
+- (BOOL)registerUserWithUserInfo:(YFBUser *)user completionHandler:(QBCompletionHandler)handler {
     
 //    if (user.birthday == nil || user.birthday.length == 0 || [user.birthday isEqualToString:@""]) {
 //        user.birthday = @"";
 //    } else {
-        user.birthday = [JYUtil timeStringFromDate:[JYUtil dateFromString:user.birthday WithDateFormat:kDateFormatChina] WithDateFormat:kDateFormatShort];
+//        user.birthday = [JYUtil timeStringFromDate:[JYUtil dateFromString:user.birthday WithDateFormat:kDateFormatChina] WithDateFormat:kDateFormatShort];
 //    }
 //    
 //    if (user.homeTown == nil || user.homeTown.length == 0) {
@@ -43,19 +43,18 @@
 //        user.height = @"未填写";
 //    }
     
-    NSDictionary *params = @{@"uuid":[JYUtil UUID] ? [JYUtil UUID] : @"",
-                             @"nickName":user.nickName,
-                             @"clientId":@"defaultClientId",
-                             @"province":user.homeTown,
-                             @"city":user.homeTown,
-                             @"sex":[JYUserSexStringGet objectAtIndex:user.userSex],
-                             @"userType":@(2),
-                             @"height":user.height,
-                             @"birthday":user.birthday};
+//    NSDictionary *params = @{@"uuid":[JYUtil UUID] ? [JYUtil UUID] : @"",
+//                             @"nickName":user.nickName,
+//                             @"clientId":@"defaultClientId",
+//                             @"province":user.homeTown,
+//                             @"city":user.homeTown,
+//                             @"sex":[JYUserSexStringGet objectAtIndex:user.userSex],
+//                             @"userType":@(2),
+//                             @"height":user.height,
+//                             @"birthday":user.birthday};
     
-    BOOL success = [self requestURLPath:JY_USERCREATE_URL
-                         standbyURLPath:[JYUtil getStandByUrlPathWithOriginalUrl:JY_USERCREATE_URL params:nil]
-                             withParams:params
+    BOOL success = [self requestURLPath:YFB_USERCREATE_URL
+                             withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
                         JYRegisterUserResponse *resp = nil;

@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "JYTabBarController.h"
 #import "AppDelegate+configuration.h"
+#import "YFBLaunchViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,15 +16,12 @@
 
 @implementation AppDelegate
 
-
 - (UIWindow *)window {
     if (_window) {
         return _window;
     }
-    
     _window                              = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor              = [UIColor whiteColor];
-    
     return _window;
 }
 
@@ -32,16 +29,16 @@
     if (_rootViewController) {
         return _rootViewController;
     }
-    JYTabBarController *tabBarVC = [[JYTabBarController alloc] init];
-    _rootViewController = tabBarVC;
+    YFBLaunchViewController *launchVC = [[YFBLaunchViewController alloc] init];
+    _rootViewController = launchVC;
     return _rootViewController;
 }
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+//    [self checkNetworkInfoState];
     [self setCommonStyle];
-    
+    [self showHomeViewController];
     
     return YES;
 }

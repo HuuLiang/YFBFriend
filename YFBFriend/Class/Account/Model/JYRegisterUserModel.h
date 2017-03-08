@@ -14,6 +14,6 @@
 
 @interface JYRegisterUserModel : QBEncryptedURLRequest
 
-- (BOOL)registerUserWithUserInfo:(JYUser *)user completionHandler:(QBCompletionHandler)handler;
+- (BOOL)registerUserWithUserInfo:(YFBUser *)user completionHandler:(QBCompletionHandler)handler;
 
 @end

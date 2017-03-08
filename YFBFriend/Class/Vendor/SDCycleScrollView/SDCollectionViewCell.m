@@ -117,9 +117,9 @@
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (error.userInfo != nil) {
-        [[JYHudManager manager] showHudWithText:@"保存失败"];
+        [[YFBHudManager manager] showHudWithText:@"保存失败"];
     } else {
-        [[JYHudManager manager] showHudWithText:@"保存成功"];
+        [[YFBHudManager manager] showHudWithText:@"保存成功"];
     }
 }
 

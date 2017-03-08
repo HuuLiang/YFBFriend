@@ -7,11 +7,10 @@
 //
 
 #import "AppDelegate+configuration.h"
-#import "JYSystemConfigModel.h"
-#import "JYUserImageCache.h"
+#import "YFBSystemConfigModel.h"
+#import "YFBActivateModel.h"
 #import <QBPaymentManager.h>
 #import <QBPaymentConfig.h>
-#import "JYActivateModel.h"
 
 static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 
@@ -19,43 +18,40 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 @implementation AppDelegate (configuration)
 
 - (void)checkNetworkInfoState {
-    [QBNetworkingConfiguration defaultConfiguration].RESTAppId = JY_REST_APPID;
-    [QBNetworkingConfiguration defaultConfiguration].RESTpV = @([JY_REST_PV integerValue]);
-    [QBNetworkingConfiguration defaultConfiguration].channelNo = JY_CHANNEL_NO;
-    [QBNetworkingConfiguration defaultConfiguration].baseURL = JY_BASE_URL;
+    [QBNetworkingConfiguration defaultConfiguration].RESTAppId = YFB_REST_APPID;
+    [QBNetworkingConfiguration defaultConfiguration].RESTpV = @([YFB_REST_PV integerValue]);
+    [QBNetworkingConfiguration defaultConfiguration].channelNo = YFB_CHANNEL_NO;
+    [QBNetworkingConfiguration defaultConfiguration].baseURL = YFB_BASE_URL;
     [QBNetworkingConfiguration defaultConfiguration].useStaticBaseUrl = NO;
     [QBNetworkingConfiguration defaultConfiguration].encryptedType = QBURLEncryptedTypeNew;
 #ifdef DEBUG
     //    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
 #endif
-    [[QBPaymentManager sharedManager] registerPaymentWithAppId:JY_REST_APPID
-                                                     paymentPv:@([JY_PAYMENT_PV integerValue])
-                                                     channelNo:JY_CHANNEL_NO
+    [[QBPaymentManager sharedManager] registerPaymentWithAppId:YFB_REST_APPID
+                                                     paymentPv:@([YFB_PAYMENT_PV integerValue])
+                                                     channelNo:YFB_CHANNEL_NO
                                                      urlScheme:kAliPaySchemeUrl
                                                  defaultConfig:[self setDefaultPaymentConfig]];
-    
-    
     
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^ (BOOL reachable) {
         
-        if (reachable && ![JYSystemConfigModel sharedModel].loaded) {
+        if (reachable && ![YFBSystemConfigModel sharedModel].loaded) {
             //系统配置
             [self fetchSystemConfigWithCompletionHandler:nil];
         }
         
         //激活信息
-        if (reachable && ![JYUtil isRegisteredUUID]) {
+        if (reachable && ![YFBUtil isRegisteredUUID]) {
             [self registerUUID];
         } else {
-            [self checkUserIsLogin];
-            //            [JYUtil beforehandFetchFansCount];
+            [self showHomeViewController];
         }
         
         //网络错误提示
-        if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![JYUtil isRegisteredUUID] || ![JYSystemConfigModel sharedModel].loaded)) {
-            if ([JYUtil isIpad]) {
+        if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![YFBUtil isRegisteredUUID] || ![YFBSystemConfigModel sharedModel].loaded)) {
+            if ([YFBUtil isIpad]) {
                 [UIAlertView bk_showAlertViewWithTitle:@"请检查您的网络连接!" message:nil cancelButtonTitle:@"确认" otherButtonTitles:nil handler:nil];
             }else{
                 [UIAlertView bk_showAlertViewWithTitle:@"很抱歉!" message:@"您的应用未连接到网络,请检查您的网络设置" cancelButtonTitle:@"稍后" otherButtonTitles:@[@"设置"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
@@ -72,10 +68,10 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     
     //    设置图片referer
     BOOL requestedSystemConfig = NO;
-    NSString *imageToken = [JYUtil imageToken];
+    NSString *imageToken = [YFBUtil imageToken];
     if (imageToken) {
         [[SDWebImageManager sharedManager].imageDownloader setValue:imageToken forHTTPHeaderField:@"Referer"];
-        [self checkUserIsLogin];
+        [self showHomeViewController];
     } else {
         self.window.rootViewController = [[UIViewController alloc] init];
         [self.window makeKeyAndVisible];
@@ -84,76 +80,47 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
         
         requestedSystemConfig = [self fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             [self.window endProgressing];
-            [self checkUserIsLogin];
+            [self showHomeViewController];
         }];
         
     }
     
     if (!requestedSystemConfig) {
-        [[JYSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+        [[YFBSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             if (success) {
-                [JYUtil setImageToken:[JYSystemConfigModel sharedModel].imageToken];
+                [YFBUtil setImageToken:[YFBSystemConfigModel sharedModel].imageToken];
             }
-            //            NSUInteger statsTimeInterval = 180;
-            //数据统计相关
-            //            [[QBStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
         }];
     }
 }
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(void (^)(BOOL success))completionHandler {
-    return [[JYSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+    return [[YFBSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
         if (success) {
-            NSString *fetchedToken = [JYSystemConfigModel sharedModel].imageToken;
-            [JYUtil setImageToken:fetchedToken];
+            NSString *fetchedToken = [YFBSystemConfigModel sharedModel].imageToken;
+            [YFBUtil setImageToken:fetchedToken];
             if (fetchedToken) {
                 [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
             }
         }
-        //        NSUInteger statsTimeInterval = 180;
-        //        [[QBStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
         QBSafelyCallBlock(completionHandler, success);
     }];
 }
 
-- (void)checkUserIsLogin {
-    
-    //    if ([JYUtil isRegisteredUserId]) {
-    //        self.window.rootViewController = self.rootViewController;
-    //    } else {
-    //        JYLoginViewController *loginVC = [[JYLoginViewController alloc] init];
-    //        JYNavigationController *loginNav = [[JYNavigationController alloc] initWithRootViewController:loginVC];
-    //        self.window.rootViewController = loginNav;
-    //    }
-    
-    if (![[SDImageCache sharedImageCache] imageFromDiskCacheForKey:kCurrentUser.userImgKey]) {
-        NSString *userPhotoKey = [JYUserImageCache writeToFileWithImage:[UIImage imageNamed:@"mine_default_avatar"] needSaveImageName:NO];
-        [JYUser currentUser].userImgKey = userPhotoKey;
-        [kCurrentUser saveOrUpdate];
-    }
-    
-    if ([JYUtil isRegisteredUUID]) {
-        self.window.rootViewController = self.rootViewController;
-    }
-    
-    [self.window makeKeyAndVisible];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseErrorInfo:) name:kQBNetworkingErrorNotification object:nil];
-}
-
 - (void)registerUUID {
-    [[JYActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *uuid) {
+    [[YFBActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *uuid) {
         if (success) {
-            [JYUtil setRegisteredWithUUID:uuid];
-            [JYUtil setRegisteredWithUserId:uuid]; //把激活码当作注册用户id使用
-            //            //加载默认用户图片数据
-            //            NSString *userPhotoKey = [JYUserImageCache writeToFileWithImage:[UIImage imageNamed:@"mine_default_avatar"] needSaveImageName:NO];
-            //            [JYUser currentUser].userImgKey = userPhotoKey;
-            [self checkUserIsLogin];
+            [YFBUtil setRegisteredWithUUID:uuid];
+            [self showHomeViewController];
         }
     }];
-    
 }
+
+- (void)showHomeViewController {
+    self.window.rootViewController = self.rootViewController;
+    [self.window makeKeyAndVisible];
+}
+
 
 
 - (QBPaymentConfig *)setDefaultPaymentConfig {
@@ -186,7 +153,7 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateSelected];
-    [[UINavigationBar appearance] setTintColor:[UIColor colorWithHexString:@"#666666"]];
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithHexString:@"#8458D0"]];
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"navi_back"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"navi_back"]];
     
@@ -247,8 +214,6 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
          BOOL bShow = NO;
          [[aspectInfo originalInvocation] setReturnValue:&bShow];
      } error:nil];
-    
 }
-
 
 @end
