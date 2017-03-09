@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "AppDelegate+configuration.h"
 #import "YFBLaunchViewController.h"
+#import "YFBNavigationController.h"
 
 @interface AppDelegate ()
 
@@ -30,7 +31,8 @@
         return _rootViewController;
     }
     YFBLaunchViewController *launchVC = [[YFBLaunchViewController alloc] init];
-    _rootViewController = launchVC;
+    YFBNavigationController *launchNav = [[YFBNavigationController alloc] initWithRootViewController:launchVC];
+    _rootViewController = launchNav;
     return _rootViewController;
 }
 

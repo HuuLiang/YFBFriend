@@ -19,9 +19,10 @@
     [super viewDidLoad];
     
     self.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:18.],
-                                               NSForegroundColorAttributeName : [UIColor blackColor]};
+                                               NSForegroundColorAttributeName : [UIColor whiteColor]};
     
     self.delegate = self;
+    self.navigationBar.backgroundColor = kColor(@"#8458D0");
 
 }
 
@@ -47,6 +48,9 @@
     }
 }
 
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
+}
 
 /*
 #pragma mark - Navigation

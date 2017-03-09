@@ -8,6 +8,7 @@
 
 #import "YFBLaunchViewController.h"
 #import "YFBTabBarController.h"
+#import "YFBLoginViewController.h"
 
 @interface YFBLaunchViewController ()
 @property (nonatomic,strong) UIImageView    *backgroundImageView;
@@ -37,11 +38,21 @@
         [[UIApplication sharedApplication].keyWindow.rootViewController.view beginLoading];
         //进入首页
         YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
-        [self presentViewController:tabbarController animated:YES completion:nil];
+        [self presentViewController:tabbarController animated:YES completion:^{
+            [[UIApplication sharedApplication].keyWindow.rootViewController.view endLoading];
+        }];
     }
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 - (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
+- (BOOL)alwaysHideNavigationBar {
     return YES;
 }
 
@@ -50,7 +61,8 @@
 }
 
 - (void)pushInToLoginViewControler {
-    
+    YFBLoginViewController *loginVC = [[YFBLoginViewController alloc] initWithTitle:@"用户登录"];
+    [self.navigationController pushViewController:loginVC animated:YES];
 }
 
 - (void)configMaleButton {
@@ -113,7 +125,7 @@
     {
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view);
-            make.bottom.equalTo(self.view.mas_bottom).offset(kWidth(20));
+            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(16));
             make.height.mas_equalTo(kWidth(28));
         }];
     }

@@ -24,5 +24,6 @@
 #import "UIView+FrameEx.h"
 #import "NSString+Size.h"
 #import "UIImage+Blur.h"
+#import "UIView+PopAnimation.h"
 
 #endif /* YFBExtensions_h */

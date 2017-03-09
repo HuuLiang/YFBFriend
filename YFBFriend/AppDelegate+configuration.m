@@ -153,17 +153,21 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateSelected];
-    [[UINavigationBar appearance] setTintColor:[UIColor colorWithHexString:@"#8458D0"]];
-    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"navi_back"]];
-    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"navi_back"]];
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithHexString:@"#ffffff"]];
+    [[UINavigationBar appearance] setBarTintColor:kColor(@"#8458D0")];
+    [[UINavigationBar appearance] setBackgroundColor:kColor(@"#8458D0")];
+    [[UINavigationBar appearance] setTranslucent:YES];
     
-    [UIViewController aspect_hookSelector:@selector(viewDidLoad)
-                              withOptions:AspectPositionAfter
-                               usingBlock:^(id<AspectInfo> aspectInfo){
-                                   UIViewController *thisVC = [aspectInfo instance];
-                                   thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"  " style:UIBarButtonItemStylePlain handler:nil];
-                                   thisVC.navigationController.navigationBar.translucent = NO;
-                               } error:nil];
+//    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"navi_back"]];
+//    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"navi_back"]];
+    
+//    [UIViewController aspect_hookSelector:@selector(viewDidLoad)
+//                              withOptions:AspectPositionAfter
+//                               usingBlock:^(id<AspectInfo> aspectInfo){
+//                                   UIViewController *thisVC = [aspectInfo instance];
+//                                   thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"  " style:UIBarButtonItemStylePlain handler:nil];
+//                                   thisVC.navigationController.navigationBar.translucent = NO;
+//                               } error:nil];
     
     [UITabBarController aspect_hookSelector:@selector(shouldAutorotate)
                                 withOptions:AspectPositionInstead
