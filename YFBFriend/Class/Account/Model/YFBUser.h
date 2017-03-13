@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, YFBUserSex) {
+    YFBUserSexMale = 0,  //男性
+    YFBUserSexFemale,    //女性
+};
+
+
+
+
 @interface YFBUser : NSObject <NSCoding>
 
 + (instancetype)currentUser;
@@ -17,5 +25,21 @@
 
 
 - (void)saveOrUpdate;
+
+
+
+
+
+#pragma mark - 注册信息
+
++ (NSArray *)allUserJob;
+
++ (NSArray *)allUserEdu;
+
++ (NSArray *)allUserIncome;
+
++ (NSArray *)allUserHeight;
+
++ (NSArray *)allUserMarr;
 
 @end

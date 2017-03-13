@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2655A8AAADBA5FD994FA27D4 /* libPods-YFBFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */; };
+		EC47D40F1E763DDE000E9519 /* YFBSetAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D40E1E763DDE000E9519 /* YFBSetAvatarView.m */; };
+		EC47D4121E766208000E9519 /* YFBRegisterDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4111E766208000E9519 /* YFBRegisterDetailCell.m */; };
+		EC47D4231E768B7C000E9519 /* YFBDiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4221E768B7C000E9519 /* YFBDiscoverViewController.m */; };
+		EC47D4261E769481000E9519 /* YFBRecommendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4251E769481000E9519 /* YFBRecommendVC.m */; };
+		EC47D4291E7695E3000E9519 /* YFBNearVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4281E7695E3000E9519 /* YFBNearVC.m */; };
+		EC47D42C1E7695F7000E9519 /* YFBRankVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D42B1E7695F7000E9519 /* YFBRankVC.m */; };
+		EC47D42F1E76A37E000E9519 /* YFBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D42E1E76A37E000E9519 /* YFBRecommendCell.m */; };
 		EC65EE521E712A0600DA1AF9 /* YFBRegisterFirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE511E712A0600DA1AF9 /* YFBRegisterFirstVC.m */; };
 		EC65EE551E712A5B00DA1AF9 /* YFBUserLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE541E712A5B00DA1AF9 /* YFBUserLoginVC.m */; };
 		EC65EE581E713AAD00DA1AF9 /* YFBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE571E713AAD00DA1AF9 /* YFBTextField.m */; };
@@ -37,7 +44,6 @@
 		EC9A67851E6D3E4A0018C5FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC9A67831E6D3E4A0018C5FB /* LaunchScreen.storyboard */; };
 		EC9A69D31E6D3F9E0018C5FB /* JYRegisterUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67991E6D3F9E0018C5FB /* JYRegisterUserModel.m */; };
 		EC9A69D51E6D3F9E0018C5FB /* JYNextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A679E1E6D3F9E0018C5FB /* JYNextButton.m */; };
-		EC9A69D71E6D3F9E0018C5FB /* JYSetAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67A21E6D3F9E0018C5FB /* JYSetAvatarView.m */; };
 		EC9A6A291E6D3F9E0018C5FB /* NSDate+timeStamp.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A68621E6D3F9E0018C5FB /* NSDate+timeStamp.m */; };
 		EC9A6A2A1E6D3F9E0018C5FB /* NSObject+PropertyAccessInspecting.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A68641E6D3F9E0018C5FB /* NSObject+PropertyAccessInspecting.m */; };
 		EC9A6A2B1E6D3F9E0018C5FB /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A68661E6D3F9E0018C5FB /* NSString+Size.m */; };
@@ -185,6 +191,20 @@
 		7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YFBFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97D15D3E72F1F4490DADAEF5 /* Pods-YFBFriend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.release.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.release.xcconfig"; sourceTree = "<group>"; };
 		BD481930EA9E3A5945F3FA6C /* Pods-YFBFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.debug.xcconfig"; sourceTree = "<group>"; };
+		EC47D40D1E763DDE000E9519 /* YFBSetAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSetAvatarView.h; sourceTree = "<group>"; };
+		EC47D40E1E763DDE000E9519 /* YFBSetAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSetAvatarView.m; sourceTree = "<group>"; };
+		EC47D4101E766208000E9519 /* YFBRegisterDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRegisterDetailCell.h; sourceTree = "<group>"; };
+		EC47D4111E766208000E9519 /* YFBRegisterDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRegisterDetailCell.m; sourceTree = "<group>"; };
+		EC47D4211E768B7C000E9519 /* YFBDiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBDiscoverViewController.h; path = YFBFriend/Class/Discover/Controller/YFBDiscoverViewController.h; sourceTree = SOURCE_ROOT; };
+		EC47D4221E768B7C000E9519 /* YFBDiscoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBDiscoverViewController.m; path = YFBFriend/Class/Discover/Controller/YFBDiscoverViewController.m; sourceTree = SOURCE_ROOT; };
+		EC47D4241E769481000E9519 /* YFBRecommendVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBRecommendVC.h; path = YFBFriend/Class/Discover/Controller/YFBRecommendVC.h; sourceTree = SOURCE_ROOT; };
+		EC47D4251E769481000E9519 /* YFBRecommendVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRecommendVC.m; path = YFBFriend/Class/Discover/Controller/YFBRecommendVC.m; sourceTree = SOURCE_ROOT; };
+		EC47D4271E7695E3000E9519 /* YFBNearVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBNearVC.h; path = YFBFriend/Class/Discover/Controller/YFBNearVC.h; sourceTree = SOURCE_ROOT; };
+		EC47D4281E7695E3000E9519 /* YFBNearVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBNearVC.m; path = YFBFriend/Class/Discover/Controller/YFBNearVC.m; sourceTree = SOURCE_ROOT; };
+		EC47D42A1E7695F7000E9519 /* YFBRankVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBRankVC.h; path = YFBFriend/Class/Discover/Controller/YFBRankVC.h; sourceTree = SOURCE_ROOT; };
+		EC47D42B1E7695F7000E9519 /* YFBRankVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRankVC.m; path = YFBFriend/Class/Discover/Controller/YFBRankVC.m; sourceTree = SOURCE_ROOT; };
+		EC47D42D1E76A37E000E9519 /* YFBRecommendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBRecommendCell.h; path = YFBFriend/Class/Discover/Controller/YFBRecommendCell.h; sourceTree = SOURCE_ROOT; };
+		EC47D42E1E76A37E000E9519 /* YFBRecommendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRecommendCell.m; path = YFBFriend/Class/Discover/Controller/YFBRecommendCell.m; sourceTree = SOURCE_ROOT; };
 		EC65EE501E712A0600DA1AF9 /* YFBRegisterFirstVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRegisterFirstVC.h; sourceTree = "<group>"; };
 		EC65EE511E712A0600DA1AF9 /* YFBRegisterFirstVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRegisterFirstVC.m; sourceTree = "<group>"; };
 		EC65EE531E712A5B00DA1AF9 /* YFBUserLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBUserLoginVC.h; sourceTree = "<group>"; };
@@ -242,8 +262,6 @@
 		EC9A67991E6D3F9E0018C5FB /* JYRegisterUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRegisterUserModel.m; sourceTree = "<group>"; };
 		EC9A679D1E6D3F9E0018C5FB /* JYNextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNextButton.h; sourceTree = "<group>"; };
 		EC9A679E1E6D3F9E0018C5FB /* JYNextButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNextButton.m; sourceTree = "<group>"; };
-		EC9A67A11E6D3F9E0018C5FB /* JYSetAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSetAvatarView.h; sourceTree = "<group>"; };
-		EC9A67A21E6D3F9E0018C5FB /* JYSetAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSetAvatarView.m; sourceTree = "<group>"; };
 		EC9A68611E6D3F9E0018C5FB /* NSDate+timeStamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+timeStamp.h"; sourceTree = "<group>"; };
 		EC9A68621E6D3F9E0018C5FB /* NSDate+timeStamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+timeStamp.m"; sourceTree = "<group>"; };
 		EC9A68631E6D3F9E0018C5FB /* NSObject+PropertyAccessInspecting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PropertyAccessInspecting.h"; sourceTree = "<group>"; };
@@ -524,6 +542,48 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EC47D41A1E76871F000E9519 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				EC47D41B1E76871F000E9519 /* Controller */,
+				EC47D41C1E76871F000E9519 /* Model */,
+				EC47D41D1E76871F000E9519 /* View */,
+			);
+			name = Discover;
+			path = Account/Discover;
+			sourceTree = "<group>";
+		};
+		EC47D41B1E76871F000E9519 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EC47D4211E768B7C000E9519 /* YFBDiscoverViewController.h */,
+				EC47D4221E768B7C000E9519 /* YFBDiscoverViewController.m */,
+				EC47D4241E769481000E9519 /* YFBRecommendVC.h */,
+				EC47D4251E769481000E9519 /* YFBRecommendVC.m */,
+				EC47D4271E7695E3000E9519 /* YFBNearVC.h */,
+				EC47D4281E7695E3000E9519 /* YFBNearVC.m */,
+				EC47D42A1E7695F7000E9519 /* YFBRankVC.h */,
+				EC47D42B1E7695F7000E9519 /* YFBRankVC.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EC47D41C1E76871F000E9519 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EC47D41D1E76871F000E9519 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EC47D42D1E76A37E000E9519 /* YFBRecommendCell.h */,
+				EC47D42E1E76A37E000E9519 /* YFBRecommendCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		EC9A67691E6D3E4A0018C5FB = {
 			isa = PBXGroup;
 			children = (
@@ -578,6 +638,7 @@
 				EC9A68571E6D3F9E0018C5FB /* Utils */,
 				EC9A67A51E6D3F9E0018C5FB /* Base */,
 				EC9A678D1E6D3F9E0018C5FB /* Account */,
+				EC47D41A1E76871F000E9519 /* Discover */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -627,10 +688,12 @@
 			children = (
 				EC9A679D1E6D3F9E0018C5FB /* JYNextButton.h */,
 				EC9A679E1E6D3F9E0018C5FB /* JYNextButton.m */,
-				EC9A67A11E6D3F9E0018C5FB /* JYSetAvatarView.h */,
-				EC9A67A21E6D3F9E0018C5FB /* JYSetAvatarView.m */,
+				EC47D40D1E763DDE000E9519 /* YFBSetAvatarView.h */,
+				EC47D40E1E763DDE000E9519 /* YFBSetAvatarView.m */,
 				EC65EE561E713AAD00DA1AF9 /* YFBTextField.h */,
 				EC65EE571E713AAD00DA1AF9 /* YFBTextField.m */,
+				EC47D4101E766208000E9519 /* YFBRegisterDetailCell.h */,
+				EC47D4111E766208000E9519 /* YFBRegisterDetailCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1435,6 +1498,7 @@
 				EC9A6A441E6D3F9E0018C5FB /* ActionSheetMultipleStringPicker.m in Sources */,
 				EC9A6A801E6D3F9E0018C5FB /* XHBaseTableViewCell.m in Sources */,
 				EC9A6A6C1E6D3F9E0018C5FB /* XHMessage.m in Sources */,
+				EC47D4291E7695E3000E9519 /* YFBNearVC.m in Sources */,
 				EC9A6A671E6D3F9E0018C5FB /* XHMessageVoiceFactory.m in Sources */,
 				EC9A6A861E6D3F9E0018C5FB /* XHMessageTextView.m in Sources */,
 				EC9A6ABE1E6D3F9F0018C5FB /* VPImageCropperViewController.m in Sources */,
@@ -1444,16 +1508,19 @@
 				EC9A6A491E6D3F9E0018C5FB /* JKDBModel.m in Sources */,
 				EC65EE521E712A0600DA1AF9 /* YFBRegisterFirstVC.m in Sources */,
 				EC7F0FAC1E70017C00F39FD9 /* YFBLoginViewController.m in Sources */,
+				EC47D42F1E76A37E000E9519 /* YFBRecommendCell.m in Sources */,
 				EC9A6A421E6D3F9E0018C5FB /* ActionSheetDistancePicker.m in Sources */,
 				EC9A6A8B1E6D3F9E0018C5FB /* XHEmotionSectionBar.m in Sources */,
 				EC9A6A841E6D3F9E0018C5FB /* XHMessageTableViewCell.m in Sources */,
 				EC9A6A5A1E6D3F9E0018C5FB /* XHVoiceRecordHelper.m in Sources */,
 				EC9A6A7F1E6D3F9E0018C5FB /* SETextView.m in Sources */,
 				EC9A6A811E6D3F9E0018C5FB /* XHBubblePhotoImageView.m in Sources */,
+				EC47D4231E768B7C000E9519 /* YFBDiscoverViewController.m in Sources */,
 				EC9A6A301E6D3F9E0018C5FB /* UIView+Loading.m in Sources */,
 				EC9A6A641E6D3F9E0018C5FB /* XHMessageAvatarFactory.m in Sources */,
 				EC9A6A621E6D3F9E0018C5FB /* XHHTTPClient.m in Sources */,
 				EC9A6A871E6D3F9E0018C5FB /* XHVoiceRecordHUD.m in Sources */,
+				EC47D40F1E763DDE000E9519 /* YFBSetAvatarView.m in Sources */,
 				EC9A6A611E6D3F9E0018C5FB /* XHFileAttribute.m in Sources */,
 				EC9A677A1E6D3E4A0018C5FB /* AppDelegate.m in Sources */,
 				EC7F0FA91E6FFE1700F39FD9 /* YFBTabBarController.m in Sources */,
@@ -1462,7 +1529,6 @@
 				EC7F0FAF1E70066100F39FD9 /* YFBAccountManager.m in Sources */,
 				EC9A6A731E6D3F9E0018C5FB /* SELineLayout.m in Sources */,
 				EC9A6A341E6D3F9E0018C5FB /* JYRegexUtil.m in Sources */,
-				EC9A69D71E6D3F9E0018C5FB /* JYSetAvatarView.m in Sources */,
 				EC9A6A561E6D3F9E0018C5FB /* XHLocationHelper.m in Sources */,
 				EC9A6A7C1E6D3F9E0018C5FB /* SETextMagnifierRanged.m in Sources */,
 				EC9A6A541E6D3F9E0018C5FB /* XHCaptureHelper.m in Sources */,
@@ -1476,6 +1542,7 @@
 				EC9A6A6E1E6D3F9E0018C5FB /* FLAnimatedImage.m in Sources */,
 				EC9A6A5B1E6D3F9E0018C5FB /* XHDisplayEmotionViewController.m in Sources */,
 				EC9A6A791E6D3F9E0018C5FB /* SETextInput.m in Sources */,
+				EC47D42C1E7695F7000E9519 /* YFBRankVC.m in Sources */,
 				EC9A6A851E6D3F9E0018C5FB /* XHMessageInputView.m in Sources */,
 				EC9A6AB91E6D3F9F0018C5FB /* TADotView.m in Sources */,
 				EC9A6ABB1E6D3F9F0018C5FB /* SDCollectionViewCell.m in Sources */,
@@ -1492,6 +1559,7 @@
 				EC9A6A501E6D3F9E0018C5FB /* UIImage+XHRounded.m in Sources */,
 				EC9A6A5D1E6D3F9E0018C5FB /* XHDisplayMediaViewController.m in Sources */,
 				EC7F0F7A1E6FA86700F39FD9 /* YFBConfiguration.m in Sources */,
+				EC47D4261E769481000E9519 /* YFBRecommendVC.m in Sources */,
 				EC9A6A581E6D3F9E0018C5FB /* XHPhotographyHelper.m in Sources */,
 				EC9A6A4C1E6D3F9E0018C5FB /* UIImage+Alpha.m in Sources */,
 				EC7F0F861E6FAB6500F39FD9 /* YFBApplicationManager.m in Sources */,
@@ -1541,6 +1609,7 @@
 				EC9A6A631E6D3F9E0018C5FB /* XHOperationNetworkKit.m in Sources */,
 				EC9A6A721E6D3F9E0018C5FB /* SEConstants.m in Sources */,
 				EC9A6AB81E6D3F9F0018C5FB /* TAAnimatedDotView.m in Sources */,
+				EC47D4121E766208000E9519 /* YFBRegisterDetailCell.m in Sources */,
 				EC9A6A651E6D3F9E0018C5FB /* XHMessageBubbleFactory.m in Sources */,
 				EC9A6A291E6D3F9E0018C5FB /* NSDate+timeStamp.m in Sources */,
 				EC9A6A5C1E6D3F9E0018C5FB /* XHDisplayLocationViewController.m in Sources */,
