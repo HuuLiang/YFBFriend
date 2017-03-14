@@ -16,7 +16,7 @@
 
 #import "NSObject+PropertyAccessInspecting.h"
 #import "UIView+RoundCorner.h"
-#import "UIImage+JYResource.h"
+#import "UIImage+Resource.h"
 #import "NSDate+timeStamp.h"
 #import "UIScrollView+Refresh.h"
 #import <NSDate+Utilities.h>

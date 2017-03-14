@@ -10,6 +10,8 @@
 		2655A8AAADBA5FD994FA27D4 /* libPods-YFBFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */; };
 		B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */; };
 		B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CD81E77DBC900C7733D /* YFBMineCell.m */; };
+		B3C18CDC1E78025D00C7733D /* YFBVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */; };
+		B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */; };
 		EC47D40F1E763DDE000E9519 /* YFBSetAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D40E1E763DDE000E9519 /* YFBSetAvatarView.m */; };
 		EC47D4121E766208000E9519 /* YFBRegisterDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4111E766208000E9519 /* YFBRegisterDetailCell.m */; };
 		EC47D4231E768B7C000E9519 /* YFBDiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4221E768B7C000E9519 /* YFBDiscoverViewController.m */; };
@@ -53,7 +55,7 @@
 		EC9A6A2A1E6D3F9E0018C5FB /* NSObject+PropertyAccessInspecting.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A68641E6D3F9E0018C5FB /* NSObject+PropertyAccessInspecting.m */; };
 		EC9A6A2B1E6D3F9E0018C5FB /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A68661E6D3F9E0018C5FB /* NSString+Size.m */; };
 		EC9A6A2C1E6D3F9E0018C5FB /* UIImage+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A68681E6D3F9E0018C5FB /* UIImage+Blur.m */; };
-		EC9A6A2D1E6D3F9E0018C5FB /* UIImage+JYResource.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A686A1E6D3F9E0018C5FB /* UIImage+JYResource.m */; };
+		EC9A6A2D1E6D3F9E0018C5FB /* UIImage+Resource.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A686A1E6D3F9E0018C5FB /* UIImage+Resource.m */; };
 		EC9A6A2E1E6D3F9E0018C5FB /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A686C1E6D3F9E0018C5FB /* UIScrollView+Refresh.m */; };
 		EC9A6A2F1E6D3F9E0018C5FB /* UIView+FrameEx.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A686E1E6D3F9E0018C5FB /* UIView+FrameEx.m */; };
 		EC9A6A301E6D3F9E0018C5FB /* UIView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A68701E6D3F9E0018C5FB /* UIView+Loading.m */; };
@@ -199,6 +201,9 @@
 		B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineHeaderCell.m; sourceTree = "<group>"; };
 		B3C18CD71E77DBC900C7733D /* YFBMineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineCell.h; sourceTree = "<group>"; };
 		B3C18CD81E77DBC900C7733D /* YFBMineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineCell.m; sourceTree = "<group>"; };
+		B3C18CDA1E78025D00C7733D /* YFBVerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVerifyViewController.h; sourceTree = "<group>"; };
+		B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBVerifyViewController.m; sourceTree = "<group>"; };
+		B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = phone_verify.jpg; sourceTree = "<group>"; };
 		BD481930EA9E3A5945F3FA6C /* Pods-YFBFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		EC47D40D1E763DDE000E9519 /* YFBSetAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSetAvatarView.h; sourceTree = "<group>"; };
 		EC47D40E1E763DDE000E9519 /* YFBSetAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSetAvatarView.m; sourceTree = "<group>"; };
@@ -285,8 +290,8 @@
 		EC9A68661E6D3F9E0018C5FB /* NSString+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Size.m"; sourceTree = "<group>"; };
 		EC9A68671E6D3F9E0018C5FB /* UIImage+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blur.h"; sourceTree = "<group>"; };
 		EC9A68681E6D3F9E0018C5FB /* UIImage+Blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blur.m"; sourceTree = "<group>"; };
-		EC9A68691E6D3F9E0018C5FB /* UIImage+JYResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JYResource.h"; sourceTree = "<group>"; };
-		EC9A686A1E6D3F9E0018C5FB /* UIImage+JYResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JYResource.m"; sourceTree = "<group>"; };
+		EC9A68691E6D3F9E0018C5FB /* UIImage+Resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resource.h"; sourceTree = "<group>"; };
+		EC9A686A1E6D3F9E0018C5FB /* UIImage+Resource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resource.m"; sourceTree = "<group>"; };
 		EC9A686B1E6D3F9E0018C5FB /* UIScrollView+Refresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Refresh.h"; sourceTree = "<group>"; };
 		EC9A686C1E6D3F9E0018C5FB /* UIScrollView+Refresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Refresh.m"; sourceTree = "<group>"; };
 		EC9A686D1E6D3F9E0018C5FB /* UIView+FrameEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FrameEx.h"; sourceTree = "<group>"; };
@@ -667,6 +672,8 @@
 			children = (
 				EC4827101E778DA200F03454 /* YFBMineViewController.h */,
 				EC4827111E778DA200F03454 /* YFBMineViewController.m */,
+				B3C18CDA1E78025D00C7733D /* YFBVerifyViewController.h */,
+				B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -854,8 +861,8 @@
 				EC9A68661E6D3F9E0018C5FB /* NSString+Size.m */,
 				EC9A68671E6D3F9E0018C5FB /* UIImage+Blur.h */,
 				EC9A68681E6D3F9E0018C5FB /* UIImage+Blur.m */,
-				EC9A68691E6D3F9E0018C5FB /* UIImage+JYResource.h */,
-				EC9A686A1E6D3F9E0018C5FB /* UIImage+JYResource.m */,
+				EC9A68691E6D3F9E0018C5FB /* UIImage+Resource.h */,
+				EC9A686A1E6D3F9E0018C5FB /* UIImage+Resource.m */,
 				EC9A686B1E6D3F9E0018C5FB /* UIScrollView+Refresh.h */,
 				EC9A686C1E6D3F9E0018C5FB /* UIScrollView+Refresh.m */,
 				EC9A686D1E6D3F9E0018C5FB /* UIView+FrameEx.h */,
@@ -1411,6 +1418,7 @@
 			isa = PBXGroup;
 			children = (
 				EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */,
+				B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1508,6 +1516,7 @@
 				EC9A6AAF1E6D3F9F0018C5FB /* SenderVoiceNodePlaying003@2x.png in Resources */,
 				EC9A6A961E6D3F9E0018C5FB /* MessageVideoPlay@2x.png in Resources */,
 				EC7F0FA01E6FE2D700F39FD9 /* homeBackground.jpg in Resources */,
+				B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */,
 				EC9A6AA51E6D3F9E0018C5FB /* RecordingSignal003@2x.png in Resources */,
 				EC9A6AB51E6D3F9F0018C5FB /* weChatBubble_Receiving_Solid@2x.png in Resources */,
 				EC9A6A931E6D3F9E0018C5FB /* input-bar-flat@2x.png in Resources */,
@@ -1643,7 +1652,7 @@
 				EC9A6A751E6D3F9E0018C5FB /* SESelectionGrabber.m in Sources */,
 				EC9A6A4D1E6D3F9E0018C5FB /* UIImage+Resize.m in Sources */,
 				EC9A6A2C1E6D3F9E0018C5FB /* UIImage+Blur.m in Sources */,
-				EC9A6A2D1E6D3F9E0018C5FB /* UIImage+JYResource.m in Sources */,
+				EC9A6A2D1E6D3F9E0018C5FB /* UIImage+Resource.m in Sources */,
 				EC7F0F8F1E6FAD2500F39FD9 /* YFBUpdateUserVipModel.m in Sources */,
 				EC7F0F8C1E6FAC3E00F39FD9 /* YFBSystemConfigModel.m in Sources */,
 				EC7F0F9B1E6FDFA300F39FD9 /* YFBBaseViewController.m in Sources */,
@@ -1671,6 +1680,7 @@
 				EC9A6ABD1E6D3F9F0018C5FB /* UIView+SDExtension.m in Sources */,
 				EC7F0FA61E6FF3FE00F39FD9 /* YFBUser.m in Sources */,
 				EC9A6A8C1E6D3F9E0018C5FB /* XHShareMenuView.m in Sources */,
+				B3C18CDC1E78025D00C7733D /* YFBVerifyViewController.m in Sources */,
 				EC9A6A6B1E6D3F9E0018C5FB /* XHEmotionManager.m in Sources */,
 				EC9A6A881E6D3F9E0018C5FB /* XHEmotionCollectionViewCell.m in Sources */,
 				EC9A6A551E6D3F9E0018C5FB /* XHConfigurationHelper.m in Sources */,

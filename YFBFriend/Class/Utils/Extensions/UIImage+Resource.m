@@ -6,16 +6,16 @@
 //
 //
 
-#import "UIImage+JYResource.h"
+#import "UIImage+Resource.h"
 #import "UIImage+GIF.h"
 
-@implementation UIImage (JYResource)
+@implementation UIImage (Resource)
 
-+ (instancetype)JY_imageWithResourcePath:(NSString *)imagePath {
-    return [self JY_imageWithResourcePath:imagePath ofType:@"png"];
++ (instancetype)imageWithResourcePath:(NSString *)imagePath {
+    return [self imageWithResourcePath:imagePath ofType:@"png"];
 }
 
-+ (instancetype)JY_imageWithResourcePath:(NSString *)imagePath ofType:(NSString *)type {
++ (instancetype)imageWithResourcePath:(NSString *)imagePath ofType:(NSString *)type {
 //    NSString *resourcePath = [[NSBundle mainBundle] pathForResource:@"JYtoreSDK" ofType:@"bundle"];
     NSBundle *resourceBundle = [NSBundle mainBundle];
 //#ifdef DEBUG

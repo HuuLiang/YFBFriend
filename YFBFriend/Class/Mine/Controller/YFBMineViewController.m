@@ -9,6 +9,7 @@
 #import "YFBMineViewController.h"
 #import "YFBMineHeaderCell.h"
 #import "YFBMineCell.h"
+#import "YFBVerifyViewController.h"
 
 static NSString *const YFBMineHeaderCellIdentifier = @"yfb_mine_header_cell_identifier";
 static NSString *const YFBMineCellIdentifier = @"yfb_mine_cell_identifier";
@@ -105,14 +106,15 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         headerCell.name = @"李涛";
         headerCell.idNumber = @"23346677";
         headerCell.invite = @"RC456";
-//        @weakify(self);
+        @weakify(self);
         headerCell.ktVipAction = ^(id sender){
 //            @strongify(self);
             
         };
         headerCell.attestationAction = ^(id sender){
-//            @strongify(self);
-        
+            @strongify(self);
+            YFBVerifyViewController *verifyVC = [[YFBVerifyViewController alloc] init];
+            [self.navigationController pushViewController:verifyVC animated:YES];
         };
         
         return headerCell;
