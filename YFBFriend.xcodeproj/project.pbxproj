@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2655A8AAADBA5FD994FA27D4 /* libPods-YFBFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */; };
+		B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */; };
+		B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CD81E77DBC900C7733D /* YFBMineCell.m */; };
 		EC47D40F1E763DDE000E9519 /* YFBSetAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D40E1E763DDE000E9519 /* YFBSetAvatarView.m */; };
 		EC47D4121E766208000E9519 /* YFBRegisterDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4111E766208000E9519 /* YFBRegisterDetailCell.m */; };
 		EC47D4231E768B7C000E9519 /* YFBDiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4221E768B7C000E9519 /* YFBDiscoverViewController.m */; };
@@ -192,6 +194,10 @@
 /* Begin PBXFileReference section */
 		7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YFBFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97D15D3E72F1F4490DADAEF5 /* Pods-YFBFriend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.release.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.release.xcconfig"; sourceTree = "<group>"; };
+		B3A1BD6B1E77BDD100BD6ECB /* YFBMineHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineHeaderCell.h; sourceTree = "<group>"; };
+		B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineHeaderCell.m; sourceTree = "<group>"; };
+		B3C18CD71E77DBC900C7733D /* YFBMineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineCell.h; sourceTree = "<group>"; };
+		B3C18CD81E77DBC900C7733D /* YFBMineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineCell.m; sourceTree = "<group>"; };
 		BD481930EA9E3A5945F3FA6C /* Pods-YFBFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		EC47D40D1E763DDE000E9519 /* YFBSetAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSetAvatarView.h; sourceTree = "<group>"; };
 		EC47D40E1E763DDE000E9519 /* YFBSetAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSetAvatarView.m; sourceTree = "<group>"; };
@@ -548,6 +554,24 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B3A1BD691E77BDB800BD6ECB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B3A1BD6A1E77BDB800BD6ECB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B3A1BD6B1E77BDD100BD6ECB /* YFBMineHeaderCell.h */,
+				B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */,
+				B3C18CD71E77DBC900C7733D /* YFBMineCell.h */,
+				B3C18CD81E77DBC900C7733D /* YFBMineCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		EC47D41A1E76871F000E9519 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
@@ -627,8 +651,8 @@
 			isa = PBXGroup;
 			children = (
 				EC48270D1E778D8900F03454 /* Controller */,
-				EC48270E1E778D8900F03454 /* Model */,
-				EC48270F1E778D8900F03454 /* View */,
+				B3A1BD691E77BDB800BD6ECB /* Model */,
+				B3A1BD6A1E77BDB800BD6ECB /* View */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -640,20 +664,6 @@
 				EC4827111E778DA200F03454 /* YFBMineViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		EC48270E1E778D8900F03454 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		EC48270F1E778D8900F03454 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		EC9A67691E6D3E4A0018C5FB = {
@@ -1435,7 +1445,7 @@
 					EC9A67711E6D3E4A0018C5FB = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = NS6846Q9KM;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1610,12 +1620,14 @@
 				EC9A6A891E6D3F9E0018C5FB /* XHEmotionCollectionViewFlowLayout.m in Sources */,
 				EC4827121E778DA200F03454 /* YFBMineViewController.m in Sources */,
 				EC9A6A2B1E6D3F9E0018C5FB /* NSString+Size.m in Sources */,
+				B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */,
 				EC9A6A691E6D3F9E0018C5FB /* XHAnnotation.m in Sources */,
 				EC9A6A761E6D3F9E0018C5FB /* SETextAttachment.m in Sources */,
 				EC9A6A2A1E6D3F9E0018C5FB /* NSObject+PropertyAccessInspecting.m in Sources */,
 				EC7F0FA31E6FE8C000F39FD9 /* YFBNavigationController.m in Sources */,
 				EC9A6A6E1E6D3F9E0018C5FB /* FLAnimatedImage.m in Sources */,
 				EC9A6A5B1E6D3F9E0018C5FB /* XHDisplayEmotionViewController.m in Sources */,
+				B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */,
 				EC9A6A791E6D3F9E0018C5FB /* SETextInput.m in Sources */,
 				EC47D42C1E7695F7000E9519 /* YFBRankVC.m in Sources */,
 				EC9A6A851E6D3F9E0018C5FB /* XHMessageInputView.m in Sources */,
@@ -1820,7 +1832,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = NS6846Q9KM;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YFBFriend/YFBPrefixHeader.pch";
@@ -1829,8 +1842,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9e34a4c6-6c68-427d-a918-967d12a121d9";
-				PROVISIONING_PROFILE_SPECIFIER = PPSocialDevlopmentProvisoningProfile;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1840,9 +1853,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = NS6846Q9KM;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YFBFriend/YFBPrefixHeader.pch";
@@ -1851,8 +1864,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "51221846-87db-4da3-b1f6-320b5ca14803";
-				PROVISIONING_PROFILE_SPECIFIER = PPSocialDistributionProvisoningProfile;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

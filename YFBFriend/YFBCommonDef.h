@@ -70,7 +70,7 @@ typedef NS_ENUM(NSUInteger,YFBVipType) {
 #define kBirthDayMaxDate                  @"2017-02-01"
 #define KBirthDaySeletedDate              @"2000-01-01"
 
-#define kWidth(width)                     kScreenWidth  * width  / 750
+#define kWidth(width)                     kScreenWidth  * width  / 750.
 #define kHeight(height)                   kScreenHeight * height / 1334.
 #define kColor(hexString)                 [UIColor colorWithHexString:[NSString stringWithFormat:@"%@",hexString]]
 #define kCurrentUser                      [YFBUser currentUser]

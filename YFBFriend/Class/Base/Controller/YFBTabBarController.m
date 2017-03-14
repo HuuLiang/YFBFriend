@@ -46,7 +46,7 @@
                                                            image:[[UIImage imageNamed:@"contact_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                                    selectedImage:[[UIImage imageNamed:@"contact_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 
-    YFBMineViewController *mineVC = [[YFBMineViewController alloc] initWithTitle:@"消息"];
+    YFBMineViewController *mineVC = [[YFBMineViewController alloc] initWithTitle:@"我的"];
     YFBNavigationController *mineNav = [[YFBNavigationController alloc] initWithRootViewController:mineVC];
     mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:mineVC.title
                                                           image:[[UIImage imageNamed:@"mine_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
