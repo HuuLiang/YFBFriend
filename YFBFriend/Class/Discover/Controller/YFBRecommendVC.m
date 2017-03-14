@@ -8,6 +8,7 @@
 
 #import "YFBRecommendVC.h"
 #import "YFBRecommendCell.h"
+#import "YFBRobot.h"
 
 static NSString *const kYFBRecommendCellReusableIdentifier = @"kYFBRecommendCellReusableIdentifier";
 
@@ -28,6 +29,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _tableView.dataSource = self;
     [_tableView setSeparatorColor:kColor(@"#E6E6E6")];
     [_tableView setSeparatorInset:UIEdgeInsetsZero];
+    _tableView.rowHeight = kWidth(200);
     [_tableView registerClass:[YFBRecommendCell class] forCellReuseIdentifier:kYFBRecommendCellReusableIdentifier];
     [self.view addSubview:_tableView];
     
@@ -37,8 +39,16 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         }];
     }
     for (int i = 0; i < 30; i++) {
-        
+        YFBRobot * robot = [[YFBRobot alloc] init];
+        robot.userId = @"123123";
+        robot.nickName = @"气泡熊";
+        robot.avatarUrl = @"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=73776489,3127806371&fm=23&gp=0.jpg";
+        robot.height = @"176cm";
+        robot.age = @"23岁";
+        robot.userSex = YFBUserSexFemale;
+        [self.dataSource addObject:robot];
     }
+    [_tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,7 +64,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBRecommendCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.row < self.dataSource.count) {
-        
+        YFBRobot *robot = [[YFBRobot alloc] init];
+        cell.userNameStr = robot.nickName;
+        cell.userImgUrl = robot.avatarUrl;
+        cell.userAge  = robot.age;
+        cell.userHeight = robot.height;
+        cell.userSex = robot.userSex;
     }
     return cell;
 }

@@ -12,10 +12,9 @@
 
 @property (nonatomic,copy)   NSString *userImgUrl;
 @property (nonatomic,copy)   NSString *userNameStr;
-@property (nonatomic,assign) BOOL      userSex;
-@property (nonatomic,assign) NSInteger userAge;
+@property (nonatomic,assign) YFBUserSex   userSex;
+@property (nonatomic,copy)   NSString * userAge;
 @property (nonatomic,copy)   NSString  *userHeight;
 @property (nonatomic,copy)   NSString *cityStr;
 @property (nonatomic,assign) BOOL greeted;
-
 @end

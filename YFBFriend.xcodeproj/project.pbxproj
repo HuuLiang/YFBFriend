@@ -19,6 +19,7 @@
 		EC47D42F1E76A37E000E9519 /* YFBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D42E1E76A37E000E9519 /* YFBRecommendCell.m */; };
 		EC48270B1E778D7B00F03454 /* YFBContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC48270A1E778D7B00F03454 /* YFBContactViewController.m */; };
 		EC4827121E778DA200F03454 /* YFBMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4827111E778DA200F03454 /* YFBMineViewController.m */; };
+		EC4827151E77B69700F03454 /* YFBRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4827141E77B69700F03454 /* YFBRobot.m */; };
 		EC65EE521E712A0600DA1AF9 /* YFBRegisterFirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE511E712A0600DA1AF9 /* YFBRegisterFirstVC.m */; };
 		EC65EE551E712A5B00DA1AF9 /* YFBUserLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE541E712A5B00DA1AF9 /* YFBUserLoginVC.m */; };
 		EC65EE581E713AAD00DA1AF9 /* YFBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE571E713AAD00DA1AF9 /* YFBTextField.m */; };
@@ -217,6 +218,8 @@
 		EC48270A1E778D7B00F03454 /* YFBContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBContactViewController.m; sourceTree = "<group>"; };
 		EC4827101E778DA200F03454 /* YFBMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineViewController.h; sourceTree = "<group>"; };
 		EC4827111E778DA200F03454 /* YFBMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineViewController.m; sourceTree = "<group>"; };
+		EC4827131E77B69700F03454 /* YFBRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBRobot.h; path = YFBFriend/Class/Mine/Controller/YFBRobot.h; sourceTree = SOURCE_ROOT; };
+		EC4827141E77B69700F03454 /* YFBRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRobot.m; path = YFBFriend/Class/Mine/Controller/YFBRobot.m; sourceTree = SOURCE_ROOT; };
 		EC65EE501E712A0600DA1AF9 /* YFBRegisterFirstVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRegisterFirstVC.h; sourceTree = "<group>"; };
 		EC65EE511E712A0600DA1AF9 /* YFBRegisterFirstVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRegisterFirstVC.m; sourceTree = "<group>"; };
 		EC65EE531E712A5B00DA1AF9 /* YFBUserLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBUserLoginVC.h; sourceTree = "<group>"; };
@@ -601,6 +604,8 @@
 		EC47D41C1E76871F000E9519 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC4827131E77B69700F03454 /* YFBRobot.h */,
+				EC4827141E77B69700F03454 /* YFBRobot.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1687,6 +1692,7 @@
 				EC9A6A701E6D3F9E0018C5FB /* LKBadgeView.m in Sources */,
 				EC7F0F9E1E6FDFD900F39FD9 /* YFBLaunchViewController.m in Sources */,
 				EC9A6A661E6D3F9E0018C5FB /* XHMessageVideoConverPhotoFactory.m in Sources */,
+				EC4827151E77B69700F03454 /* YFBRobot.m in Sources */,
 				EC9A6A7A1E6D3F9E0018C5FB /* SETextLayout.m in Sources */,
 				EC7F0F831E6FAB1900F39FD9 /* YFBApplication.m in Sources */,
 				EC9A6A361E6D3F9E0018C5FB /* NSArray+Log.m in Sources */,
