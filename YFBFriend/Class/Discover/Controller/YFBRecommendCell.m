@@ -117,6 +117,18 @@
     _userName.text = userNameStr;
 }
 
+- (void)setUserAge:(NSString *)userAge {
+    [_sexButton setTitle:userAge forState:UIControlStateNormal];
+}
+
+- (void)setUserSex:(YFBUserSex)userSex {
+    if (userSex == YFBUserSexFemale) {
+        [_sexButton setImage:[UIImage imageNamed:@"discover_female"] forState:UIControlStateNormal];
+    } else {
+        [_sexButton setImage:[UIImage imageNamed:@"discover_male"] forState:UIControlStateNormal];
+    }
+}
+
 - (void)setUserHeight:(NSString *)userHeight {
     _userHeightLabel.text = userHeight;
 }

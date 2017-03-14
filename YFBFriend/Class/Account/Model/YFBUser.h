@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, YFBUserSex) {
 
 + (instancetype)currentUser;
 
+
 //用户ID
 @property (nonatomic,copy) NSString *userId;
 
