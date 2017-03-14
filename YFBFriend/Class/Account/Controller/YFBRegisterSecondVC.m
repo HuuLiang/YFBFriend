@@ -11,8 +11,7 @@
 #import "XHPhotographyHelper.h"
 #import "YFBRegisterDetailCell.h"
 #import "ActionSheetPicker.h"
-#import "YFBDiscoverViewController.h"
-#import "YFBNavigationController.h"
+#import "YFBTabBarController.h"
 
 static NSString *const kYFBRegisterDetailCellReusableIdentifier = @"kYFBRegisterDetailCellReusableIdentifier";
 
@@ -84,9 +83,8 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
     
     [_registerButton bk_addEventHandler:^(id sender) {
         @strongify(self);
-        YFBDiscoverViewController *discoverVC = [[YFBDiscoverViewController alloc] init];
-        YFBNavigationController *discoverNav = [[YFBNavigationController alloc] initWithRootViewController:discoverVC];
-        [self presentViewController:discoverNav animated:YES completion:nil];
+        YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
+        [self presentViewController:tabbarController animated:YES completion:nil];
     } forControlEvents:UIControlEventTouchUpInside];
     
     {
