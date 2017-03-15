@@ -6,7 +6,7 @@
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import "YFBAttentionHeaderView.h"
+#import "YFBSliderView.h"
 
 #define Color(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define RandomColor Color(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))/** 随机色  */
@@ -14,14 +14,33 @@ static CGFloat const titleH = 44;/** 文字高度  */
 
 static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
 
-@interface YFBAttentionHeaderView ()<UIScrollViewDelegate>
+@interface YFBSliderView ()<UIScrollViewDelegate>
 
+{
+    UILabel *_receivedLabel;
+    UILabel *_sendLabel;
+}
+
+@property (nonatomic, strong) UIScrollView *giftScrollView;
 @property (nonatomic,assign,getter=isCanScroll) BOOL canScroll;//判断titleScroll是否可以滚动
+@property (nonatomic) BOOL isGiftVC;
+@property (nonatomic) CGFloat giftH;
 
 @end
 
 
-@implementation YFBAttentionHeaderView
+@implementation YFBSliderView
+
+- (instancetype)initWithIsGiftVC:(BOOL)isGiftVC
+{
+    self = [super init];
+    if (self) {
+        _isGiftVC = isGiftVC;
+        _giftH = isGiftVC ? 36 : 0;
+        
+    }
+    return self;
+}
 
 - (NSMutableArray *)buttons
 {
@@ -78,14 +97,32 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     lineView.backgroundColor = kColor(@"#e6e6e6");
     [_titleScrollView addSubview:lineView];
     [superVC.view addSubview:self.titleScrollView];
-    
+    if (_isGiftVC) {
+        CGRect giftRect = CGRectMake(0, titleH, kScreenWidth *2, _giftH);
+        self.giftScrollView = [[UIScrollView alloc] initWithFrame:giftRect];
+        _giftScrollView.backgroundColor = kColor(@"#eeeeee");
+        [superVC.view addSubview:_giftScrollView];
+        _receivedLabel = [[UILabel alloc] initWithFrame:CGRectMake((kScreenWidth *0.3)/2.,kWidth(35)/2., kScreenWidth*0.7, kWidth(32))];
+        //        _receivedLabel.backgroundColor = [UIColor redColor];
+        _receivedLabel.font = kFont(14);
+        _receivedLabel.textAlignment = NSTextAlignmentCenter;
+        [_giftScrollView addSubview:_receivedLabel];
+        
+        _sendLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth + (kScreenWidth *0.3)/2.,kWidth(35)/2., kScreenWidth*0.7, kWidth(32))];
+        _sendLabel.font = kFont(14);
+        _sendLabel.textAlignment = NSTextAlignmentCenter;
+        [_giftScrollView addSubview:_sendLabel];
+        self.giftScrollView.contentSize = CGSizeMake(_giftScrollView.size.width*1.5, 0);
+        self.giftScrollView.showsHorizontalScrollIndicator = NO;
+        self.giftScrollView.bounces = YES;
+    }
     
 }
 -(void)setContentScrollView{
     UIViewController *superVC = [self findViewController:self];
     
-    CGFloat y  = CGRectGetMaxY(self.titleScrollView.frame);
-    CGRect rect  = CGRectMake(0, y, kScreenWidth, kScreenHeight - titleH);
+    CGFloat y  = _isGiftVC ? CGRectGetMaxY(self.giftScrollView.frame) : CGRectGetMaxY(self.titleScrollView.frame);
+    CGRect rect  = CGRectMake(0, y, kScreenWidth, kScreenHeight - titleH - _giftH);
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:rect];
     [superVC.view addSubview:self.contentScrollView];
     
@@ -191,6 +228,7 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     //    NSLog(@"%lf,%lf,%ld",offset,maxOffset,sender.tag);
     [self.titleScrollView setContentOffset:CGPointMake(offset, 0) animated:YES];
     
+    
 }
 
 -(void)setUpOneChildController:(NSInteger)index{
@@ -221,7 +259,6 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     
 }
 
-
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
@@ -242,13 +279,30 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     
     leftButton.transform = CGAffineTransformMakeScale(scaleL * transScale + 1, scaleL * transScale + 1);
     rightButton.transform = CGAffineTransformMakeScale(scaleR * transScale + 1, scaleR * transScale + 1);
+    [self.giftScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
     
-//    UIColor *rightColor = [UIColor colorWithRed:(174+66*scaleR)/255.0 green:(174-71*scaleR)/255.0 blue:(174-174*scaleR)/255.0 alpha:1];
-//    UIColor *leftColor = [UIColor colorWithRed:(174+66*scaleL)/255.0 green:(174-71*scaleL)/255.0 blue:(174-174*scaleL)/255.0 alpha:1];
-//    
-//    [leftButton setTitleColor:leftColor forState:UIControlStateNormal];
-//    [rightButton setTitleColor:rightColor forState:UIControlStateNormal];
-//    
+    //    UIColor *rightColor = [UIColor colorWithRed:(174+66*scaleR)/255.0 green:(174-71*scaleR)/255.0 blue:(174-174*scaleR)/255.0 alpha:1];
+    //    UIColor *leftColor = [UIColor colorWithRed:(174+66*scaleL)/255.0 green:(174-71*scaleL)/255.0 blue:(174-174*scaleL)/255.0 alpha:1];
+    //
+    //    [leftButton setTitleColor:leftColor forState:UIControlStateNormal];
+    //    [rightButton setTitleColor:rightColor forState:UIControlStateNormal];
+    //
+}
+
+- (void)setReceivedGift:(NSString *)receivedGift {
+    _receivedGift = receivedGift;
+    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"当前收到的礼物:  %@个",receivedGift]];
+    [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#9d9d9d")} range:NSMakeRange(9, attributeStr.length - 9)];
+    [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#333333")} range:NSMakeRange(0, 9)];
+    _receivedLabel.attributedText = attributeStr;
+}
+
+- (void)setSendGift:(NSString *)sendGift {
+    _sendGift = sendGift;
+    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"当前送出的礼物:  %@个",sendGift]];
+    [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#9d9d9d")} range:NSMakeRange(9, attributeStr.length - 9)];
+    [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#333333")} range:NSMakeRange(0, 9)];
+    _sendLabel.attributedText = attributeStr;
 }
 
 @end

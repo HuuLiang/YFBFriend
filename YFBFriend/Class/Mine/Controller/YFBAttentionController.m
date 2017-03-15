@@ -8,11 +8,11 @@
 
 #import "YFBAttentionController.h"
 #import "YFBAttentionDetailController.h"
-#import "YFBAttentionHeaderView.h"
+#import "YFBSliderView.h"
 
 @interface YFBAttentionController ()
 {
-    YFBAttentionHeaderView *_headerView;
+    YFBSliderView *_headerView;
 }
 
 @end
@@ -23,7 +23,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"我的关注";
-    _headerView = [[YFBAttentionHeaderView alloc] init];
+    _headerView = [[YFBSliderView alloc] initWithIsGiftVC:NO];
     _headerView.titlesArr = @[@"关注我的",@"我关注的"];
     [self.view addSubview:_headerView];
     YFBAttentionDetailController *detailVC = [[YFBAttentionDetailController alloc] initWithIsAttentionMe:NO];
