@@ -203,11 +203,11 @@
     [super viewDidLayoutSubviews];
     CGRect qqButtonFrame = _QQButton.frame;
     _QQButton.imageEdgeInsets = UIEdgeInsetsMake(-(qqButtonFrame.size.height-_QQButton.imageView.size.height)/2, (qqButtonFrame.size.width-_QQButton.imageView.size.width)/2, (qqButtonFrame.size.height-_QQButton.imageView.size.height)/2, -(qqButtonFrame.size.width-_QQButton.imageView.size.width)/2);
-    _QQButton.titleEdgeInsets = UIEdgeInsetsMake(qqButtonFrame.size.height-kWidth(30), -_QQButton.imageView.frame.size.width, 0, 0);
+    _QQButton.titleEdgeInsets = UIEdgeInsetsMake(qqButtonFrame.size.height-kWidth(35), -_QQButton.imageView.frame.size.width, 0, 0);
     
     CGRect wxButtonFrame = _WXButton.frame;
     _WXButton.imageEdgeInsets = UIEdgeInsetsMake(-(wxButtonFrame.size.height-_WXButton.imageView.size.height)/2, (wxButtonFrame.size.width-_WXButton.imageView.size.width)/2, (wxButtonFrame.size.height-_WXButton.imageView.size.height)/2, -(wxButtonFrame.size.width-_WXButton.imageView.size.width)/2);
-    _WXButton.titleEdgeInsets = UIEdgeInsetsMake(wxButtonFrame.size.height-kWidth(30), -_WXButton.imageView.frame.size.width, 0, 0);
+    _WXButton.titleEdgeInsets = UIEdgeInsetsMake(wxButtonFrame.size.height-kWidth(35), -_WXButton.imageView.frame.size.width, 0, 0);
 
 }
 

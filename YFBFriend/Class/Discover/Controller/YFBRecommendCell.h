@@ -17,4 +17,7 @@
 @property (nonatomic,copy)   NSString  *userHeight;
 @property (nonatomic,copy)   NSString *cityStr;
 @property (nonatomic,assign) BOOL greeted;
+
+@property (nonatomic,copy)   NSString *distance;
+
 @end

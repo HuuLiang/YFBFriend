@@ -16,6 +16,7 @@
 @property (nonatomic,strong) UILabel     *userHeightLabel;
 @property (nonatomic,strong) UILabel     *localCity;
 @property (nonatomic,strong) UIButton    *greetButton;
+@property (nonatomic,strong) UILabel     *distanceLabel;
 @end
 
 @implementation YFBRecommendCell
@@ -24,7 +25,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = kColor(@"#ffffff");
+        self.contentView.backgroundColor = kColor(@"#ffffff");
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         self.userImgV = [[UIImageView alloc] init];
@@ -60,9 +62,16 @@
         [_greetButton setImage:[UIImage imageNamed:@"discover_greet"] forState:UIControlStateNormal];
         [_greetButton setImage:[UIImage imageNamed:@"discover_greeted"] forState:UIControlStateSelected];
         [_greetButton setTitle:@"打招呼" forState:UIControlStateNormal];
+        [_greetButton setTitle:@"已打招呼" forState:UIControlStateSelected];
         [_greetButton setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
-        _greetButton.titleLabel.font = [UIFont systemFontOfSize:24];
+        _greetButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(24)];
         [self.contentView addSubview:_greetButton];
+        
+        self.distanceLabel = [[UILabel alloc] init];
+        _distanceLabel.textColor = kColor(@"#999999");
+        _distanceLabel.font = [UIFont systemFontOfSize:kWidth(28)];
+        [self.contentView addSubview:_distanceLabel];
+        _distanceLabel.hidden = YES;
         
         {
             [_userImgV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -98,7 +107,13 @@
             [_greetButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(self.contentView);
                 make.right.equalTo(self.contentView.mas_right).offset(-kWidth(60));
-                make.size.mas_equalTo(CGSizeMake(kWidth(72), kWidth(94)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(100), kWidth(94)));
+            }];
+            
+            [_distanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(_greetButton);
+                make.right.equalTo(_greetButton.mas_left).offset(-kWidth(10));
+                make.height.mas_equalTo(kWidth(28));
             }];
         }
     }
@@ -133,12 +148,23 @@
     _userHeightLabel.text = userHeight;
 }
 
+- (void)setGreeted:(BOOL)greeted {
+    _greetButton.selected = greeted;
+    _greetButton.enabled = !greeted;
+}
+
+- (void)setDistance:(NSString *)distance {
+    _distanceLabel.hidden = NO;
+    _distanceLabel.text = distance;
+}
+
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
     
     CGRect greetButtonFrame = _greetButton.frame;
-    _greetButton.imageEdgeInsets = UIEdgeInsetsMake(-(greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, (greetButtonFrame.size.width-_greetButton.imageView.size.width)/2, (greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, -(greetButtonFrame.size.width-_greetButton.imageView.size.width)/2);
-    _greetButton.titleEdgeInsets = UIEdgeInsetsMake(greetButtonFrame.size.height-kWidth(30), -_greetButton.imageView.frame.size.width, 0, 0);
+    CGFloat imageInsetsLeft = (greetButtonFrame.size.width - _greetButton.imageView.frame.size.width)/2;
+    _greetButton.imageEdgeInsets = UIEdgeInsetsMake(-(greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft, (greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft);
+    _greetButton.titleEdgeInsets = UIEdgeInsetsMake(_greetButton.imageView.size.height, -_greetButton.frame.size.width, 0, -(_greetButton.frame.size.width-_greetButton.imageView.frame.size.width));
 }
 
 @end
