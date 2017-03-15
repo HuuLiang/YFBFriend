@@ -74,7 +74,7 @@ typedef NS_ENUM(NSUInteger,YFBVipType) {
 #define kHeight(height)                   kScreenHeight * height / 1334.
 #define kColor(hexString)                 [UIColor colorWithHexString:[NSString stringWithFormat:@"%@",hexString]]
 #define kCurrentUser                      [YFBUser currentUser]
-
+#define kFont(font)                       [UIFont systemFontOfSize:kWidth(font*2)]
 //#define YFB_SYSTEM_CONTACT_NAME_1          @"CONTACT_NAME_1"
 //#define YFB_SYSTEM_CONTACT_NAME_2          @"CONTACT_NAME_2"
 //#define YFB_SYSTEM_CONTACT_NAME_3          @"CONTACT_NAME_3"

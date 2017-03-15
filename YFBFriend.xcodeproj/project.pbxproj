@@ -8,10 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		2655A8AAADBA5FD994FA27D4 /* libPods-YFBFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */; };
+		B324038E1E78D92100E1D8EB /* YFBAttentionController.m in Sources */ = {isa = PBXBuildFile; fileRef = B324038D1E78D92100E1D8EB /* YFBAttentionController.m */; };
+		B32403911E78D9B500E1D8EB /* YFBAttentionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B32403901E78D9B500E1D8EB /* YFBAttentionHeaderView.m */; };
+		B32403941E78E6A900E1D8EB /* YFBAttentionDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = B32403931E78E6A900E1D8EB /* YFBAttentionDetailController.m */; };
+		B32403971E78EAB200E1D8EB /* YFBAttentionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B32403961E78EAB200E1D8EB /* YFBAttentionTableViewCell.m */; };
 		B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */; };
 		B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CD81E77DBC900C7733D /* YFBMineCell.m */; };
 		B3C18CDC1E78025D00C7733D /* YFBVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */; };
 		B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */; };
+		B3C18CE11E781DF600C7733D /* YFBDredgeVipController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CE01E781DF600C7733D /* YFBDredgeVipController.m */; };
 		EC47D40F1E763DDE000E9519 /* YFBSetAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D40E1E763DDE000E9519 /* YFBSetAvatarView.m */; };
 		EC47D4121E766208000E9519 /* YFBRegisterDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4111E766208000E9519 /* YFBRegisterDetailCell.m */; };
 		EC47D4231E768B7C000E9519 /* YFBDiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC47D4221E768B7C000E9519 /* YFBDiscoverViewController.m */; };
@@ -197,6 +202,14 @@
 /* Begin PBXFileReference section */
 		7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YFBFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97D15D3E72F1F4490DADAEF5 /* Pods-YFBFriend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.release.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.release.xcconfig"; sourceTree = "<group>"; };
+		B324038C1E78D92100E1D8EB /* YFBAttentionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBAttentionController.h; sourceTree = "<group>"; };
+		B324038D1E78D92100E1D8EB /* YFBAttentionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBAttentionController.m; sourceTree = "<group>"; };
+		B324038F1E78D9B500E1D8EB /* YFBAttentionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBAttentionHeaderView.h; sourceTree = "<group>"; };
+		B32403901E78D9B500E1D8EB /* YFBAttentionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBAttentionHeaderView.m; sourceTree = "<group>"; };
+		B32403921E78E6A900E1D8EB /* YFBAttentionDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBAttentionDetailController.h; sourceTree = "<group>"; };
+		B32403931E78E6A900E1D8EB /* YFBAttentionDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBAttentionDetailController.m; sourceTree = "<group>"; };
+		B32403951E78EAB200E1D8EB /* YFBAttentionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBAttentionTableViewCell.h; sourceTree = "<group>"; };
+		B32403961E78EAB200E1D8EB /* YFBAttentionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBAttentionTableViewCell.m; sourceTree = "<group>"; };
 		B3A1BD6B1E77BDD100BD6ECB /* YFBMineHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineHeaderCell.h; sourceTree = "<group>"; };
 		B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineHeaderCell.m; sourceTree = "<group>"; };
 		B3C18CD71E77DBC900C7733D /* YFBMineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineCell.h; sourceTree = "<group>"; };
@@ -204,6 +217,8 @@
 		B3C18CDA1E78025D00C7733D /* YFBVerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVerifyViewController.h; sourceTree = "<group>"; };
 		B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBVerifyViewController.m; sourceTree = "<group>"; };
 		B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = phone_verify.jpg; sourceTree = "<group>"; };
+		B3C18CDF1E781DF600C7733D /* YFBDredgeVipController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDredgeVipController.h; sourceTree = "<group>"; };
+		B3C18CE01E781DF600C7733D /* YFBDredgeVipController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDredgeVipController.m; sourceTree = "<group>"; };
 		BD481930EA9E3A5945F3FA6C /* Pods-YFBFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		EC47D40D1E763DDE000E9519 /* YFBSetAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSetAvatarView.h; sourceTree = "<group>"; };
 		EC47D40E1E763DDE000E9519 /* YFBSetAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSetAvatarView.m; sourceTree = "<group>"; };
@@ -576,6 +591,10 @@
 				B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */,
 				B3C18CD71E77DBC900C7733D /* YFBMineCell.h */,
 				B3C18CD81E77DBC900C7733D /* YFBMineCell.m */,
+				B324038F1E78D9B500E1D8EB /* YFBAttentionHeaderView.h */,
+				B32403901E78D9B500E1D8EB /* YFBAttentionHeaderView.m */,
+				B32403951E78EAB200E1D8EB /* YFBAttentionTableViewCell.h */,
+				B32403961E78EAB200E1D8EB /* YFBAttentionTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -674,6 +693,12 @@
 				EC4827111E778DA200F03454 /* YFBMineViewController.m */,
 				B3C18CDA1E78025D00C7733D /* YFBVerifyViewController.h */,
 				B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */,
+				B3C18CDF1E781DF600C7733D /* YFBDredgeVipController.h */,
+				B3C18CE01E781DF600C7733D /* YFBDredgeVipController.m */,
+				B324038C1E78D92100E1D8EB /* YFBAttentionController.h */,
+				B324038D1E78D92100E1D8EB /* YFBAttentionController.m */,
+				B32403921E78E6A900E1D8EB /* YFBAttentionDetailController.h */,
+				B32403931E78E6A900E1D8EB /* YFBAttentionDetailController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1603,12 +1628,15 @@
 				EC9A6A5E1E6D3F9E0018C5FB /* XHDisplayTextViewController.m in Sources */,
 				EC9A6A7D1E6D3F9E0018C5FB /* SETextSelection.m in Sources */,
 				EC9A6A4F1E6D3F9E0018C5FB /* UIImage+Utility.m in Sources */,
+				B32403941E78E6A900E1D8EB /* YFBAttentionDetailController.m in Sources */,
+				B324038E1E78D92100E1D8EB /* YFBAttentionController.m in Sources */,
 				EC9A6A491E6D3F9E0018C5FB /* JKDBModel.m in Sources */,
 				EC65EE521E712A0600DA1AF9 /* YFBRegisterFirstVC.m in Sources */,
 				EC7F0FAC1E70017C00F39FD9 /* YFBLoginViewController.m in Sources */,
 				EC47D42F1E76A37E000E9519 /* YFBRecommendCell.m in Sources */,
 				EC9A6A421E6D3F9E0018C5FB /* ActionSheetDistancePicker.m in Sources */,
 				EC9A6A8B1E6D3F9E0018C5FB /* XHEmotionSectionBar.m in Sources */,
+				B3C18CE11E781DF600C7733D /* YFBDredgeVipController.m in Sources */,
 				EC9A6A841E6D3F9E0018C5FB /* XHMessageTableViewCell.m in Sources */,
 				EC9A6A5A1E6D3F9E0018C5FB /* XHVoiceRecordHelper.m in Sources */,
 				EC9A6A7F1E6D3F9E0018C5FB /* SETextView.m in Sources */,
@@ -1616,9 +1644,11 @@
 				EC47D4231E768B7C000E9519 /* YFBDiscoverViewController.m in Sources */,
 				EC9A6A301E6D3F9E0018C5FB /* UIView+Loading.m in Sources */,
 				EC9A6A641E6D3F9E0018C5FB /* XHMessageAvatarFactory.m in Sources */,
+				B32403971E78EAB200E1D8EB /* YFBAttentionTableViewCell.m in Sources */,
 				EC9A6A621E6D3F9E0018C5FB /* XHHTTPClient.m in Sources */,
 				EC9A6A871E6D3F9E0018C5FB /* XHVoiceRecordHUD.m in Sources */,
 				EC47D40F1E763DDE000E9519 /* YFBSetAvatarView.m in Sources */,
+				B32403911E78D9B500E1D8EB /* YFBAttentionHeaderView.m in Sources */,
 				EC9A6A611E6D3F9E0018C5FB /* XHFileAttribute.m in Sources */,
 				EC9A677A1E6D3E4A0018C5FB /* AppDelegate.m in Sources */,
 				EC7F0FA91E6FFE1700F39FD9 /* YFBTabBarController.m in Sources */,

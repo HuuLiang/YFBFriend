@@ -10,6 +10,8 @@
 #import "YFBMineHeaderCell.h"
 #import "YFBMineCell.h"
 #import "YFBVerifyViewController.h"
+#import "YFBDredgeVipController.h"
+#import "YFBAttentionController.h"
 
 static NSString *const YFBMineHeaderCellIdentifier = @"yfb_mine_header_cell_identifier";
 static NSString *const YFBMineCellIdentifier = @"yfb_mine_cell_identifier";
@@ -108,8 +110,9 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         headerCell.invite = @"RC456";
         @weakify(self);
         headerCell.ktVipAction = ^(id sender){
-//            @strongify(self);
-            
+            @strongify(self);
+            YFBDredgeVipController *vipVC = [[YFBDredgeVipController alloc] init];
+            [self.navigationController pushViewController:vipVC animated:YES];
         };
         headerCell.attestationAction = ^(id sender){
             @strongify(self);
@@ -202,7 +205,8 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
     if (indexPath.section == YFBMineSectionTypeRecord){
         
         if (indexPath.row == YFBRecordRowTypeAttention){
-            
+            YFBAttentionController *attentionVC = [[YFBAttentionController alloc] init];
+            [self.navigationController pushViewController:attentionVC animated:YES];
         }
         
     }else if (indexPath.section == YFBMineSectionTypeWallet){

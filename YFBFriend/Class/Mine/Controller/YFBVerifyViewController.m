@@ -55,10 +55,10 @@
     _headerImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithResourcePath:@"phone_verify" ofType:@"jpg"]];
     [self.view addSubview:_headerImageView];
     {
-    [_headerImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.top.mas_equalTo(self.view);
-        make.height.mas_equalTo(kWidth(260));
-    }];
+        [_headerImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.top.mas_equalTo(self.view);
+            make.height.mas_equalTo(kWidth(260));
+        }];
     }
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.numberOfLines = 2;
@@ -69,23 +69,23 @@
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"可以直接用手机号登陆\n保护账号不被丢失"];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     [style setLineSpacing:kWidth(32)];
-//    style.alignment = NSTextAlignmentCenter;
-//    style.headIndent = 0.;
-//    [string addAttribute:NSParagraphStyleAttributeName  value:style range:NSMakeRange(0, string.length)];
+    //    style.alignment = NSTextAlignmentCenter;
+    //    style.headIndent = 0.;
+    //    [string addAttribute:NSParagraphStyleAttributeName  value:style range:NSMakeRange(0, string.length)];
     [string setAttributes:@{NSParagraphStyleAttributeName : style } range:NSMakeRange(0, string.length)];
-
+    
     titleLabel.attributedText = string;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [_headerImageView addSubview:titleLabel];
     {
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(_headerImageView);
-        make.right.mas_equalTo(_headerImageView).mas_offset(kWidth(-20));
-        make.height.mas_equalTo(kScreenWidth *0.23);
-        make.width.mas_equalTo(kScreenWidth *0.43);
-    }];
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(_headerImageView);
+            make.right.mas_equalTo(_headerImageView).mas_offset(kWidth(-20));
+            make.height.mas_equalTo(kScreenWidth *0.23);
+            make.width.mas_equalTo(kScreenWidth *0.43);
+        }];
     }
-
+    
 }
 
 - (void)creatSenderPhoneVerifyNumer {
@@ -95,12 +95,12 @@
     titleLabel.text = @"请输入手机号, 获取验证码";
     [self.view addSubview:titleLabel];
     {
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view).mas_offset(kWidth(26));
-        make.top.mas_equalTo(_headerImageView.mas_bottom).mas_offset(kWidth(22));
-        make.right.mas_equalTo(self.view);
-        make.height.mas_equalTo(kWidth(28));
-    }];
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.view).mas_offset(kWidth(26));
+            make.top.mas_equalTo(_headerImageView.mas_bottom).mas_offset(kWidth(22));
+            make.right.mas_equalTo(self.view);
+            make.height.mas_equalTo(kWidth(28));
+        }];
     }
     
     _phoneField = [[UITextField alloc] init];
@@ -111,11 +111,11 @@
     _phoneField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:_phoneField];
     {
-    [_phoneField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view).mas_offset(kWidth(20));
-        make.top.mas_equalTo(titleLabel.mas_bottom).mas_offset(kWidth(24));
-        make.size.mas_equalTo(CGSizeMake(kWidth(440), kWidth(68)));
-    }];
+        [_phoneField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.view).mas_offset(kWidth(20));
+            make.top.mas_equalTo(titleLabel.mas_bottom).mas_offset(kWidth(24));
+            make.size.mas_equalTo(CGSizeMake(kWidth(440), kWidth(68)));
+        }];
     }
     
     UIButton *senderBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -125,11 +125,11 @@
     [senderBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateSelected];
     [self.view addSubview:senderBtn];
     {
-    [senderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_phoneField.mas_right).mas_offset(kWidth(20));
-        make.right.mas_equalTo(self.view).mas_offset(kWidth(-20));
-        make.centerY.height.mas_equalTo(_phoneField);
-    }];
+        [senderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(_phoneField.mas_right).mas_offset(kWidth(20));
+            make.right.mas_equalTo(self.view).mas_offset(kWidth(-20));
+            make.centerY.height.mas_equalTo(_phoneField);
+        }];
     }
     @weakify(self);
     [senderBtn bk_addEventHandler:^(UIButton* sender) {
@@ -137,9 +137,9 @@
         senderBtn.userInteractionEnabled = NO;
         __block NSInteger seconds = 60;
         @strongify(self);
-      self->_timer  = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+        self->_timer  = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
             if (seconds >0) {
-            
+                
                 [senderBtn setTitle:[NSString stringWithFormat:@"%zd秒后重新获取",--seconds] forState:UIControlStateNormal];
             }else {
                 senderBtn.selected = NO;
@@ -160,12 +160,12 @@
     _verifyField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:_verifyField];
     {
-    [_verifyField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view).mas_offset(kWidth(20));
-        make.right.mas_equalTo(self.view).mas_offset(kWidth(-20));
-        make.height.mas_equalTo(_phoneField);
-        make.top.mas_equalTo(_phoneField.mas_bottom).mas_offset(kWidth(20));
-    }];
+        [_verifyField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.view).mas_offset(kWidth(20));
+            make.right.mas_equalTo(self.view).mas_offset(kWidth(-20));
+            make.height.mas_equalTo(_phoneField);
+            make.top.mas_equalTo(_phoneField.mas_bottom).mas_offset(kWidth(20));
+        }];
     }
 }
 
