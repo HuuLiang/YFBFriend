@@ -12,6 +12,7 @@
 #import "YFBVerifyViewController.h"
 #import "YFBDredgeVipController.h"
 #import "YFBAttentionController.h"
+#import "YFBMyGiftController.h"
 
 static NSString *const YFBMineHeaderCellIdentifier = @"yfb_mine_header_cell_identifier";
 static NSString *const YFBMineCellIdentifier = @"yfb_mine_cell_identifier";
@@ -218,7 +219,8 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
             
             
         }else if (indexPath.row == YFBWlletRowTypeGift){
-            
+            YFBMyGiftController *giftVC = [[YFBMyGiftController alloc] init];
+            [self.navigationController pushViewController:giftVC animated:YES];
         }
     }else if (indexPath.section == YFBMineSectionTypeInfo){
         
