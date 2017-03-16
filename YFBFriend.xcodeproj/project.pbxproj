@@ -14,6 +14,12 @@
 		B32403971E78EAB200E1D8EB /* YFBAttentionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B32403961E78EAB200E1D8EB /* YFBAttentionTableViewCell.m */; };
 		B324039A1E791ACE00E1D8EB /* YFBMyGiftController.m in Sources */ = {isa = PBXBuildFile; fileRef = B32403991E791ACE00E1D8EB /* YFBMyGiftController.m */; };
 		B324039D1E791BE200E1D8EB /* YFBMyGiftDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = B324039C1E791BE200E1D8EB /* YFBMyGiftDetailController.m */; };
+		B33F46911E7A3AC00028BAE4 /* YFBDiamondExplainController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46901E7A3AC00028BAE4 /* YFBDiamondExplainController.m */; };
+		B33F46941E7A41F20028BAE4 /* YFBDiamondVoucherController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46931E7A41F20028BAE4 /* YFBDiamondVoucherController.m */; };
+		B33F46971E7A55520028BAE4 /* YFBDiamondPayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46961E7A55520028BAE4 /* YFBDiamondPayTypeCell.m */; };
+		B33F469A1E7A65560028BAE4 /* YFBDiamondLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46991E7A65560028BAE4 /* YFBDiamondLabel.m */; };
+		B37A3E701E793EF300643329 /* YFBMyDiamondController.m in Sources */ = {isa = PBXBuildFile; fileRef = B37A3E6F1E793EF300643329 /* YFBMyDiamondController.m */; };
+		B37A3E731E7947B800643329 /* YFBDiamondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B37A3E721E7947B800643329 /* YFBDiamondCell.m */; };
 		B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */; };
 		B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CD81E77DBC900C7733D /* YFBMineCell.m */; };
 		B3C18CDC1E78025D00C7733D /* YFBVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */; };
@@ -216,6 +222,18 @@
 		B32403991E791ACE00E1D8EB /* YFBMyGiftController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMyGiftController.m; sourceTree = "<group>"; };
 		B324039B1E791BE200E1D8EB /* YFBMyGiftDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMyGiftDetailController.h; sourceTree = "<group>"; };
 		B324039C1E791BE200E1D8EB /* YFBMyGiftDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMyGiftDetailController.m; sourceTree = "<group>"; };
+		B33F468F1E7A3AC00028BAE4 /* YFBDiamondExplainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondExplainController.h; sourceTree = "<group>"; };
+		B33F46901E7A3AC00028BAE4 /* YFBDiamondExplainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondExplainController.m; sourceTree = "<group>"; };
+		B33F46921E7A41F20028BAE4 /* YFBDiamondVoucherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondVoucherController.h; sourceTree = "<group>"; };
+		B33F46931E7A41F20028BAE4 /* YFBDiamondVoucherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondVoucherController.m; sourceTree = "<group>"; };
+		B33F46951E7A55520028BAE4 /* YFBDiamondPayTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondPayTypeCell.h; sourceTree = "<group>"; };
+		B33F46961E7A55520028BAE4 /* YFBDiamondPayTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondPayTypeCell.m; sourceTree = "<group>"; };
+		B33F46981E7A65560028BAE4 /* YFBDiamondLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondLabel.h; sourceTree = "<group>"; };
+		B33F46991E7A65560028BAE4 /* YFBDiamondLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondLabel.m; sourceTree = "<group>"; };
+		B37A3E6E1E793EF300643329 /* YFBMyDiamondController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMyDiamondController.h; sourceTree = "<group>"; };
+		B37A3E6F1E793EF300643329 /* YFBMyDiamondController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMyDiamondController.m; sourceTree = "<group>"; };
+		B37A3E711E7947B800643329 /* YFBDiamondCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondCell.h; sourceTree = "<group>"; };
+		B37A3E721E7947B800643329 /* YFBDiamondCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondCell.m; sourceTree = "<group>"; };
 		B3A1BD6B1E77BDD100BD6ECB /* YFBMineHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineHeaderCell.h; sourceTree = "<group>"; };
 		B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineHeaderCell.m; sourceTree = "<group>"; };
 		B3C18CD71E77DBC900C7733D /* YFBMineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineCell.h; sourceTree = "<group>"; };
@@ -601,6 +619,12 @@
 				B32403901E78D9B500E1D8EB /* YFBSliderView.m */,
 				B32403951E78EAB200E1D8EB /* YFBAttentionTableViewCell.h */,
 				B32403961E78EAB200E1D8EB /* YFBAttentionTableViewCell.m */,
+				B37A3E711E7947B800643329 /* YFBDiamondCell.h */,
+				B37A3E721E7947B800643329 /* YFBDiamondCell.m */,
+				B33F46951E7A55520028BAE4 /* YFBDiamondPayTypeCell.h */,
+				B33F46961E7A55520028BAE4 /* YFBDiamondPayTypeCell.m */,
+				B33F46981E7A65560028BAE4 /* YFBDiamondLabel.h */,
+				B33F46991E7A65560028BAE4 /* YFBDiamondLabel.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -709,6 +733,12 @@
 				B32403991E791ACE00E1D8EB /* YFBMyGiftController.m */,
 				B324039B1E791BE200E1D8EB /* YFBMyGiftDetailController.h */,
 				B324039C1E791BE200E1D8EB /* YFBMyGiftDetailController.m */,
+				B37A3E6E1E793EF300643329 /* YFBMyDiamondController.h */,
+				B37A3E6F1E793EF300643329 /* YFBMyDiamondController.m */,
+				B33F468F1E7A3AC00028BAE4 /* YFBDiamondExplainController.h */,
+				B33F46901E7A3AC00028BAE4 /* YFBDiamondExplainController.m */,
+				B33F46921E7A41F20028BAE4 /* YFBDiamondVoucherController.h */,
+				B33F46931E7A41F20028BAE4 /* YFBDiamondVoucherController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1629,6 +1659,7 @@
 				EC9A6A591E6D3F9E0018C5FB /* XHVoiceCommonHelper.m in Sources */,
 				EC9A6A451E6D3F9E0018C5FB /* ActionSheetStringPicker.m in Sources */,
 				EC9A6A441E6D3F9E0018C5FB /* ActionSheetMultipleStringPicker.m in Sources */,
+				B33F469A1E7A65560028BAE4 /* YFBDiamondLabel.m in Sources */,
 				EC9A6A801E6D3F9E0018C5FB /* XHBaseTableViewCell.m in Sources */,
 				EC9A6A6C1E6D3F9E0018C5FB /* XHMessage.m in Sources */,
 				EC47D4291E7695E3000E9519 /* YFBNearVC.m in Sources */,
@@ -1672,8 +1703,10 @@
 				EC9A6A7C1E6D3F9E0018C5FB /* SETextMagnifierRanged.m in Sources */,
 				EC9A6A541E6D3F9E0018C5FB /* XHCaptureHelper.m in Sources */,
 				EC7F0F7D1E6FA8C700F39FD9 /* YFBHudManager.m in Sources */,
+				B33F46911E7A3AC00028BAE4 /* YFBDiamondExplainController.m in Sources */,
 				B324039D1E791BE200E1D8EB /* YFBMyGiftDetailController.m in Sources */,
 				EC9A6A891E6D3F9E0018C5FB /* XHEmotionCollectionViewFlowLayout.m in Sources */,
+				B37A3E731E7947B800643329 /* YFBDiamondCell.m in Sources */,
 				EC4827121E778DA200F03454 /* YFBMineViewController.m in Sources */,
 				EC9A6A2B1E6D3F9E0018C5FB /* NSString+Size.m in Sources */,
 				B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */,
@@ -1697,6 +1730,7 @@
 				EC9A6A2D1E6D3F9E0018C5FB /* UIImage+Resource.m in Sources */,
 				EC7F0F8F1E6FAD2500F39FD9 /* YFBUpdateUserVipModel.m in Sources */,
 				EC7F0F8C1E6FAC3E00F39FD9 /* YFBSystemConfigModel.m in Sources */,
+				B33F46941E7A41F20028BAE4 /* YFBDiamondVoucherController.m in Sources */,
 				EC7F0F9B1E6FDFA300F39FD9 /* YFBBaseViewController.m in Sources */,
 				EC9A6A481E6D3F9E0018C5FB /* JKDBHelper.m in Sources */,
 				EC9A6A501E6D3F9E0018C5FB /* UIImage+XHRounded.m in Sources */,
@@ -1711,6 +1745,7 @@
 				EC65EE551E712A5B00DA1AF9 /* YFBUserLoginVC.m in Sources */,
 				EC9A6A7B1E6D3F9E0018C5FB /* SETextMagnifierCaret.m in Sources */,
 				EC9A6A7E1E6D3F9E0018C5FB /* SETextSelectionView.m in Sources */,
+				B33F46971E7A55520028BAE4 /* YFBDiamondPayTypeCell.m in Sources */,
 				EC7F0F801E6FAA5600F39FD9 /* YFBActivateModel.m in Sources */,
 				EC9A6A2F1E6D3F9E0018C5FB /* UIView+FrameEx.m in Sources */,
 				EC65EE5C1E7148CE00DA1AF9 /* UIView+PopAnimation.m in Sources */,
@@ -1726,6 +1761,7 @@
 				EC9A6A6B1E6D3F9E0018C5FB /* XHEmotionManager.m in Sources */,
 				EC9A6A881E6D3F9E0018C5FB /* XHEmotionCollectionViewCell.m in Sources */,
 				EC9A6A551E6D3F9E0018C5FB /* XHConfigurationHelper.m in Sources */,
+				B37A3E701E793EF300643329 /* YFBMyDiamondController.m in Sources */,
 				EC9A6A2E1E6D3F9E0018C5FB /* UIScrollView+Refresh.m in Sources */,
 				EC9A6A431E6D3F9E0018C5FB /* ActionSheetLocalePicker.m in Sources */,
 				EC9A6A6D1E6D3F9E0018C5FB /* XHShareMenuItem.m in Sources */,
