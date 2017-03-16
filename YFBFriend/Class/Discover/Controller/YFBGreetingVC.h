@@ -10,4 +10,6 @@
 
 @interface YFBGreetingVC : YFBBaseViewController
 
+- (void)showInViewController:(UIViewController *)viewController;
+
 @end

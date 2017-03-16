@@ -26,6 +26,11 @@ typedef NS_ENUM(NSUInteger, YFBDeviceType) {
     YFBDeviceType_iPad = 100
 };
 
+typedef NS_ENUM(NSInteger,YFBRankType) {
+    YFBRankTypeSend = 0 ,//土豪榜
+    YFBRankTypereceived //魅力榜
+};
+
 typedef NS_ENUM(NSUInteger, YFBDynamicType) {
     YFBDynamicTypeOnePhoto = 0,  //1张照片
     YFBDynamicTypeTwoPhotos,     //2张照片

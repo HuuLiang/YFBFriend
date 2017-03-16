@@ -66,6 +66,14 @@
         [_greetButton setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
         _greetButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(24)];
         [self.contentView addSubview:_greetButton];
+        @weakify(self);
+        [_greetButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            if (self.greeting) {
+                self.greeting(sender);
+            }
+        } forControlEvents:UIControlEventTouchUpInside];
+        
         
         self.distanceLabel = [[UILabel alloc] init];
         _distanceLabel.textColor = kColor(@"#999999");

@@ -70,6 +70,16 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         cell.userAge  = robot.age;
         cell.userHeight = robot.height;
         cell.userSex = robot.userSex;
+        cell.greeted = robot.greeted;
+        @weakify(self);
+        cell.greeting = ^(id sender) {
+            @strongify(self);
+            UIButton *thisButton = (UIButton *)sender;
+            if (!thisButton.isSelected) {
+                thisButton.selected = YES;
+                //打招呼
+            }
+        };
     }
     return cell;
 }
