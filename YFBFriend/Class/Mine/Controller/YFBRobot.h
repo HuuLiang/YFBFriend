@@ -15,5 +15,8 @@
 @property (nonatomic,copy) NSString *height;
 @property (nonatomic,copy) NSString *age;
 @property (nonatomic,assign) YFBUserSex userSex;
+@property (nonatomic,copy) NSString *distance;
+@property (nonatomic,assign) BOOL greeted;
+
 
 @end

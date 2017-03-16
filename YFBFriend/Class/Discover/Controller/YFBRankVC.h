@@ -11,3 +11,10 @@
 @interface YFBRankVC : YFBBaseViewController
 
 @end
+
+
+@interface YFBRankDetailVC : YFBBaseViewController
+
+- (instancetype)initWithRankType:(YFBRankType)type;
+
+@end

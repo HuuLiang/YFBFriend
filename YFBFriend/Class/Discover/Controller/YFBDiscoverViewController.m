@@ -66,7 +66,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
     self.navigationItem.titleView = _segmentedControl;
     
     YFBGreetingVC *greetingVC = [[YFBGreetingVC alloc] init];
-    
+    [greetingVC showInViewController:self];
     
 }
 
