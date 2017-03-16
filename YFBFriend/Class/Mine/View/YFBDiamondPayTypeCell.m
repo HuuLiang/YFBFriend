@@ -61,7 +61,7 @@
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(_imageView.mas_right).mas_offset(kWidth(20));
                 make.top.mas_equalTo(self).mas_offset(kWidth(32));
-                make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(40)));
+                make.size.mas_equalTo(CGSizeMake(kScreenWidth *0.5, kWidth(40)));
             }];
         }
         

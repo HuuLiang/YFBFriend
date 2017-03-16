@@ -52,7 +52,7 @@ static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
 #pragma mark - 判断用户是否登录
 
 + (BOOL)checkUserIsLogin {
-//    return YES;
+    return YES;
     if ([YFBUser currentUser].userId.length > 0) {
         return YES;
     }

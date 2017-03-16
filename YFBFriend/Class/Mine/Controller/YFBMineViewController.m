@@ -10,9 +10,10 @@
 #import "YFBMineHeaderCell.h"
 #import "YFBMineCell.h"
 #import "YFBVerifyViewController.h"
-#import "YFBDredgeVipController.h"
+//#import "YFBDredgeVipController.h"
 #import "YFBAttentionController.h"
 #import "YFBMyGiftController.h"
+#import "YFBVipViewController.h"
 #import "YFBMyDiamondController.h"
 
 static NSString *const YFBMineHeaderCellIdentifier = @"yfb_mine_header_cell_identifier";
@@ -113,7 +114,7 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         @weakify(self);
         headerCell.ktVipAction = ^(id sender){
             @strongify(self);
-            YFBDredgeVipController *vipVC = [[YFBDredgeVipController alloc] init];
+            YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:YES];
             [self.navigationController pushViewController:vipVC animated:YES];
         };
         headerCell.attestationAction = ^(id sender){
@@ -214,10 +215,11 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
     }else if (indexPath.section == YFBMineSectionTypeWallet){
         
         if (indexPath.row == YFBWlletRowTypeYmoney){
-            
+            YFBVipViewController *diamondVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:NO];
+            [self.navigationController pushViewController:diamondVC animated:YES];
             
         }else if (indexPath.row == YFBWlletRowTypeDiamond){
-            YFBMyDiamondController *diamondVC = [[YFBMyDiamondController alloc] init];
+             YFBMyDiamondController *diamondVC = [[YFBMyDiamondController alloc] init];
             [self.navigationController pushViewController:diamondVC animated:YES];
         }else if (indexPath.row == YFBWlletRowTypeGift){
             YFBMyGiftController *giftVC = [[YFBMyGiftController alloc] init];

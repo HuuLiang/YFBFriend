@@ -1,26 +1,26 @@
 {
   "images" : [
     {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
       "resizing" : {
         "mode" : "9-part",
         "center" : {
           "mode" : "tile",
-          "width" : 23,
-          "height" : 60
+          "width" : 4,
+          "height" : 3
         },
         "cap-insets" : {
-          "bottom" : 0,
-          "top" : 0,
-          "right" : 26,
-          "left" : 47
+          "bottom" : 28,
+          "top" : 29,
+          "right" : 62,
+          "left" : 30
         }
       },
       "idiom" : "universal",
       "filename" : "Rectangle 27 Copy复制背景.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
       "scale" : "2x"
     },
     {
@@ -28,14 +28,14 @@
         "mode" : "9-part",
         "center" : {
           "mode" : "tile",
-          "width" : 1,
-          "height" : 90
+          "width" : 4,
+          "height" : 2
         },
         "cap-insets" : {
-          "bottom" : 0,
-          "top" : 0,
-          "right" : 38,
-          "left" : 71
+          "bottom" : 45,
+          "top" : 43,
+          "right" : 98,
+          "left" : 42
         }
       },
       "idiom" : "universal",

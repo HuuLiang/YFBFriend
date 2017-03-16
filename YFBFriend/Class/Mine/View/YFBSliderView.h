@@ -30,4 +30,5 @@
 -(void)setSlideHeadView;
 -(void)addChildViewController:(UIViewController *)childVC title:(NSString *)vcTitle;
 
+- (void)currentVCWithIndex:(NSInteger)index;
 @end

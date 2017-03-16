@@ -1,23 +1,22 @@
 //
-//  YFBDredgeVipController.m
+//  YFBMyYMoneyController.m
 //  YFBFriend
 //
-//  Created by ylz on 2017/3/14.
+//  Created by ylz on 2017/3/16.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import "YFBDredgeVipController.h"
+#import "YFBMyYMoneyController.h"
 
-@interface YFBDredgeVipController ()
+@interface YFBMyYMoneyController ()
 
 @end
 
-@implementation YFBDredgeVipController
+@implementation YFBMyYMoneyController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-//    self.title = @"充值";
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
