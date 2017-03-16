@@ -27,6 +27,9 @@ typedef void (^YFBFetchSystemConfigCompletionHandler)(BOOL success);
 
 @property (nonatomic) NSString *imageToken;
 @property (nonatomic,readonly) BOOL loaded;
+//qq客服
+@property (nonatomic) NSString *contactScheme;
+@property (nonatomic) NSString *contactName;
 
 + (instancetype)sharedModel;
 
