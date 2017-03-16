@@ -35,6 +35,7 @@
 		EC48270B1E778D7B00F03454 /* YFBContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC48270A1E778D7B00F03454 /* YFBContactViewController.m */; };
 		EC4827121E778DA200F03454 /* YFBMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4827111E778DA200F03454 /* YFBMineViewController.m */; };
 		EC4827151E77B69700F03454 /* YFBRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4827141E77B69700F03454 /* YFBRobot.m */; };
+		EC4CCAFA1E793F01001950B9 /* YFBGreetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4CCAF91E793F01001950B9 /* YFBGreetingVC.m */; };
 		EC65EE521E712A0600DA1AF9 /* YFBRegisterFirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE511E712A0600DA1AF9 /* YFBRegisterFirstVC.m */; };
 		EC65EE551E712A5B00DA1AF9 /* YFBUserLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE541E712A5B00DA1AF9 /* YFBUserLoginVC.m */; };
 		EC65EE581E713AAD00DA1AF9 /* YFBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE571E713AAD00DA1AF9 /* YFBTextField.m */; };
@@ -264,6 +265,8 @@
 		EC4827111E778DA200F03454 /* YFBMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineViewController.m; sourceTree = "<group>"; };
 		EC4827131E77B69700F03454 /* YFBRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBRobot.h; path = YFBFriend/Class/Mine/Controller/YFBRobot.h; sourceTree = SOURCE_ROOT; };
 		EC4827141E77B69700F03454 /* YFBRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRobot.m; path = YFBFriend/Class/Mine/Controller/YFBRobot.m; sourceTree = SOURCE_ROOT; };
+		EC4CCAF81E793F01001950B9 /* YFBGreetingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBGreetingVC.h; path = YFBFriend/Class/Discover/Controller/YFBGreetingVC.h; sourceTree = SOURCE_ROOT; };
+		EC4CCAF91E793F01001950B9 /* YFBGreetingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBGreetingVC.m; path = YFBFriend/Class/Discover/Controller/YFBGreetingVC.m; sourceTree = SOURCE_ROOT; };
 		EC65EE501E712A0600DA1AF9 /* YFBRegisterFirstVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRegisterFirstVC.h; sourceTree = "<group>"; };
 		EC65EE511E712A0600DA1AF9 /* YFBRegisterFirstVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRegisterFirstVC.m; sourceTree = "<group>"; };
 		EC65EE531E712A5B00DA1AF9 /* YFBUserLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBUserLoginVC.h; sourceTree = "<group>"; };
@@ -645,6 +648,8 @@
 			children = (
 				EC47D4211E768B7C000E9519 /* YFBDiscoverViewController.h */,
 				EC47D4221E768B7C000E9519 /* YFBDiscoverViewController.m */,
+				EC4CCAF81E793F01001950B9 /* YFBGreetingVC.h */,
+				EC4CCAF91E793F01001950B9 /* YFBGreetingVC.m */,
 				EC47D4241E769481000E9519 /* YFBRecommendVC.h */,
 				EC47D4251E769481000E9519 /* YFBRecommendVC.m */,
 				EC47D4271E7695E3000E9519 /* YFBNearVC.h */,
@@ -1692,6 +1697,7 @@
 				B32403911E78D9B500E1D8EB /* YFBSliderView.m in Sources */,
 				EC9A6A611E6D3F9E0018C5FB /* XHFileAttribute.m in Sources */,
 				EC9A677A1E6D3E4A0018C5FB /* AppDelegate.m in Sources */,
+				EC4CCAFA1E793F01001950B9 /* YFBGreetingVC.m in Sources */,
 				EC7F0FA91E6FFE1700F39FD9 /* YFBTabBarController.m in Sources */,
 				EC9A6A4B1E6D3F9E0018C5FB /* NSString+XHMD5.m in Sources */,
 				EC9A6ABA1E6D3F9F0018C5FB /* TAPageControl.m in Sources */,

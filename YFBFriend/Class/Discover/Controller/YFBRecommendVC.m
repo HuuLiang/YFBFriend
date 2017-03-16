@@ -42,7 +42,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         YFBRobot * robot = [[YFBRobot alloc] init];
         robot.userId = @"123123";
         robot.nickName = @"气泡熊";
-        robot.avatarUrl = @"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=73776489,3127806371&fm=23&gp=0.jpg";
+        robot.avatarUrl = @"http://hwimg.jtd51.com/wysy/video/imgcover/20160818dj53.jpg";
         robot.height = @"176cm";
         robot.age = @"23岁";
         robot.userSex = YFBUserSexFemale;
@@ -64,7 +64,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBRecommendCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.row < self.dataSource.count) {
-        YFBRobot *robot = [[YFBRobot alloc] init];
+        YFBRobot *robot = self.dataSource[indexPath.row];
         cell.userNameStr = robot.nickName;
         cell.userImgUrl = robot.avatarUrl;
         cell.userAge  = robot.age;

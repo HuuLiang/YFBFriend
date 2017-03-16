@@ -7,6 +7,7 @@
 //
 
 #import "YFBDiscoverViewController.h"
+#import "YFBGreetingVC.h"
 #import "YFBRecommendVC.h"
 #import "YFBNearVC.h"
 #import "YFBRankVC.h"
@@ -63,6 +64,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
                            options:NSKeyValueObservingOptionNew
                            context:nil];
     self.navigationItem.titleView = _segmentedControl;
+    
+    YFBGreetingVC *greetingVC = [[YFBGreetingVC alloc] init];
+    
+    
 }
 
 - (NSUInteger)currentIndex {
