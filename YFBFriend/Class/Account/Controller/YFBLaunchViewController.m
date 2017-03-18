@@ -34,13 +34,21 @@
     [self configFemaleButton];
     [self configTitleLabel];
     
+}
+
+- (void)presentTabBarController {
+    [[UIApplication sharedApplication].keyWindow.rootViewController.view beginLoading];
+    //    进入首页
+    YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:tabbarController animated:YES completion:^{
+        [[UIApplication sharedApplication].keyWindow.rootViewController.view endLoading];
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if ([YFBUtil checkUserIsLogin]) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController.view beginLoading];
-        //进入首页
-        YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
-        [self presentViewController:tabbarController animated:YES completion:^{
-            [[UIApplication sharedApplication].keyWindow.rootViewController.view endLoading];
-        }];
+        [self performSelector:@selector(presentTabBarController) withObject:nil afterDelay:1];
     }
 }
 
