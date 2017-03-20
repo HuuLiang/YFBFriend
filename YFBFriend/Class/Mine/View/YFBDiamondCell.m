@@ -37,6 +37,7 @@
         [_detailBtn setTitleColor:kColor(@"#333333") forState:UIControlStateNormal];
         _detailBtn.layer.borderColor = kColor(@"#e6e6e6").CGColor;
         _detailBtn.layer.borderWidth = 1;
+        _detailBtn.userInteractionEnabled = NO;
         [self addSubview:_detailBtn];
         {
         [_detailBtn mas_makeConstraints:^(MASConstraintMaker *make) {
