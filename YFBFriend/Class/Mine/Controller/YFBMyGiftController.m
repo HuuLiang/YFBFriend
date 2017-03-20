@@ -22,7 +22,7 @@
     [super viewDidLoad];
     self.title = @"我的礼物";
     self.view.backgroundColor = [UIColor whiteColor];
-    _sliderView = [[YFBSliderView alloc] initWithIsGiftVC:YES];
+    _sliderView = [[YFBSliderView alloc] init];
     _sliderView.titlesArr = @[@"收到的礼物",@"送出的礼物"];
     [self.view addSubview:_sliderView];
     YFBMyGiftDetailController *sendGiftVC = [[YFBMyGiftDetailController alloc] initWithIsSendGift:YES];
@@ -30,8 +30,6 @@
     [_sliderView addChildViewController:fetchGiftVC title:_sliderView.titlesArr.firstObject];
     [_sliderView addChildViewController:sendGiftVC title:_sliderView.titlesArr.lastObject];
     [_sliderView setSlideHeadView];
-    _sliderView.sendGift = @"4";
-    _sliderView.receivedGift = @"12";
 }
 
 - (void)didReceiveMemoryWarning {

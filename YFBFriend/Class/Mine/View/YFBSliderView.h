@@ -23,12 +23,9 @@
 /** 选中的按钮背景图  */
 @property (nonatomic ,strong) UIImageView * imageBackView;
 
-@property (nonatomic) NSString *receivedGift;//收到的礼物
-@property (nonatomic) NSString *sendGift;//发送的礼物
-
-- (instancetype)initWithIsGiftVC:(BOOL)isGiftVC;
+//- (instancetype)initWithIsGiftVC:(BOOL)isGiftVC;
 -(void)setSlideHeadView;
 -(void)addChildViewController:(UIViewController *)childVC title:(NSString *)vcTitle;
 
-- (void)currentVCWithIndex:(NSInteger)index;
+//- (void)currentVCWithIndex:(NSInteger)index;
 @end

@@ -33,7 +33,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"充值";
-    _sliderView = [[YFBSliderView alloc] initWithIsGiftVC:NO];
+    _sliderView = [[YFBSliderView alloc] init];
     _sliderView.titlesArr = @[@"购买Y币",@"开通VIP"];
     [self.view addSubview:_sliderView];
     YFBMyYMoneyController *moneyVC = [[YFBMyYMoneyController alloc] init];
@@ -41,7 +41,7 @@
     [_sliderView addChildViewController:moneyVC title:_sliderView.titlesArr.firstObject];
     [_sliderView addChildViewController:dredgeVC title:_sliderView.titlesArr.lastObject];
     [_sliderView setSlideHeadView];
-    [_sliderView currentVCWithIndex:_isDredgeVipVC];
+//    [_sliderView currentVCWithIndex:_isDredgeVipVC];
 }
 
 - (void)didReceiveMemoryWarning {
