@@ -193,15 +193,15 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     [self setUpOneChildController:i];
 }
 
-//- (void)currentVCWithIndex:(NSInteger)index {
-//    UIButton *sender = self.buttons[index];
-//    [self selectTitleBtn:sender];
-//    NSInteger i = sender.tag;
-//    CGFloat x  = i *kScreenWidth;
-//    self.contentScrollView.contentOffset = CGPointMake(x, 0);
-//    
-//    [self setUpOneChildController:i];
-//}
+- (void)currentVCWithIndex:(NSInteger)index {
+    UIButton *sender = self.buttons[index];
+    [self selectTitleBtn:sender];
+    NSInteger i = sender.tag;
+    CGFloat x  = i *kScreenWidth;
+    self.contentScrollView.contentOffset = CGPointMake(x, 0);
+    
+    [self setUpOneChildController:i];
+}
 
 -(void)selectTitleBtn:(UIButton *)btn{
     

@@ -41,7 +41,7 @@
     [_sliderView addChildViewController:moneyVC title:_sliderView.titlesArr.firstObject];
     [_sliderView addChildViewController:dredgeVC title:_sliderView.titlesArr.lastObject];
     [_sliderView setSlideHeadView];
-//    [_sliderView currentVCWithIndex:_isDredgeVipVC];
+    [_sliderView currentVCWithIndex:_isDredgeVipVC];
 }
 
 - (void)didReceiveMemoryWarning {
