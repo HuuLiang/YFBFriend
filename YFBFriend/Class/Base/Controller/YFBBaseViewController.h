@@ -14,4 +14,6 @@
 
 - (instancetype)initWithTitle:(NSString *)title;
 
+- (void)pushIntoDetailVC:(NSString *)userID;
+
 @end
