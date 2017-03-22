@@ -10,11 +10,11 @@
 #import "YFBMineHeaderCell.h"
 #import "YFBMineCell.h"
 #import "YFBVerifyViewController.h"
-//#import "YFBDredgeVipController.h"
 #import "YFBAttentionController.h"
 #import "YFBMyGiftController.h"
 #import "YFBVipViewController.h"
 #import "YFBMyDiamondController.h"
+#import "YFBMineDataInfoViewController.h"
 
 static NSString *const YFBMineHeaderCellIdentifier = @"yfb_mine_header_cell_identifier";
 static NSString *const YFBMineCellIdentifier = @"yfb_mine_cell_identifier";
@@ -204,40 +204,32 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.section == YFBMineSectionTypeRecord){
-        
         if (indexPath.row == YFBRecordRowTypeAttention){
             YFBAttentionController *attentionVC = [[YFBAttentionController alloc] init];
             [self.navigationController pushViewController:attentionVC animated:YES];
         }
-        
     }else if (indexPath.section == YFBMineSectionTypeWallet){
-        
         if (indexPath.row == YFBWlletRowTypeYmoney){
             YFBVipViewController *diamondVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:NO];
             [self.navigationController pushViewController:diamondVC animated:YES];
-            
         }else if (indexPath.row == YFBWlletRowTypeDiamond){
-             YFBMyDiamondController *diamondVC = [[YFBMyDiamondController alloc] init];
+            YFBMyDiamondController *diamondVC = [[YFBMyDiamondController alloc] init];
             [self.navigationController pushViewController:diamondVC animated:YES];
         }else if (indexPath.row == YFBWlletRowTypeGift){
             YFBMyGiftController *giftVC = [[YFBMyGiftController alloc] init];
             [self.navigationController pushViewController:giftVC animated:YES];
         }
     }else if (indexPath.section == YFBMineSectionTypeInfo){
-        
         if (indexPath.row == YFBMineInfoTypeInfo) {
-            
-            
-        }else if (indexPath.row == YFBMineInfoTypePhoto){
-            
+            YFBMineDataInfoViewController *dataInfoVC = [[YFBMineDataInfoViewController alloc] initWithTitle:@"更新个人资料"];
+            [self.navigationController pushViewController:dataInfoVC animated:YES];
+        } else if (indexPath.row == YFBMineInfoTypePhoto){
             
         }
     }else if (indexPath.section == YFBMineSectionTypeSetting){
         
     }
-    
 }
 
 

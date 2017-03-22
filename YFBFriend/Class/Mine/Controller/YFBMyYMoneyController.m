@@ -140,22 +140,45 @@ static NSString *const kYFBYMoneyCellIdentifier = @"yfb_ymoney_cell_identifier_k
     return 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == YFBYMoneySectionTypePrivilege) {
-        return @"Y币特权";
-    }else if (section == YFBYMoneySectionTypeUser){
-    return @"购买Y币用户";
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = kColor(@"#efefef");
+
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.textColor = kColor(@"#666666");
+    titleLabel.font = kFont(15);
+    [headerView addSubview:titleLabel];
+    {
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(headerView);
+            make.left.equalTo(headerView).offset(kWidth(30));
+            make.height.mas_equalTo(kWidth(42));
+        }];
     }
-    return nil;
+    
+    if (section == YFBYMoneySectionTypePrivilege) {
+        titleLabel.text = @"Y币特权";
+    } else if (section == YFBYMoneySectionTypeUser) {
+        titleLabel.text = @"购买Y币用户";
+    }
+    
+    return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == YFBYMoneySectionTypeTitle) {
-        return 2;
-    }else if (section == YFBYMoneySectionTypePrivilege || section == YFBYMoneySectionTypeUser){
-        return 40;
+        return 0.01f;
+    } else if (section == YFBYMoneySectionTypePrivilege || section == YFBYMoneySectionTypeUser){
+        return kWidth(80);
     }
-    return 1;
+    return 0.01f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == YFBYMoneySectionTypeUser) {
+        return 10;
+    }
+    return 0.01f;
 }
 
 @end

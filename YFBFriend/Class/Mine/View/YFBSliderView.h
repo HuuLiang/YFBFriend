@@ -23,7 +23,9 @@
 /** 选中的按钮背景图  */
 @property (nonatomic ,strong) UIImageView * imageBackView;
 
-//- (instancetype)initWithIsGiftVC:(BOOL)isGiftVC;
+//设置界面是否包含tabbar
+@property (nonatomic,assign) CGFloat tabbarHeight;
+
 -(void)setSlideHeadView;
 -(void)addChildViewController:(UIViewController *)childVC title:(NSString *)vcTitle;
 

@@ -10,11 +10,7 @@
 
 @interface YFBRobot : YFBUser
 
-@property (nonatomic,copy) NSString *nickName;
 @property (nonatomic,copy) NSString *avatarUrl;
-@property (nonatomic,copy) NSString *height;
-@property (nonatomic,copy) NSString *age;
-@property (nonatomic,assign) YFBUserSex userSex;
 @property (nonatomic,copy) NSString *distance;
 @property (nonatomic,assign) BOOL greeted;
 

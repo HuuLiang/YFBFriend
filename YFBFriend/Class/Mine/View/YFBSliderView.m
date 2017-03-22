@@ -20,27 +20,23 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     UILabel *_receivedLabel;
     UILabel *_sendLabel;
 }
-
-//@property (nonatomic, strong) UIScrollView *giftScrollView;
+@property (nonatomic,assign) CGFloat screenHeight;
 @property (nonatomic,assign,getter=isCanScroll) BOOL canScroll;//判断titleScroll是否可以滚动
-//@property (nonatomic) BOOL isGiftVC;
-//@property (nonatomic) CGFloat giftH;
 
 @end
 
 
 @implementation YFBSliderView
 
-//- (instancetype)initWithIsGiftVC:(BOOL)isGiftVC
-//{
-//    self = [super init];
-//    if (self) {
-//        _isGiftVC = isGiftVC;
-//        _giftH = isGiftVC ? 36 : 0;
-//        
-//    }
-//    return self;
-//}
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+        _tabbarHeight = 0;
+    }
+    return self;
+}
 
 - (NSMutableArray *)buttons
 {
@@ -52,7 +48,6 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
 }
 
 -(void)setSlideHeadView{
-    
     self.backgroundColor = [UIColor whiteColor];
     [self setTitleScrollView];        /** 添加文字标签  */
     
@@ -68,6 +63,11 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     self.contentScrollView.bounces = YES;
     
 }
+
+- (void)setTabbarHeight:(CGFloat)tabbarHeight {
+    _tabbarHeight = tabbarHeight;
+}
+
 - (UIViewController *)findViewController:(UIView *)sourceView
 {
     id target=sourceView;
@@ -97,36 +97,15 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     lineView.backgroundColor = kColor(@"#e6e6e6");
     [_titleScrollView addSubview:lineView];
     [superVC.view addSubview:self.titleScrollView];
-//    if (_isGiftVC) {
-//        CGRect giftRect = CGRectMake(0, titleH, kScreenWidth *2, _giftH);
-//        self.giftScrollView = [[UIScrollView alloc] initWithFrame:giftRect];
-//        _giftScrollView.backgroundColor = kColor(@"#eeeeee");
-//        [superVC.view addSubview:_giftScrollView];
-        _receivedLabel = [[UILabel alloc] initWithFrame:CGRectMake((kScreenWidth *0.3)/2.,kWidth(35)/2., kScreenWidth*0.7, kWidth(32))];
-        //        _receivedLabel.backgroundColor = [UIColor redColor];
-//        _receivedLabel.font = kFont(14);
-//        _receivedLabel.textAlignment = NSTextAlignmentCenter;
-//        [_giftScrollView addSubview:_receivedLabel];
-    
-//        _sendLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenWidth + (kScreenWidth *0.3)/2.,kWidth(35)/2., kScreenWidth*0.7, kWidth(32))];
-//        _sendLabel.font = kFont(14);
-//        _sendLabel.textAlignment = NSTextAlignmentCenter;
-//        [_giftScrollView addSubview:_sendLabel];
-//        self.giftScrollView.contentSize = CGSizeMake(_giftScrollView.size.width*1.5, 0);
-//        self.giftScrollView.showsHorizontalScrollIndicator = NO;
-//        self.giftScrollView.bounces = YES;
-//    }
-    
 }
+
 -(void)setContentScrollView{
     UIViewController *superVC = [self findViewController:self];
     
     CGFloat y  = CGRectGetMaxY(self.titleScrollView.frame);
-    CGRect rect  = CGRectMake(0, y, kScreenWidth, kScreenHeight - titleH);
+    CGRect rect  = CGRectMake(0, y, kScreenWidth, kScreenHeight - titleH - 64);
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:rect];
     [superVC.view addSubview:self.contentScrollView];
-    
-    
 }
 
 -(void)setupTitle{
@@ -164,20 +143,16 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
         [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:13.];
         
-        
         [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchDown];
         
         [self.buttons addObject:btn];
         [self.titleScrollView addSubview:btn];
         
-        
         if (i == 0)
         {
             [self click:btn];
         }
-        
     }
-    
     
     self.titleScrollView.contentSize = CGSizeMake(count * w, 0);
     self.titleScrollView.showsHorizontalScrollIndicator = NO;
@@ -223,6 +198,7 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     if (!self.isCanScroll) {
         return;
     }
+    
     CGFloat offset = sender.center.x - kScreenWidth * 0.5;
     if (offset < 0) {
         offset = 0;
@@ -233,10 +209,7 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
         offset = maxOffset;
     }
     
-    //    NSLog(@"%lf,%lf,%ld",offset,maxOffset,sender.tag);
     [self.titleScrollView setContentOffset:CGPointMake(offset, 0) animated:YES];
-    
-    
 }
 
 -(void)setUpOneChildController:(NSInteger)index{
@@ -247,24 +220,17 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     if (vc.view.superview) {
         return;
     }
-    //
-    CGRect rect = CGRectMake(x, 0, kScreenWidth, kScreenHeight - self.contentScrollView.frame.origin.y);
-    vc.view.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight - self.contentScrollView.frame.origin.y - 115);
-    UIView *view = [[UIView alloc] initWithFrame:rect];
-    [self.contentScrollView addSubview:view];
-    [view addSubview:vc.view];
+    vc.view.frame = CGRectMake(x, 0, kScreenWidth, self.contentScrollView.size.height-_tabbarHeight);
+    [self.contentScrollView addSubview:vc.view];
 }
 
 
 #pragma mark - UIScrollView  delegate
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger i  = self.contentScrollView.contentOffset.x / kScreenWidth;
     [self selectTitleBtn:self.buttons[i]];
     [self setUpOneChildController:i];
-    
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -287,30 +253,5 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     
     leftButton.transform = CGAffineTransformMakeScale(scaleL * transScale + 1, scaleL * transScale + 1);
     rightButton.transform = CGAffineTransformMakeScale(scaleR * transScale + 1, scaleR * transScale + 1);
-//    [self.giftScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-    
-    //    UIColor *rightColor = [UIColor colorWithRed:(174+66*scaleR)/255.0 green:(174-71*scaleR)/255.0 blue:(174-174*scaleR)/255.0 alpha:1];
-    //    UIColor *leftColor = [UIColor colorWithRed:(174+66*scaleL)/255.0 green:(174-71*scaleL)/255.0 blue:(174-174*scaleL)/255.0 alpha:1];
-    //
-    //    [leftButton setTitleColor:leftColor forState:UIControlStateNormal];
-    //    [rightButton setTitleColor:rightColor forState:UIControlStateNormal];
-    //
 }
-
-//- (void)setReceivedGift:(NSString *)receivedGift {
-//    _receivedGift = receivedGift;
-//    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"当前收到的礼物:  %@个",receivedGift]];
-//    [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#9d9d9d")} range:NSMakeRange(9, attributeStr.length - 9)];
-//    [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#333333")} range:NSMakeRange(0, 9)];
-//    _receivedLabel.attributedText = attributeStr;
-//}
-//
-//- (void)setSendGift:(NSString *)sendGift {
-//    _sendGift = sendGift;
-//    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"当前送出的礼物:  %@个",sendGift]];
-//    [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#9d9d9d")} range:NSMakeRange(9, attributeStr.length - 9)];
-//    [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#333333")} range:NSMakeRange(0, 9)];
-//    _sendLabel.attributedText = attributeStr;
-//}
-
 @end

@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.sliderView = [[YFBSliderView alloc] init];
+    _sliderView.tabbarHeight = 49;
     _sliderView.backgroundColor = kColor(@"#efefef");
     _sliderView.titlesArr = @[@"土豪榜",@"魅力榜"];
     [self.view addSubview:_sliderView];

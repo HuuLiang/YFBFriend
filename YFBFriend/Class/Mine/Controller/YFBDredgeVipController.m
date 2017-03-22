@@ -9,6 +9,8 @@
 #import "YFBDredgeVipController.h"
 #import "YFBDredgeVipPayCell.h"
 #import "YFBDredgeVipPrivilegeCell.h"
+#import "YFBPayUsersCell.h"
+#import "YFBPayUserModel.h"
 
 typedef NS_ENUM(NSUInteger, YFBDredgeVipType) {
     YFBDredgeVipSectionPay = 0, //开通VIP
@@ -20,6 +22,8 @@ typedef NS_ENUM(NSUInteger, YFBDredgeVipType) {
 
 static NSString *const kYFBDredgeVipPayCellReusableIdentifier = @"DredgeVipPayCellReusableIdentifier";
 static NSString *const kYFBDredgeVipPrivilegeReusableIdentifier = @"DredgeVipPrivilegeReusableIdentifier";
+static NSString *const kYFBDredgeVipMorePrivilegeReusableIdentifier = @"YFBDredgeVipMorePrivilegeReusableIdentifier";
+static NSString *const kYFBDredgeVipExampleReusableIdentifier = @"DredgeVipExampleReusableIdentifier";
 
 @interface YFBDredgeVipController () <UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
@@ -35,6 +39,8 @@ static NSString *const kYFBDredgeVipPrivilegeReusableIdentifier = @"DredgeVipPri
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [_tableView registerClass:[YFBDredgeVipPayCell class] forCellReuseIdentifier:kYFBDredgeVipPayCellReusableIdentifier];
     [_tableView registerClass:[YFBDredgeVipPrivilegeCell class] forCellReuseIdentifier:kYFBDredgeVipPrivilegeReusableIdentifier];
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kYFBDredgeVipMorePrivilegeReusableIdentifier];
+    [_tableView registerClass:[YFBPayUsersCell class] forCellReuseIdentifier:kYFBDredgeVipExampleReusableIdentifier];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -48,7 +54,6 @@ static NSString *const kYFBDredgeVipPrivilegeReusableIdentifier = @"DredgeVipPri
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource
@@ -63,9 +68,9 @@ static NSString *const kYFBDredgeVipPrivilegeReusableIdentifier = @"DredgeVipPri
     } else if (section == YFBDredgeVipSectionPrivilege) {
         return 4;
     } else if (section == YFBDredgeVipSectionMorePrivilege) {
-        return 0;
+        return 1;
     } else if (section == YFBDredgeVipSectionExample) {
-        return 0;
+        return 1;
     }
     return 0;
 }
@@ -90,9 +95,17 @@ static NSString *const kYFBDredgeVipPrivilegeReusableIdentifier = @"DredgeVipPri
         }
         return cell;
     } else if (indexPath.section == YFBDredgeVipSectionMorePrivilege) {
-        return nil;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBDredgeVipMorePrivilegeReusableIdentifier forIndexPath:indexPath];
+        cell.textLabel.text = @"聊天80Y币/条将至仅1Y币/条";
+        return cell;
     } else if (indexPath.section == YFBDredgeVipSectionExample) {
-        return nil;
+        YFBPayUsersCell *payUserCell = [tableView dequeueReusableCellWithIdentifier:kYFBDredgeVipExampleReusableIdentifier forIndexPath:indexPath];
+        payUserCell.models = @[[YFBPayUserModel creatWithName:@"张胜男" text:@"两分钟前充值50元Y币" getCharge:NO],
+                               [YFBPayUserModel creatWithName:@"张胜男1" text:@"两分钟前充值100元Y币,获得了100元话费" getCharge:YES],
+                               [YFBPayUserModel creatWithName:@"张胜男2" text:@"两分钟前充值50元Y币" getCharge:NO],
+                               [YFBPayUserModel creatWithName:@"张胜男3" text:@"两分钟前充值150元Y币,获得了100元话费" getCharge:YES],
+                               [YFBPayUserModel creatWithName:@"张胜男4" text:@"两分钟前充值50元Y币" getCharge:NO]];
+        return payUserCell;
     }
     return nil;
 }
@@ -103,33 +116,64 @@ static NSString *const kYFBDredgeVipPrivilegeReusableIdentifier = @"DredgeVipPri
     } else if (indexPath.section == YFBDredgeVipSectionPrivilege) {
         return kWidth(130);
     } else if (indexPath.section == YFBDredgeVipSectionMorePrivilege) {
-        return 1;
+        return kWidth(88);
     } else if (indexPath.section == YFBDredgeVipSectionExample) {
-        return 1;
+        return kWidth(320);
     }
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == YFBDredgeVipSectionPay) {
-        return 10;
-    } else if (section == YFBDredgeVipSectionPrivilege) {
-        return 1;
-    } else if (section == YFBDredgeVipSectionMorePrivilege) {
-        return 1;
-    } else if (section == YFBDredgeVipSectionExample) {
-        return 1;
+    if (section < YFBDredgeVipSection) {
+        return kWidth(80);
     }
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == YFBDredgeVipSectionExample) {
+        return 10;
+    }
     return 0.01f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] init];
-    headerView.backgroundColor = [UIColor redColor];
+    if (section == YFBDredgeVipSectionPay) {
+        headerView.backgroundColor = kColor(@"#FFFBF0");
+        UILabel *titleLabel = [[UILabel alloc] init];
+        titleLabel.textColor = kColor(@"#CDBE93");
+        titleLabel.font = kFont(14);
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.text = @"已开通VIP用户：11111人";
+        [headerView addSubview:titleLabel];
+        {
+            [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.equalTo(headerView);
+                make.height.mas_equalTo(kWidth(34));
+            }];
+        }
+    } else {
+        UILabel *titleLabel = [[UILabel alloc] init];
+        titleLabel.textColor = kColor(@"#666666");
+        titleLabel.font = kFont(15);
+        [headerView addSubview:titleLabel];
+        {
+            [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(headerView);
+                make.left.equalTo(headerView).offset(kWidth(30));
+                make.height.mas_equalTo(kWidth(42));
+            }];
+        }
+        if (section == YFBDredgeVipSectionPrivilege) {
+            titleLabel.text = @"热门特权";
+        } else if (section == YFBDredgeVipSectionMorePrivilege) {
+            titleLabel.text = @"更多特权";
+        } else if (section == YFBDredgeVipSectionExample) {
+            titleLabel.text = @"已充值VIP用户";
+        }
+        headerView.backgroundColor = kColor(@"#efefef");
+    }
     return headerView;
 }
 

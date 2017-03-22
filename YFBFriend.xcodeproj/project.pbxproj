@@ -47,6 +47,8 @@
 		EC4827121E778DA200F03454 /* YFBMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4827111E778DA200F03454 /* YFBMineViewController.m */; };
 		EC4827151E77B69700F03454 /* YFBRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4827141E77B69700F03454 /* YFBRobot.m */; };
 		EC4CCAFA1E793F01001950B9 /* YFBGreetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4CCAF91E793F01001950B9 /* YFBGreetingVC.m */; };
+		EC58AFB11E811A150022FE8C /* YFBMineDataInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC58AFB01E811A150022FE8C /* YFBMineDataInfoViewController.m */; };
+		EC58AFB41E81435D0022FE8C /* YFBUserDataInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC58AFB31E81435D0022FE8C /* YFBUserDataInfoCell.m */; };
 		EC5D658E1E7A308D00CBE08A /* YFBGreetingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5D658D1E7A308D00CBE08A /* YFBGreetingCell.m */; };
 		EC5D65911E7A30B100CBE08A /* YFBGreetingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5D65901E7A30B100CBE08A /* YFBGreetingHeaderView.m */; };
 		EC5D65941E7A609E00CBE08A /* YFBRankDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5D65931E7A609E00CBE08A /* YFBRankDetailCell.m */; };
@@ -308,6 +310,10 @@
 		EC4827141E77B69700F03454 /* YFBRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRobot.m; path = YFBFriend/Class/Mine/Controller/YFBRobot.m; sourceTree = SOURCE_ROOT; };
 		EC4CCAF81E793F01001950B9 /* YFBGreetingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBGreetingVC.h; path = YFBFriend/Class/Discover/Controller/YFBGreetingVC.h; sourceTree = SOURCE_ROOT; };
 		EC4CCAF91E793F01001950B9 /* YFBGreetingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBGreetingVC.m; path = YFBFriend/Class/Discover/Controller/YFBGreetingVC.m; sourceTree = SOURCE_ROOT; };
+		EC58AFAF1E811A150022FE8C /* YFBMineDataInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineDataInfoViewController.h; sourceTree = "<group>"; };
+		EC58AFB01E811A150022FE8C /* YFBMineDataInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineDataInfoViewController.m; sourceTree = "<group>"; };
+		EC58AFB21E81435D0022FE8C /* YFBUserDataInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBUserDataInfoCell.h; sourceTree = "<group>"; };
+		EC58AFB31E81435D0022FE8C /* YFBUserDataInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBUserDataInfoCell.m; sourceTree = "<group>"; };
 		EC5D658C1E7A308D00CBE08A /* YFBGreetingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBGreetingCell.h; path = YFBFriend/Class/Discover/Controller/YFBGreetingCell.h; sourceTree = SOURCE_ROOT; };
 		EC5D658D1E7A308D00CBE08A /* YFBGreetingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBGreetingCell.m; path = YFBFriend/Class/Discover/Controller/YFBGreetingCell.m; sourceTree = SOURCE_ROOT; };
 		EC5D658F1E7A30B100CBE08A /* YFBGreetingHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBGreetingHeaderView.h; path = YFBFriend/Class/Discover/Controller/YFBGreetingHeaderView.h; sourceTree = SOURCE_ROOT; };
@@ -770,6 +776,8 @@
 				EC6AE1E71E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m */,
 				EC6AE1E91E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.h */,
 				EC6AE1EA1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m */,
+				EC58AFB21E81435D0022FE8C /* YFBUserDataInfoCell.h */,
+				EC58AFB31E81435D0022FE8C /* YFBUserDataInfoCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -872,6 +880,7 @@
 		EC48270D1E778D8900F03454 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EC58AFAE1E8119C70022FE8C /* 个人资料 */,
 				B33F469F1E7A71A00028BAE4 /* 开通VIP */,
 				B33F469E1E7A6E880028BAE4 /* 谁关注我 */,
 				B33F469D1E7A6E7B0028BAE4 /* 我的Y币 */,
@@ -883,6 +892,15 @@
 				B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		EC58AFAE1E8119C70022FE8C /* 个人资料 */ = {
+			isa = PBXGroup;
+			children = (
+				EC58AFAF1E811A150022FE8C /* YFBMineDataInfoViewController.h */,
+				EC58AFB01E811A150022FE8C /* YFBMineDataInfoViewController.m */,
+			);
+			name = "个人资料";
 			sourceTree = "<group>";
 		};
 		EC5D65951E7A8E7400CBE08A /* Detail */ = {
@@ -1849,6 +1867,7 @@
 				EC47D4291E7695E3000E9519 /* YFBNearVC.m in Sources */,
 				EC9A6A671E6D3F9E0018C5FB /* XHMessageVoiceFactory.m in Sources */,
 				B33F46A21E7A72100028BAE4 /* YFBVipViewController.m in Sources */,
+				EC58AFB11E811A150022FE8C /* YFBMineDataInfoViewController.m in Sources */,
 				EC9A6A861E6D3F9E0018C5FB /* XHMessageTextView.m in Sources */,
 				B3AB93701E7BA981006EA5EB /* YFBPayUsersCell.m in Sources */,
 				EC9A6ABE1E6D3F9F0018C5FB /* VPImageCropperViewController.m in Sources */,
@@ -1893,6 +1912,7 @@
 				EC9A6A341E6D3F9E0018C5FB /* JYRegexUtil.m in Sources */,
 				B324039A1E791ACE00E1D8EB /* YFBMyGiftController.m in Sources */,
 				EC9A6A561E6D3F9E0018C5FB /* XHLocationHelper.m in Sources */,
+				EC58AFB41E81435D0022FE8C /* YFBUserDataInfoCell.m in Sources */,
 				EC9A6A7C1E6D3F9E0018C5FB /* SETextMagnifierRanged.m in Sources */,
 				EC9A6A541E6D3F9E0018C5FB /* XHCaptureHelper.m in Sources */,
 				EC7F0F7D1E6FA8C700F39FD9 /* YFBHudManager.m in Sources */,

@@ -10,8 +10,26 @@
 
 static YFBUser *_currentUser;
 
-static NSString *const kYFBFriendCurrentUserKeyName      = @"kYFBFriendCurrentUserKeyName";
-static NSString *const kYFBFriendCurrentUserIdKeyName    = @"kYFBFriendCurrentUserIdKeyName";
+static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurrentUserKeyName";
+
+static NSString *const kYFBFriendCurrentUserIdKeyName       = @"kYFBFriendCurrentUserIdKeyName";
+//static NSString *const kYFBFriendCurrentUserImageKeyName    = @"kYFBFriendCurrentUserImageKeyName";
+static NSString *const kYFBFriendCurrentUserNameKeyName     = @"kYFBFriendCurrentUserNameKeyName";
+static NSString *const kYFBFriendCurrentUserSexKeyName      = @"kYFBFriendCurrentUserSexKeyName";
+static NSString *const kYFBFriendCurrentUserAgeKeyName      = @"kYFBFriendCurrentUserAgeKeyName";
+static NSString *const kYFBFriendCurrentUserLiveCityKeyName = @"kYFBFriendCurrentUserLiveCityKeyName";
+static NSString *const kYFBFriendCurrentUserHeightKeyName   = @"kYFBFriendCurrentUserHeightKeyName";
+static NSString *const kYFBFriendCurrentUserIncomeKeyName   = @"kYFBFriendCurrentUserIncomeKeyName";
+static NSString *const kYFBFriendCurrentUserMarryingKeyName = @"kYFBFriendCurrentUserMarryingKeyName";
+static NSString *const kYFBFriendCurrentQQNumberKeyName     = @"kYFBFriendCurrentQQNumberKeyName";
+static NSString *const kYFBFriendCurrentWXNumberKeyName     = @"kYFBFriendCurrentWXNumberKeyName";
+static NSString *const kYFBFriendCurrentPhoneNumberKeyName  = @"kYFBFriendCurrentPhoneNumberKeyName";
+static NSString *const kYFBFriendCurrentEducationKeyName    = @"kYFBFriendCurrentEducationKeyName";
+static NSString *const kYFBFriendCurrentUserJobKeyName      = @"kYFBFriendCurrentUserJobKeyName";
+static NSString *const kYFBFriendCurrentBirthdayKeyName     = @"kYFBFriendCurrentBirthdayKeyName";
+static NSString *const kYFBFriendCurrentUserWeightKeyName   = @"kYFBFriendCurrentUserWeightKeyName";
+static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurrentUserStarKeyName";
+
 
 @implementation YFBUser
 
@@ -29,23 +47,121 @@ static NSString *const kYFBFriendCurrentUserIdKeyName    = @"kYFBFriendCurrentUs
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super init];
     if (self) {
-        self.userId = [coder decodeObjectForKey:kYFBFriendCurrentUserIdKeyName];;
+        self.userId = [coder decodeObjectForKey:kYFBFriendCurrentUserIdKeyName];
+//        self.userImage = [coder decodeObjectForKey:kYFBFriendCurrentUserImageKeyName];
+        self.nickName = [coder decodeObjectForKey:kYFBFriendCurrentUserNameKeyName];
+        self.userSex = [[coder decodeObjectForKey:kYFBFriendCurrentUserSexKeyName] unsignedIntegerValue];
+        self.age = [coder decodeObjectForKey:kYFBFriendCurrentUserAgeKeyName];
+        self.liveCity = [coder decodeObjectForKey:kYFBFriendCurrentUserLiveCityKeyName];
+        self.height = [coder decodeObjectForKey:kYFBFriendCurrentUserHeightKeyName];
+        self.income = [coder decodeObjectForKey:kYFBFriendCurrentUserIncomeKeyName];
+        self.marrying = [coder decodeObjectForKey:kYFBFriendCurrentUserMarryingKeyName];
+        self.QQNumber = [coder decodeObjectForKey:kYFBFriendCurrentQQNumberKeyName];
+        self.WXNumber = [coder decodeObjectForKey:kYFBFriendCurrentWXNumberKeyName];
+        self.phoneNumber = [coder decodeObjectForKey:kYFBFriendCurrentPhoneNumberKeyName];
+        self.education = [coder decodeObjectForKey:kYFBFriendCurrentEducationKeyName];
+        self.job = [coder decodeObjectForKey:kYFBFriendCurrentUserJobKeyName];
+        self.birthday = [coder decodeObjectForKey:kYFBFriendCurrentBirthdayKeyName];
+        self.weight = [coder decodeObjectForKey:kYFBFriendCurrentUserWeightKeyName];
+        self.star = [coder decodeObjectForKey:kYFBFriendCurrentUserStarKeyName];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.userId forKey:kYFBFriendCurrentUserIdKeyName];
+//    [aCoder encodeObject:self.userImage forKey:kYFBFriendCurrentUserImageKeyName];
+    [aCoder encodeObject:self.nickName forKey:kYFBFriendCurrentUserNameKeyName];
+    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.userSex] forKey:kYFBFriendCurrentUserSexKeyName];
+    [aCoder encodeObject:self.age forKey:kYFBFriendCurrentUserAgeKeyName];
+    [aCoder encodeObject:self.liveCity forKey:kYFBFriendCurrentUserLiveCityKeyName];
+    [aCoder encodeObject:self.height forKey:kYFBFriendCurrentUserHeightKeyName];
+    [aCoder encodeObject:self.income forKey:kYFBFriendCurrentUserIncomeKeyName];
+    [aCoder encodeObject:self.marrying forKey:kYFBFriendCurrentUserMarryingKeyName];
+    [aCoder encodeObject:self.QQNumber forKey:kYFBFriendCurrentQQNumberKeyName];
+    [aCoder encodeObject:self.WXNumber forKey:kYFBFriendCurrentWXNumberKeyName];
+    [aCoder encodeObject:self.phoneNumber forKey:kYFBFriendCurrentPhoneNumberKeyName];
+    [aCoder encodeObject:self.education forKey:kYFBFriendCurrentEducationKeyName];
+    [aCoder encodeObject:self.job forKey:kYFBFriendCurrentUserJobKeyName];
+    [aCoder encodeObject:self.birthday forKey:kYFBFriendCurrentBirthdayKeyName];
+    [aCoder encodeObject:self.weight forKey:kYFBFriendCurrentUserWeightKeyName];
+    [aCoder encodeObject:self.star forKey:kYFBFriendCurrentUserStarKeyName];
 }
 
 - (void)saveOrUpdate {
+    [[SDImageCache sharedImageCache] storeImage:_userImage forKey:kYFBCurrentUserImageCacheKeyName];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:kYFBFriendCurrentUserKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (NSString *)userId {
+    return _userId ?: @"未填写";
+}
 
+- (UIImage *)userImage {
+    return [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:kYFBCurrentUserImageCacheKeyName] ?: [UIImage imageNamed:@"mine_default_avatar_icon"];
+}
 
+- (NSString *)nickName {
+    return _nickName ?: @"未填写";
+}
+
+- (YFBUserSex)userSex {
+    return _userSex;
+}
+
+- (NSString *)age {
+    return _age ?: @"未填写";
+}
+
+- (NSString *)liveCity {
+    return _liveCity ?: @"未填写";
+}
+
+- (NSString *)height {
+    return _height ?: @"未填写";
+}
+
+- (NSString *)income {
+    return _income ?: @"未填写";
+}
+
+- (NSString *)marrying {
+    return _marrying ?: @"未填写";
+}
+
+- (NSString *)QQNumber {
+    return _QQNumber ?: @"未填写";
+}
+
+- (NSString *)WXNumber {
+    return _WXNumber ?: @"未填写";
+}
+
+- (NSString *)phoneNumber {
+    return _phoneNumber ?: @"未填写";
+}
+
+- (NSString *)education {
+    return _education ?: @"未填写";
+}
+
+- (NSString *)job {
+    return _job ?: @"未填写";
+}
+
+- (NSString *)birthday {
+    return _birthday ?: @"未填写";
+}
+
+- (NSString *)weight {
+    return _weight ?: @"未填写";
+}
+
+- (NSString *)star {
+    return _star ?: @"未填写";
+}
 
 #pragma mark - 用户注册信息选择
 
