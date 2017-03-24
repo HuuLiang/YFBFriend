@@ -9,6 +9,8 @@
 #import "YFBMineDataInfoViewController.h"
 #import "YFBUserDataInfoCell.h"
 #import "XHPhotographyHelper.h"
+#import "ActionSheetPicker.h"
+#import "YFBUserInfoEditView.h"
 
 typedef NS_ENUM(NSUInteger,YFBUserInfoSection) {
     YFBUserInfoSectionIntro = 0,
@@ -48,7 +50,10 @@ typedef NS_ENUM(NSUInteger,YFBUserInfoDetailSection) {
 
 static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInfoCellReusableIdentifier";
 
-@interface YFBMineDataInfoViewController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
+@interface YFBMineDataInfoViewController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,ActionSheetMultipleStringPickerDelegate>
+{
+    __block YFBUserInfoEditView * _editingView;
+}
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIView *avatarView;
 @property (nonatomic,strong) UIImageView *userImageView;
@@ -79,6 +84,19 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyBoardActionHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyBoardChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[YFBUser currentUser] saveOrUpdate];
+   // [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 - (UIView *)userHeaderView {
@@ -131,9 +149,12 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
     @weakify(self);
     void (^PickerMediaBlock)(UIImage *image, NSDictionary *editingInfo) = ^(UIImage *image, NSDictionary *editingInfo) {
         @strongify(self);
-        if (image) {
-            [[SDImageCache sharedImageCache] storeImage:image forKey:kYFBCurrentUserImageCacheKeyName];
-            self->_userImageView.image = image;
+        UIImage *originalImage = editingInfo[UIImagePickerControllerOriginalImage];
+        if (originalImage) {
+            [[SDImageCache sharedImageCache] storeImage:originalImage forKey:kYFBCurrentUserImageCacheKeyName];
+            self->_userImageView.image = originalImage;
+        } else {
+            [[YFBHudManager manager] showHudWithText:@"图片获取失败"];
         }
     };
     
@@ -168,9 +189,10 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBUserDataInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBMineDataInfoCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.section == YFBUserInfoSectionIntro) {
-        [cell setDescTitle:@"男，20岁，未填写，浙江省 杭州市" font:kFont(17)];
+        NSString *content = [NSString stringWithFormat:@"%@,%@,%@,%@",[YFBUser currentUser].userSex == YFBUserSexMale?@"男" :@"女",[YFBUser currentUser].age,[YFBUser currentUser].height,[YFBUser currentUser].liveCity];
+        [cell setDescTitle:content font:kFont(14)];
     } else if (indexPath.section == YFBUserInfoSectionSignature) {
-        [cell setDescTitle:@"我正在构思一个伟大的签名" font:kFont(14)];
+        [cell setDescTitle:[YFBUser currentUser].signature font:kFont(14)];
     } else if (indexPath.section == YFBUserInfoSectionBaseInfo) {
         if (indexPath.row == YFBUserInfoIntroSectionNickName) {
             cell.title = @"昵称";
@@ -279,5 +301,167 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
     footerView.backgroundColor = [UIColor clearColor];
     return footerView;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    @weakify(self);
+    if (indexPath.section == YFBUserInfoSectionIntro) {
+        
+    } else if (indexPath.section == YFBUserInfoSectionSignature) {
+        [self showEditingViewWithTitle:@"个性签名" handler:^(NSString *editingInfo) {
+            [YFBUser currentUser].signature = editingInfo;
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+        }];
+    } else if (indexPath.section == YFBUserInfoSectionBaseInfo) {
+        if (indexPath.row == YFBUserInfoIntroSectionNickName) {
+            [self showEditingViewWithTitle:@"昵称" handler:^(NSString *editingInfo) {
+                [YFBUser currentUser].nickName = editingInfo;
+            }];
+        } else if (indexPath.row == YFBUserInfoIntroSectionSex) {
+            [self showActionSheetPickerWithTitle:@"性别" rows:[YFBUser allUserSex] defaultSelection:0 atIndexPath:indexPath block:^(NSString * selectedValue) {
+                if ([selectedValue isEqualToString:@"男"]) {
+                    [YFBUser currentUser].userSex = YFBUserSexMale;
+                } else if ([selectedValue isEqualToString:@"女"]) {
+                    [YFBUser currentUser].userSex = YFBUserSexFemale;
+                }
+            }];
+        } else if (indexPath.row == YFBUserInfoIntroSectionAge) {
+            [self showActionSheetPickerWithTitle:@"年龄" rows:[YFBUser allUserAge] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
+                [YFBUser currentUser].age = selectedValue;
+            }];
+        } else if (indexPath.row == YFBUserInfoIntroSectionLiveCity) {
+            ActionSheetMultipleStringPicker *picker = [[ActionSheetMultipleStringPicker alloc] initWithTitle:@"家乡"
+                                                                                                        rows:[YFBUser defaultHometown]
+                                                                                            initialSelection:@[@0,@0]
+                                                                                                   doneBlock:^(ActionSheetMultipleStringPicker *picker, NSArray *selectedIndexes, id selectedValues)
+                                                       {
+                                                           @strongify(self);
+                                                           NSString *liveCity = [NSString stringWithFormat:@"%@%@",[selectedValues firstObject],[selectedValues lastObject]];
+                                                           [YFBUser currentUser].liveCity = liveCity;
+                                                           [self configRegisterDetailCellWithSelectedValue:liveCity indexPath:indexPath];
+                                                       } cancelBlock:nil origin:self.view];
+            picker.actionSheetDelegate = self;
+            [picker showActionSheetPicker];
+        } else if (indexPath.row == YFBUserInfoIntroSectionHeight) {
+            [self showActionSheetPickerWithTitle:@"身高" rows:[YFBUser allUserHeight] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
+                [YFBUser currentUser].height = selectedValue;
+            }];
+        } else if (indexPath.row == YFBUserInfoIntroSectionIncome) {
+            [self showActionSheetPickerWithTitle:@"收入" rows:[YFBUser allUserIncome] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
+                [YFBUser currentUser].income = selectedValue;
+            }];
+        } else if (indexPath.row == YFBUserInfoIntroSectionMarrying) {
+            [self showActionSheetPickerWithTitle:@"婚姻状况" rows:[YFBUser allUserMarr] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
+                [YFBUser currentUser].marrying = selectedValue;
+            }];
+        }
+    } else if (indexPath.section == YFBUserInfoSectionCantact) {
+        if (indexPath.row == YFBUserInfoContactSectionQQ)  {
+            [self showEditingViewWithTitle:@"QQ" handler:^(NSString *editingInfo) {
+                [YFBUser currentUser].QQNumber = editingInfo;
+                [self configRegisterDetailCellWithSelectedValue:editingInfo indexPath:indexPath];
+            }];
+        } else if (indexPath.row == YFBUserInfoContactSectionWX) {
+            [self showEditingViewWithTitle:@"微信" handler:^(NSString *editingInfo) {
+                [YFBUser currentUser].WXNumber = editingInfo;
+                [self configRegisterDetailCellWithSelectedValue:editingInfo indexPath:indexPath];
+            }];
+        } else if (indexPath.row == YFBUserInfoContactSectionPhone) {
+            [self showEditingViewWithTitle:@"手机号" handler:^(NSString *editingInfo) {
+                [YFBUser currentUser].phoneNumber = editingInfo;
+                [self configRegisterDetailCellWithSelectedValue:editingInfo indexPath:indexPath];
+            }];
+        }
+    } else if (indexPath.section == YFBUserInfoSectionDetail) {
+        if (indexPath.row == YFBUserInfoDetailSectionEdu) {
+            [self showActionSheetPickerWithTitle:@"学历" rows:[YFBUser allUserEdu] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
+                [YFBUser currentUser].education = selectedValue;
+            }];
+        } else if (indexPath.row == YFBUserInfoDetailSectionJob) {
+            [self showActionSheetPickerWithTitle:@"职业" rows:[YFBUser allUserJob] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
+                [YFBUser currentUser].job = selectedValue;
+            }];
+        } else if (indexPath.row == YFBUserInfoDetailSectionBirth) {
+            [ActionSheetDatePicker showPickerWithTitle:@"生日选择"
+                                        datePickerMode:UIDatePickerModeDate
+                                          selectedDate:[YFBUtil dateFromString:KBirthDaySeletedDate WithDateFormat:kDateFormatShort]
+                                           minimumDate:[YFBUtil dateFromString:kBirthDayMinDate WithDateFormat:kDateFormatShort]
+                                           maximumDate:[YFBUtil dateFromString:kBirthDayMaxDate WithDateFormat:kDateFormatShort]
+                                             doneBlock:^(ActionSheetDatePicker *picker, id selectedDate, id origin) {
+                                                 @strongify(self);
+                                                 NSDate *newDate = [selectedDate dateByAddingTimeInterval:[[NSTimeZone localTimeZone] secondsFromGMTForDate:selectedDate]];
+                                                 if (newDate) {
+                                                     NSString *newDateStr = [YFBUtil timeStringFromDate:newDate WithDateFormat:kDateFormatChina];
+                                                     [YFBUser currentUser].birthday = newDateStr;
+                                                     [self configRegisterDetailCellWithSelectedValue:newDateStr indexPath:indexPath];
+                                                 }
+                                             } cancelBlock:nil origin:self.view];
+
+        } else if (indexPath.row == YFBUserInfoDetailSectionWeight) {
+            [self showActionSheetPickerWithTitle:@"体重" rows:[YFBUser allUserWeight] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
+                [YFBUser currentUser].weight = selectedValue;
+            }];
+        } else if (indexPath.row == YFBUserInfoDetailSectionStar) {
+            [self showActionSheetPickerWithTitle:@"星座" rows:[YFBUser allUserStars] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
+                [YFBUser currentUser].star = selectedValue;
+            }];
+        }
+    }
+}
+
+- (void)showActionSheetPickerWithTitle:(NSString *)title
+                                  rows:(NSArray *)strings
+                      defaultSelection:(NSInteger)index
+                           atIndexPath:(NSIndexPath *)indexPath block:(void (^)(id selectedValue))handler {
+    @weakify(self);
+    [ActionSheetStringPicker showPickerWithTitle:title
+                                            rows:strings
+                                initialSelection:index
+                                       doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                                           @strongify(self);
+                                           handler(selectedValue);
+                                           [self configRegisterDetailCellWithSelectedValue:selectedValue indexPath:indexPath];
+                                       } cancelBlock:nil origin:self.view];
+
+}
+
+- (void)configRegisterDetailCellWithSelectedValue:(id)selectedValue indexPath:(NSIndexPath *)indexPath {
+    YFBUserDataInfoCell *cell = [self->_tableView cellForRowAtIndexPath:indexPath];
+    cell.subTitle = selectedValue;
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:YFBUserInfoSectionIntro] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+#pragma mark -- ActionSheetMultipleStringPickerDelegate
+
+- (NSArray *)refreshDataSource:(NSArray *)dataSource atSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    NSArray *array = [dataSource firstObject];
+    NSString *province = array[row];
+    NSArray *cities = [YFBUser allCitiesWihtProvince:province];
+    return cities;
+}
+
+#pragma mark - UIEditingView
+
+- (void)showEditingViewWithTitle:(NSString *)string handler:(void(^)(NSString *editingInfo))handler {
+    [self.view beginLoading];
+    @weakify(self);
+    _editingView = [[YFBUserInfoEditView alloc] initWithTitle:string hander:^(NSString *textFieldContent) {
+        @strongify(self);
+        handler(textFieldContent);
+    }];
+    _editingView.cancel = ^{
+        @strongify(self);
+        [self->_editingView removeFromSuperview];
+        self->_editingView = nil;
+        [self.view endLoading];
+    };
+    _editingView.frame = CGRectMake((kScreenWidth - kWidth(680))/2, (kScreenHeight-kWidth(450))/2-64, kWidth(680), kWidth(450));
+    [self.view addSubview:_editingView];
+}
+
+- (void)handleKeyBoardChangeFrame:(NSNotification *)notification {
+    CGRect endFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    _editingView.frame = CGRectMake((kScreenWidth - kWidth(680))/2, kScreenHeight - kWidth(450)-endFrame.size.height-64, kWidth(680), kWidth(450));
+}
+
 
 @end

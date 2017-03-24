@@ -63,6 +63,8 @@
 		EC65EE5F1E715DCE00DA1AF9 /* YFBRegisterSecondVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE5E1E715DCE00DA1AF9 /* YFBRegisterSecondVC.m */; };
 		EC6AE1E81E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE1E71E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m */; };
 		EC6AE1EB1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE1EA1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m */; };
+		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
+		EC7307071E83BCE700D7BF70 /* YFBUserInfoEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7307061E83BCE700D7BF70 /* YFBUserInfoEditView.m */; };
 		EC7F0F7A1E6FA86700F39FD9 /* YFBConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0F791E6FA86700F39FD9 /* YFBConfiguration.m */; };
 		EC7F0F7D1E6FA8C700F39FD9 /* YFBHudManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0F7C1E6FA8C700F39FD9 /* YFBHudManager.m */; };
 		EC7F0F801E6FAA5600F39FD9 /* YFBActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0F7F1E6FAA5600F39FD9 /* YFBActivateModel.m */; };
@@ -342,6 +344,9 @@
 		EC6AE1E71E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDredgeVipPayCell.m; sourceTree = "<group>"; };
 		EC6AE1E91E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDredgeVipPrivilegeCell.h; sourceTree = "<group>"; };
 		EC6AE1EA1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDredgeVipPrivilegeCell.m; sourceTree = "<group>"; };
+		EC7307031E83727D00D7BF70 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
+		EC7307051E83BCE700D7BF70 /* YFBUserInfoEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBUserInfoEditView.h; sourceTree = "<group>"; };
+		EC7307061E83BCE700D7BF70 /* YFBUserInfoEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBUserInfoEditView.m; sourceTree = "<group>"; };
 		EC7F0F771E6FA2A500F39FD9 /* YFBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBExtensions.h; sourceTree = "<group>"; };
 		EC7F0F781E6FA86700F39FD9 /* YFBConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBConfiguration.h; sourceTree = "<group>"; };
 		EC7F0F791E6FA86700F39FD9 /* YFBConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBConfiguration.m; sourceTree = "<group>"; };
@@ -778,6 +783,8 @@
 				EC6AE1EA1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m */,
 				EC58AFB21E81435D0022FE8C /* YFBUserDataInfoCell.h */,
 				EC58AFB31E81435D0022FE8C /* YFBUserDataInfoCell.m */,
+				EC7307051E83BCE700D7BF70 /* YFBUserInfoEditView.h */,
+				EC7307061E83BCE700D7BF70 /* YFBUserInfoEditView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1682,6 +1689,7 @@
 		EC9A69921E6D3F9E0018C5FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EC7307031E83727D00D7BF70 /* provinces.plist */,
 				EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */,
 				B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */,
 				B33F46A91E7A81750028BAE4 /* my_ymoney.jpg */,
@@ -1760,6 +1768,7 @@
 				EC9A6AB31E6D3F9F0018C5FB /* VoiceBtn_Black@2x.png in Resources */,
 				EC9A6AA11E6D3F9E0018C5FB /* RecordCancel@2x.png in Resources */,
 				EC9A6AA31E6D3F9E0018C5FB /* RecordingSignal001@2x.png in Resources */,
+				EC7307041E83727D00D7BF70 /* provinces.plist in Resources */,
 				EC9A6A911E6D3F9E0018C5FB /* Fav_Cell_Loc@2x.png in Resources */,
 				EC9A6AB61E6D3F9F0018C5FB /* weChatBubble_Sending_Solid@2x.png in Resources */,
 				EC9A6A8E1E6D3F9E0018C5FB /* MessageDisplayKitString.strings in Resources */,
@@ -1933,6 +1942,7 @@
 				EC5D659E1E7AAB0900CBE08A /* YFBDetailCell.m in Sources */,
 				B33283F61E7F6E980058ED6D /* YFBPayUserModel.m in Sources */,
 				B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */,
+				EC7307071E83BCE700D7BF70 /* YFBUserInfoEditView.m in Sources */,
 				EC9A6A791E6D3F9E0018C5FB /* SETextInput.m in Sources */,
 				EC47D42C1E7695F7000E9519 /* YFBRankVC.m in Sources */,
 				EC9A6A851E6D3F9E0018C5FB /* XHMessageInputView.m in Sources */,

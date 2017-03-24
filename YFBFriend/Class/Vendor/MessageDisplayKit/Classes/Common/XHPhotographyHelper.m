@@ -53,18 +53,29 @@
     }];
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
-    if (self.didFinishTakeMediaCompled) {
-        self.didFinishTakeMediaCompled(image, editingInfo);
-    }
-    [self dismissPickerViewController:picker];
-}
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
+//    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera || picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+//        if (self.didFinishTakeMediaCompled) {
+//            self.didFinishTakeMediaCompled(image, editingInfo);
+//        }
+//        [self dismissPickerViewController:picker];
+//    }
+//}
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    if (self.didFinishTakeMediaCompled) {
-        self.didFinishTakeMediaCompled(nil, info);
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+//    if (self.didFinishTakeMediaCompled) {
+//        self.didFinishTakeMediaCompled(nil, info);
+//    }
+//    [self dismissPickerViewController:picker];
+//}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera || picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        if (self.didFinishTakeMediaCompled) {
+            self.didFinishTakeMediaCompled(nil, info);
+        }
+        [self dismissPickerViewController:picker];
     }
-    [self dismissPickerViewController:picker];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

@@ -125,6 +125,7 @@ static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
     return [imageToken decryptedStringWithPassword:kImageTokenCryptPassword];
 }
 
+
 + (void)setImageToken:(NSString *)imageToken {
     if (imageToken) {
         imageToken = [imageToken encryptedStringWithPassword:kImageTokenCryptPassword];
@@ -136,5 +137,18 @@ static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+#pragma mark - 时间转换
+
++ (NSDate *)dateFromString:(NSString *)dateString WithDateFormat:(NSString *)dateFormat {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:dateFormat];
+    return [dateFormatter dateFromString:dateString];
+}
+
++ (NSString *)timeStringFromDate:(NSDate *)date WithDateFormat:(NSString *)dateFormat {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:dateFormat];
+    return [dateFormatter stringFromDate:date];
+}
 
 @end

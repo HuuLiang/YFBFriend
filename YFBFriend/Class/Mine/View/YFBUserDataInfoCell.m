@@ -42,7 +42,7 @@
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(self.contentView);
                 make.left.equalTo(self.contentView).offset(kWidth(30));
-                make.height.mas_equalTo(kWidth(34));
+                make.height.mas_equalTo(kWidth(40));
             }];
             
             [_arrowImageView mas_makeConstraints:^(MASConstraintMaker *make) {

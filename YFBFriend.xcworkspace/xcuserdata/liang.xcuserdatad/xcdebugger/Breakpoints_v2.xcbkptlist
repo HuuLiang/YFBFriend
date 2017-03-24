@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YFBFriend/Class/Account/Controller/YFBRegisterSecondVC.m"
-            timestampString = "511869768.138395"
+            filePath = "YFBFriend/Class/Vendor/MessageDisplayKit/Classes/Common/XHPhotographyHelper.m"
+            timestampString = "511940236.286961"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "-actionSheet:clickedButtonAtIndex:"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

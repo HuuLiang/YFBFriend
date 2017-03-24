@@ -13,7 +13,7 @@ static YFBUser *_currentUser;
 static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurrentUserKeyName";
 
 static NSString *const kYFBFriendCurrentUserIdKeyName       = @"kYFBFriendCurrentUserIdKeyName";
-//static NSString *const kYFBFriendCurrentUserImageKeyName    = @"kYFBFriendCurrentUserImageKeyName";
+static NSString *const kYFBFriendCurrentUserSignatureKeyName    = @"kYFBFriendCurrentUserSignatureKeyName";
 static NSString *const kYFBFriendCurrentUserNameKeyName     = @"kYFBFriendCurrentUserNameKeyName";
 static NSString *const kYFBFriendCurrentUserSexKeyName      = @"kYFBFriendCurrentUserSexKeyName";
 static NSString *const kYFBFriendCurrentUserAgeKeyName      = @"kYFBFriendCurrentUserAgeKeyName";
@@ -48,7 +48,7 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
     self = [super init];
     if (self) {
         self.userId = [coder decodeObjectForKey:kYFBFriendCurrentUserIdKeyName];
-//        self.userImage = [coder decodeObjectForKey:kYFBFriendCurrentUserImageKeyName];
+        self.signature = [coder decodeObjectForKey:kYFBFriendCurrentUserSignatureKeyName];
         self.nickName = [coder decodeObjectForKey:kYFBFriendCurrentUserNameKeyName];
         self.userSex = [[coder decodeObjectForKey:kYFBFriendCurrentUserSexKeyName] unsignedIntegerValue];
         self.age = [coder decodeObjectForKey:kYFBFriendCurrentUserAgeKeyName];
@@ -70,7 +70,7 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.userId forKey:kYFBFriendCurrentUserIdKeyName];
-//    [aCoder encodeObject:self.userImage forKey:kYFBFriendCurrentUserImageKeyName];
+    [aCoder encodeObject:self.signature forKey:kYFBFriendCurrentUserSignatureKeyName];
     [aCoder encodeObject:self.nickName forKey:kYFBFriendCurrentUserNameKeyName];
     [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.userSex] forKey:kYFBFriendCurrentUserSexKeyName];
     [aCoder encodeObject:self.age forKey:kYFBFriendCurrentUserAgeKeyName];
@@ -101,6 +101,10 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
 
 - (UIImage *)userImage {
     return [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:kYFBCurrentUserImageCacheKeyName] ?: [UIImage imageNamed:@"mine_default_avatar_icon"];
+}
+
+- (NSString *)signature {
+    return _signature ?: @"我正在构思一个伟大的签名";
 }
 
 - (NSString *)nickName {
@@ -165,6 +169,32 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
 
 #pragma mark - 用户注册信息选择
 
++ (NSArray *)allUserSex {
+    return @[@"",@"男",@"女"];
+}
+
++ (NSArray *)allUserAge {
+    NSMutableArray *allAges = [NSMutableArray array];
+    for (NSInteger age = 18; age <= 50; age++) {
+        NSString *str = [NSString stringWithFormat:@"%ld岁",(long)age];
+        [allAges addObject:str];
+    }
+    return allAges;
+}
+
++ (NSArray *)allUserWeight {
+    NSMutableArray *allWeight = [NSMutableArray array];
+    for (NSInteger weight = 40; weight <= 120; weight++) {
+        NSString *str = [NSString stringWithFormat:@"%ldkg",(long)weight];
+        [allWeight addObject:str];
+    }
+    return allWeight;
+}
+
++ (NSArray *)allUserStars {
+    return @[@"白羊座",@"金牛座",@"双子座",@"巨蟹座",@"狮子座",@"处女座",@"天秤座",@"天蝎座",@"射手座",@"摩羯座",@"水瓶座",@"双鱼座"];
+}
+
 + (NSArray *)allUserJob {
     return @[@"在校学生",@"军人",@"私营业主",@"企业职工",@"农业劳动者",@"政府机关／事业单位工作者",@"其他"];
 }
@@ -188,6 +218,25 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
 
 + (NSArray *)allUserMarr {
     return @[@"未婚",@"离异",@"丧偶"];
+}
+
++ (NSMutableDictionary *)allProvincesAndCities {
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"provinces" ofType:@"plist"];
+    NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    return dataDic;
+}
+
++ (NSArray *)defaultHometown {
+    NSMutableArray *hometown = [NSMutableArray array];
+    NSDictionary *allProvincesAndCities = [self allProvincesAndCities];
+    [hometown addObject:allProvincesAndCities.allKeys];
+    [hometown addObject:[allProvincesAndCities objectForKey:[allProvincesAndCities.allKeys firstObject]][@"city"]];
+    return hometown;
+}
+
++ (NSArray *)allCitiesWihtProvince:(NSString *)province {
+    NSArray *allCities = [self allProvincesAndCities][province][@"city"];
+    return allCities;
 }
 
 @end

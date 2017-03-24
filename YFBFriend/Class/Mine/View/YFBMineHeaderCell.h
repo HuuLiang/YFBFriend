@@ -10,10 +10,10 @@
 
 @interface YFBMineHeaderCell : UITableViewCell
 
-@property (nonatomic) NSString *name;
-@property (nonatomic) NSString *idNumber;
-@property (nonatomic) NSString *headerUrl;
-@property (nonatomic) NSString *invite;//邀请码
+@property (nonatomic,copy) NSString *name;
+@property (nonatomic,copy) NSString *idNumber;
+@property (nonatomic,strong) UIImage *headerImage;
+@property (nonatomic,copy) NSString *invite;//邀请码
 
 @property (nonatomic,copy) QBAction ktVipAction;//开通VIP
 @property (nonatomic,copy) QBAction attestationAction;//手机认证

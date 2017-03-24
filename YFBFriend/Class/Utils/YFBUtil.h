@@ -30,5 +30,9 @@
 + (NSString *)imageToken;
 + (void)setImageToken:(NSString *)imageToken;
 
+//时间转换
++ (NSDate *)dateFromString:(NSString *)dateString WithDateFormat:(NSString *)dateFormat;
++ (NSString *)timeStringFromDate:(NSDate *)date WithDateFormat:(NSString *)dateFormat;
+
 
 @end

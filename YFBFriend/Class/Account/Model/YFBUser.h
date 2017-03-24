@@ -25,6 +25,8 @@ static NSString *const kYFBCurrentUserImageCacheKeyName = @"kYFBCurrentUserImage
 
 @property (nonatomic,strong) UIImage *userImage;
 
+@property (nonatomic,copy) NSString *signature;
+
 @property (nonatomic,copy) NSString *nickName;
 
 @property (nonatomic,assign) YFBUserSex userSex;
@@ -58,6 +60,12 @@ static NSString *const kYFBCurrentUserImageCacheKeyName = @"kYFBCurrentUserImage
 - (void)saveOrUpdate;
 
 #pragma mark - 注册信息
+
++ (NSArray *)allUserSex;
++ (NSArray *)allUserAge;
++ (NSArray *)allUserWeight;
++ (NSArray *)allUserStars;
+
 //职业
 + (NSArray *)allUserJob;
 //学历
@@ -68,5 +76,9 @@ static NSString *const kYFBCurrentUserImageCacheKeyName = @"kYFBCurrentUserImage
 + (NSArray *)allUserHeight;
 //婚姻状况
 + (NSArray *)allUserMarr;
+
++ (NSMutableDictionary *)allProvincesAndCities;
++ (NSArray *)defaultHometown;
++ (NSArray *)allCitiesWihtProvince:(NSString *)province;
 
 @end

@@ -107,9 +107,9 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == YFBMineSectionTypeHeader) {
         YFBMineHeaderCell *headerCell = [tableView dequeueReusableCellWithIdentifier:YFBMineHeaderCellIdentifier forIndexPath:indexPath];
-        headerCell.headerUrl = @"http://cdn.duitang.com/uploads/item/201507/22/20150722145119_hJnyP.jpeg";
-        headerCell.name = @"李涛";
-        headerCell.idNumber = @"23346677";
+        headerCell.headerImage = [YFBUser currentUser].userImage;
+        headerCell.name = [YFBUser currentUser].nickName;
+        headerCell.idNumber = [YFBUser currentUser].userId;
         headerCell.invite = @"RC456";
         @weakify(self);
         headerCell.ktVipAction = ^(id sender){
@@ -126,10 +126,6 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         return headerCell;
     }else if (indexPath.section == YFBMineSectionTypeRecord){
         YFBMineCell *cell = [tableView dequeueReusableCellWithIdentifier:YFBMineCellIdentifier forIndexPath:indexPath];
-        //        if (indexPath.row == YFBRecordRowTypeLootRecord) {
-        //            cell.title = @"抢夺记录";
-        //            cell.iconImage = @"mine_duobao_record_icon";
-        //        }else
         if (indexPath.row == YFBRecordRowTypeAttention){
             cell.subTitle = nil;
             cell.title = @"谁关注我";
@@ -139,10 +135,6 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
     }else if (indexPath.section == YFBMineSectionTypeWallet){
         YFBMineCell *cell = [tableView dequeueReusableCellWithIdentifier:YFBMineCellIdentifier forIndexPath:indexPath];
         cell.subTitle = nil;
-        //        if (indexPath.row == YFBWlletRowTypeWllet) {
-        //            cell.title = @"我的钱包";
-        //            cell.iconImage = @"mine_my_wallet_icon";
-        //        }else
         if (indexPath.row == YFBWlletRowTypeYmoney){
             cell.title = @"我的Y币";
             cell.subTitle = @"10";

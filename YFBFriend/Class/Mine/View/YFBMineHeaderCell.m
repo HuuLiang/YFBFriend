@@ -28,11 +28,11 @@
         _headerImageView.forceRoundCorner = YES;
         [self addSubview:_headerImageView];
         {
-        [_headerImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).mas_offset(kWidth(20));
-            make.top.mas_equalTo(self).mas_offset(kWidth(25));
-            make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(150)));
-        }];
+            [_headerImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(self).mas_offset(kWidth(20));
+                make.top.mas_equalTo(self).mas_offset(kWidth(25));
+                make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(150)));
+            }];
         }
         
         _nameLabel = [[UILabel alloc] init];
@@ -40,11 +40,11 @@
         _nameLabel.font = [UIFont systemFontOfSize:kWidth(34)];
         [self addSubview:_nameLabel];
         {
-        [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_headerImageView.mas_right).mas_offset(kWidth(20));
-            make.top.mas_equalTo(self).mas_offset(kWidth(62));
-            make.size.mas_equalTo(CGSizeMake(kWidth(70), kWidth(34)));
-        }];
+            [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(_headerImageView.mas_right).mas_offset(kWidth(20));
+                make.top.mas_equalTo(self).mas_offset(kWidth(62));
+                make.height.mas_equalTo(kWidth(34));
+            }];
         }
         
         _idLabel = [[UILabel alloc] init];
@@ -52,10 +52,11 @@
         _idLabel.font = [UIFont systemFontOfSize:kWidth(28)];
         [self addSubview:_idLabel];
         {
-        [_idLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(_nameLabel);
-            make.left.mas_equalTo(_nameLabel.mas_right).mas_offset(kWidth(16));
-        }];
+            [_idLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.mas_equalTo(_nameLabel);
+                make.left.mas_equalTo(_nameLabel.mas_right).mas_offset(kWidth(16));
+                make.height.mas_equalTo(kWidth(30));
+            }];
         }
         
         _inviteLabel = [[UILabel alloc] init];
@@ -66,11 +67,11 @@
         _inviteLabel.clipsToBounds = YES;
         [self addSubview:_inviteLabel];
         {
-        [_inviteLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.mas_equalTo(_headerImageView);
-            make.left.mas_equalTo(_nameLabel);
-            make.size.mas_equalTo(CGSizeMake(kWidth(410), kWidth(60)));
-        }];
+            [_inviteLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.mas_equalTo(_headerImageView);
+                make.left.mas_equalTo(_nameLabel);
+                make.size.mas_equalTo(CGSizeMake(kWidth(410), kWidth(60)));
+            }];
         }
         //复制btn
         UIButton *inviteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -80,10 +81,10 @@
         inviteBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
         [self addSubview:inviteBtn];
         {
-        [inviteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.centerY.mas_equalTo(_inviteLabel);
-            make.size.mas_equalTo(CGSizeMake(kWidth(100), kWidth(60)));
-        }];
+            [inviteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.centerY.mas_equalTo(_inviteLabel);
+                make.size.mas_equalTo(CGSizeMake(kWidth(100), kWidth(60)));
+            }];
         }
         @weakify(self);
         [inviteBtn bk_addEventHandler:^(id sender) {
@@ -102,10 +103,10 @@
         bacView.backgroundColor = kColor(@"#eeeeee");
         [self addSubview:bacView];
         {
-        [bacView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.mas_equalTo(self);
-            make.height.mas_equalTo(kWidth(86));
-        }];
+            [bacView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.bottom.mas_equalTo(self);
+                make.height.mas_equalTo(kWidth(86));
+            }];
         }
         
         UIButton *ktVipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -117,11 +118,11 @@
         [ktVipBtn setImage:[UIImage imageNamed:@"mine_kt_vip_icon"] forState:UIControlStateNormal];
         [bacView addSubview:ktVipBtn];
         {
-        [ktVipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.bottom.mas_equalTo(bacView);
-            make.top.mas_equalTo(bacView).mas_offset(kWidth(3));
-            make.width.mas_equalTo(kScreenWidth/2. - kWidth(1.5));
-        }];
+            [ktVipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.bottom.mas_equalTo(bacView);
+                make.top.mas_equalTo(bacView).mas_offset(kWidth(3));
+                make.width.mas_equalTo(kScreenWidth/2. - kWidth(1.5));
+            }];
         }
         [ktVipBtn bk_addEventHandler:^(id sender) {
             @strongify(self);
@@ -157,9 +158,8 @@
     _nameLabel.text = name;
 }
 
-- (void)setHeaderUrl:(NSString *)headerUrl {
-    _headerUrl = headerUrl;
-    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:headerUrl]];
+- (void)setHeaderImage:(UIImage *)headerImage {
+    _headerImageView.image = headerImage;
 }
 
 - (void)setIdNumber:(NSString *)idNumber {
