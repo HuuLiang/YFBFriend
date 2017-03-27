@@ -15,6 +15,7 @@
 #import "YFBVipViewController.h"
 #import "YFBMyDiamondController.h"
 #import "YFBMineDataInfoViewController.h"
+#import "YFBSettingViewController.h"
 
 static NSString *const YFBMineHeaderCellIdentifier = @"yfb_mine_header_cell_identifier";
 static NSString *const YFBMineCellIdentifier = @"yfb_mine_cell_identifier";
@@ -201,26 +202,27 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
             YFBAttentionController *attentionVC = [[YFBAttentionController alloc] init];
             [self.navigationController pushViewController:attentionVC animated:YES];
         }
-    }else if (indexPath.section == YFBMineSectionTypeWallet){
+    } else if (indexPath.section == YFBMineSectionTypeWallet){
         if (indexPath.row == YFBWlletRowTypeYmoney){
             YFBVipViewController *diamondVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:NO];
             [self.navigationController pushViewController:diamondVC animated:YES];
-        }else if (indexPath.row == YFBWlletRowTypeDiamond){
+        } else if (indexPath.row == YFBWlletRowTypeDiamond){
             YFBMyDiamondController *diamondVC = [[YFBMyDiamondController alloc] init];
             [self.navigationController pushViewController:diamondVC animated:YES];
-        }else if (indexPath.row == YFBWlletRowTypeGift){
+        } else if (indexPath.row == YFBWlletRowTypeGift){
             YFBMyGiftController *giftVC = [[YFBMyGiftController alloc] init];
             [self.navigationController pushViewController:giftVC animated:YES];
         }
-    }else if (indexPath.section == YFBMineSectionTypeInfo){
+    } else if (indexPath.section == YFBMineSectionTypeInfo){
         if (indexPath.row == YFBMineInfoTypeInfo) {
             YFBMineDataInfoViewController *dataInfoVC = [[YFBMineDataInfoViewController alloc] initWithTitle:@"更新个人资料"];
             [self.navigationController pushViewController:dataInfoVC animated:YES];
         } else if (indexPath.row == YFBMineInfoTypePhoto){
             
         }
-    }else if (indexPath.section == YFBMineSectionTypeSetting){
-        
+    } else if (indexPath.section == YFBMineSectionTypeSetting){
+        YFBSettingViewController *settingVC = [[YFBSettingViewController alloc] initWithTitle:@"设置"];
+        [self.navigationController pushViewController:settingVC animated:YES];
     }
 }
 

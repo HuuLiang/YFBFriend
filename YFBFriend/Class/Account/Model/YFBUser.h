@@ -23,6 +23,8 @@ static NSString *const kYFBCurrentUserImageCacheKeyName = @"kYFBCurrentUserImage
 //用户ID
 @property (nonatomic,copy) NSString *userId;
 
+@property (nonatomic,copy) NSString *password;
+
 @property (nonatomic,strong) UIImage *userImage;
 
 @property (nonatomic,copy) NSString *signature;

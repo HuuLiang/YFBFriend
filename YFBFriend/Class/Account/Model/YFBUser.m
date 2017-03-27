@@ -13,6 +13,7 @@ static YFBUser *_currentUser;
 static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurrentUserKeyName";
 
 static NSString *const kYFBFriendCurrentUserIdKeyName       = @"kYFBFriendCurrentUserIdKeyName";
+static NSString *const kFYBFriendCurrentUserPasswordName    = @"kFYBFriendCurrentUserPasswordName";
 static NSString *const kYFBFriendCurrentUserSignatureKeyName    = @"kYFBFriendCurrentUserSignatureKeyName";
 static NSString *const kYFBFriendCurrentUserNameKeyName     = @"kYFBFriendCurrentUserNameKeyName";
 static NSString *const kYFBFriendCurrentUserSexKeyName      = @"kYFBFriendCurrentUserSexKeyName";
@@ -48,6 +49,7 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
     self = [super init];
     if (self) {
         self.userId = [coder decodeObjectForKey:kYFBFriendCurrentUserIdKeyName];
+        self.password = [coder decodeObjectForKey:kFYBFriendCurrentUserPasswordName];
         self.signature = [coder decodeObjectForKey:kYFBFriendCurrentUserSignatureKeyName];
         self.nickName = [coder decodeObjectForKey:kYFBFriendCurrentUserNameKeyName];
         self.userSex = [[coder decodeObjectForKey:kYFBFriendCurrentUserSexKeyName] unsignedIntegerValue];
@@ -70,6 +72,7 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.userId forKey:kYFBFriendCurrentUserIdKeyName];
+    [aCoder encodeObject:self.password forKey:kFYBFriendCurrentUserPasswordName];
     [aCoder encodeObject:self.signature forKey:kYFBFriendCurrentUserSignatureKeyName];
     [aCoder encodeObject:self.nickName forKey:kYFBFriendCurrentUserNameKeyName];
     [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.userSex] forKey:kYFBFriendCurrentUserSexKeyName];
@@ -97,6 +100,10 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
 
 - (NSString *)userId {
     return _userId ?: @"未填写";
+}
+
+- (NSString *)password {
+    return _password;
 }
 
 - (UIImage *)userImage {
