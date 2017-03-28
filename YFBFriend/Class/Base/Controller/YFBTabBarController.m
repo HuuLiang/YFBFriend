@@ -37,7 +37,7 @@
     YFBDiscoverViewController *discoverVC = [[YFBDiscoverViewController alloc] initWithTitle:@"发现"];
     YFBNavigationController *discoverNav = [[YFBNavigationController alloc] initWithRootViewController:discoverVC];
     discoverNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:discoverVC.title
-                                                          image:[[UIImage imageNamed:@"discover_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
+                                                          image:[[UIImage imageNamed:@"discover_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
                                                   selectedImage:[[UIImage imageNamed:@"discover_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     YFBContactViewController *contactVC = [[YFBContactViewController alloc] initWithTitle:@"消息"];

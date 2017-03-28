@@ -10,17 +10,17 @@
 
 @interface UIScrollView (Refresh)
 
-- (void)JY_addPullToRefreshWithHandler:(void (^)(void))handler;
-- (void)JY_triggerPullToRefresh;
-- (void)JY_endPullToRefresh;
+- (void)YFB_addPullToRefreshWithHandler:(void (^)(void))handler;
+- (void)YFB_triggerPullToRefresh;
+- (void)YFB_endPullToRefresh;
 
-- (void)JY_addPagingRefreshWithHandler:(void (^)(void))handler;
-- (void)JY_pagingRefreshNoMoreData;
+- (void)YFB_addPagingRefreshWithHandler:(void (^)(void))handler;
+- (void)YFB_pagingRefreshNoMoreData;
 
-- (void)JY_addIsRefreshing;
+- (void)YFB_addIsRefreshing;
 
-- (void)JY_addVIPNotiRefreshWithHandler:(void (^)(void))handler;
+- (void)YFB_addVIPNotiRefreshWithHandler:(void (^)(void))handler;
 
-//- (void)JY_addVipDetailNotiWithVipLevel:(PPVipLevel)vipLevel RefreshWithHandler:(void (^)(void))handler;
+//- (void)YFB_addVipDetailNotiWithVipLevel:(PPVipLevel)vipLevel RefreshWithHandler:(void (^)(void))handler;
 
 @end

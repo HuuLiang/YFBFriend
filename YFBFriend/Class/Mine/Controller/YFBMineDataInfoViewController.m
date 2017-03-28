@@ -8,9 +8,9 @@
 
 #import "YFBMineDataInfoViewController.h"
 #import "YFBUserDataInfoCell.h"
-#import "XHPhotographyHelper.h"
 #import "ActionSheetPicker.h"
 #import "YFBUserInfoEditView.h"
+#import "YFBPhotoManager.h"
 
 typedef NS_ENUM(NSUInteger,YFBUserInfoSection) {
     YFBUserInfoSectionIntro = 0,
@@ -50,7 +50,7 @@ typedef NS_ENUM(NSUInteger,YFBUserInfoDetailSection) {
 
 static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInfoCellReusableIdentifier";
 
-@interface YFBMineDataInfoViewController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,ActionSheetMultipleStringPickerDelegate>
+@interface YFBMineDataInfoViewController () <UITableViewDelegate,UITableViewDataSource,ActionSheetMultipleStringPickerDelegate>
 {
     __block YFBUserInfoEditView * _editingView;
 }
@@ -58,11 +58,9 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
 @property (nonatomic,strong) UIView *avatarView;
 @property (nonatomic,strong) UIImageView *userImageView;
 @property (nonatomic,strong) UILabel *userIdLabel;
-@property (nonatomic, strong) XHPhotographyHelper *photographyHelper;
 @end
 
 @implementation YFBMineDataInfoViewController
-QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -88,14 +86,12 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyBoardActionHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyBoardChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[YFBUser currentUser] saveOrUpdate];
-   // [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
@@ -123,8 +119,11 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
     @weakify(self);
     [_userImageView bk_whenTapped:^{
         @strongify(self);
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"请选择图片获取方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"选择相册",@"选择相机", nil];
-        [actionSheet showInView:self.view];
+        [[YFBPhotoManager manager] getImageInCurrentViewController:self handler:^(UIImage *pickerImage, NSString *keyName) {
+            [[SDImageCache sharedImageCache] storeImage:pickerImage forKey:kYFBCurrentUserImageCacheKeyName];
+            @strongify(self);
+            self->_userImageView.image = pickerImage;
+        }];
     }];
     
     {
@@ -143,30 +142,6 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
     
     return _avatarView;
 }
-
-#pragma mark - UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    @weakify(self);
-    void (^PickerMediaBlock)(UIImage *image, NSDictionary *editingInfo) = ^(UIImage *image, NSDictionary *editingInfo) {
-        @strongify(self);
-        UIImage *originalImage = editingInfo[UIImagePickerControllerOriginalImage];
-        if (originalImage) {
-            [[SDImageCache sharedImageCache] storeImage:originalImage forKey:kYFBCurrentUserImageCacheKeyName];
-            self->_userImageView.image = originalImage;
-        } else {
-            [[YFBHudManager manager] showHudWithText:@"图片获取失败"];
-        }
-    };
-    
-    if (buttonIndex == 0) {
-        //相册
-        [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypePhotoLibrary onViewController:self compled:PickerMediaBlock];
-    } else if (buttonIndex == 1)  {
-        //相机
-        [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypeCamera onViewController:self compled:PickerMediaBlock];
-    }
-}
-
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

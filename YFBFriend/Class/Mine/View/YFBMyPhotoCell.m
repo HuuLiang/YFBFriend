@@ -21,18 +21,22 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.photoImageView = [[UIImageView alloc] init];
+        self.layer.cornerRadius = 4;
+        self.layer.masksToBounds = YES;
+        
+        self.photoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_add_photo"]];
         [self.contentView addSubview:_photoImageView];
         
         self.shadowView = [[UIView alloc] init];
         _shadowView.backgroundColor = [kColor(@"#000000") colorWithAlphaComponent:0.3];
         [self.contentView addSubview:_shadowView];
+        _shadowView.hidden = YES;
         
         self.noticeLabel = [[UILabel alloc] init];
         _noticeLabel.text = @"审核中";
         _noticeLabel.textColor = kColor(@"#F5C73D");
         _noticeLabel.textAlignment = NSTextAlignmentCenter;
-        _noticeLabel.font = kFont(12);
+        _noticeLabel.font = kFont(10);
         [_shadowView addSubview:_noticeLabel];
         
         {
@@ -55,7 +59,16 @@
 }
 
 - (void)setImageKeyName:(NSString *)imageKeyName {
-    _photoImageView.image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imageKeyName];
+    _shadowView.hidden = NO;
+//    QBLog(@"imageKeyName:%@",imageKeyName);
+    _photoImageView.image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imageKeyName] ?: [UIImage imageNamed:@"mine_add_photo"];
+}
+
+- (void)setFunctionCell:(BOOL)functionCell {
+    if (functionCell) {
+        _shadowView.hidden = YES;
+        _photoImageView.image = [UIImage imageNamed:@"mine_add_photo"];
+    }
 }
 
 @end

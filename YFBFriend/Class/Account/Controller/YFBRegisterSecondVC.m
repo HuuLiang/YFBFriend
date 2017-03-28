@@ -8,10 +8,10 @@
 
 #import "YFBRegisterSecondVC.h"
 #import "YFBSetAvatarView.h"
-#import "XHPhotographyHelper.h"
 #import "YFBRegisterDetailCell.h"
 #import "ActionSheetPicker.h"
 #import "YFBTabBarController.h"
+#import "YFBPhotoManager.h"
 
 static NSString *const kYFBRegisterDetailCellReusableIdentifier = @"kYFBRegisterDetailCellReusableIdentifier";
 
@@ -24,15 +24,13 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
     YFBRegisterDetailCount
 };
 
-@interface YFBRegisterSecondVC () <UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface YFBRegisterSecondVC () <UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIButton    *registerButton;
 @property (nonatomic,strong) YFBSetAvatarView *avatarView;
-@property (nonatomic, strong) XHPhotographyHelper *photographyHelper;
 @end
 
 @implementation YFBRegisterSecondVC
-QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -64,8 +62,9 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
     _avatarView = [[YFBSetAvatarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(420))
                                                    action:^{
                                                        @strongify(self);
-                                                       UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"请选择图片获取方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"选择相册",@"选择相机", nil];
-                                                       [actionSheet showInView:self.view];
+                                                       [[YFBPhotoManager manager] getImageInCurrentViewController:self handler:^(UIImage *pickerImage, NSString *keyName) {
+                                                           [self->_avatarView setUserImg:pickerImage];
+                                                       }];
                                                    }];
     
     self->_tableView.tableHeaderView = _avatarView;
@@ -99,24 +98,6 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
-#pragma mark - UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    void (^PickerMediaBlock)(UIImage *image, NSDictionary *editingInfo) = ^(UIImage *image, NSDictionary *editingInfo) {
-        if (image) {
-            [self->_avatarView setUserImg:image];
-        }
-    };
-
-    if (buttonIndex == 0) {
-        //相册
-        [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypePhotoLibrary onViewController:self compled:PickerMediaBlock];
-    } else if (buttonIndex == 1)  {
-        //相机
-        [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypeCamera onViewController:self compled:PickerMediaBlock];
-    }
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource 

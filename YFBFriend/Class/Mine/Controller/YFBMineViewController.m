@@ -16,6 +16,7 @@
 #import "YFBMyDiamondController.h"
 #import "YFBMineDataInfoViewController.h"
 #import "YFBSettingViewController.h"
+#import "YFBMinePhotosViewController.h"
 
 static NSString *const YFBMineHeaderCellIdentifier = @"yfb_mine_header_cell_identifier";
 static NSString *const YFBMineCellIdentifier = @"yfb_mine_cell_identifier";
@@ -218,7 +219,8 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
             YFBMineDataInfoViewController *dataInfoVC = [[YFBMineDataInfoViewController alloc] initWithTitle:@"更新个人资料"];
             [self.navigationController pushViewController:dataInfoVC animated:YES];
         } else if (indexPath.row == YFBMineInfoTypePhoto){
-            
+            YFBMinePhotosViewController *photoVC = [[YFBMinePhotosViewController alloc] initWithTitle:@"我的照片"];
+            [self.navigationController pushViewController:photoVC animated:YES];
         }
     } else if (indexPath.section == YFBMineSectionTypeSetting){
         YFBSettingViewController *settingVC = [[YFBSettingViewController alloc] initWithTitle:@"设置"];

@@ -70,6 +70,7 @@
 		EC65EE581E713AAD00DA1AF9 /* YFBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE571E713AAD00DA1AF9 /* YFBTextField.m */; };
 		EC65EE5C1E7148CE00DA1AF9 /* UIView+PopAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE5B1E7148CE00DA1AF9 /* UIView+PopAnimation.m */; };
 		EC65EE5F1E715DCE00DA1AF9 /* YFBRegisterSecondVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC65EE5E1E715DCE00DA1AF9 /* YFBRegisterSecondVC.m */; };
+		EC67DE8E1E8A304200557E7A /* YFBPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC67DE8D1E8A304200557E7A /* YFBPhotoManager.m */; };
 		EC6AE1E81E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE1E71E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m */; };
 		EC6AE1EB1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE1EA1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
@@ -367,6 +368,8 @@
 		EC65EE5B1E7148CE00DA1AF9 /* UIView+PopAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PopAnimation.m"; sourceTree = "<group>"; };
 		EC65EE5D1E715DCE00DA1AF9 /* YFBRegisterSecondVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRegisterSecondVC.h; sourceTree = "<group>"; };
 		EC65EE5E1E715DCE00DA1AF9 /* YFBRegisterSecondVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRegisterSecondVC.m; sourceTree = "<group>"; };
+		EC67DE8C1E8A304200557E7A /* YFBPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPhotoManager.h; sourceTree = "<group>"; };
+		EC67DE8D1E8A304200557E7A /* YFBPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPhotoManager.m; sourceTree = "<group>"; };
 		EC6AE1E61E7FD30B00FF91D0 /* YFBDredgeVipPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDredgeVipPayCell.h; sourceTree = "<group>"; };
 		EC6AE1E71E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDredgeVipPayCell.m; sourceTree = "<group>"; };
 		EC6AE1E91E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDredgeVipPrivilegeCell.h; sourceTree = "<group>"; };
@@ -775,6 +778,8 @@
 				B33F46AF1E7AABDF0028BAE4 /* YFBPayUserCountUtil.m */,
 				B33283F41E7F6E980058ED6D /* YFBPayUserModel.h */,
 				B33283F51E7F6E980058ED6D /* YFBPayUserModel.m */,
+				EC67DE8C1E8A304200557E7A /* YFBPhotoManager.h */,
+				EC67DE8D1E8A304200557E7A /* YFBPhotoManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1027,7 +1032,6 @@
 				EC9A67791E6D3E4A0018C5FB /* AppDelegate.m */,
 				EC9A6B021E6D50670018C5FB /* AppDelegate+configuration.h */,
 				EC9A6B031E6D50670018C5FB /* AppDelegate+configuration.m */,
-				EC9A67811E6D3E4A0018C5FB /* Assets.xcassets */,
 				EC9A67751E6D3E4A0018C5FB /* Supporting Files */,
 				EC9A69921E6D3F9E0018C5FB /* Resources */,
 				EC9A678C1E6D3F9E0018C5FB /* Class */,
@@ -1042,6 +1046,7 @@
 				EC9A67861E6D3E4A0018C5FB /* Info.plist */,
 				EC9A69911E6D3F9E0018C5FB /* config.plist */,
 				EC9A67761E6D3E4A0018C5FB /* main.m */,
+				EC9A67811E6D3E4A0018C5FB /* Assets.xcassets */,
 				EC9A6AFF1E6D421A0018C5FB /* YFBPrefixHeader.pch */,
 				EC9A6B001E6D44C10018C5FB /* YFBCommonDef.h */,
 				EC9A6B011E6D452A0018C5FB /* YFBConfig.h */,
@@ -1785,7 +1790,7 @@
 					EC9A67711E6D3E4A0018C5FB = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = NS6846Q9KM;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -1934,6 +1939,7 @@
 				B3AB93701E7BA981006EA5EB /* YFBPayUsersCell.m in Sources */,
 				EC9A6ABE1E6D3F9F0018C5FB /* VPImageCropperViewController.m in Sources */,
 				EC9A6A5E1E6D3F9E0018C5FB /* XHDisplayTextViewController.m in Sources */,
+				EC67DE8E1E8A304200557E7A /* YFBPhotoManager.m in Sources */,
 				EC5D65941E7A609E00CBE08A /* YFBRankDetailCell.m in Sources */,
 				EC9A6A7D1E6D3F9E0018C5FB /* SETextSelection.m in Sources */,
 				EC9A6A4F1E6D3F9E0018C5FB /* UIImage+Utility.m in Sources */,
@@ -2223,7 +2229,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NS6846Q9KM;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YFBFriend/YFBPrefixHeader.pch";
@@ -2232,8 +2238,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "9e34a4c6-6c68-427d-a918-967d12a121d9";
+				PROVISIONING_PROFILE_SPECIFIER = PPSocialDevlopmentProvisoningProfile;
 			};
 			name = Debug;
 		};
@@ -2243,9 +2249,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NS6846Q9KM;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YFBFriend/YFBPrefixHeader.pch";
@@ -2254,8 +2260,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "51221846-87db-4da3-b1f6-320b5ca14803";
+				PROVISIONING_PROFILE_SPECIFIER = PPSocialDistributionProvisoningProfile;
 			};
 			name = Release;
 		};

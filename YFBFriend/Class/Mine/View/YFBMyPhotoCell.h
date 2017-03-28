@@ -12,4 +12,6 @@
 
 @property (nonatomic,copy) NSString *imageKeyName;
 
+@property (nonatomic,assign) BOOL functionCell;
+
 @end
