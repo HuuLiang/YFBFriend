@@ -12,6 +12,8 @@
 #import "ActionSheetPicker.h"
 #import "YFBTabBarController.h"
 #import "YFBPhotoManager.h"
+#import "YFBRegisterUserModel.h"
+#import "YFBImageUploadManager.h"
 
 static NSString *const kYFBRegisterDetailCellReusableIdentifier = @"kYFBRegisterDetailCellReusableIdentifier";
 
@@ -28,9 +30,11 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIButton    *registerButton;
 @property (nonatomic,strong) YFBSetAvatarView *avatarView;
+@property (nonatomic,retain) YFBRegisterUserModel *registerModel;
 @end
 
 @implementation YFBRegisterSecondVC
+QBDefineLazyPropertyInitialization(YFBRegisterUserModel, registerModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -64,6 +68,9 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
                                                        @strongify(self);
                                                        [[YFBPhotoManager manager] getImageInCurrentViewController:self handler:^(UIImage *pickerImage, NSString *keyName) {
                                                            [self->_avatarView setUserImg:pickerImage];
+                                                           [[SDImageCache sharedImageCache] storeImage:pickerImage forKey:kYFBCurrentUserImageCacheKeyName];
+                                                           NSString *name = [NSString stringWithFormat:@"%@_avatar.jpg", [[NSDate date] stringWithFormat:kDefaultDateFormat]];
+                                                           [YFBImageUploadManager uploadImage:pickerImage withName:<#(NSString *)#> completionHandler:<#^(BOOL success, id obj)handler#>]
                                                        }];
                                                    }];
     
@@ -82,8 +89,7 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
     
     [_registerButton bk_addEventHandler:^(id sender) {
         @strongify(self);
-        YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
-        [self presentViewController:tabbarController animated:YES completion:nil];
+        [self registerUser];
     } forControlEvents:UIControlEventTouchUpInside];
     
     {
@@ -94,6 +100,18 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
     }
     
     self->_tableView.tableFooterView = footerView;
+}
+
+- (void)registerUser {
+    @weakify(self);
+    [self.registerModel registerUserWithUserInfo:[YFBUser currentUser] CompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            
+            YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
+            [self presentViewController:tabbarController animated:YES completion:nil];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -135,6 +153,7 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
                                            doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                                                @strongify(self);
                                                [self configRegisterDetailCellWithSelectedValue:selectedValue indexPath:indexPath];
+                                               [YFBUser currentUser].job = selectedValue;
                                            } cancelBlock:nil origin:self.view];
     } else if (indexPath.row == YFBRegisterDetailEduRow) {
         [ActionSheetStringPicker showPickerWithTitle:@"学历"
@@ -143,6 +162,7 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
                                            doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                                                @strongify(self);
                                                [self configRegisterDetailCellWithSelectedValue:selectedValue indexPath:indexPath];
+                                               [YFBUser currentUser].education = selectedValue;
                                            } cancelBlock:nil origin:self.view];
 
     } else if (indexPath.row == YFBRegisterDetailIncomeRow) {
@@ -152,6 +172,7 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
                                            doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                                                @strongify(self);
                                                [self configRegisterDetailCellWithSelectedValue:selectedValue indexPath:indexPath];
+                                               [YFBUser currentUser].income = selectedValue;
                                            } cancelBlock:nil origin:self.view];
 
     } else if (indexPath.row == YFBRegisterDetailTallRow) {
@@ -161,6 +182,7 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
                                            doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                                                @strongify(self);
                                                [self configRegisterDetailCellWithSelectedValue:selectedValue indexPath:indexPath];
+                                               [YFBUser currentUser].height = selectedValue;
                                            } cancelBlock:nil origin:self.view];
     } else if (indexPath.row == YFBRegisterDetailMarrRow) {
         [ActionSheetStringPicker showPickerWithTitle:@"婚姻"
@@ -169,6 +191,7 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
                                            doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                                                @strongify(self);
                                                [self configRegisterDetailCellWithSelectedValue:selectedValue indexPath:indexPath];
+                                               [YFBUser currentUser].marrying = selectedValue;
                                            } cancelBlock:nil origin:self.view];
     }
 }

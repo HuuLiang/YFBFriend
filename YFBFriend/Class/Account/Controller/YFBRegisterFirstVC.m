@@ -73,8 +73,10 @@
     @weakify(self);
     [_nextButton bk_addEventHandler:^(id sender) {
         @strongify(self);
-        YFBRegisterSecondVC *regiterVC = [[YFBRegisterSecondVC alloc] initWithTitle:@"完善个人资料"];
-        [self.navigationController pushViewController:regiterVC animated:YES];
+        if ([self checkUserInfo]) {
+            YFBRegisterSecondVC *regiterVC = [[YFBRegisterSecondVC alloc] initWithTitle:@"完善个人资料"];
+            [self.navigationController pushViewController:regiterVC animated:YES];
+        }
     } forControlEvents:UIControlEventTouchUpInside];
     
     {
@@ -84,6 +86,22 @@
             make.size.mas_equalTo(CGSizeMake(kWidth(630), kWidth(80)));
         }];
     }
+}
+
+- (BOOL)checkUserInfo {
+    if (_accountField.text.length < 2) {
+        [[YFBHudManager manager] showHudWithText:@"昵称太短啦"];
+        return NO;
+    }
+    
+    if ([_passwordField.text integerValue] < 18 ||  [_passwordField.text integerValue] > 60){
+        [[YFBHudManager manager] showHudWithText:@"总感觉哪里不对"];
+        return NO;
+    }
+    
+    [YFBUser currentUser].nickName = _accountField.text;
+    [YFBUser currentUser].age = [_passwordField.text integerValue];
+    return YES;
 }
 
 /*

@@ -97,7 +97,6 @@
 		EC9A677A1E6D3E4A0018C5FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67791E6D3E4A0018C5FB /* AppDelegate.m */; };
 		EC9A67821E6D3E4A0018C5FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC9A67811E6D3E4A0018C5FB /* Assets.xcassets */; };
 		EC9A67851E6D3E4A0018C5FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC9A67831E6D3E4A0018C5FB /* LaunchScreen.storyboard */; };
-		EC9A69D31E6D3F9E0018C5FB /* JYRegisterUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67991E6D3F9E0018C5FB /* JYRegisterUserModel.m */; };
 		EC9A69D51E6D3F9E0018C5FB /* JYNextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A679E1E6D3F9E0018C5FB /* JYNextButton.m */; };
 		EC9A6A291E6D3F9E0018C5FB /* NSDate+timeStamp.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A68621E6D3F9E0018C5FB /* NSDate+timeStamp.m */; };
 		EC9A6A2A1E6D3F9E0018C5FB /* NSObject+PropertyAccessInspecting.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A68641E6D3F9E0018C5FB /* NSObject+PropertyAccessInspecting.m */; };
@@ -240,6 +239,12 @@
 		EC9A6ABE1E6D3F9F0018C5FB /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A69901E6D3F9E0018C5FB /* VPImageCropperViewController.m */; };
 		EC9A6ABF1E6D3F9F0018C5FB /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC9A69911E6D3F9E0018C5FB /* config.plist */; };
 		EC9A6B041E6D50670018C5FB /* AppDelegate+configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A6B031E6D50670018C5FB /* AppDelegate+configuration.m */; };
+		ECCA56B41E9CA83100E067B1 /* YFBRegisterUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56B31E9CA83100E067B1 /* YFBRegisterUserModel.m */; };
+		ECCA56BF1E9CD76600E067B1 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56B71E9CD76600E067B1 /* GTMBase64.m */; };
+		ECCA56C01E9CD76600E067B1 /* QiniuFile.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56BA1E9CD76600E067B1 /* QiniuFile.m */; };
+		ECCA56C11E9CD76600E067B1 /* QiniuToken.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56BC1E9CD76600E067B1 /* QiniuToken.m */; };
+		ECCA56C21E9CD76600E067B1 /* QiniuUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56BE1E9CD76600E067B1 /* QiniuUploader.m */; };
+		ECCA56C81E9CD92C00E067B1 /* YFBImageUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56C71E9CD92C00E067B1 /* YFBImageUploadManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -420,8 +425,6 @@
 		EC9A67811E6D3E4A0018C5FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC9A67841E6D3E4A0018C5FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC9A67861E6D3E4A0018C5FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EC9A67981E6D3F9E0018C5FB /* JYRegisterUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRegisterUserModel.h; sourceTree = "<group>"; };
-		EC9A67991E6D3F9E0018C5FB /* JYRegisterUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRegisterUserModel.m; sourceTree = "<group>"; };
 		EC9A679D1E6D3F9E0018C5FB /* JYNextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNextButton.h; sourceTree = "<group>"; };
 		EC9A679E1E6D3F9E0018C5FB /* JYNextButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNextButton.m; sourceTree = "<group>"; };
 		EC9A68611E6D3F9E0018C5FB /* NSDate+timeStamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+timeStamp.h"; sourceTree = "<group>"; };
@@ -673,6 +676,19 @@
 		EC9A6B011E6D452A0018C5FB /* YFBConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBConfig.h; sourceTree = "<group>"; };
 		EC9A6B021E6D50670018C5FB /* AppDelegate+configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+configuration.h"; sourceTree = "<group>"; };
 		EC9A6B031E6D50670018C5FB /* AppDelegate+configuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+configuration.m"; sourceTree = "<group>"; };
+		ECCA56B21E9CA83100E067B1 /* YFBRegisterUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRegisterUserModel.h; sourceTree = "<group>"; };
+		ECCA56B31E9CA83100E067B1 /* YFBRegisterUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRegisterUserModel.m; sourceTree = "<group>"; };
+		ECCA56B61E9CD76600E067B1 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		ECCA56B71E9CD76600E067B1 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		ECCA56B81E9CD76600E067B1 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		ECCA56B91E9CD76600E067B1 /* QiniuFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuFile.h; sourceTree = "<group>"; };
+		ECCA56BA1E9CD76600E067B1 /* QiniuFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiniuFile.m; sourceTree = "<group>"; };
+		ECCA56BB1E9CD76600E067B1 /* QiniuToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuToken.h; sourceTree = "<group>"; };
+		ECCA56BC1E9CD76600E067B1 /* QiniuToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiniuToken.m; sourceTree = "<group>"; };
+		ECCA56BD1E9CD76600E067B1 /* QiniuUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuUploader.h; sourceTree = "<group>"; };
+		ECCA56BE1E9CD76600E067B1 /* QiniuUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiniuUploader.m; sourceTree = "<group>"; };
+		ECCA56C61E9CD92C00E067B1 /* YFBImageUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBImageUploadManager.h; sourceTree = "<group>"; };
+		ECCA56C71E9CD92C00E067B1 /* YFBImageUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBImageUploadManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1099,8 +1115,8 @@
 		EC9A67971E6D3F9E0018C5FB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EC9A67981E6D3F9E0018C5FB /* JYRegisterUserModel.h */,
-				EC9A67991E6D3F9E0018C5FB /* JYRegisterUserModel.m */,
+				ECCA56B21E9CA83100E067B1 /* YFBRegisterUserModel.h */,
+				ECCA56B31E9CA83100E067B1 /* YFBRegisterUserModel.m */,
 				EC7F0FA41E6FF3FE00F39FD9 /* YFBUser.h */,
 				EC7F0FA51E6FF3FE00F39FD9 /* YFBUser.m */,
 				EC7F0FAD1E70066100F39FD9 /* YFBAccountManager.h */,
@@ -1240,6 +1256,7 @@
 		EC9A688F1E6D3F9E0018C5FB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				ECCA56B51E9CD76600E067B1 /* QiniuUpload */,
 				EC9A68901E6D3F9E0018C5FB /* ActionSheetPicker-3.0 */,
 				EC9A68A51E6D3F9E0018C5FB /* DBModel */,
 				EC9A68AA1E6D3F9E0018C5FB /* MessageDisplayKit */,
@@ -1755,6 +1772,24 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		ECCA56B51E9CD76600E067B1 /* QiniuUpload */ = {
+			isa = PBXGroup;
+			children = (
+				ECCA56B61E9CD76600E067B1 /* GTMBase64.h */,
+				ECCA56B71E9CD76600E067B1 /* GTMBase64.m */,
+				ECCA56B81E9CD76600E067B1 /* GTMDefines.h */,
+				ECCA56B91E9CD76600E067B1 /* QiniuFile.h */,
+				ECCA56BA1E9CD76600E067B1 /* QiniuFile.m */,
+				ECCA56BB1E9CD76600E067B1 /* QiniuToken.h */,
+				ECCA56BC1E9CD76600E067B1 /* QiniuToken.m */,
+				ECCA56BD1E9CD76600E067B1 /* QiniuUploader.h */,
+				ECCA56BE1E9CD76600E067B1 /* QiniuUploader.m */,
+				ECCA56C61E9CD92C00E067B1 /* YFBImageUploadManager.h */,
+				ECCA56C71E9CD92C00E067B1 /* YFBImageUploadManager.m */,
+			);
+			path = QiniuUpload;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1985,6 +2020,7 @@
 				EC9A6A561E6D3F9E0018C5FB /* XHLocationHelper.m in Sources */,
 				EC58AFB41E81435D0022FE8C /* YFBUserDataInfoCell.m in Sources */,
 				EC9A6A7C1E6D3F9E0018C5FB /* SETextMagnifierRanged.m in Sources */,
+				ECCA56C01E9CD76600E067B1 /* QiniuFile.m in Sources */,
 				EC9A6A541E6D3F9E0018C5FB /* XHCaptureHelper.m in Sources */,
 				EC7F0F7D1E6FA8C700F39FD9 /* YFBHudManager.m in Sources */,
 				B33F46911E7A3AC00028BAE4 /* YFBDiamondExplainController.m in Sources */,
@@ -2030,6 +2066,7 @@
 				EC7F0F7A1E6FA86700F39FD9 /* YFBConfiguration.m in Sources */,
 				EC47D4261E769481000E9519 /* YFBRecommendVC.m in Sources */,
 				EC9A6A581E6D3F9E0018C5FB /* XHPhotographyHelper.m in Sources */,
+				ECCA56C11E9CD76600E067B1 /* QiniuToken.m in Sources */,
 				EC9A6A4C1E6D3F9E0018C5FB /* UIImage+Alpha.m in Sources */,
 				EC2A86CB1E88EB8F00E4B300 /* YFBPasswordVC.m in Sources */,
 				B32207E91E7D327D00A101E4 /* YFBMTableViewDatasource.m in Sources */,
@@ -2040,6 +2077,7 @@
 				EC9A6A7B1E6D3F9E0018C5FB /* SETextMagnifierCaret.m in Sources */,
 				EC9A6A7E1E6D3F9E0018C5FB /* SETextSelectionView.m in Sources */,
 				B33F46971E7A55520028BAE4 /* YFBDiamondPayTypeCell.m in Sources */,
+				ECCA56C81E9CD92C00E067B1 /* YFBImageUploadManager.m in Sources */,
 				EC7F0F801E6FAA5600F39FD9 /* YFBActivateModel.m in Sources */,
 				EC9A6A2F1E6D3F9E0018C5FB /* UIView+FrameEx.m in Sources */,
 				EC65EE5C1E7148CE00DA1AF9 /* UIView+PopAnimation.m in Sources */,
@@ -2064,15 +2102,17 @@
 				EC9A6A4E1E6D3F9E0018C5FB /* UIImage+RoundedCorner.m in Sources */,
 				EC9A6A531E6D3F9E0018C5FB /* XHAudioPlayerHelper.m in Sources */,
 				EC9A6AB71E6D3F9F0018C5FB /* TAAbstractDotView.m in Sources */,
+				ECCA56C21E9CD76600E067B1 /* QiniuUploader.m in Sources */,
 				EC6AE1E81E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m in Sources */,
 				EC2A86CE1E88EBA300E4B300 /* YFBAdviseVC.m in Sources */,
 				EC9A6ABC1E6D3F9F0018C5FB /* SDCycleScrollView.m in Sources */,
 				EC9A6A8A1E6D3F9E0018C5FB /* XHEmotionManagerView.m in Sources */,
+				ECCA56B41E9CA83100E067B1 /* YFBRegisterUserModel.m in Sources */,
 				EC9A6A741E6D3F9E0018C5FB /* SELinkText.m in Sources */,
 				EC9A6A3F1E6D3F9E0018C5FB /* AbstractActionSheetPicker.m in Sources */,
 				EC9A6A711E6D3F9E0018C5FB /* SECompatibility.m in Sources */,
+				ECCA56BF1E9CD76600E067B1 /* GTMBase64.m in Sources */,
 				EC9A6A6A1E6D3F9E0018C5FB /* XHEmotion.m in Sources */,
-				EC9A69D31E6D3F9E0018C5FB /* JYRegisterUserModel.m in Sources */,
 				EC9A6A401E6D3F9E0018C5FB /* ActionSheetCustomPicker.m in Sources */,
 				EC9A6A701E6D3F9E0018C5FB /* LKBadgeView.m in Sources */,
 				EC7F0F9E1E6FDFD900F39FD9 /* YFBLaunchViewController.m in Sources */,
@@ -2231,6 +2271,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = NS6846Q9KM;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YFBFriend/Class/Vendor",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YFBFriend/YFBPrefixHeader.pch";
 				INFOPLIST_FILE = YFBFriend/Info.plist;
@@ -2253,6 +2297,10 @@
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = NS6846Q9KM;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YFBFriend/Class/Vendor",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YFBFriend/YFBPrefixHeader.pch";
 				INFOPLIST_FILE = YFBFriend/Info.plist;

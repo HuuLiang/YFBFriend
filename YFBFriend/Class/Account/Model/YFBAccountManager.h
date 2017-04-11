@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class SendAuthResp;
+
 @interface YFBAccountManager : NSObject
 
 + (instancetype)manager;
@@ -17,5 +19,7 @@
 - (void)loginWithWX;
 
 - (void)loginWithAccountAndPassword;
+
+- (void)sendAuthRespCode:(SendAuthResp *)resp;
 
 @end

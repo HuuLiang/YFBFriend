@@ -178,7 +178,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         cell.userImageUrl = robot.avatarUrl;
         cell.nickName = robot.nickName;
         cell.userSex = robot.userSex;
-        cell.age = robot.age;
+        cell.age = [NSString stringWithFormat:@"%ld岁",robot.age];
         cell.distance = robot.distance;
         cell.rankType = _rankType;
         cell.giftCount = [NSString stringWithFormat:@"%ld",(long)arc4random() % 30 + 5];

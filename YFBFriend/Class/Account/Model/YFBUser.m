@@ -31,6 +31,8 @@ static NSString *const kYFBFriendCurrentBirthdayKeyName     = @"kYFBFriendCurren
 static NSString *const kYFBFriendCurrentUserWeightKeyName   = @"kYFBFriendCurrentUserWeightKeyName";
 static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurrentUserStarKeyName";
 
+NSString *const kYFBUserSexFemale = @"F";
+NSString *const KYFBUserSexMale   = @"M";
 
 @implementation YFBUser
 
@@ -52,8 +54,8 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
         self.password = [coder decodeObjectForKey:kFYBFriendCurrentUserPasswordName];
         self.signature = [coder decodeObjectForKey:kYFBFriendCurrentUserSignatureKeyName];
         self.nickName = [coder decodeObjectForKey:kYFBFriendCurrentUserNameKeyName];
-        self.userSex = [[coder decodeObjectForKey:kYFBFriendCurrentUserSexKeyName] unsignedIntegerValue];
-        self.age = [coder decodeObjectForKey:kYFBFriendCurrentUserAgeKeyName];
+        self.userSex = [[coder decodeObjectForKey:kYFBFriendCurrentUserSexKeyName] integerValue];
+        self.age = [[coder decodeObjectForKey:kYFBFriendCurrentUserAgeKeyName] integerValue];
         self.liveCity = [coder decodeObjectForKey:kYFBFriendCurrentUserLiveCityKeyName];
         self.height = [coder decodeObjectForKey:kYFBFriendCurrentUserHeightKeyName];
         self.income = [coder decodeObjectForKey:kYFBFriendCurrentUserIncomeKeyName];
@@ -76,7 +78,7 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
     [aCoder encodeObject:self.signature forKey:kYFBFriendCurrentUserSignatureKeyName];
     [aCoder encodeObject:self.nickName forKey:kYFBFriendCurrentUserNameKeyName];
     [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.userSex] forKey:kYFBFriendCurrentUserSexKeyName];
-    [aCoder encodeObject:self.age forKey:kYFBFriendCurrentUserAgeKeyName];
+    [aCoder encodeObject:[NSNumber numberWithInteger:self.age] forKey:kYFBFriendCurrentUserAgeKeyName];
     [aCoder encodeObject:self.liveCity forKey:kYFBFriendCurrentUserLiveCityKeyName];
     [aCoder encodeObject:self.height forKey:kYFBFriendCurrentUserHeightKeyName];
     [aCoder encodeObject:self.income forKey:kYFBFriendCurrentUserIncomeKeyName];
@@ -99,14 +101,14 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
 }
 
 - (NSString *)userId {
-    return _userId ?: @"未填写";
+    return _userId ?: @"";
 }
 
 - (NSString *)password {
     return _password;
 }
 
-- (UIImage *)userImage {
+- (NSString *)userImage {
     return [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:kYFBCurrentUserImageCacheKeyName] ?: [UIImage imageNamed:@"mine_default_avatar_icon"];
 }
 
@@ -122,8 +124,8 @@ static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurren
     return _userSex;
 }
 
-- (NSString *)age {
-    return _age ?: @"未填写";
+- (NSInteger)age {
+    return _age ?: -1;
 }
 
 - (NSString *)liveCity {

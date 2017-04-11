@@ -25,6 +25,9 @@ NSString *const kQBXLTXPayConfigName = @"XLTX";
 NSString *const kQBWJPayConfigName = @"WUJI";
 NSString *const kQBMLYPayConfigName = @"MLY";
 NSString *const kQBLSPayConfigName = @"LS";
+NSString *const kQBRMPayConfigName = @"RONGM";
+NSString *const kQBZRPayConfigName = @"ZRF";
+NSString *const kQBYiPayConfigName = @"YFPAY";
 
 @implementation QBPaymentConfigDetail
 
@@ -57,6 +60,12 @@ NSString *const kQBLSPayConfigName = @"LS";
         return [QBMLYPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(lsPayConfig))]) {
         return [QBLSPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(rmPayConfig))]) {
+        return [QBRMPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(zrPayConfig))]) {
+        return [QBZRPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(yiPayConfig))]) {
+        return [QBYiPayConfig class];
     }
     return nil;
 }
@@ -90,6 +99,12 @@ NSString *const kQBLSPayConfigName = @"LS";
         return NSStringFromSelector(@selector(mlyPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBLSPayConfigName]]) {
         return NSStringFromSelector(@selector(lsPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBRMPayConfigName]]) {
+        return NSStringFromSelector(@selector(rmPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBZRPayConfigName]]) {
+        return NSStringFromSelector(@selector(zrPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBYiPayConfigName]]) {
+        return NSStringFromSelector(@selector(yiPayConfig));
     }
     return nil;
 }
@@ -277,4 +292,16 @@ NSString *const kQBLSPayConfigName = @"LS";
     payConfig.notifyUrl = @"http://www.baidu.com";
     return payConfig;
 }
+@end
+
+@implementation QBRMPayConfig
+
+@end
+
+@implementation QBZRPayConfig
+
+@end
+
+@implementation QBYiPayConfig
+
 @end

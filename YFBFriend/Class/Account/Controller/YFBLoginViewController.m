@@ -12,7 +12,7 @@
 #import "YFBRegisterFirstVC.h"
 
 @interface YFBLoginViewController ()
-@property (nonatomic,strong) UIButton     *QQButton;
+//@property (nonatomic,strong) UIButton     *QQButton;
 @property (nonatomic,strong) UIButton     *WXButton;
 @property (nonatomic,strong) UIButton     *accountButton;
 @property (nonatomic,strong) UIButton     *registerButton;
@@ -50,13 +50,13 @@
     label.font = [UIFont systemFontOfSize:kWidth(30)];
     [self.view addSubview:label];
     
-    self.QQButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _QQButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [_QQButton setImage:[UIImage imageNamed:@"login_qq"] forState:UIControlStateNormal];
-    [_QQButton setTitle:@"QQ登录" forState:UIControlStateNormal];
-    [_QQButton setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
-    _QQButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
-    [self.view addSubview:_QQButton];
+//    self.QQButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    _QQButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    [_QQButton setImage:[UIImage imageNamed:@"login_qq"] forState:UIControlStateNormal];
+//    [_QQButton setTitle:@"QQ登录" forState:UIControlStateNormal];
+//    [_QQButton setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
+//    _QQButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
+//    [self.view addSubview:_QQButton];
     
     self.WXButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_WXButton setImage:[UIImage imageNamed:@"login_wx"] forState:UIControlStateNormal];
@@ -66,10 +66,10 @@
     [self.view addSubview:_WXButton];
 
     @weakify(self);
-    [_QQButton bk_addEventHandler:^(id sender) {
-        @strongify(self);
-        [[YFBAccountManager manager] loginWithQQ];
-    } forControlEvents:UIControlEventTouchUpInside];
+//    [_QQButton bk_addEventHandler:^(id sender) {
+//        @strongify(self);
+//        [[YFBAccountManager manager] loginWithQQ];
+//    } forControlEvents:UIControlEventTouchUpInside];
     
     [_WXButton bk_addEventHandler:^(id sender) {
         @strongify(self);
@@ -83,14 +83,14 @@
             make.height.mas_equalTo(kWidth(30));
         }];
         
-        [_QQButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.view).offset(kWidth(182));
-            make.top.equalTo(label.mas_bottom).offset(kWidth(98));
-            make.size.mas_equalTo(CGSizeMake(kWidth(130), kWidth(200)));
-        }];
+//        [_QQButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(self.view).offset(kWidth(182));
+//            make.top.equalTo(label.mas_bottom).offset(kWidth(98));
+//            make.size.mas_equalTo(CGSizeMake(kWidth(130), kWidth(200)));
+//        }];
         
         [_WXButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.view.mas_right).offset(-kWidth(182));
+            make.centerX.equalTo(self.view).offset(0);
             make.top.equalTo(label.mas_bottom).offset(kWidth(98));
             make.size.mas_equalTo(CGSizeMake(kWidth(130), kWidth(200)));
         }];
@@ -144,7 +144,7 @@
     {
         [downImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view);
-            make.top.equalTo(_QQButton.mas_bottom).offset(kWidth(64));
+            make.top.equalTo(_WXButton.mas_bottom).offset(kWidth(64));
             make.size.mas_equalTo(CGSizeMake(kWidth(52), kWidth(52)));
         }];
         
@@ -201,9 +201,9 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    CGRect qqButtonFrame = _QQButton.frame;
-    _QQButton.imageEdgeInsets = UIEdgeInsetsMake(-(qqButtonFrame.size.height-_QQButton.imageView.size.height)/2, (qqButtonFrame.size.width-_QQButton.imageView.size.width)/2, (qqButtonFrame.size.height-_QQButton.imageView.size.height)/2, -(qqButtonFrame.size.width-_QQButton.imageView.size.width)/2);
-    _QQButton.titleEdgeInsets = UIEdgeInsetsMake(qqButtonFrame.size.height-kWidth(35), -_QQButton.imageView.frame.size.width, 0, 0);
+//    CGRect qqButtonFrame = _QQButton.frame;
+//    _QQButton.imageEdgeInsets = UIEdgeInsetsMake(-(qqButtonFrame.size.height-_QQButton.imageView.size.height)/2, (qqButtonFrame.size.width-_QQButton.imageView.size.width)/2, (qqButtonFrame.size.height-_QQButton.imageView.size.height)/2, -(qqButtonFrame.size.width-_QQButton.imageView.size.width)/2);
+//    _QQButton.titleEdgeInsets = UIEdgeInsetsMake(qqButtonFrame.size.height-kWidth(35), -_QQButton.imageView.frame.size.width, 0, 0);
     
     CGRect wxButtonFrame = _WXButton.frame;
     _WXButton.imageEdgeInsets = UIEdgeInsetsMake(-(wxButtonFrame.size.height-_WXButton.imageView.size.height)/2, (wxButtonFrame.size.width-_WXButton.imageView.size.width)/2, (wxButtonFrame.size.height-_WXButton.imageView.size.height)/2, -(wxButtonFrame.size.width-_WXButton.imageView.size.width)/2);

@@ -164,7 +164,7 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBUserDataInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBMineDataInfoCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.section == YFBUserInfoSectionIntro) {
-        NSString *content = [NSString stringWithFormat:@"%@,%@,%@,%@",[YFBUser currentUser].userSex == YFBUserSexMale?@"男" :@"女",[YFBUser currentUser].age,[YFBUser currentUser].height,[YFBUser currentUser].liveCity];
+        NSString *content = [NSString stringWithFormat:@"%@,%ld,%@,%@",[YFBUser currentUser].userSex == YFBUserSexMale?@"男" :@"女",[YFBUser currentUser].age,[YFBUser currentUser].height,[YFBUser currentUser].liveCity];
         [cell setDescTitle:content font:kFont(14)];
     } else if (indexPath.section == YFBUserInfoSectionSignature) {
         [cell setDescTitle:[YFBUser currentUser].signature font:kFont(14)];
@@ -177,7 +177,7 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
             cell.subTitle = [YFBUser currentUser].userSex == YFBUserSexMale ? @"男" : @"女";
         } else if (indexPath.row == YFBUserInfoIntroSectionAge) {
             cell.title = @"年龄";
-            cell.subTitle = [YFBUser currentUser].age;
+            cell.subTitle = [NSString stringWithFormat:@"%ld岁",[YFBUser currentUser].age];
         } else if (indexPath.row == YFBUserInfoIntroSectionLiveCity) {
             cell.title = @"居住市";
             cell.subTitle = [YFBUser currentUser].liveCity;

@@ -65,4 +65,16 @@
 #import "LSPayManager.h"
 #endif
 
+#ifdef QBPAYMENT_RMPAY_ENABLED
+#import "QBRMPayManager.h"
+#endif
+
+#ifdef QBPAYMENT_ZRPAY_ENABLED
+#import "ZRPayManager.h"
+#endif
+
+#ifdef QBPAYMENT_YIPAY_ENABLED
+#import "YiPayManager.h"
+#endif
+
 #endif /* QBPaymentPlugins_h */

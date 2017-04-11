@@ -21,6 +21,8 @@
 @property (nonatomic) QBPayType paymentType;
 @property (nonatomic) QBPaySubType paymentSubType;
 @property (nonatomic) QBPayPointType payPointType;
+@property (nonatomic) QBPayPointType currentPayPointType;
+@property (nonatomic) QBPayPointType targetPayPointType;
 @property (nonatomic) NSString *paymentTime;
 @property (nonatomic) NSString *reservedData;
 
@@ -33,6 +35,8 @@
 @property (nonatomic) NSNumber *columnId;
 @property (nonatomic) NSNumber *columnType;
 @property (nonatomic) NSString *userId;
+
+@property (nonatomic) NSNumber *version;
 
 + (NSArray<QBPaymentInfo *> *)allPaymentInfos;
 - (instancetype)initWithOrderInfo:(QBOrderInfo *)orderInfo contentInfo:(QBContentInfo *)contentInfo;

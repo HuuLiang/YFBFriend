@@ -20,7 +20,7 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
 @implementation QBEncryptedURLRequest
 
 - (NSString *)signKey {
-    return kEncryptionPasssword;
+    return self.configuration.encryptionPasssword ?: kEncryptionPasssword;
 }
 
 - (NSDictionary *)commonParams {
@@ -54,7 +54,7 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
             [array addObject:[NSString stringWithFormat:@"%@=%@",key,obj]];
         }];
         NSString *endataStr = [array componentsJoinedByString:@"&"];
-        NSString *encryptedKey = [endataStr encryptedStringWithPassword:[kNewEncryptionPassword.md5 substringToIndex:16]];
+        NSString *encryptedKey = [endataStr encryptedStringWithPassword:[(self.configuration.encryptionPasssword ?: kNewEncryptionPassword).md5 substringToIndex:16]];
         return @{@"data":encryptedKey};
     }
 }
@@ -64,6 +64,13 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
 }
 
 - (BOOL)requestURLPath:(NSString *)urlPath standbyURLPath:(NSString *)standbyUrlPath withParams:(NSDictionary *)params responseHandler:(QBURLResponseHandler)responseHandler {
+    if (standbyUrlPath) {
+        //备用静态文件链接后加时间戳
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyyMMdd"];
+        NSString *timeString = [dateFormatter stringFromDate:[NSDate date]];
+        standbyUrlPath = [NSString stringWithFormat:@"%@?t=%@",standbyUrlPath,timeString];
+    }
     return [super requestURLPath:urlPath standbyURLPath:standbyUrlPath withParams:[self encryptWithParams:params] responseHandler:responseHandler];
 }
 
@@ -88,7 +95,7 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
         return jsonObject;
     } else if (self.configuration.encryptedType == QBURLEncryptedTypeNew) {
         NSString *str = [[NSString alloc] initWithData:encryptedResponse encoding:NSUTF8StringEncoding];
-        NSString *decryptedStr = [str decryptedStringWithPassword:[kNewEncryptionPassword.md5 substringToIndex:16]];
+        NSString *decryptedStr = [str decryptedStringWithPassword:[(self.configuration.encryptionPasssword ?: kNewEncryptionPassword).md5 substringToIndex:16]];
         NSData *jsonData = [decryptedStr dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:nil];
         return responseJSON;

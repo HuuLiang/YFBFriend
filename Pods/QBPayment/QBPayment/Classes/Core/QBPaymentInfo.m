@@ -25,6 +25,8 @@ static NSString *const kPaymentInfoContentLocationKeyName = @"qbpayment_paymenti
 static NSString *const kPaymentInfoColumnIdKeyName = @"qbpayment_paymentinfo_columnid_keyname";
 static NSString *const kPaymentInfoColumnTypeKeyName = @"qbpayment_paymentinfo_columntype_keyname";
 static NSString *const kPaymentInfoPayPointTypeKeyName = @"qbpayment_paymentinfo_paypointtype_keyname";
+static NSString *const kPaymentInfoCurrentPayPointTypeKeyName = @"qbpayment_paymentinfo_currentpaypointtype_keyname";
+static NSString *const kPaymentInfoTargetPayPointTypeKeyName = @"qbpayment_paymentinfo_targetpaypointtype_keyname";
 static NSString *const kPaymentInfoPaymentTypeKeyName = @"qbpayment_paymentinfo_paymenttype_keyname";
 static NSString *const kPaymentInfoPaymentSubTypeKeyName = @"qbpayment_paymentinfo_paymentsubtype_keyname";
 static NSString *const kPaymentInfoPaymentResultKeyName = @"qbpayment_paymentinfo_paymentresult_keyname";
@@ -32,6 +34,8 @@ static NSString *const kPaymentInfoPaymentStatusKeyName = @"qbpayment_paymentinf
 static NSString *const kPaymentInfoPaymentTimeKeyName = @"qbpayment_paymentinfo_paymenttime_keyname";
 static NSString *const kPaymentInfoPaymentReservedDataKeyName = @"qbpayment_paymentinfo_paymentreserveddata_keyname";
 static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_userid_keyname";
+
+static NSString *const kPaymentInfoVersionKeyName = @"qbpayment_paymentinfo_version_keyname";
 
 @interface QBPaymentInfo ()
 @property (nonatomic) NSString *paymentId;
@@ -53,6 +57,7 @@ static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_useri
     if (self) {
         _paymentResult = QBPayResultUnknown;
         _paymentStatus = QBPayStatusUnknown;
+        _version = @0.1;
     }
     return self;
 }
@@ -71,7 +76,9 @@ static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_useri
         _paymentSubType = [paymentSubTypeMapping[@(orderInfo.payType)] unsignedIntegerValue];
         _paymentTime = orderInfo.createTime;
         _reservedData = orderInfo.reservedData;
-        _payPointType = orderInfo.payPointType;
+        _payPointType = orderInfo.targetPayPointType;
+        _currentPayPointType = orderInfo.currentPayPointType;
+        _targetPayPointType = orderInfo.targetPayPointType;
         _userId = orderInfo.userId;
         
         _contentId = contentInfo.contentId;
@@ -95,6 +102,8 @@ static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_useri
     paymentInfo.columnId = payment[kPaymentInfoColumnIdKeyName];
     paymentInfo.columnType = payment[kPaymentInfoColumnTypeKeyName];
     paymentInfo.payPointType = [payment[kPaymentInfoPayPointTypeKeyName] unsignedIntegerValue];
+    paymentInfo.currentPayPointType = [payment[kPaymentInfoCurrentPayPointTypeKeyName] unsignedIntegerValue];
+    paymentInfo.targetPayPointType = [payment[kPaymentInfoTargetPayPointTypeKeyName] unsignedIntegerValue];
     paymentInfo.paymentType = [payment[kPaymentInfoPaymentTypeKeyName] unsignedIntegerValue];
     paymentInfo.paymentSubType = [payment[kPaymentInfoPaymentSubTypeKeyName] unsignedIntegerValue];
     paymentInfo.paymentResult = [payment[kPaymentInfoPaymentResultKeyName] unsignedIntegerValue];
@@ -102,6 +111,7 @@ static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_useri
     paymentInfo.paymentTime = payment[kPaymentInfoPaymentTimeKeyName];
     paymentInfo.reservedData = payment[kPaymentInfoPaymentReservedDataKeyName];
     paymentInfo.userId = payment[kPaymentInfoUserIdKeyName];
+    paymentInfo.version = payment[kPaymentInfoVersionKeyName];
     return paymentInfo;
 }
 
@@ -117,6 +127,8 @@ static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_useri
     [payment safelySetObject:self.columnId forKey:kPaymentInfoColumnIdKeyName];
     [payment safelySetObject:self.columnType forKey:kPaymentInfoColumnTypeKeyName];
     [payment safelySetObject:@(self.payPointType) forKey:kPaymentInfoPayPointTypeKeyName];
+    [payment safelySetObject:@(self.currentPayPointType) forKey:kPaymentInfoCurrentPayPointTypeKeyName];
+    [payment safelySetObject:@(self.targetPayPointType) forKey:kPaymentInfoTargetPayPointTypeKeyName];
     [payment safelySetObject:@(self.paymentType) forKey:kPaymentInfoPaymentTypeKeyName];
     [payment safelySetObject:@(self.paymentSubType) forKey:kPaymentInfoPaymentSubTypeKeyName];
     [payment safelySetObject:@(self.paymentResult) forKey:kPaymentInfoPaymentResultKeyName];
@@ -124,6 +136,7 @@ static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_useri
     [payment safelySetObject:self.paymentTime forKey:kPaymentInfoPaymentTimeKeyName];
     [payment safelySetObject:self.reservedData forKey:kPaymentInfoPaymentReservedDataKeyName];
     [payment safelySetObject:self.userId forKey:kPaymentInfoUserIdKeyName];
+    [payment safelySetObject:self.version forKey:kPaymentInfoVersionKeyName];
     return payment;
 }
 
@@ -165,6 +178,6 @@ static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_useri
     [[NSUserDefaults standardUserDefaults] setObject:paymentInfosM forKey:kPaymentInfoKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    QBLog(@"Save payment info: %@", payment);
+//    QBLog(@"Save payment info: %@", payment);
 }
 @end

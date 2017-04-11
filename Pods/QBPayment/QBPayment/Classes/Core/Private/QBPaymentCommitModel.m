@@ -44,7 +44,7 @@ static const NSTimeInterval kRetryingTimeInterval = 180;
                              @"contentType":paymentInfo.contentType.stringValue ?: @"0",
                              @"pluginType":@(paymentInfo.paymentType),
                              @"payType":paymentSubTypeDic[@(paymentInfo.paymentSubType)] ?: @"",
-                             @"payPointType":@(paymentInfo.payPointType),
+                             @"payPointType":@(paymentInfo.currentPayPointType * 10 + paymentInfo.targetPayPointType),
                              @"appId":[QBPaymentNetworkingConfiguration defaultConfiguration].RESTAppId,
                              @"versionNo":@(appVersion.integerValue),
                              @"status":statusDic[@(paymentInfo.paymentResult)],

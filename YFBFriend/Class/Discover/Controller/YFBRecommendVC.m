@@ -67,7 +67,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         YFBRobot *robot = self.dataSource[indexPath.row];
         cell.userNameStr = robot.nickName;
         cell.userImgUrl = robot.avatarUrl;
-        cell.userAge  = robot.age;
+        cell.userAge  = [NSString stringWithFormat:@"%ld岁",robot.age];
         cell.userHeight = robot.height;
         cell.userSex = robot.userSex;
         cell.greeted = robot.greeted;

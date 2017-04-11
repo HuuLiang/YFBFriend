@@ -8,32 +8,47 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, YFBUserSex) {
+typedef NS_ENUM(NSInteger, YFBUserSex) {
     YFBUsersexUnkown = 0,
     YFBUserSexMale,  //男性
     YFBUserSexFemale,    //女性
 };
 
+typedef NS_ENUM(NSInteger, YFBLoginType) {
+    YFBLoginTypeDefine = 1, //自定义
+    YFBLoginTypeQQ,  //qq
+    YFBLoginTypeWX   //微信
+};
+
+#define ENUM_TO_NSSTRING(enum) @#enum
+
 static NSString *const kYFBCurrentUserImageCacheKeyName = @"kYFBCurrentUserImageCacheKeyName";
+
+extern NSString *const kYFBUserSexFemale;
+extern NSString *const KYFBUserSexMale;
 
 @interface YFBUser : NSObject <NSCoding>
 
 + (instancetype)currentUser;
 
 //用户ID
+
+
 @property (nonatomic,copy) NSString *userId;
 
 @property (nonatomic,copy) NSString *password;
 
-@property (nonatomic,strong) UIImage *userImage;
+@property (nonatomic,copy) NSString *userImage;
 
 @property (nonatomic,copy) NSString *signature;
 
 @property (nonatomic,copy) NSString *nickName;
 
-@property (nonatomic,assign) YFBUserSex userSex;
+@property (nonatomic) YFBUserSex userSex;
 
-@property (nonatomic,copy) NSString *age;
+@property (nonatomic) YFBLoginType loginType;
+
+@property (nonatomic) NSInteger age;
 
 @property (nonatomic,copy) NSString *liveCity;
 

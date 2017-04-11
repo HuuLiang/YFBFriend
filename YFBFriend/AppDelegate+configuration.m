@@ -11,19 +11,28 @@
 #import "YFBActivateModel.h"
 #import <QBPaymentManager.h>
 #import <QBPaymentConfig.h>
+#import <WXApi.h>
+#import "YFBAccountManager.h"
+#import "YFBImageUploadManager.h"
 
 static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 
+@interface AppDelegate ()<WXApiDelegate>
+
+@end
 
 @implementation AppDelegate (configuration)
 
 - (void)checkNetworkInfoState {
+    [YFBImageUploadManager registerWithSecretKey:YFB_UPLOAD_SECRET_KEY accessKey:YFB_UPLOAD_ACCESS_KEY scope:YFB_UPLOAD_SCOPE];
+    
     [QBNetworkingConfiguration defaultConfiguration].RESTAppId = YFB_REST_APPID;
     [QBNetworkingConfiguration defaultConfiguration].RESTpV = @([YFB_REST_PV integerValue]);
     [QBNetworkingConfiguration defaultConfiguration].channelNo = YFB_CHANNEL_NO;
     [QBNetworkingConfiguration defaultConfiguration].baseURL = YFB_BASE_URL;
     [QBNetworkingConfiguration defaultConfiguration].useStaticBaseUrl = NO;
     [QBNetworkingConfiguration defaultConfiguration].encryptedType = QBURLEncryptedTypeNew;
+    [QBNetworkingConfiguration defaultConfiguration].encryptionPasssword = YFB_ENCRYPT_PASSWORD;
 #ifdef DEBUG
     //    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
 #endif
@@ -117,6 +126,7 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 }
 
 - (void)showHomeViewController {
+    [WXApi registerApp:YFB_WEXIN_APP_ID];
     self.window.rootViewController = self.rootViewController;
     [self.window makeKeyAndVisible];
 }
@@ -219,5 +229,25 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
          [[aspectInfo originalInvocation] setReturnValue:&bShow];
      } error:nil];
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    [WXApi handleOpenURL:url delegate:self];
+    return YES;
+}
+
+#pragma mark - WXApiDelegate
+- (void)onReq:(BaseReq *)req {
+    QBLog(@"%@",req);
+}
+
+- (void)onResp:(BaseResp *)resp {
+    if ([resp isKindOfClass:[SendAuthResp class]]) {
+        [[YFBAccountManager manager] sendAuthRespCode:(SendAuthResp *)resp];
+    }
+}
+
+#pragma mark - QQApiInterfaceDelegate
+
+
 
 @end
