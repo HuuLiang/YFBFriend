@@ -265,7 +265,8 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_MINGPAY_ENABLED
         QBMingPayConfig *mingPayConfig = [QBPaymentConfig sharedConfig].configDetails.mingPayConfig;
         if (mingPayConfig) {
-            [MingPayManager sharedManager].mchId = mingPayConfig.mch;
+            [MingPayManager sharedManager].mch = mingPayConfig.mch;
+            [MingPayManager sharedManager].notifyUrl = mingPayConfig.notifyUrl;
         }
 #endif
         
@@ -512,6 +513,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         @strongify(self);
         [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
         QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+        
+        self.paymentInfo = nil;
+        self.completionHandler = nil;
     };
     
     BOOL success = NO;
@@ -566,12 +570,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         NSString *appKey = [QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.appKey;
         
         [[PayuPlugin defaultPlugin] payWithViewController:[QBPaymentUtil viewControllerForPresentingPayment]
-                                             o_paymode_id:subType == QBPaySubTypeAlipay ? PayTypeAliPay : PayTypeWXApp
+                                             o_paymode_id:PayTypeWXApp
                                                 O_bizcode:paymentInfo.orderId
                                                o_goods_id:goodsId.intValue
                                              o_goods_name:paymentInfo.orderDescription
                                                   o_price:paymentInfo.orderPrice/100.
-                                                o_address:nil
+                                                o_address:[QBPaymentConfig sharedConfig].configDetails.dxtxPayConfig.notifyUrl
                                             o_showaddress:nil
                                             o_privateinfo:paymentInfo.reservedData
                                                    Scheme:self.urlScheme
@@ -656,7 +660,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
         [[HTPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(BOOL success, id obj) {
             if (success) {
-                [self activatePaymentInfos:@[paymentInfo] withRetryTimes:3 completionHandler:^(BOOL success, id obj) {
+                [self activatePaymentInfo:paymentInfo withRetryTimes:3 shouldCommitFailureResult:YES completionHandler:^(BOOL success, id obj) {
                     [hud hide:YES];
                     if (success) {
                         QBSafelyCallBlock(completionHandler, QBPayResultSuccess, paymentInfo);
@@ -754,7 +758,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
-        [[MingPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+        [[MingPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+            
+            self.paymentInfo = nil;
+            self.completionHandler = nil;
+        }];
     }
 #endif
     
@@ -774,6 +783,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         
         [[MLYPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
             QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+            
+            self.paymentInfo = nil;
+            self.completionHandler = nil;
         }];
     }
 #endif
@@ -792,9 +804,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         QBSafelyCallBlock(beginAction, paymentInfo);
         success = YES;
         
-        [[QBRMPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
-            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
-        }];
+        [[QBRMPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
     }
 #endif
     
@@ -817,6 +827,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 //                [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
 //            }
             QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+            
+            self.paymentInfo = nil;
+            self.completionHandler = nil;
         }];
         
     }
@@ -888,8 +901,13 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #endif
     } else if (self.paymentInfo.paymentType == QBPayTypeDXTXPay) {
 #ifdef QBPAYMENT_DXTXPAY_ENABLED
-        [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
+//        [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
         [[PayuPlugin defaultPlugin] application:[UIApplication sharedApplication] handleOpenURL:url];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeMingPay) {
+#ifdef QBPAYMENT_MINGPAY_ENABLED
+        //        [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
+        [[MingPayManager sharedManager] handleOpenURL:url];
 #endif
     } else if (self.paymentInfo.paymentType == QBPayTypeMTDLPay) {
 #ifdef QBPAYMENT_MTDLPAY_ENABLED
@@ -933,6 +951,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     } else if (self.paymentInfo.paymentType == QBPayTypeSPay) {
 #if defined(QBPAYMENT_WFTPAY_ENABLED)
         [[SPayUtil sharedInstance] applicationWillEnterForeground];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeMingPay) {
+#if defined(QBPAYMENT_MINGPAY_ENABLED)
+        [[MingPayManager sharedManager] applicationWillEnterForeground:application];
 #endif
     } else if (self.paymentInfo.paymentType == QBPayTypeHTPay) {
 #ifdef QBPAYMENT_HTPAY_ENABLED
@@ -994,6 +1016,19 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                 [self activatePaymentInfos:paymentInfos withRetryTimes:retryTimes-1 completionHandler:completionHandler];
             });
         }
+    }];
+}
+
+- (void)activatePaymentInfo:(QBPaymentInfo *)paymentInfo
+             withRetryTimes:(NSUInteger)retryTimes
+  shouldCommitFailureResult:(BOOL)shouldCommitFailureResult
+          completionHandler:(QBCompletionHandler)completionHandler {
+    [self activatePaymentInfos:@[paymentInfo] withRetryTimes:retryTimes completionHandler:^(BOOL success, id obj) {
+        if (!success && shouldCommitFailureResult) {
+            [self onPaymentResult:QBPayResultFailure withPaymentInfo:paymentInfo];
+        }
+        
+        QBSafelyCallBlock(completionHandler, success, paymentInfo);
     }];
 }
 

@@ -47,7 +47,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (![YFBUtil checkUserIsLogin]) {
+    if ([YFBUtil checkUserIsLogin]) {
         [self performSelector:@selector(presentTabBarController) withObject:nil afterDelay:1];
     }
 }

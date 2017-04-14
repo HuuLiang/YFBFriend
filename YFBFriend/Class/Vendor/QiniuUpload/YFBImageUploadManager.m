@@ -7,9 +7,13 @@
 //
 
 #import "YFBImageUploadManager.h"
+#import <AFNetworking.h>
 #import "QiniuToken.h"
 #import "QiniuUploader.h"
-#import <AFNetworking.h>
+
+@interface YFBImageUploadManager ()
+@property (nonatomic) NSString *accessToken;
+@end
 
 @implementation YFBImageUploadManager
 
@@ -17,14 +21,14 @@
     [QiniuToken registerWithScope:scope SecretKey:secretKey Accesskey:accessKey];
 }
 
-//+ (NSString *)imageURLWithName:(NSString *)name {
-//    NSString *baseURL = [YPBSystemConfig sharedConfig].imgUrl;
-//    if (![baseURL hasSuffix:@"/"]) {
-//        baseURL = [baseURL stringByAppendingString:@"/"];
-//    }
-//    
-//    return [baseURL stringByAppendingString:name];
-//}
++ (NSString *)imageURLWithName:(NSString *)name {
+    NSString *baseURL = @"http://mfw.jtd51.com";
+    if (![baseURL hasSuffix:@"/"]) {
+        baseURL = [baseURL stringByAppendingString:@"/"];
+    }
+    
+    return [baseURL stringByAppendingString:name];
+}
 
 + (BOOL)uploadImage:(UIImage *)image
            withName:(NSString *)name
@@ -32,16 +36,22 @@
 {
     QiniuUploader *uploader = [[QiniuUploader alloc] init];
     
-    uploader.uploadOneFileSucceeded = ^(AFHTTPRequestSerializer *operation, NSInteger index, NSString *key) {
-        QBSafelyCallBlock(handler,YES,nil);
+    uploader.uploadOneFileSucceeded = ^(NSInteger index, NSString * _Nonnull key, NSDictionary * _Nonnull info) {
+        QBSafelyCallBlock(handler,YES,[self imageURLWithName:key]);
     };
     
-    uploader.uploadOneFileFailed = ^(AFHTTPRequestSerializer *operation, NSInteger index, NSDictionary *error) {
+    uploader.uploadOneFileFailed = ^(NSInteger index, NSError * _Nullable error) {
         QBSafelyCallBlock(handler,NO,error);
     };
     
+    uploader.uploadOneFileProgress = ^(NSInteger index, NSProgress * _Nonnull process) {
+        QBLog(@"%@",process);
+    };
+    
+    
     [self uploader:uploader addImage:image withName:name];
-    return [uploader startUpload];
+    NSString *acccessToken = [[QiniuToken sharedQiniuToken] uploadToken];
+    return [uploader startUploadWithAccessToken:acccessToken];
 }
 
 + (void)uploader:(QiniuUploader *)uploader addImage:(UIImage *)image withName:(NSString *)name {

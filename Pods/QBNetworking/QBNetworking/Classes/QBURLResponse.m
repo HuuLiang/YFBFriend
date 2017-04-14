@@ -51,6 +51,12 @@ const NSUInteger kSuccessResponseCode = 100;
             propertyName = setPropertyName;
         }
         
+        if ([setPropertyName isEqualToString:@"code"]) {
+            setPropertyName = @"resultCode";
+            propertyName = setPropertyName;
+        }
+        
+        
         if (![properties containsObject:setPropertyName]) {
             return ;
         }

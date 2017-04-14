@@ -39,7 +39,7 @@
 /**
  *  uploadToken.
  */
-- (NSString *)uploadTokenWithKey:(NSString *)key;
+- (NSString *)uploadToken;
 
 /**
  *  initialize instance with scope, secret key and access key, the defaut live time is 5 minutes.

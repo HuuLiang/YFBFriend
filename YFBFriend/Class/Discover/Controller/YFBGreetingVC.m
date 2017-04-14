@@ -9,6 +9,9 @@
 #import "YFBGreetingVC.h"
 #import "YFBGreetingCell.h"
 #import "YFBGreetingHeaderView.h"
+#import "YFBRobot.h"
+#import "YFBGreetingModel.h"
+#import "YFBInteractionManager.h"
 
 static NSString *const kYFBGreetingCellReusableIdentifier = @"kYFBGreetingCellReusableIdentifier";
 static NSString *const kYFBGreetingHeaderReusableIdentifier = @"kYFBGreetingHeaderReusableIdentifier";
@@ -17,10 +20,12 @@ static NSString *const kYFBGreetingHeaderReusableIdentifier = @"kYFBGreetingHead
 @interface YFBGreetingVC () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong) UICollectionView *layoutCollectionView;
 @property (nonatomic,strong) NSMutableArray *dataSource;
+@property (nonatomic,strong) YFBGreetingInfoModel *greetInfoModel;
 @end
 
 @implementation YFBGreetingVC
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+QBDefineLazyPropertyInitialization(YFBGreetingInfoModel, greetInfoModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,10 +59,15 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)loadData {
-    for (int i = 0; i < 5 ; i++) {
-        [self.dataSource addObject:@"http://hwimg.jtd51.com/wysy/video/imgcover/20160818dj53.jpg"];
-    }
-    [_layoutCollectionView reloadData];
+    @weakify(self);
+    [self.greetInfoModel fetchGreetingInfoWithCompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            [self.dataSource removeAllObjects];
+            [self.dataSource addObjectsFromArray:obj];
+            [self->_layoutCollectionView reloadData];
+        }
+    }];
 }
 
 - (void)showInViewController:(UIViewController *)viewController {
@@ -108,13 +118,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 3;
+    return self.dataSource.count < 3 ? self.dataSource.count : 3;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YFBGreetingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kYFBGreetingCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.item < self.dataSource.count) {
-        cell.imageUrl = self.dataSource[indexPath.item];
+        YFBRobot *info = self.dataSource[indexPath.item];
+        cell.imageUrl = info.portraitUrl;
     }
     return cell;
 }
@@ -126,10 +137,16 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         headerView.greeingBlock = ^{
             @strongify(self);
             //批量打招呼 并退出推荐弹窗
+            [[YFBInteractionManager manager] greetWithUserInfoList:self.dataSource handler:^(BOOL *success) {
+               
+            }];
             [self hide];
         };
-        headerView.backImageUrl = self.dataSource[0];
-        headerView.frontImageUrl = self.dataSource[1];
+        YFBRobot *info = [self.dataSource firstObject];
+        if (info) {
+            headerView.backImageUrl = info.onKeyGreetImgUrl;
+            headerView.frontImageUrl = info.onKeyGreetImgUrl;
+        }
         return headerView;
     }
     return nil;

@@ -59,7 +59,7 @@ static NSString *const kPPVideoSystemConfigPayYearKeyName     = @"PP_SystemConfi
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YFBFetchSystemConfigCompletionHandler)handler {
     @weakify(self);
-    BOOL success = [self requestURLPath:YFB_SYSTEM_CONFIG_URL
+    BOOL success = [self requestURLPath:nil
                              withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {

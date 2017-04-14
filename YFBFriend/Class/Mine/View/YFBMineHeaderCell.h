@@ -12,7 +12,7 @@
 
 @property (nonatomic,copy) NSString *name;
 @property (nonatomic,copy) NSString *idNumber;
-@property (nonatomic,strong) UIImage *headerImage;
+@property (nonatomic,copy) NSString *headerImage;
 @property (nonatomic,copy) NSString *invite;//邀请码
 
 @property (nonatomic,copy) QBAction ktVipAction;//开通VIP

@@ -34,5 +34,4 @@
 - (void)setImageUrl:(NSString *)imageUrl {
     [_imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
 }
-
 @end

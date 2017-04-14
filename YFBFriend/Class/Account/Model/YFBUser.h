@@ -20,12 +20,10 @@ typedef NS_ENUM(NSInteger, YFBLoginType) {
     YFBLoginTypeWX   //微信
 };
 
-#define ENUM_TO_NSSTRING(enum) @#enum
-
-static NSString *const kYFBCurrentUserImageCacheKeyName = @"kYFBCurrentUserImageCacheKeyName";
-
-extern NSString *const kYFBUserSexFemale;
-extern NSString *const KYFBUserSexMale;
+typedef NS_ENUM(NSInteger,YFBUserMarriageStatus) {
+    YFBUserfiance = 0, //未婚
+    YFBUserMarried     //已婚
+};
 
 @interface YFBUser : NSObject <NSCoding>
 
@@ -35,6 +33,8 @@ extern NSString *const KYFBUserSexMale;
 
 
 @property (nonatomic,copy) NSString *userId;
+
+@property (nonatomic,copy) NSString *token;
 
 @property (nonatomic,copy) NSString *password;
 
@@ -52,11 +52,11 @@ extern NSString *const KYFBUserSexMale;
 
 @property (nonatomic,copy) NSString *liveCity;
 
-@property (nonatomic,copy) NSString *height;
+@property (nonatomic) NSInteger height;
 
 @property (nonatomic,copy) NSString *income;
 
-@property (nonatomic,copy) NSString *marrying;
+@property (nonatomic) YFBUserMarriageStatus marriageStatus;
 
 @property (nonatomic,copy) NSString *QQNumber;
 

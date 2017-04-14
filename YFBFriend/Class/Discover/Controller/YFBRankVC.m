@@ -93,17 +93,17 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)loadData {
-    for (int i = 0; i < 30; i++) {
-        YFBRobot * robot = [[YFBRobot alloc] init];
-        robot.userId = @"123123";
-        robot.nickName = @"气泡熊";
-        robot.avatarUrl = @"http://hwimg.jtd51.com/wysy/video/imgcover/20160818dj53.jpg";
-        robot.height = @"176cm";
-        robot.age = @"23岁";
-        robot.distance = @" 1.13km ";
-        robot.userSex = (long)_rankType;
-        [self.dataSource addObject:robot];
-    }
+//    for (int i = 0; i < 30; i++) {
+//        YFBRobot * robot = [[YFBRobot alloc] init];
+//        robot.userId = @"123123";
+//        robot.nickName = @"气泡熊";
+//        robot.portraitUrl = @"http://hwimg.jtd51.com/wysy/video/imgcover/20160818dj53.jpg";
+//        robot.height = @"176cm";
+//        robot.age = @"23岁";
+//        robot.distance = @" 1.13km ";
+//        robot.gender = (long)_rankType;
+//        [self.dataSource addObject:robot];
+//    }
     [_tableView reloadData];
 
 }
@@ -174,13 +174,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (indexPath.row < self.dataSource.count) {
         YFBRobot *robot = self.dataSource[indexPath.row];
         
-        cell.index = indexPath.row;
-        cell.userImageUrl = robot.avatarUrl;
-        cell.nickName = robot.nickName;
-        cell.userSex = robot.userSex;
-        cell.age = [NSString stringWithFormat:@"%ld岁",robot.age];
-        cell.distance = robot.distance;
-        cell.rankType = _rankType;
+//        cell.index = indexPath.row;
+//        cell.userImageUrl = robot.avatarUrl;
+//        cell.nickName = robot.nickName;
+//        cell.userSex = robot.userSex;
+//        cell.age = [NSString stringWithFormat:@"%ld岁",robot.age];
+//        cell.distance = robot.distance;
+//        cell.rankType = _rankType;
         cell.giftCount = [NSString stringWithFormat:@"%ld",(long)arc4random() % 30 + 5];
     }
     return cell;

@@ -8,18 +8,25 @@
 
 #import "YFBNearVC.h"
 #import "YFBRecommendCell.h"
+#import "YFBDiscoverModel.h"
+#import "YFBGreetingModel.h"
 #import "YFBRobot.h"
+#import "YFBInteractionManager.h"
 
 static NSString *const kYFBNearCellReusableIdentifier = @"kYFBNearCellReusableIdentifier";
 
 @interface YFBNearVC () <UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *dataSource;
+@property (nonatomic,strong) YFBDiscoverModel *discoverModel;
+@property (nonatomic,strong) YFBRmdNearByDtoModel *response;
 @property (nonatomic,strong) UIButton   *greetAllButton;
 @end
 
 @implementation YFBNearVC
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+QBDefineLazyPropertyInitialization(YFBDiscoverModel, discoverModel)
+QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,21 +47,28 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             make.edges.equalTo(self.view);
         }];
     }
-    for (int i = 0; i < 30; i++) {
-        YFBRobot * robot = [[YFBRobot alloc] init];
-        robot.userId = @"123123";
-        robot.nickName = @"气泡熊";
-        robot.avatarUrl = @"http://hwimg.jtd51.com/wysy/video/imgcover/20160818dj53.jpg";
-        robot.height = @"176cm";
-        robot.age = @"23岁";
-        robot.userSex = YFBUserSexFemale;
-        robot.distance = @"1.13km";
-        [self.dataSource addObject:robot];
-    }
+
     
     _tableView.tableFooterView = [self tableFooterView];
+    _tableView.tableFooterView.hidden = YES;
     
-    [_tableView reloadData];
+    @weakify(self);
+    [_tableView YFB_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadDataWithPageCount:1 refresh:YES];
+    }];
+    
+    [_tableView YFB_addPagingRefreshWithHandler:^{
+        @strongify(self);
+        if (self.response.pageNum < self.response.pageCount) {
+            self.response.pageNum++;
+        } else if (self.response.pageNum) {
+            self.response.pageNum = 1;
+        }
+        [self loadDataWithPageCount:self.response.pageNum refresh:NO];
+    }];
+    
+    [_tableView YFB_triggerPullToRefresh];
 
 }
 
@@ -62,6 +76,24 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)loadDataWithPageCount:(NSInteger)pageNum refresh:(BOOL)isRefresh {
+    @weakify(self);
+    [self.discoverModel fetchUserInfoWithType:kYFBFriendDiscoverNearbyKeyName pageNum:pageNum CompletionHandler:^(BOOL success, YFBRmdNearByDtoModel * obj) {
+        @strongify(self);
+        [self->_tableView YFB_endPullToRefresh];
+        if (success) {
+            self->_tableView.tableFooterView.hidden = NO;
+            self.response = obj;
+            if (isRefresh) {
+                [self.dataSource removeAllObjects];
+            }
+            [self.dataSource addObjectsFromArray:obj.userList];
+        }
+        [self->_tableView reloadData];
+    }];
+}
+
 
 - (void)viewDidLayoutSubviews {
     UIEdgeInsets imageEdge = _greetAllButton.imageEdgeInsets;
@@ -86,7 +118,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [_greetAllButton bk_addEventHandler:^(id sender) {
         @strongify(self);
         //批量打招呼
-        
+        [[YFBInteractionManager manager] greetWithUserInfoList:self.dataSource handler:^(BOOL *success) {
+            if (success) {
+                [self->_tableView reloadData];
+            }
+        }];
     } forControlEvents:UIControlEventTouchUpInside];
     
     [_greetAllButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -111,14 +147,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBNearCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.row < self.dataSource.count) {
-        YFBRobot *robot = self.dataSource[indexPath.row];
-        cell.userNameStr = robot.nickName;
-        cell.userImgUrl = robot.avatarUrl;
-        cell.userAge  = [NSString stringWithFormat:@"%ld岁",robot.age];
-        cell.userHeight = robot.height;
-        cell.userSex = robot.userSex;
-        cell.distance = robot.distance;
-        cell.greeted = robot.greeted;
+        YFBRobot *info = self.dataSource[indexPath.row];
+        cell.userNameStr = info.nickName;
+        cell.userImgUrl = info.portraitUrl;
+        cell.userAge  = [NSString stringWithFormat:@"%ld岁",(long)info.age];
+        cell.userHeight = info.height;
+        cell.distance = info.distance;
+        cell.userSex = [info.gender isEqualToString:@"M"] ? YFBUserSexMale : YFBUserSexFemale;
+        cell.greeted = [YFBRobot checkUserIsGreetedWithUserId:info.userId];
         @weakify(self);
         cell.greeting = ^(id sender) {
             @strongify(self);
@@ -126,7 +162,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             if (!thisButton.isSelected) {
                 thisButton.selected = YES;
                 //打招呼
-                
+                [[YFBInteractionManager manager] greetWithUserInfoList:@[info] handler:^(BOOL *success) {
+                    if (success) {
+                        YFBRecommendCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                        cell.greeted  = YES;
+                    }
+                }];
             }
         };
     }

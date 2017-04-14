@@ -42,7 +42,7 @@
     NSDictionary *params = @{@"userId":@"",
                              @"vipMonths":@(months)};
     
-    BOOL success = [self requestURLPath:YFB_VIPUPDATE_URL
+    BOOL success = [self requestURLPath:nil
                          standbyURLPath:nil
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)

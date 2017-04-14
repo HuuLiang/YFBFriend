@@ -158,8 +158,8 @@
     _nameLabel.text = name;
 }
 
-- (void)setHeaderImage:(UIImage *)headerImage {
-    _headerImageView.image = headerImage;
+- (void)setHeaderImage:(NSString *)headerImage {
+    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:headerImage]];;
 }
 
 - (void)setIdNumber:(NSString *)idNumber {

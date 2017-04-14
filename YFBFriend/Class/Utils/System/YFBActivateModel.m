@@ -59,7 +59,7 @@ static NSString *const kSuccessResponse = @"SUCCESS";
                              @"appVersion":[YFBUtil appVersion],
                              @"appId":YFB_REST_APPID};
     
-    BOOL success = [self requestURLPath:YFB_ACTIVATION_URL
+    BOOL success = [self requestURLPath:nil
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
                             YFBActivate *resp;

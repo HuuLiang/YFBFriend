@@ -152,8 +152,8 @@
     }
 }
 
-- (void)setUserHeight:(NSString *)userHeight {
-    _userHeightLabel.text = userHeight;
+- (void)setUserHeight:(NSInteger )userHeight {
+    _userHeightLabel.text = [NSString stringWithFormat:@"%ld cm",userHeight];;
 }
 
 - (void)setGreeted:(BOOL)greeted {
@@ -161,9 +161,9 @@
     _greetButton.enabled = !greeted;
 }
 
-- (void)setDistance:(NSString *)distance {
+- (void)setDistance:(NSInteger)distance {
     _distanceLabel.hidden = NO;
-    _distanceLabel.text = distance;
+    _distanceLabel.text = [NSString stringWithFormat:@"%ldkm",distance];
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -173,6 +173,12 @@
     CGFloat imageInsetsLeft = (greetButtonFrame.size.width - _greetButton.imageView.frame.size.width)/2;
     _greetButton.imageEdgeInsets = UIEdgeInsetsMake(-(greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft, (greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft);
     _greetButton.titleEdgeInsets = UIEdgeInsetsMake(_greetButton.imageView.size.height, -_greetButton.frame.size.width, 0, -(_greetButton.frame.size.width-_greetButton.imageView.frame.size.width));
+    
+    UIEdgeInsets imageEdge = _sexButton.imageEdgeInsets;
+    UIEdgeInsets titleEdge = _sexButton.titleEdgeInsets;
+    _sexButton.imageEdgeInsets = UIEdgeInsetsMake(imageEdge.top, imageEdge.left - 2.5, imageEdge.bottom, imageEdge.right + 2.5);
+    _sexButton.titleEdgeInsets = UIEdgeInsetsMake(titleEdge.top, titleEdge.left + 2.5, titleEdge.bottom, titleEdge.right - 2.5);
+
 }
 
 @end

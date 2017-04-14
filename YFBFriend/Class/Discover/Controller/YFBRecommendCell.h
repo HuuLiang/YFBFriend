@@ -14,11 +14,11 @@
 @property (nonatomic,copy)   NSString *userNameStr;
 @property (nonatomic,assign) YFBUserSex   userSex;
 @property (nonatomic,copy)   NSString * userAge;
-@property (nonatomic,copy)   NSString  *userHeight;
+@property (nonatomic)   NSInteger  userHeight;
 @property (nonatomic,copy)   NSString *cityStr;
 @property (nonatomic,assign) BOOL greeted;
 
-@property (nonatomic,copy)   NSString *distance;
+@property (nonatomic)   NSInteger distance;
 
 @property (nonatomic,copy) QBAction greeting;
 

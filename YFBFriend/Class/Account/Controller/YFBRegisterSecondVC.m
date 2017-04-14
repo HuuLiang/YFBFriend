@@ -68,9 +68,15 @@ QBDefineLazyPropertyInitialization(YFBRegisterUserModel, registerModel)
                                                        @strongify(self);
                                                        [[YFBPhotoManager manager] getImageInCurrentViewController:self handler:^(UIImage *pickerImage, NSString *keyName) {
                                                            [self->_avatarView setUserImg:pickerImage];
-                                                           [[SDImageCache sharedImageCache] storeImage:pickerImage forKey:kYFBCurrentUserImageCacheKeyName];
-                                                           NSString *name = [NSString stringWithFormat:@"%@_avatar.jpg", [[NSDate date] stringWithFormat:kDefaultDateFormat]];
-                                                           [YFBImageUploadManager uploadImage:pickerImage withName:<#(NSString *)#> completionHandler:<#^(BOOL success, id obj)handler#>]
+                                                           NSString *name = [NSString stringWithFormat:@"%@_avatar.jpg", [[NSDate date] stringWithFormat:KDateFormatLong]];
+                                                           [YFBImageUploadManager uploadImage:pickerImage withName:name completionHandler:^(BOOL success, id obj) {
+                                                               if (success) {
+                                                                   [YFBUser currentUser].userImage = obj;
+                                                                   [[YFBHudManager manager] showHudWithText:@"头像上传成功"];
+                                                               } else {
+                                                                   [[YFBHudManager manager] showHudWithText:@"头像上传失败"];
+                                                               }
+                                                           }];
                                                        }];
                                                    }];
     
@@ -107,7 +113,6 @@ QBDefineLazyPropertyInitialization(YFBRegisterUserModel, registerModel)
     [self.registerModel registerUserWithUserInfo:[YFBUser currentUser] CompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (success) {
-            
             YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
             [self presentViewController:tabbarController animated:YES completion:nil];
         }
@@ -182,7 +187,7 @@ QBDefineLazyPropertyInitialization(YFBRegisterUserModel, registerModel)
                                            doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                                                @strongify(self);
                                                [self configRegisterDetailCellWithSelectedValue:selectedValue indexPath:indexPath];
-                                               [YFBUser currentUser].height = selectedValue;
+                                               [YFBUser currentUser].height = [selectedValue integerValue];
                                            } cancelBlock:nil origin:self.view];
     } else if (indexPath.row == YFBRegisterDetailMarrRow) {
         [ActionSheetStringPicker showPickerWithTitle:@"婚姻"
@@ -191,7 +196,7 @@ QBDefineLazyPropertyInitialization(YFBRegisterUserModel, registerModel)
                                            doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                                                @strongify(self);
                                                [self configRegisterDetailCellWithSelectedValue:selectedValue indexPath:indexPath];
-                                               [YFBUser currentUser].marrying = selectedValue;
+                                               [YFBUser currentUser].marriageStatus = selectedIndex;
                                            } cancelBlock:nil origin:self.view];
     }
 }

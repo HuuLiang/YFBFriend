@@ -34,7 +34,7 @@
     }
     
     @weakify(self);
-    BOOL ret = [super requestURLPath:YFB_ACCESS_URL
+    BOOL ret = [super requestURLPath:nil
                           withParams:@{@"userId":userId,@"accessId":[YFBUtil accessId]}
                      responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                 {

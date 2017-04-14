@@ -11,6 +11,7 @@
 #import "ActionSheetPicker.h"
 #import "YFBUserInfoEditView.h"
 #import "YFBPhotoManager.h"
+#import "YFBImageUploadManager.h"
 
 typedef NS_ENUM(NSUInteger,YFBUserInfoSection) {
     YFBUserInfoSectionIntro = 0,
@@ -104,7 +105,8 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
     _avatarView.size = CGSizeMake(kScreenWidth, kWidth(185*2));
     _avatarView.backgroundColor = kColor(@"#7FAFF6");
     
-    self.userImageView = [[UIImageView alloc] initWithImage:[YFBUser currentUser].userImage];
+    self.userImageView = [[UIImageView alloc] init];
+    [_userImageView sd_setImageWithURL:[NSURL URLWithString:[YFBUser currentUser].userImage] placeholderImage:[UIImage imageNamed:@"mine_default_avatar_icon"]];
     _userImageView.layer.cornerRadius = kWidth(70);
     _userImageView.layer.masksToBounds = YES;
     _userImageView.userInteractionEnabled = YES;
@@ -120,7 +122,11 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
     [_userImageView bk_whenTapped:^{
         @strongify(self);
         [[YFBPhotoManager manager] getImageInCurrentViewController:self handler:^(UIImage *pickerImage, NSString *keyName) {
-            [[SDImageCache sharedImageCache] storeImage:pickerImage forKey:kYFBCurrentUserImageCacheKeyName];
+//            [[SDImageCache sharedImageCache] storeImage:pickerImage forKey:kYFBCurrentUserImageCacheKeyName];
+            NSString *name = [NSString stringWithFormat:@"%@_avatar.jpg", [[NSDate date] stringWithFormat:KDateFormatLong]];
+            [YFBImageUploadManager uploadImage:pickerImage withName:name completionHandler:^(BOOL success, id obj) {
+                
+            }];
             @strongify(self);
             self->_userImageView.image = pickerImage;
         }];
@@ -164,7 +170,7 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBUserDataInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBMineDataInfoCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.section == YFBUserInfoSectionIntro) {
-        NSString *content = [NSString stringWithFormat:@"%@,%ld,%@,%@",[YFBUser currentUser].userSex == YFBUserSexMale?@"男" :@"女",[YFBUser currentUser].age,[YFBUser currentUser].height,[YFBUser currentUser].liveCity];
+        NSString *content = [NSString stringWithFormat:@"%@,%ld,%ld,%@",[YFBUser currentUser].userSex == YFBUserSexMale?@"男" :@"女",[YFBUser currentUser].age,[YFBUser currentUser].height,[YFBUser currentUser].liveCity];
         [cell setDescTitle:content font:kFont(14)];
     } else if (indexPath.section == YFBUserInfoSectionSignature) {
         [cell setDescTitle:[YFBUser currentUser].signature font:kFont(14)];
@@ -177,19 +183,19 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
             cell.subTitle = [YFBUser currentUser].userSex == YFBUserSexMale ? @"男" : @"女";
         } else if (indexPath.row == YFBUserInfoIntroSectionAge) {
             cell.title = @"年龄";
-            cell.subTitle = [NSString stringWithFormat:@"%ld岁",[YFBUser currentUser].age];
+            cell.subTitle = [NSString stringWithFormat:@"%ld岁",(long)[YFBUser currentUser].age];
         } else if (indexPath.row == YFBUserInfoIntroSectionLiveCity) {
             cell.title = @"居住市";
             cell.subTitle = [YFBUser currentUser].liveCity;
         } else if (indexPath.row == YFBUserInfoIntroSectionHeight) {
             cell.title = @"身高";
-            cell.subTitle = [YFBUser currentUser].height;
+            cell.subTitle = [NSString stringWithFormat:@"%ldcm",[YFBUser currentUser].height];
         } else if (indexPath.row == YFBUserInfoIntroSectionIncome) {
             cell.title = @"月收入";
             cell.subTitle = [YFBUser currentUser].income;
         } else if (indexPath.row == YFBUserInfoIntroSectionMarrying) {
             cell.title = @"婚姻状况";
-            cell.subTitle = [YFBUser currentUser].marrying;
+            cell.subTitle = [YFBUser currentUser].marriageStatus == YFBUserfiance ? @"未婚" : @"已婚";
         }
     } else if (indexPath.section == YFBUserInfoSectionCantact) {
         if (indexPath.row == YFBUserInfoContactSectionQQ)  {
@@ -318,7 +324,7 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
             [picker showActionSheetPicker];
         } else if (indexPath.row == YFBUserInfoIntroSectionHeight) {
             [self showActionSheetPickerWithTitle:@"身高" rows:[YFBUser allUserHeight] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
-                [YFBUser currentUser].height = selectedValue;
+                [YFBUser currentUser].height = [selectedValue integerValue];
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionIncome) {
             [self showActionSheetPickerWithTitle:@"收入" rows:[YFBUser allUserIncome] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
@@ -326,7 +332,7 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionMarrying) {
             [self showActionSheetPickerWithTitle:@"婚姻状况" rows:[YFBUser allUserMarr] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
-                [YFBUser currentUser].marrying = selectedValue;
+                [YFBUser currentUser].marriageStatus = [selectedValue isEqualToString:@"未婚"] ? YFBUserfiance : YFBUserMarried;
             }];
         }
     } else if (indexPath.section == YFBUserInfoSectionCantact) {

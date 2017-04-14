@@ -36,7 +36,7 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
     return @[@"appId",kEncryptionKeyName,@"imsi",@"channelNo",@"pV"];
 }
 
-- (NSDictionary *)encryptWithParams:(NSDictionary *)params {
+- (id)encryptWithParams:(NSDictionary *)params {
     if (self.configuration.encryptedType == QBURLEncryptedTypeOriginal) {
         NSMutableDictionary *mergedParams = params ? params.mutableCopy : [NSMutableDictionary dictionary];
         NSDictionary *commonParams = [self commonParams];
@@ -49,13 +49,15 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
         if (!params) {
             return nil;
         }
-        NSMutableArray *array = [[NSMutableArray alloc] init];
-        [params enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            [array addObject:[NSString stringWithFormat:@"%@=%@",key,obj]];
-        }];
-        NSString *endataStr = [array componentsJoinedByString:@"&"];
-        NSString *encryptedKey = [endataStr encryptedStringWithPassword:[(self.configuration.encryptionPasssword ?: kNewEncryptionPassword).md5 substringToIndex:16]];
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
+        if (!jsonData) {
+            return nil;
+        }
+        
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSString *encryptedKey = [jsonString encryptedStringWithPassword:[(self.configuration.encryptionPasssword ?: kNewEncryptionPassword).md5 substringToIndex:16]];
         return @{@"data":encryptedKey};
+//        return [NSString stringWithFormat:@"data=%@",encryptedKey];
     }
 }
 
@@ -95,8 +97,8 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
         return jsonObject;
     } else if (self.configuration.encryptedType == QBURLEncryptedTypeNew) {
         NSString *str = [[NSString alloc] initWithData:encryptedResponse encoding:NSUTF8StringEncoding];
-        NSString *decryptedStr = [str decryptedStringWithPassword:[(self.configuration.encryptionPasssword ?: kNewEncryptionPassword).md5 substringToIndex:16]];
-        NSData *jsonData = [decryptedStr dataUsingEncoding:NSUTF8StringEncoding];
+//        NSString *decryptedStr = [str decryptedStringWithPassword:[(self.configuration.encryptionPasssword ?: kNewEncryptionPassword).md5 substringToIndex:16]];
+        NSData *jsonData = [str dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:nil];
         return responseJSON;
     }

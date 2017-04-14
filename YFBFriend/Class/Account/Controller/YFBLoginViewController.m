@@ -137,6 +137,7 @@
     
     [_registerButton bk_addEventHandler:^(id sender) {
         @strongify(self);
+        [YFBUser currentUser].loginType = YFBLoginTypeDefine;
         YFBRegisterFirstVC *registerVC = [[YFBRegisterFirstVC alloc] initWithTitle:@"填写用户信息"];
         [self.navigationController pushViewController:registerVC animated:YES];
     } forControlEvents:UIControlEventTouchUpInside];

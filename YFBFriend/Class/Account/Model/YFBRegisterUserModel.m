@@ -20,7 +20,7 @@
 }
 
 - (NSTimeInterval)requestTimeInterval {
-    return 5;
+    return 10;
 }
 
 + (Class)responseClass {
@@ -30,17 +30,16 @@
 - (BOOL)registerUserWithUserInfo:(YFBUser *)user CompletionHandler:(QBCompletionHandler)handler {
     NSDictionary *userInfo = @{@"channelNo":YFB_CHANNEL_NO,
                                @"loginType":@(user.loginType),
-                               @"loginName":user.nickName,
                                @"password":user.password,
                                @"nickName":user.nickName,
                                @"portraitUrl":user.userImage,
-                               @"age":@"",
-                               @"vocation":@"",
-                               @"education":@"",
-                               @"monthlyIncome":@"",
-                               @"height":@"",
-                               @"marriageStatus":@"",
-                               @"gender":@"",};
+                               @"age":@(user.age),
+                               @"vocation":user.job,
+                               @"education":user.education,
+                               @"monthlyIncome":user.income,
+                               @"height":@(user.height),
+                               @"marriageStatus":@(user.marriageStatus),
+                               @"gender":user.userSex == YFBUserSexMale ? @"M" : @"F"};
     
     
     BOOL success = [self requestURLPath:YFB_USERCREATE_URL
@@ -50,7 +49,10 @@
                     {
                         YFBRegisterUserResponse *resp = nil;
                         if (respStatus == QBURLResponseSuccess) {
-                            
+                            resp = self.response;
+                            [YFBUser currentUser].userId = resp.userId;
+                            [YFBUser currentUser].token = resp.token;
+                            [[YFBUser currentUser] saveOrUpdate];
                         }
                         if (handler) {
                             QBSafelyCallBlock(handler,respStatus == QBURLResponseSuccess,resp);

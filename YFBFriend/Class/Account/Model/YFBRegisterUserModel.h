@@ -9,7 +9,9 @@
 #import <QBEncryptedURLRequest.h>
 
 @interface YFBRegisterUserResponse : QBURLResponse
-
+@property (nonatomic) NSInteger code;
+@property (nonatomic) NSString *userId;
+@property (nonatomic) NSString *token;
 @end
 
 @interface YFBRegisterUserModel : QBEncryptedURLRequest

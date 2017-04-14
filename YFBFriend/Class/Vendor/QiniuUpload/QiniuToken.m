@@ -9,8 +9,8 @@
 #import "QiniuToken.h"
 #import <CommonCrypto/CommonHMAC.h>
 #import <CommonCrypto/CommonCryptor.h>
-#import "GTMDefines.h"
-#import "GTMBase64.h"
+#import "QUMDefines.h"
+#import "QUMBase64.h"
 
 @implementation QiniuToken
 
@@ -48,10 +48,10 @@ static QiniuToken *qiniuToken = nil;
     return qiniuToken;
 }
 
-- (NSString *)uploadTokenWithKey:(NSString *)key
+- (NSString *)uploadToken
 {
     NSMutableDictionary *authInfo = [[NSMutableDictionary alloc]init];
-    [authInfo setObject:[NSString stringWithFormat:@"%@:%@", scope, key] forKey:@"scope"];
+    [authInfo setObject:scope forKey:@"scope"];
     [authInfo setObject:[NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970]+self.liveTime] forKey:@"deadline" ];
     //    [authInfo setObject:@"" forKey:@"callbackUrl"];
     //    [authInfo setObject:@"" forKey:@"callbackBodyType"];
@@ -60,7 +60,6 @@ static QiniuToken *qiniuToken = nil;
     //    [authInfo setObject:@"" forKey:@"asyncOps"];
     //    [authInfo setObject:@"" forKey:@"returnBody"];
     [authInfo setObject:[NSNumber numberWithInt:1] forKey:@"detectMime"];
-    [authInfo setObject:@0 forKey:@"insertOnly"];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:authInfo
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:nil];
@@ -86,7 +85,7 @@ static QiniuToken *qiniuToken = nil;
 
 - (NSString *)urlSafeBase64Encode:(NSData *)text
 {
-    NSString *base64 = [[NSString alloc] initWithData:[GTMBase64 encodeData:text]
+    NSString *base64 = [[NSString alloc] initWithData:[QUMBase64 encodeData:text]
                                              encoding:NSUTF8StringEncoding];
     base64 = [base64 stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
     base64 = [base64 stringByReplacingOccurrencesOfString:@"/" withString:@"_"];

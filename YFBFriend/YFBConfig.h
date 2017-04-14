@@ -21,19 +21,13 @@
 #define YFB_BASE_URL                    @"http://120.24.252.114/friend"//@"http://mcps.dswtg.com"
 #define YFB_STANDBY_BASE_URL            @"http://sfs.dswtg.com"
 
-#define YFB_ACTIVATION_URL              @"/mfwcps/jihuo.htm"                     //激活
-#define YFB_ACCESS_URL                  @"/mfwcps/userAccess.htm"                //登录次数
-#define YFB_SYSTEM_CONFIG_URL           @"/mfwcps/systemConfig.htm"              //系统配置
-#define YFB_USERCREATE_URL              @"reg.service?"                          //注册
-#define YFB_CHARACTER_URL               @"/mfwcps/recommend.htm"                 //推荐
-#define YFB_CHARACTER_FIGURE_URL        @"/mfwcps/recommendPage.htm"              //人物
-#define YFB_DYNAMIC_URL                 @"/mfwcps/moodSection.htm"               //动态
-#define YFB_NEAR_PERSON_URL             @"/mfwcps/peopleNearby.htm"              //附近
-#define YFB_USER_DETAIL_URL             @"/mfwcps/userDetails.htm"               //详情
-#define YFB_INTERACTIVE_URL             @"/mfwcps/interactive.htm"               //交互  关注  粉丝  访问我的
-#define YFB_BATCHGREET_URL              @"/mfwcps/batchGreetCreate.htm"          //批量打招呼
-#define YFB_MESSAGECREATE_URL           @"/mfwcps/messageCreate.htm"             //消息新增
-#define YFB_VIPUPDATE_URL               @"/mfwcps/updateUserVip.htm"             //升级VIP
+//#define YFB_ACTIVATION_URL              @"/mfwcps/jihuo.htm"                     //激活
+//#define YFB_ACCESS_URL                  @"/mfwcps/userAccess.htm"                //登录次数
+//#define YFB_SYSTEM_CONFIG_URL           @"/mfwcps/systemConfig.htm"              //系统配置
+#define YFB_USERCREATE_URL              @"reg.service"                          //注册
+#define YFB_GREETINFO_URL               @"oneKeyUserList.service"               //获取一键打招呼用户列表
+#define YFB_GREET_URL                   @"oneKeyGreet.service"                 //一键打招呼
+#define YFB_RMDNEARBY_URL               @"rmdNearby.service"                    //
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"
 #define YFB_APP_URL                     @"/iosvideo/appSpreadList.htm"
@@ -47,9 +41,9 @@
 #define YFB_WECHAT_SECRET               @"812993d98872f297bd11486512bf6141"
 #define YFB_WECHAT_USERINFO             @"https://api.weixin.qq.com/sns/userinfo?"
 
-#define YFB_UPLOAD_SCOPE                @"mfw-photo"
-#define YFB_UPLOAD_SECRET_KEY           @"K9cjaa7iip6LxVT9zo45p7DiVxEIo158NTUfJ7dq"
-#define YFB_UPLOAD_ACCESS_KEY           @"02q5Mhx6Tfb525_sdU_VJV6po2MhZHwdgyNthI-U"
+#define YFB_UPLOAD_SCOPE                @"mfw-image"
+#define YFB_UPLOAD_SECRET_KEY           @"JIWlLAM3_bGrfTyU16XKjluzYKcsHOB--yDFB4zt"
+#define YFB_UPLOAD_ACCESS_KEY           @"9mmo2Dd9oca-2SJ5Uou9qQ1d2XjNIoX9EdrPQ6Xj"
 
 
 #endif /* YFBConfig_h */

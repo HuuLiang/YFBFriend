@@ -130,7 +130,7 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
     };
     
     void (^failure)(NSURLSessionDataTask *, NSError *) = ^(NSURLSessionDataTask *task, NSError *error) {
-        QBLog(@"Error for %@ : %@\n", urlPath, error.localizedDescription);
+        QBLog(@"Error for %@ : %@\n", urlPath, error.localizedDescription);        
         
         if (shouldNotifyError) {
             if ([self shouldPostErrorNotification]) {
@@ -209,8 +209,8 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
             [urlResp parseResponseWithDictionary:responseObject];
             if (self.configuration.encryptedType == QBURLEncryptedTypeOriginal) {
             status = urlResp.success.boolValue ? QBURLResponseSuccess : QBURLResponseFailedByInterface;
-            }else if(self.configuration.encryptedType == QBURLEncryptedTypeNew){
-                status = [urlResp.responseCode.value integerValue] == 100 ? QBURLResponseSuccess :QBURLResponseFailedByInterface;
+            } else if(self.configuration.encryptedType == QBURLEncryptedTypeNew){
+                status = [urlResp.resultCode integerValue] == 200 ? QBURLResponseSuccess :QBURLResponseFailedByInterface;
             }
             errorMessage = (status == QBURLResponseSuccess) ? nil : [NSString stringWithFormat:@"ResultCode: %@", urlResp.resultCode];
         } else {
