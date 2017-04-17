@@ -27,7 +27,9 @@
 #define YFB_USERCREATE_URL              @"reg.service"                          //注册
 #define YFB_GREETINFO_URL               @"oneKeyUserList.service"               //获取一键打招呼用户列表
 #define YFB_GREET_URL                   @"oneKeyGreet.service"                 //一键打招呼
-#define YFB_RMDNEARBY_URL               @"rmdNearby.service"                    //
+#define YFB_RMDNEARBY_URL               @"rmdNearby.service"                    //推荐和附近的人
+#define YFB_RANK_URL                    @"fengyun.service"                      //风云榜
+#define YFB_DETAIL_URL                  @"personDtl.service"                    //详情页
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"
 #define YFB_APP_URL                     @"/iosvideo/appSpreadList.htm"

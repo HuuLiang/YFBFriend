@@ -9,8 +9,6 @@
 #import <QBEncryptedURLRequest.h>
 @class YFBRobot;
 
-
-
 @interface YFBGreetingInfoResponse : QBURLResponse
 @property (nonatomic) NSArray <YFBRobot *>*userList;
 @end

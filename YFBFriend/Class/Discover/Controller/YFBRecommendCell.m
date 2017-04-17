@@ -81,6 +81,12 @@
         [self.contentView addSubview:_distanceLabel];
         _distanceLabel.hidden = YES;
         
+        UIEdgeInsets imageEdge = _sexButton.imageEdgeInsets;
+        UIEdgeInsets titleEdge = _sexButton.titleEdgeInsets;
+        _sexButton.imageEdgeInsets = UIEdgeInsetsMake(imageEdge.top, imageEdge.left - 2.5, imageEdge.bottom, imageEdge.right + 2.5);
+        _sexButton.titleEdgeInsets = UIEdgeInsetsMake(titleEdge.top, titleEdge.left + 2.5, titleEdge.bottom, titleEdge.right - 2.5);
+
+        
         {
             [_userImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.contentView).offset(kWidth(14));
@@ -174,10 +180,6 @@
     _greetButton.imageEdgeInsets = UIEdgeInsetsMake(-(greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft, (greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft);
     _greetButton.titleEdgeInsets = UIEdgeInsetsMake(_greetButton.imageView.size.height, -_greetButton.frame.size.width, 0, -(_greetButton.frame.size.width-_greetButton.imageView.frame.size.width));
     
-    UIEdgeInsets imageEdge = _sexButton.imageEdgeInsets;
-    UIEdgeInsets titleEdge = _sexButton.titleEdgeInsets;
-    _sexButton.imageEdgeInsets = UIEdgeInsetsMake(imageEdge.top, imageEdge.left - 2.5, imageEdge.bottom, imageEdge.right + 2.5);
-    _sexButton.titleEdgeInsets = UIEdgeInsetsMake(titleEdge.top, titleEdge.left + 2.5, titleEdge.bottom, titleEdge.right - 2.5);
 
 }
 

@@ -12,9 +12,9 @@
 @property (nonatomic,assign) NSInteger index;
 @property (nonatomic,copy) NSString *userImageUrl;
 @property (nonatomic,copy) NSString *nickName;
-@property (nonatomic,assign) YFBUserSex userSex;
+@property (nonatomic) YFBUserSex userSex;
 @property (nonatomic,copy) NSString *age;
 @property (nonatomic,copy) NSString *distance;
-@property (nonatomic,assign) YFBRankType rankType;
-@property (nonatomic,copy) NSString *giftCount;
+@property (nonatomic) YFBRankType rankType;
+@property (nonatomic) NSInteger giftCount;
 @end

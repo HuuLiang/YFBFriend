@@ -10,6 +10,7 @@
 #import "YFBDetailCell.h"
 #import "YFBDetailHeaderView.h"
 #import "YFBDetailFooterView.h"
+#import "YFBDetailModel.h"
 
 typedef NS_ENUM(NSUInteger, YFBDetailSection) {
     YFBDetailSpace = 0, //个人空间
@@ -65,9 +66,14 @@ static NSString *const kYFBDetailCellReusableIdentifier = @"YFBDetailCellReusabl
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) YFBDetailHeaderView *headerView;
 @property (nonatomic,strong) YFBDetailFooterView *footerView;
+@property (nonatomic,strong) YFBDetailModel *detailModel;
+@property (nonatomic,strong) YFBUserLoginModel *response;
 @end
 
 @implementation YFBDetailViewController
+QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
+QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -86,6 +92,10 @@ static NSString *const kYFBDetailCellReusableIdentifier = @"YFBDetailCellReusabl
             make.edges.equalTo(self.view);
         }];
     }
+    
+    @weakify(self);
+    
+    
     [self configTableHeaderView];
     [self configFooterView];
 }

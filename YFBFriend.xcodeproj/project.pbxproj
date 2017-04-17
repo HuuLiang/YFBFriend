@@ -72,6 +72,7 @@
 		EC67DE8E1E8A304200557E7A /* YFBPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC67DE8D1E8A304200557E7A /* YFBPhotoManager.m */; };
 		EC6AE1E81E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE1E71E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m */; };
 		EC6AE1EB1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE1EA1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m */; };
+		EC6DAFE11EA4568A00D93FB3 /* YFBContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
 		EC7307071E83BCE700D7BF70 /* YFBUserInfoEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7307061E83BCE700D7BF70 /* YFBUserInfoEditView.m */; };
 		EC7F0F7A1E6FA86700F39FD9 /* YFBConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0F791E6FA86700F39FD9 /* YFBConfiguration.m */; };
@@ -253,6 +254,8 @@
 		ECB8C84A1E9DCD5B00B116AC /* POSBlobInputStreamAssetDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8C83D1E9DCD5B00B116AC /* POSBlobInputStreamAssetDataSource.m */; };
 		ECB8C84B1E9DCD5B00B116AC /* POSFastAssetReader.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8C8401E9DCD5B00B116AC /* POSFastAssetReader.m */; };
 		ECB8C84C1E9DCD5B00B116AC /* POSLocking.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8C8441E9DCD5B00B116AC /* POSLocking.m */; };
+		ECC785781EA1F93500221E8E /* YFBRankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC785771EA1F93500221E8E /* YFBRankModel.m */; };
+		ECC7857B1EA215CF00221E8E /* YFBDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC7857A1EA215CF00221E8E /* YFBDetailModel.m */; };
 		ECCA56B41E9CA83100E067B1 /* YFBRegisterUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56B31E9CA83100E067B1 /* YFBRegisterUserModel.m */; };
 		ECCA56C81E9CD92C00E067B1 /* YFBImageUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56C71E9CD92C00E067B1 /* YFBImageUploadManager.m */; };
 		ECD09E431EA0AF14008B7BF8 /* YFBInteractionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD09E421EA0AF14008B7BF8 /* YFBInteractionManager.m */; };
@@ -391,6 +394,8 @@
 		EC6AE1E71E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDredgeVipPayCell.m; sourceTree = "<group>"; };
 		EC6AE1E91E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDredgeVipPrivilegeCell.h; sourceTree = "<group>"; };
 		EC6AE1EA1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDredgeVipPrivilegeCell.m; sourceTree = "<group>"; };
+		EC6DAFDF1EA4568A00D93FB3 /* YFBContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBContactCell.h; sourceTree = "<group>"; };
+		EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBContactCell.m; sourceTree = "<group>"; };
 		EC7307031E83727D00D7BF70 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		EC7307051E83BCE700D7BF70 /* YFBUserInfoEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBUserInfoEditView.h; sourceTree = "<group>"; };
 		EC7307061E83BCE700D7BF70 /* YFBUserInfoEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBUserInfoEditView.m; sourceTree = "<group>"; };
@@ -723,6 +728,10 @@
 		ECB8C8421E9DCD5B00B116AC /* POSInputStreamLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSInputStreamLibrary.h; sourceTree = "<group>"; };
 		ECB8C8431E9DCD5B00B116AC /* POSLocking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSLocking.h; sourceTree = "<group>"; };
 		ECB8C8441E9DCD5B00B116AC /* POSLocking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSLocking.m; sourceTree = "<group>"; };
+		ECC785761EA1F93500221E8E /* YFBRankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBRankModel.h; path = YFBFriend/Class/Discover/Model/YFBRankModel.h; sourceTree = SOURCE_ROOT; };
+		ECC785771EA1F93500221E8E /* YFBRankModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRankModel.m; path = YFBFriend/Class/Discover/Model/YFBRankModel.m; sourceTree = SOURCE_ROOT; };
+		ECC785791EA215CF00221E8E /* YFBDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDetailModel.h; sourceTree = "<group>"; };
+		ECC7857A1EA215CF00221E8E /* YFBDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDetailModel.m; sourceTree = "<group>"; };
 		ECCA56B21E9CA83100E067B1 /* YFBRegisterUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRegisterUserModel.h; sourceTree = "<group>"; };
 		ECCA56B31E9CA83100E067B1 /* YFBRegisterUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRegisterUserModel.m; sourceTree = "<group>"; };
 		ECCA56C61E9CD92C00E067B1 /* YFBImageUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBImageUploadManager.h; sourceTree = "<group>"; };
@@ -943,6 +952,8 @@
 				ECEED7981E9F6E6100B47D8A /* YFBGreetingModel.m */,
 				ECEED79D1E9F9A6900B47D8A /* YFBDiscoverModel.h */,
 				ECEED79E1E9F9A6900B47D8A /* YFBDiscoverModel.m */,
+				ECC785761EA1F93500221E8E /* YFBRankModel.h */,
+				ECC785771EA1F93500221E8E /* YFBRankModel.m */,
 				ECD09E411EA0AF14008B7BF8 /* YFBInteractionManager.h */,
 				ECD09E421EA0AF14008B7BF8 /* YFBInteractionManager.m */,
 			);
@@ -993,6 +1004,8 @@
 		EC4827081E778D3C00F03454 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC6DAFDF1EA4568A00D93FB3 /* YFBContactCell.h */,
+				EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1058,6 +1071,8 @@
 		EC5D65971E7A8E7400CBE08A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ECC785791EA215CF00221E8E /* YFBDetailModel.h */,
+				ECC7857A1EA215CF00221E8E /* YFBDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2119,6 +2134,7 @@
 				B324039D1E791BE200E1D8EB /* YFBMyGiftDetailController.m in Sources */,
 				EC9A6A891E6D3F9E0018C5FB /* XHEmotionCollectionViewFlowLayout.m in Sources */,
 				B37A3E731E7947B800643329 /* YFBDiamondCell.m in Sources */,
+				EC6DAFE11EA4568A00D93FB3 /* YFBContactCell.m in Sources */,
 				EC4827121E778DA200F03454 /* YFBMineViewController.m in Sources */,
 				EC2A86D11E88EBB500E4B300 /* YFBActivityVC.m in Sources */,
 				EC9A6A2B1E6D3F9E0018C5FB /* NSString+Size.m in Sources */,
@@ -2136,6 +2152,7 @@
 				EC7307071E83BCE700D7BF70 /* YFBUserInfoEditView.m in Sources */,
 				EC9A6A791E6D3F9E0018C5FB /* SETextInput.m in Sources */,
 				EC47D42C1E7695F7000E9519 /* YFBRankVC.m in Sources */,
+				ECC785781EA1F93500221E8E /* YFBRankModel.m in Sources */,
 				EC9A6A851E6D3F9E0018C5FB /* XHMessageInputView.m in Sources */,
 				EC9A6AB91E6D3F9F0018C5FB /* TADotView.m in Sources */,
 				EC9A6ABB1E6D3F9F0018C5FB /* SDCollectionViewCell.m in Sources */,
@@ -2248,6 +2265,7 @@
 				EC7F0F891E6FAC0800F39FD9 /* YFBSystemConfig.m in Sources */,
 				EC9A6A511E6D3F9E0018C5FB /* UIScrollView+XHkeyboardControl.m in Sources */,
 				EC9A69D51E6D3F9E0018C5FB /* JYNextButton.m in Sources */,
+				ECC7857B1EA215CF00221E8E /* YFBDetailModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

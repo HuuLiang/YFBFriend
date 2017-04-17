@@ -6,7 +6,7 @@
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import "YFBUser.h"
+#import <AVFoundation/AVFoundation.h>
 #import "JKDBModel.h"
 
 @interface YFBRobot : JKDBModel
@@ -19,6 +19,8 @@
 @property (nonatomic) NSString *portraitUrl;
 @property (nonatomic) NSString *onKeyGreetImgUrl;
 @property (nonatomic) NSString *gender;
+@property (nonatomic) NSInteger recvGiftCount;
+@property (nonatomic) NSInteger sendGiftCount;
 @property (nonatomic) BOOL greeted;
 
 + (BOOL)checkUserIsGreetedWithUserId:(NSString *)userId;

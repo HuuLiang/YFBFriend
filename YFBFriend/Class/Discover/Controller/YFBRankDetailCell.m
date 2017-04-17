@@ -170,7 +170,7 @@
     }
 }
 
-- (void)setGiftCount:(NSString *)giftCount {
-    _giftLabel.text = [NSString stringWithFormat:@"%@个礼物",giftCount];
+- (void)setGiftCount:(NSInteger)giftCount {
+    _giftLabel.text = [NSString stringWithFormat:@"%ld个礼物",giftCount];
 }
 @end

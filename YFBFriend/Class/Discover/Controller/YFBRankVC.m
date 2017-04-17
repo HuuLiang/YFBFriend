@@ -46,6 +46,7 @@
 
 #import "YFBRankDetailCell.h"
 #import "YFBRobot.h"
+#import "YFBRankModel.h"
 
 static NSString *const kYFBRankDetailCellReusableIdentifier = @"YFBRankDetailCellReusableIdentifier";
 
@@ -53,11 +54,15 @@ static NSString *const kYFBRankDetailCellReusableIdentifier = @"YFBRankDetailCel
 @property (nonatomic,assign) YFBRankType rankType;
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *dataSource;
+@property (nonatomic,strong) YFBRankModel * rankModel;
+@property (nonatomic,strong) YFBRankFentYunListModel *response;
 @property (nonatomic,strong) UIButton       *rankButton;
 @end
 
 @implementation YFBRankDetailVC
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+QBDefineLazyPropertyInitialization(YFBRankModel, rankModel)
+QBDefineLazyPropertyInitialization(YFBRankFentYunListModel, response)
 
 - (instancetype)initWithRankType:(YFBRankType)type
 {
@@ -83,29 +88,57 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         }];
     }
     _tableView.tableHeaderView = [self tableHeaderView];
+    _tableView.tableFooterView = [[UIView alloc] init];
+    _tableView.tableHeaderView.hidden = YES;
     
+    @weakify(self);
+    [_tableView YFB_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadDataWithPageCount:1 refresh:YES];
+    }];
     
-    [self loadData];
+    [_tableView YFB_addPagingRefreshWithHandler:^{
+        @strongify(self);
+        if (self.response.pageNum < self.response.pageCount) {
+            self.response.pageNum++;
+        } else if (self.response.pageNum) {
+            [[YFBHudManager manager] showHudWithText:@"所有数据加载完成"];
+            [self->_tableView YFB_endPullToRefresh];
+            return ;
+        }
+        [self loadDataWithPageCount:self.response.pageNum refresh:NO];
+    }];
+    
+    [_tableView YFB_triggerPullToRefresh];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)loadData {
-//    for (int i = 0; i < 30; i++) {
-//        YFBRobot * robot = [[YFBRobot alloc] init];
-//        robot.userId = @"123123";
-//        robot.nickName = @"气泡熊";
-//        robot.portraitUrl = @"http://hwimg.jtd51.com/wysy/video/imgcover/20160818dj53.jpg";
-//        robot.height = @"176cm";
-//        robot.age = @"23岁";
-//        robot.distance = @" 1.13km ";
-//        robot.gender = (long)_rankType;
-//        [self.dataSource addObject:robot];
-//    }
-    [_tableView reloadData];
-
+- (void)loadDataWithPageCount:(NSInteger)pageNum refresh:(BOOL)isRefresh {
+    @weakify(self);
+    NSString *type = nil;
+    if (_rankType == YFBRankTypereceived) {
+        type = kYFBFriendRankReceiveCountKeyName;
+    } else if (_rankType == YFBRankTypeSend) {
+        type = kYFBFriendRankSendCountKeyName;
+    }
+    self->_tableView.tableHeaderView.hidden = YES;
+    [self.rankModel fetchRankListInfoWithType:type pageNum:pageNum CompletionHandler:^(BOOL success, YFBRankFentYunListModel * obj) {
+        @strongify(self);
+        [self->_tableView YFB_endPullToRefresh];
+        if (success) {
+            self->_tableView.tableFooterView.hidden = NO;
+            self.response = obj;
+            if (isRefresh) {
+                [self.dataSource removeAllObjects];
+            }
+            [self.dataSource addObjectsFromArray:obj.userList];
+        }
+        self->_tableView.tableHeaderView.hidden = NO;
+        [self->_tableView reloadData];
+    }];
 }
 
 - (UIView *)tableHeaderView {
@@ -118,12 +151,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [headerView addSubview:_rankButton];
     
     NSString *typeStr;
+    NSInteger count;
     if (_rankType == YFBRankTypeSend) {
         typeStr = @"送出多少：";
+        count = self.response.sendGiftCount;
     } else {
         typeStr = @"收到多少：";
+        count = self.response.recvGiftCount;
     }
-    NSInteger count = arc4random() % 1000 + 300;
     NSString *rankStr = [NSString stringWithFormat:@"%@%ld",typeStr,count];
     UILabel *rankTypeLabel = [[UILabel alloc] init];
     rankTypeLabel.font = kFont(12);
@@ -173,15 +208,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     YFBRankDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBRankDetailCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.row < self.dataSource.count) {
         YFBRobot *robot = self.dataSource[indexPath.row];
-        
-//        cell.index = indexPath.row;
-//        cell.userImageUrl = robot.avatarUrl;
-//        cell.nickName = robot.nickName;
-//        cell.userSex = robot.userSex;
-//        cell.age = [NSString stringWithFormat:@"%ld岁",robot.age];
-//        cell.distance = robot.distance;
-//        cell.rankType = _rankType;
-        cell.giftCount = [NSString stringWithFormat:@"%ld",(long)arc4random() % 30 + 5];
+        cell.index = indexPath.row;
+        cell.userImageUrl = robot.portraitUrl;
+        cell.nickName = robot.nickName;
+        cell.userSex = [robot.gender isEqualToString:@"M"] ? YFBUserSexMale : YFBUserSexFemale;
+        cell.age = [NSString stringWithFormat:@"%ld岁",robot.age];
+        cell.distance = [NSString stringWithFormat:@"%ldkm",robot.distance];
+        cell.rankType = _rankType;
+        cell.giftCount = _rankType == YFBRankTypeSend ? robot.sendGiftCount : robot.recvGiftCount;
     }
     return cell;
 }

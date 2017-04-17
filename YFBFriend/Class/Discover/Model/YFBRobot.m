@@ -10,12 +10,8 @@
 
 @implementation YFBRobot
 
-+ (NSArray *)transients {
-    return @[@"age",@"city",@"distance",@"height",@"nickName",@"portraitUrl",@"onKeyGreetImgUrl",@"gender"];
-}
-
 + (BOOL)checkUserIsGreetedWithUserId:(NSString *)userId {
-    YFBRobot *robot = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=%@",userId]];
+    YFBRobot *robot = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=\'%@\'",userId]];
     if (robot) {
         return robot.greeted;
     }

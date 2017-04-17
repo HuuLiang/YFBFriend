@@ -80,9 +80,6 @@
     NSMutableArray *availableUserList = [NSMutableArray array];
     NSMutableArray *userIdList = [NSMutableArray array];
     
-//    [userList enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBRobot * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//    }];
-    
     [userList enumerateObjectsUsingBlock:^(YFBRobot * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (![YFBRobot checkUserIsGreetedWithUserId:obj.userId]) {
             [userIdList addObject:obj.userId];
@@ -102,10 +99,6 @@
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         if (respStatus == QBURLResponseSuccess) {
-//            [availableUserList enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBRobot *  _Nonnull robot, NSUInteger idx, BOOL * _Nonnull stop) {
-//                robot.greeted = YES;
-//                [robot saveOrUpdate];
-//            }];
             
             [availableUserList enumerateObjectsUsingBlock:^(YFBRobot *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 obj.greeted = YES;

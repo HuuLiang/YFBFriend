@@ -7,16 +7,38 @@
 //
 
 #import "YFBContactViewController.h"
+#import "YFBContactCell.h"
 
-@interface YFBContactViewController ()
+static NSString *const kYFBContactCellReusableIdentifier = @"kYFBContactCellReusableIdentifier";
 
+@interface YFBContactViewController () <UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic) UITableView *tableView;
 @end
 
 @implementation YFBContactViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+    [_tableView registerClass:[YFBContactCell class] forCellReuseIdentifier:kYFBContactCellReusableIdentifier];
+    [self.view addSubview:_tableView];
+    
+    {
+        [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+    }
+    
+    @weakify(self);
+    [_tableView YFB_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadData];
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +46,26 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (UIView *)configHeaderView {
+    UIView *headerView = [[UIView alloc] init];
+    headerView.size = CGSizeMake(kScreenWidth, kWidth(84));
+    
+    UIImageView *eyeImageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"contact_eye"]];
+    [headerView addSubview:eyeImageV];
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"谁看过我";
+    titleLabel.font = [UIFont systemFontOfSize:kWidth(26)];
+    titleLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+    [headerView addSubview:titleLabel];
+    
+    
+    
+    return headerView;
 }
-*/
+
+- (void)loadData {
+    
+}
 
 @end

@@ -57,7 +57,9 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         if (self.response.pageNum < self.response.pageCount) {
             self.response.pageNum++;
         } else if (self.response.pageNum) {
-            self.response.pageNum = 1;
+            [[YFBHudManager manager] showHudWithText:@"所有数据加载完成"];
+            [self->_tableView YFB_endPullToRefresh];
+            return ;
         }
         [self loadDataWithPageCount:self.response.pageNum refresh:NO];
     }];
