@@ -63,6 +63,9 @@ typedef NS_ENUM(NSUInteger, YFBDetailDetailInfoSection) {
 static NSString *const kYFBDetailCellReusableIdentifier = @"YFBDetailCellReusableIdentifier";
 
 @interface YFBDetailViewController () <UITableViewDelegate,UITableViewDataSource>
+{
+    NSString *_userId;
+}
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) YFBDetailHeaderView *headerView;
 @property (nonatomic,strong) YFBDetailFooterView *footerView;
@@ -74,6 +77,13 @@ static NSString *const kYFBDetailCellReusableIdentifier = @"YFBDetailCellReusabl
 QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
 QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
 
+- (instancetype)initWithUserId:(NSString *)userId {
+    self = [super init];
+    if (self) {
+        _userId = userId;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -94,10 +104,12 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
     }
     
     @weakify(self);
+    [_tableView YFB_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadData];
+    }];
     
-    
-    [self configTableHeaderView];
-    [self configFooterView];
+    [_tableView YFB_triggerPullToRefresh];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,14 +119,14 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
 - (void)configTableHeaderView {
     self.headerView = [[YFBDetailHeaderView alloc] init];
     _headerView.size = CGSizeMake(kScreenWidth, kWidth(418));
-    _headerView.backImageUrl = @"http://hwimg.jtd51.com/wysy/video/imgcover/20160818dj53.jpg";
-    _headerView.userImageUrl = @"http://hwimg.jtd51.com/wysy/video/imgcover/20160818dj53.jpg";
-    _headerView.nickName = @"Dior女孩";
-    _headerView.userId = @"ID:55157130";
-    _headerView.userLocation = @"所在地：杭州市";
-    _headerView.distance = @"3km以内";
+    _headerView.backImageUrl = self.response.portraitUrl;
+    _headerView.userImageUrl = self.response.portraitUrl;
+    _headerView.nickName = self.response.nickName;
+    _headerView.userId = self.response.userId;
+    _headerView.userLocation = self.response.userBaseInfo.city;
+    _headerView.distance = self.response.distance;
     _headerView.albumCount = @"相册:5";
-    _headerView.followCount = @"关注:127701";
+    _headerView.followCount = self.response.userBaseInfo.concernNum;
     _tableView.tableHeaderView = _headerView;
 }
 
@@ -145,6 +157,19 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
     }
 }
 
+- (void)loadData {
+    @weakify(self);
+    [self.detailModel fetchDetailInfoWithUserId:self->_userId CompletionHandler:^(BOOL success, YFBUserLoginModel * obj) {
+        @strongify(self);
+        [self->_tableView YFB_endPullToRefresh];
+        if (success) {
+            self.response = obj;
+            [self configTableHeaderView];
+            [self configFooterView];
+        }
+    }];
+}
+
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -172,19 +197,19 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
             cell.isTitle = YES;
         } else if (indexPath.row == YFBSpaceSectionRecent) {
             cell.title = @"最近上线时间";
-            cell.content = @"2017-03-02 20：36：28";
+            cell.content = self.response.lastLoginTime;
         } else if (indexPath.row == YFBSpaceSectionPurpose) {
             cell.title = @"交友目的";
-            cell.content = @"找对象";
+            cell.content = self.response.userBaseInfo.friendDestination;
         } else if (indexPath.row == YFBSpaceSectionIdea) {
             cell.title = @"恋爱观念";
-            cell.content = @"顺气自然";
+            cell.content = self.response.userBaseInfo.loveConcept;
         } else if (indexPath.row == YFBSpaceSectionMeeting) {
             cell.title = @"首次见面希望";
-            cell.content = @"喝喝茶";
+            cell.content = self.response.userBaseInfo.firstMeetHope;
         } else if (indexPath.row == YFBSpaceSectionSite) {
             cell.title = @"喜欢约会的地点";
-            cell.content = @"咖啡馆";
+            cell.content = self.response.userBaseInfo.datePlace;
         }
     } else if (indexPath.section == YFBDetailBaseInfo) {
         if (indexPath.row == YFBBaseInfoSectionTitle) {
@@ -192,25 +217,25 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
             cell.isTitle = kColor(@"#999999");
         } else if (indexPath.row == YFBBaseInfoSectionNickName) {
             cell.title = @"昵称";
-            cell.content = @"Dior女孩";
+            cell.content = self.response.nickName;
         } else if (indexPath.row == YFBBaseInfoSectionSex) {
             cell.title = @"性别";
-            cell.content = @"女";
+            cell.content = [self.response.userBaseInfo.gender isEqualToString:@"M"] ? @"男" : @"女";
         } else if (indexPath.row == YFBBaseInfoSectionAge) {
             cell.title = @"年龄";
-            cell.content = @"24岁";
+            cell.content = [NSString stringWithFormat:@"%ld岁",self.response.userBaseInfo.age];
         } else if (indexPath.row == YFBBaseInfoSectionLive) {
             cell.title = @"居住市";
-            cell.content = @"杭州市";
+            cell.content = self.response.userBaseInfo.city;
         } else if (indexPath.row == YFBBaseInfoSectionTall) {
             cell.title = @"身高";
-            cell.content = @"159cm";
+            cell.content = [NSString stringWithFormat:@"%ldcm",self.response.userBaseInfo.height];
         } else if (indexPath.row == YFBBaseInfoSectionIncome) {
             cell.title = @"月收入";
-            cell.content = @"5000-10000";
+            cell.content = self.response.userBaseInfo.monthlyIncome;
         } else if (indexPath.row == YFBBaseInfoSectionMarr) {
             cell.title = @"婚姻状况";
-            cell.content = @"未婚";
+            cell.content = self.response.userBaseInfo.marriageStatus == YFBUserfiance ? @"未婚" : @"已婚";
         }
     } else if (indexPath.section == YFBDetailContactInfo) {
         if (indexPath.row == YFBContactInfoSectionTitle) {
@@ -218,13 +243,13 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
             cell.isTitle = kColor(@"#999999");
         } else if (indexPath.row == YFBContactInfoSectionQQ) {
             cell.title = @"QQ";
-            cell.content = @"仅对钻石VIP开放";
+            cell.content = self.response.userBaseInfo.qq;//@"仅对钻石VIP开放";
         } else if (indexPath.row == YFBContactInfoSectionPhone) {
             cell.title = @"手机号";
-            cell.content = @"仅对钻石VIP开放";
+            cell.content = self.response.userBaseInfo.mobilePhone;//@"仅对钻石VIP开放";
         } else if (indexPath.row == YFBContactInfoSectionWX) {
             cell.title = @"微信";
-            cell.content = @"仅对钻石VIP开放";
+            cell.content = self.response.userBaseInfo.weixin;//@"仅对钻石VIP开放";
         }
     } else if (indexPath.section == YFBDetailDetailInfo) {
         if (indexPath.row == YFBDetailInfoSectionTitle) {
@@ -232,19 +257,19 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
             cell.isTitle = kColor(@"#999999");
         } else if (indexPath.row == YFBDetailInfoSectionEdu) {
             cell.title = @"学历";
-            cell.content = @"本科";
+            cell.content = self.response.userBaseInfo.education;
         } else if (indexPath.row == YFBDetailInfoSectionJob) {
             cell.title = @"职业";
-            cell.content = @"未填写";
+            cell.content = self.response.userBaseInfo.vocation;
         } else if (indexPath.row == YFBDetailInfoSectionBirth) {
             cell.title = @"生日";
-            cell.content = @"1992-05-24";
+            cell.content = self.response.userBaseInfo.birthday;
         } else if (indexPath.row == YFBDetailInfoSectionWeight) {
             cell.title = @"体重";
-            cell.content = @"50-55kg";
+            cell.content = [NSString stringWithFormat:@"%ldkg",self.response.userBaseInfo.weight];
         } else if (indexPath.row == YFBDetailInfoSectionStar) {
             cell.title = @"星座";
-            cell.content = @"白羊座";
+            cell.content = self.response.userBaseInfo.constellation;
         }
     }
     return cell;
@@ -266,8 +291,5 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
     UITableViewHeaderFooterView *shadowView = (UITableViewHeaderFooterView *)view;
     shadowView.backgroundView.backgroundColor = kColor(@"#efefef");
 }
-
-
-
 
 @end

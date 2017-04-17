@@ -73,6 +73,7 @@
 		EC6AE1E81E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE1E71E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m */; };
 		EC6AE1EB1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE1EA1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m */; };
 		EC6DAFE11EA4568A00D93FB3 /* YFBContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */; };
+		EC6DAFE41EA4C74E00D93FB3 /* YFBContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6DAFE31EA4C74E00D93FB3 /* YFBContactModel.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
 		EC7307071E83BCE700D7BF70 /* YFBUserInfoEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7307061E83BCE700D7BF70 /* YFBUserInfoEditView.m */; };
 		EC7F0F7A1E6FA86700F39FD9 /* YFBConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0F791E6FA86700F39FD9 /* YFBConfiguration.m */; };
@@ -396,6 +397,8 @@
 		EC6AE1EA1E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDredgeVipPrivilegeCell.m; sourceTree = "<group>"; };
 		EC6DAFDF1EA4568A00D93FB3 /* YFBContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBContactCell.h; sourceTree = "<group>"; };
 		EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBContactCell.m; sourceTree = "<group>"; };
+		EC6DAFE21EA4C74E00D93FB3 /* YFBContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBContactModel.h; sourceTree = "<group>"; };
+		EC6DAFE31EA4C74E00D93FB3 /* YFBContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBContactModel.m; sourceTree = "<group>"; };
 		EC7307031E83727D00D7BF70 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		EC7307051E83BCE700D7BF70 /* YFBUserInfoEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBUserInfoEditView.h; sourceTree = "<group>"; };
 		EC7307061E83BCE700D7BF70 /* YFBUserInfoEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBUserInfoEditView.m; sourceTree = "<group>"; };
@@ -997,6 +1000,8 @@
 		EC4827071E778D3C00F03454 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC6DAFE21EA4C74E00D93FB3 /* YFBContactModel.h */,
+				EC6DAFE31EA4C74E00D93FB3 /* YFBContactModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2086,6 +2091,7 @@
 				EC9A6A491E6D3F9E0018C5FB /* JKDBModel.m in Sources */,
 				EC65EE521E712A0600DA1AF9 /* YFBRegisterFirstVC.m in Sources */,
 				EC5D659B1E7A8EA200CBE08A /* YFBDetailViewController.m in Sources */,
+				EC6DAFE41EA4C74E00D93FB3 /* YFBContactModel.m in Sources */,
 				EC7F0FAC1E70017C00F39FD9 /* YFBLoginViewController.m in Sources */,
 				ECEED79C1E9F6E8A00B47D8A /* YFBRobot.m in Sources */,
 				EC47D42F1E76A37E000E9519 /* YFBRecommendCell.m in Sources */,

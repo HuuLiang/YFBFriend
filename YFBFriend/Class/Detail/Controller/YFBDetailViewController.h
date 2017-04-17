@@ -10,4 +10,6 @@
 
 @interface YFBDetailViewController : YFBBaseViewController
 
+- (instancetype)initWithUserId:(NSString *)userId;
+
 @end

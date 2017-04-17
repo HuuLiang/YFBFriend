@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface YFBContactCell : UITableViewCell
-
+@property (nonatomic) NSString *userImgUrl;
+@property (nonatomic) NSString *nickName;
+@property (nonatomic) NSString *recentTime;
+@property (nonatomic) NSInteger msgType;
+@property (nonatomic) NSString *content;
+@property (nonatomic) NSInteger unreadMsg;
 @end

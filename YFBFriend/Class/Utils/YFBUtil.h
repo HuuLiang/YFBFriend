@@ -33,6 +33,6 @@
 //时间转换
 + (NSDate *)dateFromString:(NSString *)dateString WithDateFormat:(NSString *)dateFormat;
 + (NSString *)timeStringFromDate:(NSDate *)date WithDateFormat:(NSString *)dateFormat;
-
++ (NSString *)compareCurrentTime:(NSTimeInterval)compareTimeInterval;
 
 @end

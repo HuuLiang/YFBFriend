@@ -123,7 +123,10 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self pushIntoDetailVC:nil];
+    if (indexPath.row < self.dataSource.count) {
+        YFBRobot *robot = self.dataSource[indexPath.row];
+        [self pushIntoDetailVC:robot.userId];
+    }
 }
 
 @end

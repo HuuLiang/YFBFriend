@@ -223,4 +223,12 @@ QBDefineLazyPropertyInitialization(YFBRankFentYunListModel, response)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return kWidth(138);
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row < self.dataSource.count) {
+        YFBRobot *robot = self.dataSource[indexPath.row];
+        [self pushIntoDetailVC:robot.userId];
+    }
+}
+
 @end

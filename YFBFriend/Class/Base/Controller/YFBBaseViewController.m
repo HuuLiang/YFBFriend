@@ -37,7 +37,7 @@
 }
 
 - (void)pushIntoDetailVC:(NSString *)userID {
-    YFBDetailViewController *detailVC = [[YFBDetailViewController alloc] init];
+    YFBDetailViewController *detailVC = [[YFBDetailViewController alloc] initWithUserId:userID];
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
