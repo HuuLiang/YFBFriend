@@ -87,7 +87,7 @@
                 make.width.mas_equalTo(kWidth(440));
             }];
         }
-        _popView = [[YFBGiftPopView alloc] initWithGiftModels:nil edg:kWidth(6) footerHeight:kWidth(40)];
+        _popView = [[YFBGiftPopView alloc] initWithGiftModels:nil edg:kWidth(6) footerHeight:kWidth(40) backColor:kColor(@"#ef5f73") isMessagePop:NO];
         [backImage addSubview:_popView];
         {
             [_popView mas_makeConstraints:^(MASConstraintMaker *make) {

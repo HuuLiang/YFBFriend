@@ -9,13 +9,14 @@
 #import "YFBGiftPopView.h"
 #import "YFBGiftPopCell.h"
 #import "YFBGiftFooterView.h"
+#import "YFBMessageGiftFooterView.h"
 
 static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier";
 
 @interface YFBGiftPopView ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_collectionView;
-    YFBGiftFooterView *_footerView;
+    UIView *_footerView;
     CGFloat _footerHeight;
     CGFloat _edg;
 }
@@ -23,7 +24,7 @@ static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier
 
 @implementation YFBGiftPopView
 
-- (instancetype)initWithGiftModels:(NSArray *)giftModels edg:(CGFloat)edg footerHeight:(CGFloat)height{
+- (instancetype)initWithGiftModels:(NSArray *)giftModels edg:(CGFloat)edg footerHeight:(CGFloat)height backColor:(UIColor *)backColor isMessagePop:(BOOL)isMessagePop{
     
     if (self = [super init]) {
         _footerHeight = height;
@@ -54,10 +55,25 @@ static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier
             }];
         }
         
-        _footerView = [[YFBGiftFooterView alloc] init];
-        _footerView.backgroundColor = kColor(@"#ef5f73");
-        _footerView.pageNumbers = 2;//giftModels.count % 8 == 0 ? giftModels.count/8 : giftModels.count/8 +1;
-        _footerView.diamondCount = 2300;
+        
+        if (isMessagePop) {
+            YFBMessageGiftFooterView *footerView = [[YFBMessageGiftFooterView alloc] init];
+            footerView.pageNumbers = 2;//giftModels.count % 8 == 0 ? giftModels.count/8 : giftModels.count/8 +1;
+            footerView.diamondCount = 2300;
+            footerView.sendAction = ^(id obj) {
+                QBLog(@"点击赠送")
+            };
+            footerView.topUpAction = ^(id obj) {
+                QBLog(@"点击充值")
+            };
+            _footerView = footerView;
+        }else {
+            YFBGiftFooterView *footerView = [[YFBGiftFooterView alloc] init];
+            footerView.pageNumbers = 2;//giftModels.count % 8 == 0 ? giftModels.count/8 : giftModels.count/8 +1;
+            footerView.diamondCount = 2300;
+            _footerView = footerView;
+        }
+        _footerView.backgroundColor = backColor;
         [self addSubview:_footerView];
         {
             [_footerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -81,7 +97,7 @@ static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier
     YFBGiftPopCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:YFBGiftPopCellIdentifier forIndexPath:indexPath];
     cell.title = @"棒棒糖";
     cell.diamondCount = 1800;
-    cell.backgroundColor = kColor(@"#ef5f73");
+    cell.backgroundColor = _footerView.backgroundColor;//kColor(@"#ef5f73");
     return cell;
 }
 
@@ -95,7 +111,14 @@ static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier
     if ( scrollView.contentOffset.x > 0) {
         scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x +1, 0);
     }
-    _footerView.currentPage = scrollView.contentOffset.x / (CGRectGetWidth(self.bounds) - _edg*2);
+    if ([_footerView isKindOfClass:[YFBMessageGiftFooterView class]]) {
+        YFBMessageGiftFooterView *footerView = (YFBMessageGiftFooterView *)_footerView;
+        footerView.currentPage = scrollView.contentOffset.x / (CGRectGetWidth(self.bounds) - _edg*2);
+    }else {
+        YFBGiftFooterView *footerView = (YFBGiftFooterView *)_footerView;
+        footerView.currentPage = scrollView.contentOffset.x / (CGRectGetWidth(self.bounds) - _edg*2);
+    }
+    
 }
 
 

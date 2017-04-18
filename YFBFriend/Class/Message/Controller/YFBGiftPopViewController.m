@@ -14,19 +14,23 @@
 
 //@property (nonatomic,retain) YFBGiftPopView *popView;
 @property (nonatomic,retain) YFBBlagGiftView *popView;
+@property (nonatomic,retain) YFBGiftPopView *messagePopView;
+@property (nonatomic) BOOL isMessagePop;
 
 @end
 
 @implementation YFBGiftPopViewController
 
-//- (YFBGiftPopView *)popView {
-//    if (_popView) {
-//        return _popView;
-//    }
-//    _popView = [[YFBGiftPopView alloc] initWithContenInset:UIEdgeInsetsMake(2, 2, 2, 2)];
-////    _popView.
-//    return _popView;
-//}
+- (YFBGiftPopView *)messagePopView {
+    if (_messagePopView) {
+        return _messagePopView;
+    }
+    _messagePopView = [[YFBGiftPopView alloc] initWithGiftModels:nil edg:0 footerHeight:kWidth(88) backColor:kColor(@"#000000") isMessagePop:YES];
+    
+    
+    return _messagePopView;
+}
+
 
 - (YFBBlagGiftView *)popView {
     if (_popView) {
@@ -42,7 +46,7 @@
         [self hide];
     };
     _popView.giftAction = ^(id obj) {
-//        @storngify(self);
+        //        @storngify(self);
         QBLog(@"打赏礼物")
     };
     return _popView;
@@ -50,19 +54,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.35];
-    [self.view addSubview:self.popView];
-    {
-        [self.popView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self.view).mas_offset(kWidth(40));
-            make.right.mas_equalTo(self.view).mas_offset(kWidth(-16));
-            make.centerY.mas_equalTo(self.view).mas_offset(kWidth(-20));
-            make.height.mas_equalTo(kWidth(800));
-        }];
+    
+    if (self.isMessagePop) {
+        [self.view addSubview:self.messagePopView];
+        {
+            [self.messagePopView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.left.right.mas_equalTo(self.view);
+                make.height.mas_equalTo(kWidth(464));
+            }];
+        }
+    }else{
+        self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.35];
+        [self.view addSubview:self.popView];
+        {
+            [self.popView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(self.view).mas_offset(kWidth(40));
+                make.right.mas_equalTo(self.view).mas_offset(kWidth(-16));
+                make.centerY.mas_equalTo(self.view).mas_offset(kWidth(-20));
+                make.height.mas_equalTo(kWidth(780));
+            }];
+        }
     }
 }
 
-- (void)showGiftPopViewWithCurrentVC:(UIViewController *)currentVC {
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.isMessagePop) {
+        [self hide];
+    }
+}
+
+- (void)showGiftPopViewWithCurrentVC:(UIViewController *)currentVC isMessagePop:(BOOL)isMessagePop{
+    self.isMessagePop = isMessagePop;
     
     BOOL anySpreadBanner = [currentVC.childViewControllers bk_any:^BOOL(id obj) {
         if ([obj isKindOfClass:[self class]]) {
