@@ -36,6 +36,11 @@
 		B3C18CDC1E78025D00C7733D /* YFBVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */; };
 		B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */; };
 		B3C18CE11E781DF600C7733D /* YFBDredgeVipController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CE01E781DF600C7733D /* YFBDredgeVipController.m */; };
+		B3D6E9AA1EA4C4F000D972CC /* YFBGiftPopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D6E9A91EA4C4F000D972CC /* YFBGiftPopViewController.m */; };
+		B3D6E9AD1EA4DBA900D972CC /* YFBBlagGiftView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D6E9AC1EA4DBA900D972CC /* YFBBlagGiftView.m */; };
+		B3D6E9B01EA4EDF700D972CC /* YFBGiftFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D6E9AF1EA4EDF700D972CC /* YFBGiftFooterView.m */; };
+		B3F0F5631EA48B0D003F0D15 /* YFBGiftPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F5621EA48B0D003F0D15 /* YFBGiftPopView.m */; };
+		B3F0F5661EA498E7003F0D15 /* YFBGiftPopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F5651EA498E7003F0D15 /* YFBGiftPopCell.m */; };
 		EC2A86C51E88C0A500E4B300 /* YFBSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A86C41E88C0A500E4B300 /* YFBSettingViewController.m */; };
 		EC2A86C81E88DD0200E4B300 /* YFBSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A86C71E88DD0200E4B300 /* YFBSettingCell.m */; };
 		EC2A86CB1E88EB8F00E4B300 /* YFBPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A86CA1E88EB8F00E4B300 /* YFBPasswordVC.m */; };
@@ -322,6 +327,16 @@
 		B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = phone_verify.jpg; sourceTree = "<group>"; };
 		B3C18CDF1E781DF600C7733D /* YFBDredgeVipController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDredgeVipController.h; sourceTree = "<group>"; };
 		B3C18CE01E781DF600C7733D /* YFBDredgeVipController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDredgeVipController.m; sourceTree = "<group>"; };
+		B3D6E9A81EA4C4F000D972CC /* YFBGiftPopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBGiftPopViewController.h; sourceTree = "<group>"; };
+		B3D6E9A91EA4C4F000D972CC /* YFBGiftPopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBGiftPopViewController.m; sourceTree = "<group>"; };
+		B3D6E9AB1EA4DBA900D972CC /* YFBBlagGiftView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBBlagGiftView.h; sourceTree = "<group>"; };
+		B3D6E9AC1EA4DBA900D972CC /* YFBBlagGiftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBBlagGiftView.m; sourceTree = "<group>"; };
+		B3D6E9AE1EA4EDF700D972CC /* YFBGiftFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBGiftFooterView.h; sourceTree = "<group>"; };
+		B3D6E9AF1EA4EDF700D972CC /* YFBGiftFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBGiftFooterView.m; sourceTree = "<group>"; };
+		B3F0F5611EA48B0D003F0D15 /* YFBGiftPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBGiftPopView.h; sourceTree = "<group>"; };
+		B3F0F5621EA48B0D003F0D15 /* YFBGiftPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBGiftPopView.m; sourceTree = "<group>"; };
+		B3F0F5641EA498E7003F0D15 /* YFBGiftPopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBGiftPopCell.h; sourceTree = "<group>"; };
+		B3F0F5651EA498E7003F0D15 /* YFBGiftPopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBGiftPopCell.m; sourceTree = "<group>"; };
 		BD481930EA9E3A5945F3FA6C /* Pods-YFBFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		EC2A86C31E88C0A500E4B300 /* YFBSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSettingViewController.h; sourceTree = "<group>"; };
 		EC2A86C41E88C0A500E4B300 /* YFBSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSettingViewController.m; sourceTree = "<group>"; };
@@ -993,6 +1008,8 @@
 			children = (
 				EC4827091E778D7B00F03454 /* YFBContactViewController.h */,
 				EC48270A1E778D7B00F03454 /* YFBContactViewController.m */,
+				B3D6E9A81EA4C4F000D972CC /* YFBGiftPopViewController.h */,
+				B3D6E9A91EA4C4F000D972CC /* YFBGiftPopViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1011,6 +1028,8 @@
 			children = (
 				EC6DAFDF1EA4568A00D93FB3 /* YFBContactCell.h */,
 				EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */,
+				B3D6E9AB1EA4DBA900D972CC /* YFBBlagGiftView.h */,
+				B3D6E9AC1EA4DBA900D972CC /* YFBBlagGiftView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1245,6 +1264,12 @@
 		EC9A67B01E6D3F9E0018C5FB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B3F0F5611EA48B0D003F0D15 /* YFBGiftPopView.h */,
+				B3F0F5621EA48B0D003F0D15 /* YFBGiftPopView.m */,
+				B3F0F5641EA498E7003F0D15 /* YFBGiftPopCell.h */,
+				B3F0F5651EA498E7003F0D15 /* YFBGiftPopCell.m */,
+				B3D6E9AE1EA4EDF700D972CC /* YFBGiftFooterView.h */,
+				B3D6E9AF1EA4EDF700D972CC /* YFBGiftFooterView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1931,7 +1956,7 @@
 					EC9A67711E6D3E4A0018C5FB = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = NS6846Q9KM;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -2130,6 +2155,7 @@
 				EC9A6A731E6D3F9E0018C5FB /* SELineLayout.m in Sources */,
 				EC9A6A341E6D3F9E0018C5FB /* JYRegexUtil.m in Sources */,
 				B324039A1E791ACE00E1D8EB /* YFBMyGiftController.m in Sources */,
+				B3D6E9AA1EA4C4F000D972CC /* YFBGiftPopViewController.m in Sources */,
 				EC9A6A561E6D3F9E0018C5FB /* XHLocationHelper.m in Sources */,
 				EC58AFB41E81435D0022FE8C /* YFBUserDataInfoCell.m in Sources */,
 				EC9A6A7C1E6D3F9E0018C5FB /* SETextMagnifierRanged.m in Sources */,
@@ -2177,6 +2203,7 @@
 				EC7F0F9B1E6FDFA300F39FD9 /* YFBBaseViewController.m in Sources */,
 				EC9A6A481E6D3F9E0018C5FB /* JKDBHelper.m in Sources */,
 				ECB8C8461E9DCD5B00B116AC /* NSInputStream+POS.m in Sources */,
+				B3F0F5661EA498E7003F0D15 /* YFBGiftPopCell.m in Sources */,
 				ECB8C8481E9DCD5B00B116AC /* POSAdjustedAssetReaderIOS8.m in Sources */,
 				ECD09E431EA0AF14008B7BF8 /* YFBInteractionManager.m in Sources */,
 				EC9A6A501E6D3F9E0018C5FB /* UIImage+XHRounded.m in Sources */,
@@ -2215,6 +2242,7 @@
 				EC9A6A6B1E6D3F9E0018C5FB /* XHEmotionManager.m in Sources */,
 				ECEED79F1E9F9A6900B47D8A /* YFBDiscoverModel.m in Sources */,
 				ECB8C8451E9DCD5B00B116AC /* ALAssetsLibrary+POS.m in Sources */,
+				B3F0F5631EA48B0D003F0D15 /* YFBGiftPopView.m in Sources */,
 				EC9A6A881E6D3F9E0018C5FB /* XHEmotionCollectionViewCell.m in Sources */,
 				EC9A6A551E6D3F9E0018C5FB /* XHConfigurationHelper.m in Sources */,
 				B37A3E701E793EF300643329 /* YFBMyDiamondController.m in Sources */,
@@ -2249,6 +2277,7 @@
 				EC9A6A821E6D3F9E0018C5FB /* XHMessageBubbleView.m in Sources */,
 				EC7F0F981E6FD56300F39FD9 /* YFBUtil.m in Sources */,
 				EC7F0F921E6FADF600F39FD9 /* YFBUserAccessModel.m in Sources */,
+				B3D6E9AD1EA4DBA900D972CC /* YFBBlagGiftView.m in Sources */,
 				EC48270B1E778D7B00F03454 /* YFBContactViewController.m in Sources */,
 				EC9A6A631E6D3F9E0018C5FB /* XHOperationNetworkKit.m in Sources */,
 				EC9A6A721E6D3F9E0018C5FB /* SEConstants.m in Sources */,
@@ -2271,6 +2300,7 @@
 				EC7F0F891E6FAC0800F39FD9 /* YFBSystemConfig.m in Sources */,
 				EC9A6A511E6D3F9E0018C5FB /* UIScrollView+XHkeyboardControl.m in Sources */,
 				EC9A69D51E6D3F9E0018C5FB /* JYNextButton.m in Sources */,
+				B3D6E9B01EA4EDF700D972CC /* YFBGiftFooterView.m in Sources */,
 				ECC7857B1EA215CF00221E8E /* YFBDetailModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2393,7 +2423,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = NS6846Q9KM;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2406,8 +2436,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9e34a4c6-6c68-427d-a918-967d12a121d9";
-				PROVISIONING_PROFILE_SPECIFIER = PPSocialDevlopmentProvisoningProfile;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -2417,9 +2447,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = NS6846Q9KM;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2432,8 +2462,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "51221846-87db-4da3-b1f6-320b5ca14803";
-				PROVISIONING_PROFILE_SPECIFIER = PPSocialDistributionProvisoningProfile;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
