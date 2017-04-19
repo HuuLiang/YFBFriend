@@ -641,6 +641,7 @@ static CGPoint  delayOffset = {0.0};
     inputView.allowsSendVoice = self.allowsSendVoice;
     inputView.allowsSendMultiMedia = self.allowsSendMultiMedia;
     inputView.delegate = self;
+    inputView.backgroundColor = [UIColor colorWithHexString:@"#d8d8d8"];
     [self.view addSubview:inputView];
     [self.view bringSubviewToFront:inputView];
     

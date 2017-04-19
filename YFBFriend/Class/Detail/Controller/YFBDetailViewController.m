@@ -137,7 +137,7 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
         @strongify(self);
         if (infoType == YFBFunctionSendMsg) {
             //发信
-            
+            [self pushIntoMessageVCWithUserId:self.response.userId nickName:self.response.nickName avatarUrl:self.response.portraitUrl];
         } else if (infoType == YFBFunctionSendGreet) {
             //打招呼
             

@@ -8,6 +8,7 @@
 
 #import "YFBBaseViewController.h"
 #import "YFBDetailViewController.h"
+#import "YFBMessageViewController.h"
 
 @interface YFBBaseViewController ()
 
@@ -39,6 +40,10 @@
 - (void)pushIntoDetailVC:(NSString *)userID {
     YFBDetailViewController *detailVC = [[YFBDetailViewController alloc] initWithUserId:userID];
     [self.navigationController pushViewController:detailVC animated:YES];
+}
+
+- (void)pushIntoMessageVCWithUserId:(NSString *)userId nickName:(NSString *)nickName avatarUrl:(NSString *)avatarUrl {
+    [YFBMessageViewController showMessageWithUserId:userId nickName:nickName avatarUrl:avatarUrl inViewController:self];
 }
 
 

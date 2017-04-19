@@ -9,6 +9,7 @@
 #import "YFBContactViewController.h"
 #import "YFBContactCell.h"
 #import "YFBContactModel.h"
+#import "YFBMessageViewController.h"
 
 static NSString *const kYFBContactCellReusableIdentifier = @"kYFBContactCellReusableIdentifier";
 
@@ -21,12 +22,14 @@ static NSString *const kYFBContactCellReusableIdentifier = @"kYFBContactCellReus
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) UIView *editingView;
 @property (nonatomic) NSMutableArray *dataSource;
+@property (nonatomic) NSMutableArray *selectedSource;
 @property (nonatomic) YFBContactModel *contactModel;
 @property (nonatomic) YFBContactResponse *response;
 @end
 
 @implementation YFBContactViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+QBDefineLazyPropertyInitialization(NSMutableArray, selectedSource)
 QBDefineLazyPropertyInitialization(YFBContactModel, contactModel)
 QBDefineLazyPropertyInitialization(YFBContactResponse, response)
 
@@ -59,14 +62,23 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"编辑" style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
         //进入编辑模式
-        [self animationEditingViewHidden:NO];
-        [self->_tableView setEditing:YES animated:YES];
+        if ([self.navigationItem.rightBarButtonItem.title isEqualToString:@"编辑"]) {
+            self.navigationItem.rightBarButtonItem.title = @"取消";
+            [self animationEditingViewHidden:NO];
+            [_tableView setEditing:YES animated:YES];
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"全选" style:UIBarButtonItemStylePlain handler:^(id sender) {
+                @strongify(self);
+                //全选
+            }];
+        } else if ([self.navigationItem.rightBarButtonItem.title isEqualToString:@"取消"]) {
+            [self.selectedSource removeAllObjects];
+            self.navigationItem.rightBarButtonItem.title = @"编辑";
+            [self animationEditingViewHidden:YES];
+            [self->_tableView setEditing:NO animated:YES];
+            self.navigationItem.leftBarButtonItem = nil;
+        }
     }];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"全选" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        @strongify(self);
-        //全选
-    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -208,10 +220,29 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleInsert;
+    return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    YFBContactUserModel *model = nil;
+    if (indexPath.row < self.dataSource.count) {
+        model = self.response.userList[indexPath.row];
+    }
+    if (tableView.isEditing) {
+        if (!model) {
+            [self.selectedSource addObject:model];
+        }
+    } else {
+        //进入聊天界面
+        [self pushIntoMessageVCWithUserId:model.userId nickName:model.userId avatarUrl:model.portraitUrl];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    YFBContactUserModel *model = nil;
+    if (indexPath.row < self.dataSource.count) {
+        model = self.response.userList[indexPath.row];
+    }
     if (tableView.isEditing) {
         
     } else {
