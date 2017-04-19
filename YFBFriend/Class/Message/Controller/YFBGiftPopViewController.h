@@ -10,6 +10,6 @@
 
 @interface YFBGiftPopViewController : YFBBaseViewController
 
-- (void)showGiftPopViewWithCurrentVC:(UIViewController *)currentVC;
+- (void)showGiftPopViewWithCurrentVC:(UIViewController *)currentVC isMessagePop:(BOOL)isMessagePop;
 
 @end

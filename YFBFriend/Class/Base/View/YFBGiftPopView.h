@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface YFBGiftPopView : UIView
-- (instancetype)initWithGiftModels:(NSArray *)giftModels edg:(CGFloat)edg footerHeight:(CGFloat)height;
+- (instancetype)initWithGiftModels:(NSArray *)giftModels edg:(CGFloat)edg footerHeight:(CGFloat)height backColor:(UIColor *)backColor isMessagePop:(BOOL)isMessagePop;
 
 @end

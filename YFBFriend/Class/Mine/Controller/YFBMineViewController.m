@@ -17,6 +17,7 @@
 #import "YFBMineDataInfoViewController.h"
 #import "YFBSettingViewController.h"
 #import "YFBMinePhotosViewController.h"
+#import "YFBGiftPopViewController.h"
 
 static NSString *const YFBMineHeaderCellIdentifier = @"yfb_mine_header_cell_identifier";
 static NSString *const YFBMineCellIdentifier = @"yfb_mine_cell_identifier";
@@ -76,6 +77,12 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
             make.edges.mas_equalTo(self.view);
         }];
     }
+    @weakify(self);
+    [self.navigationController.navigationBar bk_whenTapped:^{
+        @strongify(self);
+        [[[YFBGiftPopViewController alloc] init] showGiftPopViewWithCurrentVC:self isMessagePop:YES];
+        
+    }];
     
 }
 
