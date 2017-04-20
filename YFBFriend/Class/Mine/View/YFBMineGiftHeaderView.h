@@ -12,7 +12,7 @@
 
 @property (nonatomic) NSAttributedString *title;
 @property (nonatomic) NSString *imageUrl;
-@property (nonatomic) NSString *allGift;
+@property (nonatomic) NSInteger allGift;
 
 @property (nonatomic,copy) QBAction action;
 @end

@@ -21,6 +21,7 @@ static NSString *const YFBMineGiftCellIdentifier = @"yfb_mine_gift_cell_identifi
 @property (nonatomic,retain) NSMutableArray <YFBMineGiftHeaderView *>*headerViews;
 @property (nonatomic,retain) NSMutableArray <NSNumber *>*rowCounts;
 @property (nonatomic,retain) YFBMyGiftModel *giftModel;
+@property (nonatomic,retain) NSArray <YFBGiftListModel *>*giftList;
 @end
 
 @implementation YFBMyGiftDetailController
@@ -52,15 +53,12 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
             make.edges.mas_equalTo(self.view);
         }];
     }
-    for (int i = 0; i<3; i++) {//根据模型个数
-        [self.rowCounts addObject:@1];
-    }
-    _layoutTableView.tableHeaderView = [self getTabelHeaderView];
     @weakify(self);
     [_layoutTableView YFB_addPullToRefreshWithHandler:^{
         @strongify(self);
         [self loadModel];
     }];
+    [_layoutTableView YFB_triggerPullToRefresh];
 }
 
 - (void)loadModel {
@@ -68,10 +66,19 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
     [self.giftModel fetchMyGiftModelWithType:_isSendGift ? @"send":@"recv" CompleteHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (success) {
-            
+            self.giftList = obj;
+            [self setRowCount];
+            [self->_layoutTableView reloadData];
         }
         [self->_layoutTableView YFB_endPullToRefresh];
     }];
+}
+
+- (void)setRowCount{
+    for (int i= 0; i<self.giftList.count; i++) {
+        [self.rowCounts addObject:@(1)];
+    }
+    self->_layoutTableView.tableHeaderView = [self getTabelHeaderView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,7 +101,11 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
         }];
     }
     NSString *titleStr = _isSendGift ? @"当前送出的礼物：" : @"当前收到的礼物：";
-    NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%zd件",titleStr,9]];
+    NSInteger allGiftCount = 0;
+    for (YFBGiftListModel *model in self.giftList) {
+        allGiftCount += model.giftList.count;
+    }
+    NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%zd件",titleStr,allGiftCount]];
     [attribute setAttributes:@{NSForegroundColorAttributeName : kColor(@"#8458d0")} range:NSMakeRange(titleStr.length, attribute.length-titleStr.length)];
     titleLabel.attributedText = attribute.copy;
     return headerView;
@@ -108,7 +119,7 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
 
 #pragma mark UITableViewDelegate,UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return self.giftList.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -119,19 +130,21 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    YFBMineGiftCell *cell = [tableView dequeueReusableCellWithIdentifier:YFBMineGiftCellIdentifier forIndexPath:indexPath];
-    if (_isSendGift) {
-        cell.name = @"一个棒棒糖x1";
-        cell.diamond = @"30颗钻石";
-        cell.time = @"2017/03/01 11:34";
-        cell.giveStr = @"再送一个";
-    }else{
-        cell.name = @"一个棒棒糖x1";
-        cell.diamond = @"30颗钻石";
-        cell.time = @"2017/03/01 11:34";
-        cell.giveStr = @"回赠";
+    if (indexPath.section < self.giftList.count) {
+        YFBMineGiftCell *cell = [tableView dequeueReusableCellWithIdentifier:YFBMineGiftCellIdentifier forIndexPath:indexPath];
+        YFBGiftListModel *giftModel = self.giftList[indexPath.section];
+        YFBGift *gift = giftModel.giftList[indexPath.row];
+        cell.name = gift.name;
+        cell.diamond = [NSString stringWithFormat:@"%@颗钻石",gift.diamondCount];
+        cell.time = gift.recvOrSendTime;
+        if (_isSendGift) {
+            cell.giveStr = @"再送一个";
+        }else{
+            cell.giveStr = @"回赠";
+        }
+        return cell;
     }
-    return cell;
+    return nil;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -139,17 +152,18 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
         return self.headerViews[section];
     }
     YFBMineGiftHeaderView *headerView = [[YFBMineGiftHeaderView alloc] init];
+    YFBGiftListModel *giftModel = self.giftList[section];
     if (_isSendGift) {
-        headerView.title = [self getAttributeStrWithName:@"寒暄" title:@"收到您送的礼物"];
+        headerView.title = [self getAttributeStrWithName:giftModel.nickName title:@"收到您送的礼物"];
     }else{
-        headerView.title = [self getAttributeStrWithName:@"寒暄" title:@"送给你礼物"];
+        headerView.title = [self getAttributeStrWithName:giftModel.nickName title:@"送给你礼物"];
     }
-    headerView.imageUrl = @"http://www.haopic.me/wp-content/uploads/2015/12/2015122808171644.jpg";
-    headerView.allGift = @"3";
+    headerView.imageUrl = giftModel.portraitUrl;
+    headerView.allGift = giftModel.giftList.count;
     @weakify(self);
     headerView.action = ^(UIButton *btn) {
         @strongify(self);
-        [self.rowCounts replaceObjectAtIndex:section withObject:btn.selected ? @3 : @1];
+        [self.rowCounts replaceObjectAtIndex:section withObject:btn.selected ? @(giftModel.giftList.count) : @1];
         [tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
     };
     [self.headerViews addObject:headerView];
