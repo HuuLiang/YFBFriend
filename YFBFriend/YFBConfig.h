@@ -31,6 +31,7 @@
 #define YFB_RANK_URL                    @"fengyun.service"                      //风云榜
 #define YFB_DETAIL_URL                  @"personDtl.service"                    //详情页
 #define YFB_MSGLIST_URL                 @"msgList.service"                      //消息列表
+#define YFB_MY_GIFT_URL                 @"recvOrSendGiftList.service"           //我的礼物
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"
 #define YFB_APP_URL                     @"/iosvideo/appSpreadList.htm"
