@@ -278,7 +278,7 @@
 		ECCA56B41E9CA83100E067B1 /* YFBRegisterUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56B31E9CA83100E067B1 /* YFBRegisterUserModel.m */; };
 		ECCA56C81E9CD92C00E067B1 /* YFBImageUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56C71E9CD92C00E067B1 /* YFBImageUploadManager.m */; };
 		ECD09E431EA0AF14008B7BF8 /* YFBInteractionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD09E421EA0AF14008B7BF8 /* YFBInteractionManager.m */; };
-		ECEED7991E9F6E6100B47D8A /* YFBGreetingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEED7981E9F6E6100B47D8A /* YFBGreetingModel.m */; };
+		ECEED7991E9F6E6100B47D8A /* YFBGreetingInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEED7981E9F6E6100B47D8A /* YFBGreetingInfoModel.m */; };
 		ECEED79C1E9F6E8A00B47D8A /* YFBRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEED79B1E9F6E8A00B47D8A /* YFBRobot.m */; };
 		ECEED79F1E9F9A6900B47D8A /* YFBDiscoverModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEED79E1E9F9A6900B47D8A /* YFBDiscoverModel.m */; };
 /* End PBXBuildFile section */
@@ -795,8 +795,8 @@
 		ECCA56C71E9CD92C00E067B1 /* YFBImageUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBImageUploadManager.m; sourceTree = "<group>"; };
 		ECD09E411EA0AF14008B7BF8 /* YFBInteractionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBInteractionManager.h; path = YFBFriend/Class/Discover/Model/YFBInteractionManager.h; sourceTree = SOURCE_ROOT; };
 		ECD09E421EA0AF14008B7BF8 /* YFBInteractionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBInteractionManager.m; path = YFBFriend/Class/Discover/Model/YFBInteractionManager.m; sourceTree = SOURCE_ROOT; };
-		ECEED7971E9F6E6100B47D8A /* YFBGreetingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBGreetingModel.h; path = YFBFriend/Class/Discover/Model/YFBGreetingModel.h; sourceTree = SOURCE_ROOT; };
-		ECEED7981E9F6E6100B47D8A /* YFBGreetingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBGreetingModel.m; path = YFBFriend/Class/Discover/Model/YFBGreetingModel.m; sourceTree = SOURCE_ROOT; };
+		ECEED7971E9F6E6100B47D8A /* YFBGreetingInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBGreetingInfoModel.h; path = YFBFriend/Class/Discover/Model/YFBGreetingInfoModel.h; sourceTree = SOURCE_ROOT; };
+		ECEED7981E9F6E6100B47D8A /* YFBGreetingInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBGreetingInfoModel.m; path = YFBFriend/Class/Discover/Model/YFBGreetingInfoModel.m; sourceTree = SOURCE_ROOT; };
 		ECEED79A1E9F6E8A00B47D8A /* YFBRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBRobot.h; path = YFBFriend/Class/Discover/Model/YFBRobot.h; sourceTree = SOURCE_ROOT; };
 		ECEED79B1E9F6E8A00B47D8A /* YFBRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRobot.m; path = YFBFriend/Class/Discover/Model/YFBRobot.m; sourceTree = SOURCE_ROOT; };
 		ECEED79D1E9F9A6900B47D8A /* YFBDiscoverModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBDiscoverModel.h; path = YFBFriend/Class/Discover/Model/YFBDiscoverModel.h; sourceTree = SOURCE_ROOT; };
@@ -1013,8 +1013,8 @@
 			children = (
 				ECEED79A1E9F6E8A00B47D8A /* YFBRobot.h */,
 				ECEED79B1E9F6E8A00B47D8A /* YFBRobot.m */,
-				ECEED7971E9F6E6100B47D8A /* YFBGreetingModel.h */,
-				ECEED7981E9F6E6100B47D8A /* YFBGreetingModel.m */,
+				ECEED7971E9F6E6100B47D8A /* YFBGreetingInfoModel.h */,
+				ECEED7981E9F6E6100B47D8A /* YFBGreetingInfoModel.m */,
 				ECEED79D1E9F9A6900B47D8A /* YFBDiscoverModel.h */,
 				ECEED79E1E9F9A6900B47D8A /* YFBDiscoverModel.m */,
 				ECC785761EA1F93500221E8E /* YFBRankModel.h */,
@@ -2303,7 +2303,7 @@
 				B3456A5E1EA5EC8C000528DA /* YFBMessageGiftFooterView.m in Sources */,
 				EC9A6A411E6D3F9E0018C5FB /* ActionSheetDatePicker.m in Sources */,
 				EC9A6B041E6D50670018C5FB /* AppDelegate+configuration.m in Sources */,
-				ECEED7991E9F6E6100B47D8A /* YFBGreetingModel.m in Sources */,
+				ECEED7991E9F6E6100B47D8A /* YFBGreetingInfoModel.m in Sources */,
 				EC96EB041EA70A1100365B8F /* YFBMessageFunctionView.m in Sources */,
 				ECB8C8491E9DCD5B00B116AC /* POSBlobInputStream.m in Sources */,
 				EC9A6A461E6D3F9E0018C5FB /* DistancePickerView.m in Sources */,

@@ -7,15 +7,15 @@
 //
 
 #import "YFBInteractionManager.h"
-#import "YFBGreetingModel.h"
+//#import "YFBGreetingInfoModel.h"
 #import "YFBRobot.h"
 
 @interface YFBInteractionManager ()
-@property (nonatomic,retain) YFBGreetingModel *greetModel;
+//@property (nonatomic,retain) YFBGreetingInfoModel *greetModel;
 @end
 
 @implementation YFBInteractionManager
-QBDefineLazyPropertyInitialization(YFBGreetingModel, greetModel)
+//QBDefineLazyPropertyInitialization(YFBGreetingInfoModel, greetModel)
 
 + (instancetype)manager {
     static YFBInteractionManager *_manager;
@@ -36,7 +36,10 @@ QBDefineLazyPropertyInitialization(YFBGreetingModel, greetModel)
 
 //打招呼
 - (void)greetWithUserInfoList:(NSArray<YFBRobot *> *)userList handler:(void (^)(BOOL success))handler {
-    [self.greetModel fetchGreetingInfoWithUserIdStr:userList CompletionHandler:^(BOOL success, id obj) {
+//    [self.greetModel fetchGreetingInfoWithUserIdStr:userList CompletionHandler:^(BOOL success, id obj) {
+//        QBSafelyCallBlock(handler,success);
+//    }];
+    [self fetchGreetingInfoWithUserIdStr:userList CompletionHandler:^(BOOL success, id obj) {
         QBSafelyCallBlock(handler,success);
     }];
 }

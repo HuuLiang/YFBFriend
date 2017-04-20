@@ -1,5 +1,5 @@
 //
-//  YFBGreetingModel.h
+//  YFBGreetingInfoModel.h
 //  YFBFriend
 //
 //  Created by Liang on 2017/4/13.
@@ -17,18 +17,5 @@
 @interface YFBGreetingInfoModel : QBEncryptedURLRequest
 
 - (BOOL)fetchGreetingInfoWithCompletionHandler:(QBCompletionHandler)handler;
-
-@end
-
-
-//一键打招呼
-
-@interface YFBGreetingResponse : QBURLResponse
-
-@end
-
-@interface YFBGreetingModel : QBEncryptedURLRequest
-
-- (BOOL)fetchGreetingInfoWithUserIdStr:(NSArray <YFBRobot *> *)userList CompletionHandler:(QBCompletionHandler)handler;
 
 @end

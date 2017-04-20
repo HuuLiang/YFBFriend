@@ -10,7 +10,7 @@
 #import "YFBGreetingCell.h"
 #import "YFBGreetingHeaderView.h"
 #import "YFBRobot.h"
-#import "YFBGreetingModel.h"
+#import "YFBGreetingInfoModel.h"
 #import "YFBInteractionManager.h"
 
 static NSString *const kYFBGreetingCellReusableIdentifier = @"kYFBGreetingCellReusableIdentifier";
@@ -137,7 +137,7 @@ QBDefineLazyPropertyInitialization(YFBGreetingInfoModel, greetInfoModel)
         headerView.greeingBlock = ^{
             @strongify(self);
             //批量打招呼 并退出推荐弹窗
-            [[YFBInteractionManager manager] greetWithUserInfoList:self.dataSource handler:^(BOOL *success) {
+            [[YFBInteractionManager manager] greetWithUserInfoList:self.dataSource handler:^(BOOL success) {
                
             }];
             [self hide];
