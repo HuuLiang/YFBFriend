@@ -33,6 +33,9 @@
 		B37A3E731E7947B800643329 /* YFBDiamondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B37A3E721E7947B800643329 /* YFBDiamondCell.m */; };
 		B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */; };
 		B3AB93701E7BA981006EA5EB /* YFBPayUsersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AB936F1E7BA981006EA5EB /* YFBPayUsersCell.m */; };
+		B3B3EAE51EA738F400B97396 /* YFBMineGiftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B3EAE41EA738F400B97396 /* YFBMineGiftCell.m */; };
+		B3B3EAE81EA74D6C00B97396 /* YFBMineGiftHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B3EAE71EA74D6C00B97396 /* YFBMineGiftHeaderView.m */; };
+		B3B3EAEB1EA76DBE00B97396 /* YFBMineBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B3EAEA1EA76DBE00B97396 /* YFBMineBtn.m */; };
 		B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CD81E77DBC900C7733D /* YFBMineCell.m */; };
 		B3C18CDC1E78025D00C7733D /* YFBVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */; };
 		B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */; };
@@ -332,6 +335,12 @@
 		B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineHeaderCell.m; sourceTree = "<group>"; };
 		B3AB936E1E7BA981006EA5EB /* YFBPayUsersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPayUsersCell.h; sourceTree = "<group>"; };
 		B3AB936F1E7BA981006EA5EB /* YFBPayUsersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPayUsersCell.m; sourceTree = "<group>"; };
+		B3B3EAE31EA738F400B97396 /* YFBMineGiftCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineGiftCell.h; sourceTree = "<group>"; };
+		B3B3EAE41EA738F400B97396 /* YFBMineGiftCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineGiftCell.m; sourceTree = "<group>"; };
+		B3B3EAE61EA74D6C00B97396 /* YFBMineGiftHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineGiftHeaderView.h; sourceTree = "<group>"; };
+		B3B3EAE71EA74D6C00B97396 /* YFBMineGiftHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineGiftHeaderView.m; sourceTree = "<group>"; };
+		B3B3EAE91EA76DBE00B97396 /* YFBMineBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineBtn.h; sourceTree = "<group>"; };
+		B3B3EAEA1EA76DBE00B97396 /* YFBMineBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineBtn.m; sourceTree = "<group>"; };
 		B3C18CD71E77DBC900C7733D /* YFBMineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineCell.h; sourceTree = "<group>"; };
 		B3C18CD81E77DBC900C7733D /* YFBMineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineCell.m; sourceTree = "<group>"; };
 		B3C18CDA1E78025D00C7733D /* YFBVerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVerifyViewController.h; sourceTree = "<group>"; };
@@ -944,6 +953,12 @@
 				EC2A86D61E88FCEC00E4B300 /* YFBPasswordView.m */,
 				EC2AC3AA1E8944360076BF88 /* YFBMyPhotoCell.h */,
 				EC2AC3AB1E8944360076BF88 /* YFBMyPhotoCell.m */,
+				B3B3EAE31EA738F400B97396 /* YFBMineGiftCell.h */,
+				B3B3EAE41EA738F400B97396 /* YFBMineGiftCell.m */,
+				B3B3EAE61EA74D6C00B97396 /* YFBMineGiftHeaderView.h */,
+				B3B3EAE71EA74D6C00B97396 /* YFBMineGiftHeaderView.m */,
+				B3B3EAE91EA76DBE00B97396 /* YFBMineBtn.h */,
+				B3B3EAEA1EA76DBE00B97396 /* YFBMineBtn.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2305,6 +2320,7 @@
 				B37A3E701E793EF300643329 /* YFBMyDiamondController.m in Sources */,
 				EC9A6A2E1E6D3F9E0018C5FB /* UIScrollView+Refresh.m in Sources */,
 				EC9A6A431E6D3F9E0018C5FB /* ActionSheetLocalePicker.m in Sources */,
+				B3B3EAEB1EA76DBE00B97396 /* YFBMineBtn.m in Sources */,
 				EC9A6A6D1E6D3F9E0018C5FB /* XHShareMenuItem.m in Sources */,
 				EC5D65A41E7AAB4000CBE08A /* YFBDetailFooterView.m in Sources */,
 				EC9A6A831E6D3F9E0018C5FB /* XHMessageTableView.m in Sources */,
@@ -2316,6 +2332,7 @@
 				ECB8C84B1E9DCD5B00B116AC /* POSFastAssetReader.m in Sources */,
 				EC9A6ABC1E6D3F9F0018C5FB /* SDCycleScrollView.m in Sources */,
 				EC9A6A8A1E6D3F9E0018C5FB /* XHEmotionManagerView.m in Sources */,
+				B3B3EAE51EA738F400B97396 /* YFBMineGiftCell.m in Sources */,
 				ECCA56B41E9CA83100E067B1 /* YFBRegisterUserModel.m in Sources */,
 				EC9A6A741E6D3F9E0018C5FB /* SELinkText.m in Sources */,
 				ECB8C8471E9DCD5B00B116AC /* POSAdjustedAssetReaderIOS7.m in Sources */,
@@ -2359,6 +2376,7 @@
 				EC96EB071EA7649800365B8F /* YFBGiftManager.m in Sources */,
 				EC96EB0A1EA769B700365B8F /* YFBDiamonManager.m in Sources */,
 				EC9A6A511E6D3F9E0018C5FB /* UIScrollView+XHkeyboardControl.m in Sources */,
+				B3B3EAE81EA74D6C00B97396 /* YFBMineGiftHeaderView.m in Sources */,
 				EC9A69D51E6D3F9E0018C5FB /* JYNextButton.m in Sources */,
 				B3D6E9B01EA4EDF700D972CC /* YFBGiftFooterView.m in Sources */,
 				ECC7857B1EA215CF00221E8E /* YFBDetailModel.m in Sources */,
