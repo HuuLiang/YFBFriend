@@ -26,8 +26,8 @@
     _headerView = [[YFBSliderView alloc] init];
     _headerView.titlesArr = @[@"关注我的",@"我关注的"];
     [self.view addSubview:_headerView];
-    YFBAttentionDetailController *detailVC = [[YFBAttentionDetailController alloc] initWithIsAttentionMe:NO];
-     YFBAttentionDetailController *detailVC2 = [[YFBAttentionDetailController alloc] initWithIsAttentionMe:YES];
+    YFBAttentionDetailController *detailVC = [[YFBAttentionDetailController alloc] initWithIsAttentionMe:YES];
+     YFBAttentionDetailController *detailVC2 = [[YFBAttentionDetailController alloc] initWithIsAttentionMe:NO];
     [_headerView addChildViewController:detailVC title:_headerView.titlesArr.firstObject];
     [_headerView addChildViewController:detailVC2 title:_headerView.titlesArr.lastObject];
     [_headerView setSlideHeadView];

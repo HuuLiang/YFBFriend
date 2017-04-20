@@ -9,7 +9,7 @@
 #import "YFBRecommendVC.h"
 #import "YFBRecommendCell.h"
 #import "YFBDiscoverModel.h"
-#import "YFBGreetingModel.h"
+#import "YFBGreetingInfoModel.h"
 #import "YFBRobot.h"
 #import "YFBInteractionManager.h"
 
@@ -110,7 +110,7 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
             if (!thisButton.isSelected) {
                 thisButton.selected = YES;
                 //打招呼                
-                [[YFBInteractionManager manager] greetWithUserInfoList:@[info] handler:^(BOOL *success) {
+                [[YFBInteractionManager manager] greetWithUserInfoList:@[info] handler:^(BOOL success) {
                     if (success) {
                         YFBRecommendCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
                         cell.greeted  = YES;
