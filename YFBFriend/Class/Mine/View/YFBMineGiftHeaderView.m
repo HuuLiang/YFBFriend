@@ -80,9 +80,9 @@
     [_headerImage sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
 }
 
-- (void)setAllGift:(NSString *)allGift {
+- (void)setAllGift:(NSInteger)allGift {
     _allGift = allGift;
-    [_allGiftBtn setTitle:[NSString stringWithFormat:@"共%@件",allGift] forState:UIControlStateNormal];
+    [_allGiftBtn setTitle:[NSString stringWithFormat:@"共%zd件",allGift] forState:UIControlStateNormal];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
