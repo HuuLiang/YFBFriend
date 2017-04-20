@@ -77,12 +77,12 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
             make.edges.mas_equalTo(self.view);
         }];
     }
-    @weakify(self);
-    [self.navigationController.navigationBar bk_whenTapped:^{
-        @strongify(self);
-        [[[YFBGiftPopViewController alloc] init] showGiftPopViewWithCurrentVC:self isMessagePop:YES];
-        
-    }];
+//    @weakify(self);
+//    [self.navigationController.navigationBar bk_whenTapped:^{
+//        @strongify(self);
+//        [[[YFBGiftPopViewController alloc] init] showGiftPopViewWithCurrentVC:self isMessagePop:YES];
+//        
+//    }];
     
 }
 

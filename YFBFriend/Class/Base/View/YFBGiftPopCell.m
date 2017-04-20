@@ -31,23 +31,23 @@
         _diamondBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [self addSubview:_diamondBtn];
         {
-        [_diamondBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.mas_equalTo(self);
-            make.right.mas_equalTo(self).mas_offset(kWidth(-9));
-        }];
+            [_diamondBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.mas_equalTo(self);
+                make.right.mas_equalTo(self).mas_offset(kWidth(-9));
+            }];
         }
-    
+        
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = kFont(9);
         _titleLabel.textColor = kColor(@"#ffffff");
-//        _titleLabel.textAlignment = NSTextAlignmentLeft;
+        //        _titleLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_titleLabel];
         {
-        [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).mas_offset(kWidth(9));
-            make.bottom.mas_equalTo(self);
-            make.right.mas_lessThanOrEqualTo(_diamondBtn.mas_left).mas_offset(kWidth(6));//mas_equalTo(_diamondBtn.mas_left);
-        }];
+            [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(self).mas_offset(kWidth(9));
+                make.bottom.mas_equalTo(self);
+                make.right.mas_lessThanOrEqualTo(_diamondBtn.mas_left).mas_offset(kWidth(6));//mas_equalTo(_diamondBtn.mas_left);
+            }];
         }
         _imageView = [[UIImageView alloc] init];
         _imageView.contentMode = UIViewContentModeCenter;
@@ -55,10 +55,10 @@
         _imageView.image = [UIImage imageNamed:@"bbt"];
         [self addSubview:_imageView];
         {
-        [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.top.mas_equalTo(self);
-            make.bottom.mas_equalTo(self);
-        }];
+            [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.top.mas_equalTo(self);
+                make.bottom.mas_equalTo(self);
+            }];
         }
         
     }
