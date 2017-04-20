@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger,YFBUserMarriageStatus) {
 
 @property (nonatomic,copy) NSString *userImage;
 
+//@property (nonatomic,copy) NSString *userPhotos;
+
 @property (nonatomic,copy) NSString *signature;
 
 @property (nonatomic,copy) NSString *nickName;

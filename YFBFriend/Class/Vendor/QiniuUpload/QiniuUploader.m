@@ -8,7 +8,7 @@
 
 #import "QiniuUploader.h"
 
-#define kQiniuUploadURL @"https://up.qbox.me"
+#define kQiniuUploadURL @"http://up-z2.qiniu.com"//@"https://up.qbox.me"
 #define kQiniuTaskKey @"qiniuTaskKey"
 
 @implementation QiniuUploader{

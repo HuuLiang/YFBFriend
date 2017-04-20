@@ -38,7 +38,8 @@
 #define YFB_CONCERN_URL                 @"concern.service"                      //关注
 #define YFB_CANCELCONCERN_URL           @"cancelConcern.service"                //取消关注
 #define YFB_FEEDBACK_URL                @"feedback.service"                     //意见反馈
-
+#define YFB_PHOTOLIST_URL               @"photoList.service"                    //用户相册列表
+#define YFB_SAVEPHOTO_URL               @"savePhoto.service"                    //相片上传接口
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"
 #define YFB_APP_URL                     @"/iosvideo/appSpreadList.htm"
@@ -53,8 +54,8 @@
 #define YFB_WECHAT_USERINFO             @"https://api.weixin.qq.com/sns/userinfo?"
 
 #define YFB_UPLOAD_SCOPE                @"mfw-image"
-#define YFB_UPLOAD_SECRET_KEY           @"JIWlLAM3_bGrfTyU16XKjluzYKcsHOB--yDFB4zt"
-#define YFB_UPLOAD_ACCESS_KEY           @"9mmo2Dd9oca-2SJ5Uou9qQ1d2XjNIoX9EdrPQ6Xj"
+#define YFB_UPLOAD_SECRET_KEY           @"9mmo2Dd9oca-2SJ5Uou9qQ1d2XjNIoX9EdrPQ6Xj"
+#define YFB_UPLOAD_ACCESS_KEY           @"JIWlLAM3_bGrfTyU16XKjluzYKcsHOB--yDFB4zt"
 
 
 #endif /* YFBConfig_h */

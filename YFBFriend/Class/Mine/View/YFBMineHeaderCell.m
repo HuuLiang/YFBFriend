@@ -159,7 +159,11 @@
 }
 
 - (void)setHeaderImage:(NSString *)headerImage {
-    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:headerImage]];;
+    if (headerImage) {
+        [_headerImageView sd_setImageWithURL:[NSURL URLWithString:headerImage]];
+    } else {
+        _headerImageView.image = [UIImage imageNamed:@"login_userImage"];
+    }
 }
 
 - (void)setIdNumber:(NSString *)idNumber {

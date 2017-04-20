@@ -60,8 +60,13 @@
 
 - (void)setImageKeyName:(NSString *)imageKeyName {
     _shadowView.hidden = NO;
-//    QBLog(@"imageKeyName:%@",imageKeyName);
-    _photoImageView.image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imageKeyName] ?: [UIImage imageNamed:@"mine_add_photo"];
+    NSString *imageKey = [[[[imageKeyName componentsSeparatedByString:@"_"] lastObject] componentsSeparatedByString:@"."] firstObject];
+    UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imageKey];
+    if (image) {
+        _photoImageView.image = image;
+    } else {
+        [_photoImageView sd_setImageWithURL:[NSURL URLWithString:imageKeyName] placeholderImage:[UIImage imageNamed:@"mine_add_photo"]];
+    }
 }
 
 - (void)setFunctionCell:(BOOL)functionCell {

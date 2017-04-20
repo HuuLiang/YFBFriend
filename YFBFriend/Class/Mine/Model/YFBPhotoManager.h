@@ -14,11 +14,11 @@ typedef void(^ImagePicker)(UIImage *pickerImage,NSString *keyName);
 
 + (instancetype)manager;
 
-- (void)saveAllImageKeys:(NSArray *)imageKeys;
-
-- (NSArray *)allImageKeys;
-
-- (void)saveOneImageKey:(NSString *)imageKey;
+//- (void)saveAllImageKeys:(NSArray *)imageKeys;
+//
+//- (NSArray *)allImageKeys;
+//
+//- (void)saveOneImageKey:(NSString *)imageKey;
 
 
 

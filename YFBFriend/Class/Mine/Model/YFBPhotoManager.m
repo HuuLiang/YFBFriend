@@ -31,31 +31,31 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
     return _photoManager;
 }
 
-- (void)saveAllImageKeys:(NSArray *)imageKeys {
-    [[NSUserDefaults standardUserDefaults] setObject:imageKeys forKey:kYFBPhotoCacheKeyName];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (NSArray *)allImageKeys {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kYFBPhotoCacheKeyName];
-}
-
-- (void)saveOneImageKey:(NSString *)imageKey {
-    NSMutableArray *allKeys = [NSMutableArray arrayWithArray:[self allImageKeys]];
-    [allKeys addObject:imageKey];
-    [self saveAllImageKeys:allKeys];
-}
-
-- (void)removeFormCache:(NSString *)imageKey {
-    NSMutableArray *allKeys = [NSMutableArray arrayWithArray:[self allImageKeys]];
-    [allKeys enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSString *  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([key isEqualToString:imageKey]) {
-            [allKeys removeObject:key];
-            * stop = YES;
-        }
-    }];
-    [self saveAllImageKeys:allKeys];
-}
+//- (void)saveAllImageKeys:(NSArray *)imageKeys {
+//    [[NSUserDefaults standardUserDefaults] setObject:imageKeys forKey:kYFBPhotoCacheKeyName];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//}
+//
+//- (NSArray *)allImageKeys {
+//    return [[NSUserDefaults standardUserDefaults] objectForKey:kYFBPhotoCacheKeyName];
+//}
+//
+//- (void)saveOneImageKey:(NSString *)imageKey {
+//    NSMutableArray *allKeys = [NSMutableArray arrayWithArray:[self allImageKeys]];
+//    [allKeys addObject:imageKey];
+//    [self saveAllImageKeys:allKeys];
+//}
+//
+//- (void)removeFormCache:(NSString *)imageKey {
+//    NSMutableArray *allKeys = [NSMutableArray arrayWithArray:[self allImageKeys]];
+//    [allKeys enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSString *  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if ([key isEqualToString:imageKey]) {
+//            [allKeys removeObject:key];
+//            * stop = YES;
+//        }
+//    }];
+//    [self saveAllImageKeys:allKeys];
+//}
 
 
 - (void)getImageInCurrentViewController:(UIViewController *)viewController handler:(ImagePicker)picker {

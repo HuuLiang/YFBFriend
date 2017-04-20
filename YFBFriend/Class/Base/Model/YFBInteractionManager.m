@@ -36,9 +36,6 @@
 
 //打招呼
 - (void)greetWithUserInfoList:(NSArray<YFBRobot *> *)userList handler:(void (^)(BOOL success))handler {
-//    [self.greetModel fetchGreetingInfoWithUserIdStr:userList CompletionHandler:^(BOOL success, id obj) {
-//        QBSafelyCallBlock(handler,success);
-//    }];
     [self fetchGreetingInfoWithUserIdStr:userList CompletionHandler:^(BOOL success, id obj) {
         QBSafelyCallBlock(handler,success);
     }];

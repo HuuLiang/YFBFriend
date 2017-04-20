@@ -11,6 +11,7 @@
 #import "YFBDetailHeaderView.h"
 #import "YFBDetailFooterView.h"
 #import "YFBDetailModel.h"
+#import "YFBInteractionManager.h"
 
 typedef NS_ENUM(NSUInteger, YFBDetailSection) {
     YFBDetailSpace = 0, //个人空间
@@ -140,10 +141,16 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
             [self pushIntoMessageVCWithUserId:self.response.userId nickName:self.response.nickName avatarUrl:self.response.portraitUrl];
         } else if (infoType == YFBFunctionSendGreet) {
             //打招呼
-            
+            [[YFBInteractionManager manager] greetWithUserInfoList:@[self.response.userId] handler:^(BOOL success) {
+                if (success) {
+                    [[YFBHudManager manager] showHudWithText:@"打招呼成功"];
+                }
+            }];
         } else if (infoType == YFBFunctionSendFollow) {
             //关注
-            
+            [[YFBInteractionManager manager] concernUserWithUserId:self.response.userId handler:^(BOOL success) {
+                
+            }];
         }
     };
     [self.view addSubview:_footerView];

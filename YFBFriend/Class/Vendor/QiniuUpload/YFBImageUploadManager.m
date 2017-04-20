@@ -18,7 +18,7 @@
 @implementation YFBImageUploadManager
 
 + (void)registerWithSecretKey:(NSString *)secretKey accessKey:(NSString *)accessKey scope:(NSString *)scope {
-    [QiniuToken registerWithScope:scope SecretKey:secretKey Accesskey:accessKey];
+    [QiniuToken registerWithScope:scope SecretKey:secretKey Accesskey:accessKey TimeToLive:3600];
 }
 
 + (NSString *)imageURLWithName:(NSString *)name {

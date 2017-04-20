@@ -32,7 +32,7 @@
                                @"loginType":@(user.loginType),
                                @"password":user.password,
                                @"nickName":user.nickName,
-                               @"portraitUrl":user.userImage,
+                               @"portraitUrl":user.userImage ?: @"",
                                @"age":@(user.age),
                                @"vocation":user.job,
                                @"education":user.education,

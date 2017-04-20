@@ -9,6 +9,8 @@
 #import "YFBMinePhotosViewController.h"
 #import "YFBMyPhotoCell.h"
 #import "YFBPhotoManager.h"
+#import "YFBImageUploadManager.h"
+#import "YFBPhotoListManager.h"
 
 static NSString *const kYFBMyPhotoCellReusableIdentifier = @"kYFBMyPhotoCellReusableIdentifier";
 
@@ -53,10 +55,25 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)loadData {
-    [self.dataSource removeAllObjects];
-    [self.dataSource addObjectsFromArray:[[YFBPhotoManager manager] allImageKeys]];
-    [self->_colleciontView reloadData];
-    [self->_colleciontView YFB_endPullToRefresh];
+//    [self.dataSource removeAllObjects];
+//    [self.dataSource addObjectsFromArray:[[YFBPhotoManager manager] allImageKeys]];
+//    [[[YFBUser currentUser].userPhotos componentsSeparatedByString:@"|"] enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if (obj.length > 0) {
+//            [self.dataSource addObject:obj];
+//        }
+//    }];
+//    [self->_colleciontView reloadData];
+//    [self->_colleciontView YFB_endPullToRefresh];
+    @weakify(self);
+    [[YFBPhotoListManager manager] fetchPhotoListWithCompletionHandler:^(BOOL success, NSArray <YFBPhoto *> *photoList) {
+        @strongify(self);
+        [self->_colleciontView YFB_endPullToRefresh];
+        if (success) {
+            [self.dataSource removeAllObjects];
+            [self.dataSource addObjectsFromArray:photoList];
+            [self->_colleciontView reloadData];
+        }
+    }];
 }
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
@@ -101,8 +118,24 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [[YFBPhotoManager manager] getImageInCurrentViewController:self handler:^(UIImage *pickerImage, NSString *keyName) {
             @strongify(self);
             [[SDImageCache sharedImageCache] storeImage:pickerImage forKey:keyName];
-            [[YFBPhotoManager manager] saveOneImageKey:keyName];
+//            [[YFBPhotoManager manager] saveOneImageKey:keyName];
             [self->_colleciontView YFB_triggerPullToRefresh];
+            NSString *name = [NSString stringWithFormat:@"_%@.jpg",keyName];
+            [YFBImageUploadManager uploadImage:pickerImage withName:name completionHandler:^(BOOL success, NSString * imageUrl) {
+                if (success) {
+                    [[YFBPhotoListManager manager] savePhotoWithUrl:imageUrl CompletionHandler:^(BOOL success, id obj) {
+                        if (success) {
+                            [self.dataSource addObject:imageUrl];
+                            [self->_colleciontView reloadData];
+                            [[YFBHudManager manager] showHudWithText:@"图片上传成功"];
+                        } else {
+                            [[YFBHudManager manager] showHudWithText:@"图片上传失败"];
+                        }
+                    }];
+                } else {
+                    [[YFBHudManager manager] showHudWithText:@"图片上传失败"];
+                }
+            }];
         }];
     }
 }
