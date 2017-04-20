@@ -36,6 +36,8 @@
 #define YFB_ATTENTIONLIST_URL           @"concernList.service"                  //用户关注列表
 #define YFB_CONCERN_URL                 @"concern.service"                      //关注
 #define YFB_CANCELCONCERN_URL           @"cancelConcern.service"                //取消关注
+#define YFB_FEEDBACK_URL                @"feedback.service"                     //意见反馈
+
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"
 #define YFB_APP_URL                     @"/iosvideo/appSpreadList.htm"

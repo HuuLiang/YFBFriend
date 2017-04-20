@@ -139,4 +139,24 @@
     return success;
 }
 
+//意见反馈
+
+- (void)sendAdviceWithContent:(NSString *)content Contact:(NSString *)contact handler:(void (^)(BOOL))handler {
+    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+                             @"userId":[YFBUser currentUser].userId,
+                             @"token":[YFBUser currentUser].token,
+                             @"content":content,
+                             @"contact":contact};
+    
+    [self requestURLPath:YFB_FEEDBACK_URL
+          standbyURLPath:nil
+              withParams:params
+         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+    {
+        if (handler) {
+            handler(respStatus == QBURLResponseSuccess);
+        }
+    }];
+}
+
 @end

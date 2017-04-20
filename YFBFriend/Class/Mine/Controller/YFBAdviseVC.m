@@ -8,6 +8,7 @@
 
 #import "YFBAdviseVC.h"
 #import "YFBPasswordView.h"
+#import "YFBInteractionManager.h"
 
 @interface YFBAdviseVC ()
 @property (nonatomic,strong) UITextView *textView;
@@ -99,6 +100,13 @@
     [_sendButton bk_addEventHandler:^(id sender) {
         @strongify(self);
         //发送信息
+        [[YFBInteractionManager manager] sendAdviceWithContent:self->_textView.text Contact:self.contactView.content handler:^(BOOL success) {
+            if (success) {
+                [[YFBHudManager manager] showHudWithText:@"发送成功"];
+                self.textView.text = @"";
+            }
+            [[YFBHudManager manager] showHudWithText:@"发送失败"];
+        }];
     } forControlEvents:UIControlEventTouchUpInside];
     
     {

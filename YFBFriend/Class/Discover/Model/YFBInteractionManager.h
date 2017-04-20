@@ -19,4 +19,6 @@
 
 - (void)cancleConcernUserWithUserId:(NSString *)userId handler:(void(^)(BOOL success))handler;
 
+- (void)sendAdviceWithContent:(NSString *)content Contact:(NSString *)contact handler:(void(^)(BOOL success))handler;
+
 @end
