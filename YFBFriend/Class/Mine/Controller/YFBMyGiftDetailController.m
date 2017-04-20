@@ -9,6 +9,7 @@
 #import "YFBMyGiftDetailController.h"
 #import "YFBMineGiftCell.h"
 #import "YFBMineGiftHeaderView.h"
+#import "YFBMyGiftModel.h"
 
 static NSString *const YFBMineGiftCellIdentifier = @"yfb_mine_gift_cell_identifier";
 
@@ -19,11 +20,13 @@ static NSString *const YFBMineGiftCellIdentifier = @"yfb_mine_gift_cell_identifi
 }
 @property (nonatomic,retain) NSMutableArray <YFBMineGiftHeaderView *>*headerViews;
 @property (nonatomic,retain) NSMutableArray <NSNumber *>*rowCounts;
+@property (nonatomic,retain) YFBMyGiftModel *giftModel;
 @end
 
 @implementation YFBMyGiftDetailController
 QBDefineLazyPropertyInitialization(NSMutableArray,headerViews)
 QBDefineLazyPropertyInitialization(NSMutableArray, rowCounts)
+QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
 
 - (instancetype)initWithIsSendGift:(BOOL)isSendGift
 {
@@ -53,6 +56,22 @@ QBDefineLazyPropertyInitialization(NSMutableArray, rowCounts)
         [self.rowCounts addObject:@1];
     }
     _layoutTableView.tableHeaderView = [self getTabelHeaderView];
+    @weakify(self);
+    [_layoutTableView YFB_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadModel];
+    }];
+}
+
+- (void)loadModel {
+    @weakify(self);
+    [self.giftModel fetchMyGiftModelWithType:_isSendGift ? @"send":@"recv" CompleteHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            
+        }
+        [self->_layoutTableView YFB_endPullToRefresh];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,12 +88,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, rowCounts)
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:titleLabel];
     {
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.centerY.right.mas_equalTo(headerView);
-        make.height.mas_equalTo(kWidth(30));
-    }];
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.centerY.right.mas_equalTo(headerView);
+            make.height.mas_equalTo(kWidth(30));
+        }];
     }
-    NSString *titleStr = @"当前收到的礼物：";
+    NSString *titleStr = _isSendGift ? @"当前送出的礼物：" : @"当前收到的礼物：";
     NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%zd件",titleStr,9]];
     [attribute setAttributes:@{NSForegroundColorAttributeName : kColor(@"#8458d0")} range:NSMakeRange(titleStr.length, attribute.length-titleStr.length)];
     titleLabel.attributedText = attribute.copy;
@@ -121,9 +140,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, rowCounts)
     }
     YFBMineGiftHeaderView *headerView = [[YFBMineGiftHeaderView alloc] init];
     if (_isSendGift) {
-         headerView.title = [self getAttributeStrWithName:@"寒暄" title:@"收到您送的礼物"];
+        headerView.title = [self getAttributeStrWithName:@"寒暄" title:@"收到您送的礼物"];
     }else{
-     headerView.title = [self getAttributeStrWithName:@"寒暄" title:@"送给你礼物"];
+        headerView.title = [self getAttributeStrWithName:@"寒暄" title:@"送给你礼物"];
     }
     headerView.imageUrl = @"http://www.haopic.me/wp-content/uploads/2015/12/2015122808171644.jpg";
     headerView.allGift = @"3";

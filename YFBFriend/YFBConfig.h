@@ -31,6 +31,7 @@
 #define YFB_RANK_URL                    @"fengyun.service"                      //风云榜
 #define YFB_DETAIL_URL                  @"personDtl.service"                    //详情页
 #define YFB_MSGLIST_URL                 @"msgList.service"                      //消息列表
+#define YFB_MY_GIFT_URL                 @"recvOrSendGiftList.service"           //我的礼物
 #define YFB_GIFTLIST_URL                @"giftList.service"                     //获取礼物列表
 #define YFB_DIAMONLIST_URL              @"dpcList.service"                      //获取钻石数量和价格列表
 #define YFB_ATTENTIONLIST_URL           @"concernList.service"                  //用户关注列表
