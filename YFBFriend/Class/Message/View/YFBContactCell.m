@@ -23,7 +23,7 @@
     
     if (self) {
         
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+//        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         self.userImageView = [[UIImageView alloc] init];
         _userImageView.layer.cornerRadius = kWidth(50);

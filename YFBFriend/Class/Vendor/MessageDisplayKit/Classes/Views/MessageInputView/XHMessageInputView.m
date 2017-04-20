@@ -431,16 +431,18 @@
             }
             
             _inputTextView.frame = CGRectMake(textViewLeftMargin, 4.5f, width, height);
-            _inputTextView.backgroundColor = [UIColor clearColor];
+            _inputTextView.backgroundColor = [UIColor whiteColor];
             _inputTextView.layer.borderColor = borderColor.CGColor;
             _inputTextView.layer.borderWidth = borderWidth;
             _inputTextView.layer.cornerRadius = cornerRadius;
-            if (inputBackgroundColor) {
-                self.backgroundColor = inputBackgroundColor;
-            } else {
-                self.image = [[UIImage imageNamed:inputViewBackgroundImageName] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0f, 0.0f, 0.0f, 0.0f)
-                                                                                               resizingMode:UIImageResizingModeTile];
-            }
+//            if (inputBackgroundColor) {
+//                self.backgroundColor = inputBackgroundColor;
+//            } else {
+//                self.image = [[UIImage imageNamed:inputViewBackgroundImageName] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0f, 0.0f, 0.0f, 0.0f)
+//                                                                                               resizingMode:UIImageResizingModeTile];
+//            }
+            self.backgroundColor = [UIColor colorWithHexString:@"#d8d8d8"];
+
             break;
         }
         default:
@@ -484,6 +486,8 @@
     self.opaque = YES;
     // 由于继承UIImageView，所以需要这个属性设置
     self.userInteractionEnabled = YES;
+    
+    self.backgroundColor = [UIColor redColor];
     
     // 默认设置
     _allowsSendVoice = YES;

@@ -45,6 +45,11 @@
 		B3D6E9B01EA4EDF700D972CC /* YFBGiftFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D6E9AF1EA4EDF700D972CC /* YFBGiftFooterView.m */; };
 		B3F0F5631EA48B0D003F0D15 /* YFBGiftPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F5621EA48B0D003F0D15 /* YFBGiftPopView.m */; };
 		B3F0F5661EA498E7003F0D15 /* YFBGiftPopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F5651EA498E7003F0D15 /* YFBGiftPopCell.m */; };
+		EC2149451EA5E86900E07592 /* YFBMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2149441EA5E86900E07592 /* YFBMessageViewController.m */; };
+		EC2149481EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2149471EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m */; };
+		EC21494B1EA5FC0B00E07592 /* YFBMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC21494A1EA5FC0B00E07592 /* YFBMessageModel.m */; };
+		EC21494E1EA6008700E07592 /* YFBPhotoBrowse.m in Sources */ = {isa = PBXBuildFile; fileRef = EC21494D1EA6008700E07592 /* YFBPhotoBrowse.m */; };
+		EC2149511EA61A8C00E07592 /* YFBMessageAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2149501EA61A8C00E07592 /* YFBMessageAdView.m */; };
 		EC2A86C51E88C0A500E4B300 /* YFBSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A86C41E88C0A500E4B300 /* YFBSettingViewController.m */; };
 		EC2A86C81E88DD0200E4B300 /* YFBSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A86C71E88DD0200E4B300 /* YFBSettingCell.m */; };
 		EC2A86CB1E88EB8F00E4B300 /* YFBPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A86CA1E88EB8F00E4B300 /* YFBPasswordVC.m */; };
@@ -103,6 +108,7 @@
 		EC7F0FA91E6FFE1700F39FD9 /* YFBTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0FA81E6FFE1700F39FD9 /* YFBTabBarController.m */; };
 		EC7F0FAC1E70017C00F39FD9 /* YFBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0FAB1E70017C00F39FD9 /* YFBLoginViewController.m */; };
 		EC7F0FAF1E70066100F39FD9 /* YFBAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0FAE1E70066100F39FD9 /* YFBAccountManager.m */; };
+		EC96EB041EA70A1100365B8F /* YFBMessageFunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC96EB031EA70A1100365B8F /* YFBMessageFunctionView.m */; };
 		EC9A67771E6D3E4A0018C5FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67761E6D3E4A0018C5FB /* main.m */; };
 		EC9A677A1E6D3E4A0018C5FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67791E6D3E4A0018C5FB /* AppDelegate.m */; };
 		EC9A67821E6D3E4A0018C5FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC9A67811E6D3E4A0018C5FB /* Assets.xcassets */; };
@@ -350,6 +356,16 @@
 		B3F0F5641EA498E7003F0D15 /* YFBGiftPopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBGiftPopCell.h; sourceTree = "<group>"; };
 		B3F0F5651EA498E7003F0D15 /* YFBGiftPopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBGiftPopCell.m; sourceTree = "<group>"; };
 		BD481930EA9E3A5945F3FA6C /* Pods-YFBFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.debug.xcconfig"; sourceTree = "<group>"; };
+		EC2149431EA5E86900E07592 /* YFBMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessageViewController.h; sourceTree = "<group>"; };
+		EC2149441EA5E86900E07592 /* YFBMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageViewController.m; sourceTree = "<group>"; };
+		EC2149461EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YFBMessageViewController+XHBMessageDelegate.h"; sourceTree = "<group>"; };
+		EC2149471EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YFBMessageViewController+XHBMessageDelegate.m"; sourceTree = "<group>"; };
+		EC2149491EA5FC0B00E07592 /* YFBMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessageModel.h; sourceTree = "<group>"; };
+		EC21494A1EA5FC0B00E07592 /* YFBMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageModel.m; sourceTree = "<group>"; };
+		EC21494C1EA6008700E07592 /* YFBPhotoBrowse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPhotoBrowse.h; sourceTree = "<group>"; };
+		EC21494D1EA6008700E07592 /* YFBPhotoBrowse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPhotoBrowse.m; sourceTree = "<group>"; };
+		EC21494F1EA61A8C00E07592 /* YFBMessageAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessageAdView.h; sourceTree = "<group>"; };
+		EC2149501EA61A8C00E07592 /* YFBMessageAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageAdView.m; sourceTree = "<group>"; };
 		EC2A86C31E88C0A500E4B300 /* YFBSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSettingViewController.h; sourceTree = "<group>"; };
 		EC2A86C41E88C0A500E4B300 /* YFBSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSettingViewController.m; sourceTree = "<group>"; };
 		EC2A86C61E88DD0200E4B300 /* YFBSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSettingCell.h; sourceTree = "<group>"; };
@@ -465,6 +481,8 @@
 		EC7F0FAB1E70017C00F39FD9 /* YFBLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBLoginViewController.m; sourceTree = "<group>"; };
 		EC7F0FAD1E70066100F39FD9 /* YFBAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBAccountManager.h; sourceTree = "<group>"; };
 		EC7F0FAE1E70066100F39FD9 /* YFBAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBAccountManager.m; sourceTree = "<group>"; };
+		EC96EB021EA70A1100365B8F /* YFBMessageFunctionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessageFunctionView.h; sourceTree = "<group>"; };
+		EC96EB031EA70A1100365B8F /* YFBMessageFunctionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageFunctionView.m; sourceTree = "<group>"; };
 		EC9A67721E6D3E4A0018C5FB /* YFBFriend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YFBFriend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC9A67761E6D3E4A0018C5FB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EC9A67781E6D3E4A0018C5FB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1026,6 +1044,10 @@
 			children = (
 				EC4827091E778D7B00F03454 /* YFBContactViewController.h */,
 				EC48270A1E778D7B00F03454 /* YFBContactViewController.m */,
+				EC2149431EA5E86900E07592 /* YFBMessageViewController.h */,
+				EC2149441EA5E86900E07592 /* YFBMessageViewController.m */,
+				EC2149461EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.h */,
+				EC2149471EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m */,
 				B3D6E9A81EA4C4F000D972CC /* YFBGiftPopViewController.h */,
 				B3D6E9A91EA4C4F000D972CC /* YFBGiftPopViewController.m */,
 			);
@@ -1037,6 +1059,10 @@
 			children = (
 				EC6DAFE21EA4C74E00D93FB3 /* YFBContactModel.h */,
 				EC6DAFE31EA4C74E00D93FB3 /* YFBContactModel.m */,
+				EC2149491EA5FC0B00E07592 /* YFBMessageModel.h */,
+				EC21494A1EA5FC0B00E07592 /* YFBMessageModel.m */,
+				EC21494C1EA6008700E07592 /* YFBPhotoBrowse.h */,
+				EC21494D1EA6008700E07592 /* YFBPhotoBrowse.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1048,6 +1074,10 @@
 				EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */,
 				B3D6E9AB1EA4DBA900D972CC /* YFBBlagGiftView.h */,
 				B3D6E9AC1EA4DBA900D972CC /* YFBBlagGiftView.m */,
+				EC21494F1EA61A8C00E07592 /* YFBMessageAdView.h */,
+				EC2149501EA61A8C00E07592 /* YFBMessageAdView.m */,
+				EC96EB021EA70A1100365B8F /* YFBMessageFunctionView.h */,
+				EC96EB031EA70A1100365B8F /* YFBMessageFunctionView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1297,6 +1327,8 @@
 		EC9A68571E6D3F9E0018C5FB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EC9A687E1E6D3F9E0018C5FB /* System */,
+				EC9A687B1E6D3F9E0018C5FB /* Log */,
 				EC9A685F1E6D3F9E0018C5FB /* Extensions */,
 				EC7F0F781E6FA86700F39FD9 /* YFBConfiguration.h */,
 				EC7F0F791E6FA86700F39FD9 /* YFBConfiguration.m */,
@@ -1306,8 +1338,6 @@
 				EC9A68781E6D3F9E0018C5FB /* JYRegexUtil.m */,
 				EC7F0F961E6FD56300F39FD9 /* YFBUtil.h */,
 				EC7F0F971E6FD56300F39FD9 /* YFBUtil.m */,
-				EC9A687B1E6D3F9E0018C5FB /* Log */,
-				EC9A687E1E6D3F9E0018C5FB /* System */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2178,6 +2208,7 @@
 				B3D6E9AA1EA4C4F000D972CC /* YFBGiftPopViewController.m in Sources */,
 				EC9A6A561E6D3F9E0018C5FB /* XHLocationHelper.m in Sources */,
 				EC58AFB41E81435D0022FE8C /* YFBUserDataInfoCell.m in Sources */,
+				EC21494B1EA5FC0B00E07592 /* YFBMessageModel.m in Sources */,
 				EC9A6A7C1E6D3F9E0018C5FB /* SETextMagnifierRanged.m in Sources */,
 				ECB8C8281E9DCD4000B116AC /* QiniuFile.m in Sources */,
 				EC9A6A541E6D3F9E0018C5FB /* XHCaptureHelper.m in Sources */,
@@ -2201,6 +2232,7 @@
 				EC5D659E1E7AAB0900CBE08A /* YFBDetailCell.m in Sources */,
 				B33283F61E7F6E980058ED6D /* YFBPayUserModel.m in Sources */,
 				B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */,
+				EC21494E1EA6008700E07592 /* YFBPhotoBrowse.m in Sources */,
 				EC7307071E83BCE700D7BF70 /* YFBUserInfoEditView.m in Sources */,
 				EC9A6A791E6D3F9E0018C5FB /* SETextInput.m in Sources */,
 				EC47D42C1E7695F7000E9519 /* YFBRankVC.m in Sources */,
@@ -2242,18 +2274,22 @@
 				EC9A6A7B1E6D3F9E0018C5FB /* SETextMagnifierCaret.m in Sources */,
 				EC9A6A7E1E6D3F9E0018C5FB /* SETextSelectionView.m in Sources */,
 				B33F46971E7A55520028BAE4 /* YFBDiamondPayTypeCell.m in Sources */,
+				EC2149481EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m in Sources */,
 				ECB8C82A1E9DCD4000B116AC /* QiniuMultipartElement.m in Sources */,
 				ECCA56C81E9CD92C00E067B1 /* YFBImageUploadManager.m in Sources */,
 				EC7F0F801E6FAA5600F39FD9 /* YFBActivateModel.m in Sources */,
 				EC9A6A2F1E6D3F9E0018C5FB /* UIView+FrameEx.m in Sources */,
+				EC2149451EA5E86900E07592 /* YFBMessageViewController.m in Sources */,
 				EC65EE5C1E7148CE00DA1AF9 /* UIView+PopAnimation.m in Sources */,
 				ECB8C84C1E9DCD5B00B116AC /* POSLocking.m in Sources */,
 				EC9A67771E6D3E4A0018C5FB /* main.m in Sources */,
+				EC2149511EA61A8C00E07592 /* YFBMessageAdView.m in Sources */,
 				EC9A6A5F1E6D3F9E0018C5FB /* XHMessageTableViewController.m in Sources */,
 				B3456A5E1EA5EC8C000528DA /* YFBMessageGiftFooterView.m in Sources */,
 				EC9A6A411E6D3F9E0018C5FB /* ActionSheetDatePicker.m in Sources */,
 				EC9A6B041E6D50670018C5FB /* AppDelegate+configuration.m in Sources */,
 				ECEED7991E9F6E6100B47D8A /* YFBGreetingModel.m in Sources */,
+				EC96EB041EA70A1100365B8F /* YFBMessageFunctionView.m in Sources */,
 				ECB8C8491E9DCD5B00B116AC /* POSBlobInputStream.m in Sources */,
 				EC9A6A461E6D3F9E0018C5FB /* DistancePickerView.m in Sources */,
 				EC9A6ABD1E6D3F9F0018C5FB /* UIView+SDExtension.m in Sources */,

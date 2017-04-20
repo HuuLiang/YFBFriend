@@ -124,7 +124,7 @@ static NSString *const kYFBUserDefaultPasswordKeyName       = @"666666";
 }
 
 - (NSString *)userImage {
-    return _userImage ?: @"";
+    return _userImage ?: nil;
 }
 
 - (NSString *)signature {

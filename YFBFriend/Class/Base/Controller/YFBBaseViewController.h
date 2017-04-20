@@ -16,4 +16,6 @@
 
 - (void)pushIntoDetailVC:(NSString *)userID;
 
+- (void)pushIntoMessageVCWithUserId:(NSString *)userId nickName:(NSString *)nickName avatarUrl:(NSString *)avatarUrl;
+
 @end
