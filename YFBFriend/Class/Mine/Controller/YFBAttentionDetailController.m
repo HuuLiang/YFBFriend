@@ -8,6 +8,7 @@
 
 #import "YFBAttentionDetailController.h"
 #import "YFBAttentionTableViewCell.h"
+#import "YFBAttentionListModel.h"
 
 static NSString *const kAttentionOtherCellIdentifier = @"yfb_attention_other_identifier";
 static NSString *const kAttentionMeCellIdentifier = @"yfb_attention_me_identifier";
@@ -17,10 +18,13 @@ static NSString *const kAttentionMeCellIdentifier = @"yfb_attention_me_identifie
     UITableView *_layoutTableView;
     BOOL _isAttentionMe;
 }
-
+@property (nonatomic,retain) NSMutableArray *dataSource;
+@property (nonatomic,retain) YFBAttentionListModel *attentionModel;
 @end
 
 @implementation YFBAttentionDetailController
+QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+QBDefineLazyPropertyInitialization(YFBAttentionListModel, attentionModel)
 
 - (instancetype)initWithIsAttentionMe:(BOOL)isAttentionMe
 {
@@ -43,53 +47,71 @@ static NSString *const kAttentionMeCellIdentifier = @"yfb_attention_me_identifie
     [_layoutTableView setSeparatorColor:kColor(@"#e6e6e6")];
     if (_isAttentionMe) {
         [_layoutTableView registerClass:[YFBAttentionTableViewCell class] forCellReuseIdentifier:kAttentionMeCellIdentifier];
-    }else {
-        
+    } else {
         [_layoutTableView registerClass:[YFBAttentionTableViewCell class] forCellReuseIdentifier:kAttentionOtherCellIdentifier];
     }
     [self.view addSubview:_layoutTableView];
+    
     {
         [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(self.view);
         }];
     }
+    
+    @weakify(self);
+    [_layoutTableView YFB_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadData];
+    }];
+    
+    [_layoutTableView YFB_triggerPullToRefresh];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+- (void)loadData {
+    @weakify(self);
+    [self.attentionModel fetchAttentionListWithType:self->_isAttentionMe ? kYFBAttentionListConcernKeyName : kYFBAttentionListCOncernedKeyName
+                                  CompletionHandler:^(BOOL success, NSArray <YFBAttentionInfo *>* userList)
+    {
+        @strongify(self);
+        
+        [self->_layoutTableView YFB_endPullToRefresh];
+        if (success) {
+            [self.dataSource removeAllObjects];
+            [self.dataSource addObjectsFromArray:userList];
+            [self->_layoutTableView reloadData];
+        }
+    }];
 }
 
 #pragma mark  UITableViewDelegate,UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (_isAttentionMe) {
-        YFBAttentionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kAttentionMeCellIdentifier forIndexPath:indexPath];
-        cell.name = @"钱稍稍";
-        cell.headerUrl = @"http://cdn.duitang.com/uploads/item/201507/22/20150722145119_hJnyP.jpeg";
-        cell.age = @"25";
-        cell.photoCount = 17;
-        cell.attentionAction = ^(id sender){
-        
-        };
-        return cell;
-    }else {
-    
-    YFBAttentionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kAttentionOtherCellIdentifier forIndexPath:indexPath];
-    cell.name = @"钱多多";
-    cell.headerUrl = @"http://cdn.duitang.com/uploads/item/201507/22/20150722145119_hJnyP.jpeg";
-    cell.age = @"23";
-    cell.photoCount = 20;
-    return cell;
+    YFBAttentionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:_isAttentionMe ? kAttentionMeCellIdentifier : kAttentionOtherCellIdentifier forIndexPath:indexPath];
+    if (indexPath.row < self.dataSource.count) {
+        YFBAttentionInfo *info = self.dataSource[indexPath.row];
+        cell.name = info.nickName;
+        cell.headerUrl = info.protraitUrl;
+        cell.age = [NSString stringWithFormat:@"%ld岁",info.age];
+        cell.photoCount = info.photoCount;
+        if (_isAttentionMe) {
+            @weakify(self);
+            cell.attentionAction = ^(id obj) {
+                @strongify(self);
+                
+            };
+        }
     }
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return kWidth(140);
 }
 

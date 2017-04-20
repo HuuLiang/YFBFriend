@@ -21,7 +21,9 @@
 @property (nonatomic) NSString *gender;
 @property (nonatomic) NSInteger recvGiftCount;
 @property (nonatomic) NSInteger sendGiftCount;
-@property (nonatomic) BOOL greeted;
+@property (nonatomic) BOOL greeted; //打招呼
+@property (nonatomic) BOOL concernMe; //关注我
+@property (nonatomic) BOOL concerned; //是否关注
 
 + (BOOL)checkUserIsGreetedWithUserId:(NSString *)userId;
 

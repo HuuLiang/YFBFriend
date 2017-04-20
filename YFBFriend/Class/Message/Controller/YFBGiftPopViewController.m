@@ -83,6 +83,11 @@
     }
 }
 
++ (void)showGiftViewInCurrentViewController:(UIViewController *)currentViewController isMessagePop:(BOOL)isMessagePop {
+    YFBGiftPopViewController *giftPopVC = [[YFBGiftPopViewController alloc] init];
+    [giftPopVC showGiftPopViewWithCurrentVC:currentViewController isMessagePop:isMessagePop];
+}
+
 - (void)showGiftPopViewWithCurrentVC:(UIViewController *)currentVC isMessagePop:(BOOL)isMessagePop{
     self.isMessagePop = isMessagePop;
     

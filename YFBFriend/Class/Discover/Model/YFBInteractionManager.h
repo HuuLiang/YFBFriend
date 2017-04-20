@@ -6,13 +6,17 @@
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <QBEncryptedURLRequest.h>
 @class YFBRobot;
 
-@interface YFBInteractionManager : NSObject
+@interface YFBInteractionManager : QBEncryptedURLRequest
 
 + (instancetype)manager;
 
-- (void)greetWithUserInfoList:(NSArray <YFBRobot *> *)userList handler:(void(^)(BOOL *success))handler;
+- (void)greetWithUserInfoList:(NSArray <YFBRobot *> *)userList handler:(void(^)(BOOL success))handler;
+
+- (void)concernUserWithUserId:(NSString *)userId handler:(void(^)(BOOL success))handler;
+
+- (void)cancleConcernUserWithUserId:(NSString *)userId handler:(void(^)(BOOL success))handler;
 
 @end

@@ -11,6 +11,7 @@
 #import "YFBContactModel.h"
 #import "YFBMessageAdView.h"
 #import "YFBMessageFunctionView.h"
+#import "YFBGiftPopViewController.h"
 
 @interface YFBMessageViewController ()
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
@@ -177,7 +178,43 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [self.view addSubview:functionView];
 }
 
+- (void)popGiftView {
+    if (self.messageInputView.inputTextView.isFirstResponder) {
+        [self.messageInputView.inputTextView resignFirstResponder];
+    }
+//    [YFBGiftPopViewController showGiftViewInCurrentViewController:self isMessagePop:YES];
+    [self showPayView];
+}
 
-
+- (void)showPayView {
+    if (self.messageInputView.inputTextView.isFirstResponder) {
+        [self.messageInputView.inputTextView resignFirstResponder];
+    }
+    CGRect payFrame = self.messageInputView.frame;
+    self.messageInputView.hidden = YES;
+    
+    UIView *payView = [[UIView alloc] initWithFrame:payFrame];
+    [self.view addSubview:payView];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"回复并索要联系方式" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithHexString:@""] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:kWidth(30)];
+    button.backgroundColor = [UIColor colorWithHexString:@"#8458D0"];
+    button.layer.cornerRadius = 5;
+    button.layer.masksToBounds = YES;
+    [payView addSubview:button];
+    
+    @weakify(self);
+    [button bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(payView);
+        make.size.mas_equalTo(CGSizeMake(payView.size.width*0.9, payView.size.height * 0.9));
+    }];
+}
 
 @end
