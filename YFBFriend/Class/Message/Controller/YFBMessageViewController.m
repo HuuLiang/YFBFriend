@@ -15,6 +15,7 @@
 
 @interface YFBMessageViewController ()
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
+@property (nonatomic,retain) YFBMessageAdView *messagAdView;
 @end
 
 @implementation YFBMessageViewController
@@ -64,7 +65,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    _messagAdView.scrollStart = YES;
 }
 
 - (void)reloadChatMessages {
@@ -146,9 +147,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 }
 
 - (void)configFunctionUI {
-    YFBMessageAdView *adView = [[YFBMessageAdView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(48))];
-    adView.recordsArr = @[@"11",@"22",@"33",@"44",@"55"];
-    [self.view addSubview:adView];
+    self.messagAdView = [[YFBMessageAdView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(48))];
+    _messagAdView.recordsArr = @[@"11",@"22",@"33",@"44",@"55"];
+    [self.view addSubview:_messagAdView];
     
     YFBMessageFunctionView *functionView = [[YFBMessageFunctionView alloc] initWithFrame:CGRectMake(0, kWidth(48), kScreenWidth, kWidth(72))];
     @weakify(self);

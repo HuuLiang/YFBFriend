@@ -11,6 +11,7 @@
 @interface YFBMessageAdView : UIView
 
 @property (nonatomic) NSArray *recordsArr;
+@property (nonatomic) BOOL scrollStart;
 
 @end
 
@@ -18,5 +19,6 @@
 @interface YFBMessageAdCell : UITableViewCell
 
 @property (nonatomic) NSString *title;
+
 
 @end

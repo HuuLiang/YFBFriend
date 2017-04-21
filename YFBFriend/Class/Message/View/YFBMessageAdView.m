@@ -61,6 +61,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [self.dataSource removeAllObjects];
     [self.dataSource addObjectsFromArray:recordsArr];
     [_tableView reloadData];
+}
+
+- (void)setScrollStart:(BOOL)scrollStart {
     [_timer fire];
 }
 
