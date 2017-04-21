@@ -68,6 +68,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     _messagAdView.scrollStart = YES;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    _messagAdView.scrollStart = NO;
+}
+
 - (void)reloadChatMessages {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         self.chatMessages = [YFBMessageModel allMessagesWithUserId:self.userId].mutableCopy;

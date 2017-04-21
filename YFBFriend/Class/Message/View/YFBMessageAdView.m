@@ -44,17 +44,15 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
                 make.edges.equalTo(self);
             }];
         }
-        @weakify(self);
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 repeats:YES block:^(NSTimer * _Nonnull timer) {
-            @strongify(self);
-            if (self.scrollIndex >= self.dataSource.count) {
-                self.scrollIndex = 0;
-            }
-            [self->_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.scrollIndex++ inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:self.scrollIndex != 1];
-        }];
-        
     }
     return self;
+}
+
+- (void)scrollTableView {
+    if (self.scrollIndex >= self.dataSource.count) {
+        self.scrollIndex = 0;
+    }
+    [self->_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.scrollIndex++ inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:self.scrollIndex != 1];
 }
 
 - (void)setRecordsArr:(NSArray *)recordsArr {
@@ -64,11 +62,19 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)setScrollStart:(BOOL)scrollStart {
-    [_timer fire];
+    if (scrollStart) {
+        if (!_timer) {
+            _timer =  [NSTimer timerWithTimeInterval:1 target:self selector:@selector(scrollTableView) userInfo:nil repeats:YES];
+            [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+        }
+        [_timer fire];
+    } else {
+        [_timer invalidate];
+    }
 }
 
 - (void)dealloc {
-    [_timer invalidate];
+    
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource
