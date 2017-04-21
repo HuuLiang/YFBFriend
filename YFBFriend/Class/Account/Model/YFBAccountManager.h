@@ -6,20 +6,23 @@
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <QBEncryptedURLRequest.h>
 
 @class SendAuthResp;
 
-@interface YFBAccountManager : NSObject
+@interface YFBRegisterUserResponse : QBURLResponse
+@property (nonatomic) NSString *userId;
+@property (nonatomic) NSString *gender;
+@property (nonatomic) NSString *token;
+@end
 
+typedef void(^RegisterResult)(BOOL success);
+
+@interface YFBAccountManager : QBEncryptedURLRequest
 + (instancetype)manager;
-
 - (void)loginWithQQ;
-
-- (void)loginWithWX;
-
+- (void)loginWithWXhandler:(RegisterResult)handler;
 - (void)loginWithAccountAndPassword;
-
 - (void)sendAuthRespCode:(SendAuthResp *)resp;
-
+- (void)registerUserWithUserInfo:(YFBUser *)user handler:(void(^)(BOOL success))handler;
 @end

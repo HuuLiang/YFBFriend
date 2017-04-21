@@ -32,7 +32,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (BOOL)alwaysHideNavigationBar {
@@ -65,15 +64,22 @@
     _WXButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
     [self.view addSubview:_WXButton];
 
-    @weakify(self);
+//    @weakify(self);
 //    [_QQButton bk_addEventHandler:^(id sender) {
 //        @strongify(self);
 //        [[YFBAccountManager manager] loginWithQQ];
 //    } forControlEvents:UIControlEventTouchUpInside];
     
     [_WXButton bk_addEventHandler:^(id sender) {
-        @strongify(self);
-        [[YFBAccountManager manager] loginWithWX];
+        @weakify(self);
+        [[YFBAccountManager manager] loginWithWXhandler:^(BOOL success) {
+            @strongify(self);
+            if (success) {
+                [YFBUser currentUser].loginType = YFBLoginTypeWX;
+                YFBRegisterFirstVC *registerVC = [[YFBRegisterFirstVC alloc] initWithTitle:@"填写用户信息"];
+                [self.navigationController pushViewController:registerVC animated:YES];
+            }
+        }];;
     } forControlEvents:UIControlEventTouchUpInside];
     
     {
@@ -188,6 +194,7 @@
     @weakify(self);
     [button bk_addEventHandler:^(id sender) {
         @strongify(self);
+        //APP隐私协议
         
     } forControlEvents:UIControlEventTouchUpInside];
     
@@ -202,6 +209,7 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    
 //    CGRect qqButtonFrame = _QQButton.frame;
 //    _QQButton.imageEdgeInsets = UIEdgeInsetsMake(-(qqButtonFrame.size.height-_QQButton.imageView.size.height)/2, (qqButtonFrame.size.width-_QQButton.imageView.size.width)/2, (qqButtonFrame.size.height-_QQButton.imageView.size.height)/2, -(qqButtonFrame.size.width-_QQButton.imageView.size.width)/2);
 //    _QQButton.titleEdgeInsets = UIEdgeInsetsMake(qqButtonFrame.size.height-kWidth(35), -_QQButton.imageView.frame.size.width, 0, 0);
@@ -209,17 +217,7 @@
     CGRect wxButtonFrame = _WXButton.frame;
     _WXButton.imageEdgeInsets = UIEdgeInsetsMake(-(wxButtonFrame.size.height-_WXButton.imageView.size.height)/2, (wxButtonFrame.size.width-_WXButton.imageView.size.width)/2, (wxButtonFrame.size.height-_WXButton.imageView.size.height)/2, -(wxButtonFrame.size.width-_WXButton.imageView.size.width)/2);
     _WXButton.titleEdgeInsets = UIEdgeInsetsMake(wxButtonFrame.size.height-kWidth(35), -_WXButton.imageView.frame.size.width, 0, 0);
-
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

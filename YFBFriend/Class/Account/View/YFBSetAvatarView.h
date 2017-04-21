@@ -14,4 +14,5 @@
 
 @property (nonatomic,strong) UIImage *userImg;
 
+@property (nonatomic,copy) NSString *imageUrl;
 @end

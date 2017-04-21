@@ -47,7 +47,7 @@
     
     //更新密码
     [YFBUser currentUser].password = _createView.content;
-    [[YFBUser currentUser] saveOrUpdate];
+    [[YFBUser currentUser] saveOrUpdateUserInfo];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

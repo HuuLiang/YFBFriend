@@ -12,8 +12,8 @@
 #import "ActionSheetPicker.h"
 #import "YFBTabBarController.h"
 #import "YFBPhotoManager.h"
-#import "YFBRegisterUserModel.h"
 #import "YFBImageUploadManager.h"
+#import "YFBAccountManager.h"
 
 static NSString *const kYFBRegisterDetailCellReusableIdentifier = @"kYFBRegisterDetailCellReusableIdentifier";
 
@@ -30,11 +30,9 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIButton    *registerButton;
 @property (nonatomic,strong) YFBSetAvatarView *avatarView;
-@property (nonatomic,retain) YFBRegisterUserModel *registerModel;
 @end
 
 @implementation YFBRegisterSecondVC
-QBDefineLazyPropertyInitialization(YFBRegisterUserModel, registerModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -110,17 +108,28 @@ QBDefineLazyPropertyInitialization(YFBRegisterUserModel, registerModel)
 
 - (void)registerUser {
     @weakify(self);
-    [self.registerModel registerUserWithUserInfo:[YFBUser currentUser] CompletionHandler:^(BOOL success, id obj) {
+    
+    [[YFBAccountManager manager] registerUserWithUserInfo:[YFBUser currentUser] handler:^(BOOL success) {
         @strongify(self);
         if (success) {
             YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
             [self presentViewController:tabbarController animated:YES completion:nil];
+        } else {
+            [[YFBHudManager manager] showHudWithText:@"注册失败"];
         }
     }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([YFBUser currentUser].userImage.length > 0) {
+        self->_avatarView.imageUrl = [YFBUser currentUser].userImage;
+    }
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource 

@@ -12,29 +12,28 @@ static YFBUser *_currentUser;
 
 static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurrentUserKeyName";
 
-static NSString *const kYFBFriendCurrentUserIdKeyName       = @"kYFBFriendCurrentUserIdKeyName";
-static NSString *const kYFBFriendCurrentUserTokenKeyName    = @"kYFBFriendCurrentUserTokenKeyName";
-static NSString *const kYFBFriendCurrentUserPasswordName    = @"kFYBFriendCurrentUserPasswordName";
-static NSString *const kYFBFriendCurrentUserSignatureKeyName    = @"kYFBFriendCurrentUserSignatureKeyName";
-static NSString *const kYFBFriendCurrentUserImageKeyName    = @"kFriendCurrentUserImageKeyName";
-//static NSString *const kYFBFriendCurrentUserPhotosKeyName   = @"kYFBFriendCurrentUserPhotosKeyName";
-static NSString *const kYFBFriendCurrentUserNameKeyName     = @"kYFBFriendCurrentUserNameKeyName";
-static NSString *const kYFBFriendCurrentUserSexKeyName      = @"kYFBFriendCurrentUserSexKeyName";
-static NSString *const kYFBFriendCurrentUserAgeKeyName      = @"kYFBFriendCurrentUserAgeKeyName";
-static NSString *const kYFBFriendCurrentUserLiveCityKeyName = @"kYFBFriendCurrentUserLiveCityKeyName";
-static NSString *const kYFBFriendCurrentUserHeightKeyName   = @"kYFBFriendCurrentUserHeightKeyName";
-static NSString *const kYFBFriendCurrentUserIncomeKeyName   = @"kYFBFriendCurrentUserIncomeKeyName";
-static NSString *const kYFBFriendCurrentUserMarryingKeyName = @"kYFBFriendCurrentUserMarryingKeyName";
-static NSString *const kYFBFriendCurrentQQNumberKeyName     = @"kYFBFriendCurrentQQNumberKeyName";
-static NSString *const kYFBFriendCurrentWXNumberKeyName     = @"kYFBFriendCurrentWXNumberKeyName";
-static NSString *const kYFBFriendCurrentPhoneNumberKeyName  = @"kYFBFriendCurrentPhoneNumberKeyName";
-static NSString *const kYFBFriendCurrentEducationKeyName    = @"kYFBFriendCurrentEducationKeyName";
-static NSString *const kYFBFriendCurrentUserJobKeyName      = @"kYFBFriendCurrentUserJobKeyName";
-static NSString *const kYFBFriendCurrentBirthdayKeyName     = @"kYFBFriendCurrentBirthdayKeyName";
-static NSString *const kYFBFriendCurrentUserWeightKeyName   = @"kYFBFriendCurrentUserWeightKeyName";
-static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurrentUserStarKeyName";
-
-static NSString *const kYFBUserPasswordCacheKeyName         = @"kYFBUserPasswordCacheKeyName";
+//static NSString *const kYFBFriendCurrentUserIdKeyName       = @"kYFBFriendCurrentUserIdKeyName";
+//static NSString *const kYFBFriendCurrentUserTokenKeyName    = @"kYFBFriendCurrentUserTokenKeyName";
+//static NSString *const kYFBFriendCurrentUserPasswordName    = @"kFYBFriendCurrentUserPasswordName";
+//static NSString *const kYFBFriendCurrentUserSignatureKeyName    = @"kYFBFriendCurrentUserSignatureKeyName";
+//static NSString *const kYFBFriendCurrentUserImageKeyName    = @"kFriendCurrentUserImageKeyName";
+//static NSString *const kYFBFriendCurrentUserNameKeyName     = @"kYFBFriendCurrentUserNameKeyName";
+//static NSString *const kYFBFriendCurrentUserSexKeyName      = @"kYFBFriendCurrentUserSexKeyName";
+//static NSString *const kYFBFriendCurrentUserAgeKeyName      = @"kYFBFriendCurrentUserAgeKeyName";
+//static NSString *const kYFBFriendCurrentUserLiveCityKeyName = @"kYFBFriendCurrentUserLiveCityKeyName";
+//static NSString *const kYFBFriendCurrentUserHeightKeyName   = @"kYFBFriendCurrentUserHeightKeyName";
+//static NSString *const kYFBFriendCurrentUserIncomeKeyName   = @"kYFBFriendCurrentUserIncomeKeyName";
+//static NSString *const kYFBFriendCurrentUserMarryingKeyName = @"kYFBFriendCurrentUserMarryingKeyName";
+//static NSString *const kYFBFriendCurrentQQNumberKeyName     = @"kYFBFriendCurrentQQNumberKeyName";
+//static NSString *const kYFBFriendCurrentWXNumberKeyName     = @"kYFBFriendCurrentWXNumberKeyName";
+//static NSString *const kYFBFriendCurrentPhoneNumberKeyName  = @"kYFBFriendCurrentPhoneNumberKeyName";
+//static NSString *const kYFBFriendCurrentEducationKeyName    = @"kYFBFriendCurrentEducationKeyName";
+//static NSString *const kYFBFriendCurrentUserJobKeyName      = @"kYFBFriendCurrentUserJobKeyName";
+//static NSString *const kYFBFriendCurrentBirthdayKeyName     = @"kYFBFriendCurrentBirthdayKeyName";
+//static NSString *const kYFBFriendCurrentUserWeightKeyName   = @"kYFBFriendCurrentUserWeightKeyName";
+//static NSString *const kYFBFriendCurrentUserStarKeyName     = @"kYFBFriendCurrentUserStarKeyName";
+//
+//static NSString *const kYFBUserPasswordCacheKeyName         = @"kYFBUserPasswordCacheKeyName";
 static NSString *const kYFBUserDefaultPasswordKeyName       = @"666666";
 
 
@@ -43,7 +42,8 @@ static NSString *const kYFBUserDefaultPasswordKeyName       = @"666666";
 + (instancetype)currentUser {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendCurrentUserKeyName]];
+        _currentUser = [self findFirstByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendCurrentUserKeyName]]];
+//        _currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendCurrentUserKeyName]];
         if (!_currentUser) {
             _currentUser = [[YFBUser alloc] init];
         }
@@ -51,62 +51,64 @@ static NSString *const kYFBUserDefaultPasswordKeyName       = @"666666";
     return _currentUser;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
-    self = [super init];
-    if (self) {
-        self.userId = [coder decodeObjectForKey:kYFBFriendCurrentUserIdKeyName];
-        self.token = [coder decodeObjectForKey:kYFBFriendCurrentUserTokenKeyName];
-        self.password = [coder decodeObjectForKey:kYFBFriendCurrentUserPasswordName];
-        self.signature = [coder decodeObjectForKey:kYFBFriendCurrentUserSignatureKeyName];
-        self.userImage = [coder decodeObjectForKey:kYFBFriendCurrentUserImageKeyName];
-//        self.userPhotos = [coder decodeObjectForKey:kYFBFriendCurrentUserPhotosKeyName];
-        self.nickName = [coder decodeObjectForKey:kYFBFriendCurrentUserNameKeyName];
-        self.userSex = [[coder decodeObjectForKey:kYFBFriendCurrentUserSexKeyName] integerValue];
-        self.age = [[coder decodeObjectForKey:kYFBFriendCurrentUserAgeKeyName] integerValue];
-        self.liveCity = [coder decodeObjectForKey:kYFBFriendCurrentUserLiveCityKeyName];
-        self.height = [[coder decodeObjectForKey:kYFBFriendCurrentUserHeightKeyName] integerValue];
-        self.income = [coder decodeObjectForKey:kYFBFriendCurrentUserIncomeKeyName];
-        self.marriageStatus = [[coder decodeObjectForKey:kYFBFriendCurrentUserMarryingKeyName] integerValue];
-        self.QQNumber = [coder decodeObjectForKey:kYFBFriendCurrentQQNumberKeyName];
-        self.WXNumber = [coder decodeObjectForKey:kYFBFriendCurrentWXNumberKeyName];
-        self.phoneNumber = [coder decodeObjectForKey:kYFBFriendCurrentPhoneNumberKeyName];
-        self.education = [coder decodeObjectForKey:kYFBFriendCurrentEducationKeyName];
-        self.job = [coder decodeObjectForKey:kYFBFriendCurrentUserJobKeyName];
-        self.birthday = [coder decodeObjectForKey:kYFBFriendCurrentBirthdayKeyName];
-        self.weight = [coder decodeObjectForKey:kYFBFriendCurrentUserWeightKeyName];
-        self.star = [coder decodeObjectForKey:kYFBFriendCurrentUserStarKeyName];
+//- (instancetype)initWithCoder:(NSCoder *)coder {
+//    self = [super init];
+//    if (self) {
+//        self.userId = [coder decodeObjectForKey:kYFBFriendCurrentUserIdKeyName];
+//        self.token = [coder decodeObjectForKey:kYFBFriendCurrentUserTokenKeyName];
+//        self.password = [coder decodeObjectForKey:kYFBFriendCurrentUserPasswordName];
+//        self.signature = [coder decodeObjectForKey:kYFBFriendCurrentUserSignatureKeyName];
+//        self.userImage = [coder decodeObjectForKey:kYFBFriendCurrentUserImageKeyName];
+//        self.nickName = [coder decodeObjectForKey:kYFBFriendCurrentUserNameKeyName];
+//        self.userSex = [[coder decodeObjectForKey:kYFBFriendCurrentUserSexKeyName] integerValue];
+//        self.age = [[coder decodeObjectForKey:kYFBFriendCurrentUserAgeKeyName] integerValue];
+//        self.liveCity = [coder decodeObjectForKey:kYFBFriendCurrentUserLiveCityKeyName];
+//        self.height = [[coder decodeObjectForKey:kYFBFriendCurrentUserHeightKeyName] integerValue];
+//        self.income = [coder decodeObjectForKey:kYFBFriendCurrentUserIncomeKeyName];
+//        self.marriageStatus = [[coder decodeObjectForKey:kYFBFriendCurrentUserMarryingKeyName] integerValue];
+//        self.QQNumber = [coder decodeObjectForKey:kYFBFriendCurrentQQNumberKeyName];
+//        self.WXNumber = [coder decodeObjectForKey:kYFBFriendCurrentWXNumberKeyName];
+//        self.phoneNumber = [coder decodeObjectForKey:kYFBFriendCurrentPhoneNumberKeyName];
+//        self.education = [coder decodeObjectForKey:kYFBFriendCurrentEducationKeyName];
+//        self.job = [coder decodeObjectForKey:kYFBFriendCurrentUserJobKeyName];
+//        self.birthday = [coder decodeObjectForKey:kYFBFriendCurrentBirthdayKeyName];
+//        self.weight = [coder decodeObjectForKey:kYFBFriendCurrentUserWeightKeyName];
+//        self.star = [coder decodeObjectForKey:kYFBFriendCurrentUserStarKeyName];
+//    }
+//    return self;
+//}
+
+//- (void)encodeWithCoder:(NSCoder *)aCoder {
+//    [aCoder encodeObject:self.userId forKey:kYFBFriendCurrentUserIdKeyName];
+//    [aCoder encodeObject:self.token forKey:kYFBFriendCurrentUserTokenKeyName];
+//    [aCoder encodeObject:self.password forKey:kYFBFriendCurrentUserPasswordName];
+//    [aCoder encodeObject:self.signature forKey:kYFBFriendCurrentUserSignatureKeyName];
+//    [aCoder encodeObject:self.userImage forKey:kYFBFriendCurrentUserImageKeyName];
+//    [aCoder encodeObject:self.nickName forKey:kYFBFriendCurrentUserNameKeyName];
+//    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.userSex] forKey:kYFBFriendCurrentUserSexKeyName];
+//    [aCoder encodeObject:[NSNumber numberWithInteger:self.age] forKey:kYFBFriendCurrentUserAgeKeyName];
+//    [aCoder encodeObject:self.liveCity forKey:kYFBFriendCurrentUserLiveCityKeyName];
+//    [aCoder encodeObject:[NSNumber numberWithInteger:self.height] forKey:kYFBFriendCurrentUserHeightKeyName];
+//    [aCoder encodeObject:self.income forKey:kYFBFriendCurrentUserIncomeKeyName];
+//    [aCoder encodeObject:[NSNumber numberWithInteger:self.marriageStatus] forKey:kYFBFriendCurrentUserMarryingKeyName];
+//    [aCoder encodeObject:self.QQNumber forKey:kYFBFriendCurrentQQNumberKeyName];
+//    [aCoder encodeObject:self.WXNumber forKey:kYFBFriendCurrentWXNumberKeyName];
+//    [aCoder encodeObject:self.phoneNumber forKey:kYFBFriendCurrentPhoneNumberKeyName];
+//    [aCoder encodeObject:self.education forKey:kYFBFriendCurrentEducationKeyName];
+//    [aCoder encodeObject:self.job forKey:kYFBFriendCurrentUserJobKeyName];
+//    [aCoder encodeObject:self.birthday forKey:kYFBFriendCurrentBirthdayKeyName];
+//    [aCoder encodeObject:self.weight forKey:kYFBFriendCurrentUserWeightKeyName];
+//    [aCoder encodeObject:self.star forKey:kYFBFriendCurrentUserStarKeyName];
+//}
+
+
+- (BOOL)saveOrUpdateUserInfo {
+    if (_userId.length > 0) {
+        [[NSUserDefaults standardUserDefaults] setObject:_userId forKey:kYFBFriendCurrentUserKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:self.userId forKey:kYFBFriendCurrentUserIdKeyName];
-    [aCoder encodeObject:self.token forKey:kYFBFriendCurrentUserTokenKeyName];
-    [aCoder encodeObject:self.password forKey:kYFBFriendCurrentUserPasswordName];
-    [aCoder encodeObject:self.signature forKey:kYFBFriendCurrentUserSignatureKeyName];
-    [aCoder encodeObject:self.userImage forKey:kYFBFriendCurrentUserImageKeyName];
-//    [aCoder encodeObject:self.userPhotos forKey:kYFBFriendCurrentUserPhotosKeyName];
-    [aCoder encodeObject:self.nickName forKey:kYFBFriendCurrentUserNameKeyName];
-    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.userSex] forKey:kYFBFriendCurrentUserSexKeyName];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.age] forKey:kYFBFriendCurrentUserAgeKeyName];
-    [aCoder encodeObject:self.liveCity forKey:kYFBFriendCurrentUserLiveCityKeyName];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.height] forKey:kYFBFriendCurrentUserHeightKeyName];
-    [aCoder encodeObject:self.income forKey:kYFBFriendCurrentUserIncomeKeyName];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.marriageStatus] forKey:kYFBFriendCurrentUserMarryingKeyName];
-    [aCoder encodeObject:self.QQNumber forKey:kYFBFriendCurrentQQNumberKeyName];
-    [aCoder encodeObject:self.WXNumber forKey:kYFBFriendCurrentWXNumberKeyName];
-    [aCoder encodeObject:self.phoneNumber forKey:kYFBFriendCurrentPhoneNumberKeyName];
-    [aCoder encodeObject:self.education forKey:kYFBFriendCurrentEducationKeyName];
-    [aCoder encodeObject:self.job forKey:kYFBFriendCurrentUserJobKeyName];
-    [aCoder encodeObject:self.birthday forKey:kYFBFriendCurrentBirthdayKeyName];
-    [aCoder encodeObject:self.weight forKey:kYFBFriendCurrentUserWeightKeyName];
-    [aCoder encodeObject:self.star forKey:kYFBFriendCurrentUserStarKeyName];
-}
-
-- (void)saveOrUpdate {
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kYFBFriendCurrentUserKeyName];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    //保存到数据库中
+    return [self saveOrUpdate];
 }
 
 - (NSString *)userId {
@@ -118,33 +120,25 @@ static NSString *const kYFBUserDefaultPasswordKeyName       = @"666666";
 }
 
 - (NSString *)password {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kYFBUserPasswordCacheKeyName] ?: kYFBUserDefaultPasswordKeyName;
+//    return [[NSUserDefaults standardUserDefaults] objectForKey:kYFBUserPasswordCacheKeyName] ?: kYFBUserDefaultPasswordKeyName;
+    return _password == nil ? kYFBUserDefaultPasswordKeyName : (_password.length == 0 ? kYFBUserDefaultPasswordKeyName : _password);
 }
 
-- (void)setPassword:(NSString *)password {
-    [[NSUserDefaults standardUserDefaults] setObject:password forKey:kYFBUserPasswordCacheKeyName];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+//- (void)setPassword:(NSString *)password {
+//    [[NSUserDefaults standardUserDefaults] setObject:password forKey:kYFBUserPasswordCacheKeyName];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//}
 
 - (NSString *)userImage {
     return _userImage;
 }
-
-//- (void)setUserPhotos:(NSString *)userPhotos {
-//    NSMutableArray *photosArr = [NSMutableArray arrayWithArray:[_userPhotos componentsSeparatedByString:@"|"]];
-//    if (userPhotos) {
-//        [photosArr addObject:userPhotos];
-//    }
-//    _userPhotos = [photosArr componentsJoinedByString:@"|"];
-//}
-
 
 - (NSString *)signature {
     return _signature ?: @"我正在构思一个伟大的签名";
 }
 
 - (NSString *)nickName {
-    return _nickName ?: @"未填写";
+    return _nickName;
 }
 
 - (YFBUserSex)userSex {
@@ -152,7 +146,7 @@ static NSString *const kYFBUserDefaultPasswordKeyName       = @"666666";
 }
 
 - (NSInteger)age {
-    return _age ?: -1;
+    return _age > 0 ? _age : -1;
 }
 
 - (NSString *)liveCity {

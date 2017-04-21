@@ -28,4 +28,6 @@
 
 - (BOOL)fetchGiftListWithCompletionHandler:(QBCompletionHandler)handler;
 
+- (BOOL)sendGiftToUserId:(NSString *)userId giftId:(NSInteger)giftId handler:(QBCompletionHandler)handler;
+
 @end

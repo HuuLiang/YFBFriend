@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JKDBModel.h"
 
 typedef NS_ENUM(NSInteger, YFBUserSex) {
     YFBUsersexUnkown = 0,
@@ -25,7 +26,7 @@ typedef NS_ENUM(NSInteger,YFBUserMarriageStatus) {
     YFBUserMarried     //已婚
 };
 
-@interface YFBUser : NSObject <NSCoding>
+@interface YFBUser : JKDBModel <NSCoding>
 
 + (instancetype)currentUser;
 
@@ -37,6 +38,8 @@ typedef NS_ENUM(NSInteger,YFBUserMarriageStatus) {
 @property (nonatomic,copy) NSString *token;
 
 @property (nonatomic,copy) NSString *password;
+
+@property (nonatomic,copy) NSString *loginName;
 
 @property (nonatomic,copy) NSString *userImage;
 
@@ -76,7 +79,7 @@ typedef NS_ENUM(NSInteger,YFBUserMarriageStatus) {
 
 @property (nonatomic,copy) NSString *star;
 
-- (void)saveOrUpdate;
+- (BOOL)saveOrUpdateUserInfo;
 
 #pragma mark - 注册信息
 

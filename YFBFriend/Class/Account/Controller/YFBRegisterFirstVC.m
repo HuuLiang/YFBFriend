@@ -31,6 +31,18 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([YFBUser currentUser].nickName.length > 0) {
+        _accountField.text = [YFBUser currentUser].nickName;
+    }
+    
+    if ([YFBUser currentUser].age > 0) {
+        _passwordField.text = [NSString stringWithFormat:@"%ld",[YFBUser currentUser].age];
+    }
+}
+
 - (void)configAccountAndPassWordField {
     self.accountField = [[YFBTextField alloc] init];
     _accountField.backgroundColor = kColor(@"#efefef");

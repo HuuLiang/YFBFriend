@@ -92,7 +92,7 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[YFBUser currentUser] saveOrUpdate];
+    [[YFBUser currentUser] saveOrUpdateUserInfo];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 

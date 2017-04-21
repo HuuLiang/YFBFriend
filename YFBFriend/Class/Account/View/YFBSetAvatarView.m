@@ -78,4 +78,8 @@
     [_avatarButton setImage:userImg forState:UIControlStateNormal];
 }
 
+- (void)setImageUrl:(NSString *)imageUrl {
+    [_avatarButton sd_setImageWithURL:[NSURL URLWithString:imageUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"login_avatar"]];
+}
+
 @end
