@@ -41,7 +41,7 @@
     
     BOOL isCurrentUser = [message.sender isEqualToString:[YFBUser currentUser].userId];
     if (isCurrentUser) {
-        [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:[YFBUser currentUser].userImage] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mine_normal"]];
+        [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:[YFBUser currentUser].userImage] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"login_userImage"]];
 //        [cell.avatarButton setImage:[UIImage imageNamed:@"mine_default_avatar"] forState:UIControlStateNormal];
     } else {
         [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:self.avatarUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mine_default_avatar"]];;

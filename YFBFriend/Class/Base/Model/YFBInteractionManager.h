@@ -13,7 +13,7 @@
 
 + (instancetype)manager;
 
-- (void)greetWithUserInfoList:(NSArray <YFBRobot *> *)userList handler:(void(^)(BOOL success))handler;
+- (void)greetWithUserInfoList:(NSArray <YFBRobot *> *)userList toAllUsers:(BOOL)toAll handler:(void(^)(BOOL success))handler;
 
 - (void)concernUserWithUserId:(NSString *)userId handler:(void(^)(BOOL success))handler;
 

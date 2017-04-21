@@ -7,15 +7,18 @@
 //
 
 #import "YFBInteractionManager.h"
-//#import "YFBGreetingInfoModel.h"
 #import "YFBRobot.h"
 
+static NSString *const kYFBFriendGreetToOneUserKeyName = @"kYFBFriendGreetToOneUserKeyName";
+static NSString *const KYFBFriendGreetToAllUsersKeyName = @"KYFBFriendGreetToAllUsersKeyName";
+
+#define GreetToOneUserCount 20
+#define GreetToAllUsersCount 3
+
 @interface YFBInteractionManager ()
-//@property (nonatomic,retain) YFBGreetingInfoModel *greetModel;
 @end
 
 @implementation YFBInteractionManager
-//QBDefineLazyPropertyInitialization(YFBGreetingInfoModel, greetModel)
 
 + (instancetype)manager {
     static YFBInteractionManager *_manager;
@@ -35,7 +38,18 @@
 }
 
 //打招呼
-- (void)greetWithUserInfoList:(NSArray<YFBRobot *> *)userList handler:(void (^)(BOOL success))handler {
+- (void)greetWithUserInfoList:(NSArray<YFBRobot *> *)userList toAllUsers:(BOOL)toAll handler:(void (^)(BOOL))handler {
+    
+    NSInteger userCount = [[[NSUserDefaults standardUserDefaults] objectForKey:toAll ? KYFBFriendGreetToAllUsersKeyName : kYFBFriendGreetToOneUserKeyName] integerValue];
+    if (userCount > toAll ? GreetToAllUsersCount : GreetToOneUserCount) {
+        [[YFBHudManager manager] showHudWithText:toAll ? @"超出每日群体招呼次数限制" : @"超出每日单人招呼次数限制"];
+        return;
+    } else {
+        userCount++;
+        [[NSUserDefaults standardUserDefaults] setObject:@(userCount) forKey:toAll ? KYFBFriendGreetToAllUsersKeyName : kYFBFriendGreetToOneUserKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     [self fetchGreetingInfoWithUserIdStr:userList CompletionHandler:^(BOOL success, id obj) {
         QBSafelyCallBlock(handler,success);
     }];

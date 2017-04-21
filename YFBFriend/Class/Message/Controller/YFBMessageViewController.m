@@ -70,8 +70,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     _messagAdView.scrollStart = NO;
+    
 }
 
 - (void)reloadChatMessages {
@@ -110,6 +110,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     });
 }
 
+
+
 - (void)addTextMessage:(NSString *)message
             withSender:(NSString *)sender
               receiver:(NSString *)receiver
@@ -125,6 +127,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 }
 
 - (void)addChatMessage:(YFBMessageModel *)chatMessage {
+    [chatMessage saveOrUpdate];
     [self.chatMessages addObject:chatMessage];
     
     if (self.isViewLoaded) {

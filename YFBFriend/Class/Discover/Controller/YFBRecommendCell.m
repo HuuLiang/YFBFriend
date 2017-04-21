@@ -163,7 +163,8 @@
 }
 
 - (void)setGreeted:(BOOL)greeted {
-    _greetButton.selected = greeted;
+    [_greetButton setImage:[UIImage imageNamed:greeted ? @"discover_greeted" : @"discover_greet"] forState:UIControlStateNormal];
+    [_greetButton setTitle:greeted ? @"已打招呼" : @"打招呼" forState:UIControlStateNormal];
     _greetButton.enabled = !greeted;
 }
 
@@ -179,8 +180,6 @@
     CGFloat imageInsetsLeft = (greetButtonFrame.size.width - _greetButton.imageView.frame.size.width)/2;
     _greetButton.imageEdgeInsets = UIEdgeInsetsMake(-(greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft, (greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft);
     _greetButton.titleEdgeInsets = UIEdgeInsetsMake(_greetButton.imageView.size.height, -_greetButton.frame.size.width, 0, -(_greetButton.frame.size.width-_greetButton.imageView.frame.size.width));
-    
-
 }
 
 @end
