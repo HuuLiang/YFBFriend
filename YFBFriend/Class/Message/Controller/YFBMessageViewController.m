@@ -12,6 +12,7 @@
 #import "YFBMessageAdView.h"
 #import "YFBMessageFunctionView.h"
 #import "YFBGiftPopViewController.h"
+#import "YFBMessagePayPopController.h"
 
 @interface YFBMessageViewController ()
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
@@ -215,7 +216,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     @weakify(self);
     [button bk_addEventHandler:^(id sender) {
         @strongify(self);
-        
+        [[[YFBMessagePayPopController alloc] init] showMessageTopUpPopViewWithCurrentVC:self];
     } forControlEvents:UIControlEventTouchUpInside];
     
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
