@@ -10,13 +10,10 @@
 #import "JKDBModel.h"
 
 typedef NS_ENUM(NSUInteger, YFBMessageType) {
-    JYMessageTypeText = 1,      //文字消息
-    JYMessageTypePhoto = 2,     //图片消息
-    JYMessageTypeVioce = 3,     //声音消息
-    JYMessageTypeEmotion = 4,   //表情消息
-    JYMessageTypeNormal = 5,    //未开通VIP
-    JYMessageTypeVIP = 6,       //开通VIP
-    JYMessageTypeCount
+    YFBMessageTypeText = 1,      //文字消息
+    YFBMessageTypePhoto = 2,     //图片消息
+    YFBMessageTypeGift = 3,     //礼物
+    YFBMessageTypeCount
 };
 
 

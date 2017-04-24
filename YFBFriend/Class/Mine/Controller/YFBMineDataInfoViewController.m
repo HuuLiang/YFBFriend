@@ -298,30 +298,30 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
                 [YFBUser currentUser].nickName = editingInfo;
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionSex) {
-            [self showActionSheetPickerWithTitle:@"性别" rows:[YFBUser allUserSex] defaultSelection:0 atIndexPath:indexPath block:^(NSString * selectedValue) {
-                if ([selectedValue isEqualToString:@"男"]) {
-                    [YFBUser currentUser].userSex = YFBUserSexMale;
-                } else if ([selectedValue isEqualToString:@"女"]) {
-                    [YFBUser currentUser].userSex = YFBUserSexFemale;
-                }
-            }];
+//            [self showActionSheetPickerWithTitle:@"性别" rows:[YFBUser allUserSex] defaultSelection:0 atIndexPath:indexPath block:^(NSString * selectedValue) {
+//                if ([selectedValue isEqualToString:@"男"]) {
+//                    [YFBUser currentUser].userSex = YFBUserSexMale;
+//                } else if ([selectedValue isEqualToString:@"女"]) {
+//                    [YFBUser currentUser].userSex = YFBUserSexFemale;
+//                }
+//            }];
         } else if (indexPath.row == YFBUserInfoIntroSectionAge) {
             [self showActionSheetPickerWithTitle:@"年龄" rows:[YFBUser allUserAge] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].age = selectedValue;
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionLiveCity) {
-            ActionSheetMultipleStringPicker *picker = [[ActionSheetMultipleStringPicker alloc] initWithTitle:@"家乡"
-                                                                                                        rows:[YFBUser defaultHometown]
-                                                                                            initialSelection:@[@0,@0]
-                                                                                                   doneBlock:^(ActionSheetMultipleStringPicker *picker, NSArray *selectedIndexes, id selectedValues)
-                                                       {
-                                                           @strongify(self);
-                                                           NSString *liveCity = [NSString stringWithFormat:@"%@%@",[selectedValues firstObject],[selectedValues lastObject]];
-                                                           [YFBUser currentUser].liveCity = liveCity;
-                                                           [self configRegisterDetailCellWithSelectedValue:liveCity indexPath:indexPath];
-                                                       } cancelBlock:nil origin:self.view];
-            picker.actionSheetDelegate = self;
-            [picker showActionSheetPicker];
+//            ActionSheetMultipleStringPicker *picker = [[ActionSheetMultipleStringPicker alloc] initWithTitle:@"家乡"
+//                                                                                                        rows:[YFBUser defaultHometown]
+//                                                                                            initialSelection:@[@0,@0]
+//                                                                                                   doneBlock:^(ActionSheetMultipleStringPicker *picker, NSArray *selectedIndexes, id selectedValues)
+//                                                       {
+//                                                           @strongify(self);
+//                                                           NSString *liveCity = [NSString stringWithFormat:@"%@%@",[selectedValues firstObject],[selectedValues lastObject]];
+//                                                           [YFBUser currentUser].liveCity = liveCity;
+//                                                           [self configRegisterDetailCellWithSelectedValue:liveCity indexPath:indexPath];
+//                                                       } cancelBlock:nil origin:self.view];
+//            picker.actionSheetDelegate = self;
+//            [picker showActionSheetPicker];
         } else if (indexPath.row == YFBUserInfoIntroSectionHeight) {
             [self showActionSheetPickerWithTitle:@"身高" rows:[YFBUser allUserHeight] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].height = [selectedValue integerValue];

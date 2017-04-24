@@ -120,7 +120,7 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     [_greetAllButton bk_addEventHandler:^(id sender) {
         @strongify(self);
         //批量打招呼
-        [[YFBInteractionManager manager] greetWithUserInfoList:self.dataSource handler:^(BOOL success) {
+        [[YFBInteractionManager manager] greetWithUserInfoList:self.dataSource toAllUsers:YES handler:^(BOOL success) {
             if (success) {
                 [self->_tableView reloadData];
             }
@@ -164,7 +164,7 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
             if (!thisButton.isSelected) {
                 thisButton.selected = YES;
                 //打招呼
-                [[YFBInteractionManager manager] greetWithUserInfoList:@[info] handler:^(BOOL success) {
+                [[YFBInteractionManager manager] greetWithUserInfoList:@[info] toAllUsers:NO handler:^(BOOL success) {
                     if (success) {
                         YFBRecommendCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
                         cell.greeted  = YES;

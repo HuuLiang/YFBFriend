@@ -8,6 +8,7 @@
 
 #import "YFBInteractionManager.h"
 #import "YFBRobot.h"
+#import "YFBMessageModel.h"
 
 static NSString *const kYFBFriendGreetToOneUserKeyName = @"kYFBFriendGreetToOneUserKeyName";
 static NSString *const KYFBFriendGreetToAllUsersKeyName = @"KYFBFriendGreetToAllUsersKeyName";
@@ -170,4 +171,23 @@ static NSString *const KYFBFriendGreetToAllUsersKeyName = @"KYFBFriendGreetToAll
     }];
 }
 
+//发送消息
+- (void)sendMessageInfoToUserId:(NSString *)userId content:(NSString *)content type:(NSInteger)messageType handler:(void (^)(BOOL))handler {
+    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+                             @"userId":[YFBUser currentUser].userId,
+                             @"token":[YFBUser currentUser].token,
+                             @"toUserId":userId,
+                             @"content":content,
+                             @"type":@(messageType)};
+    
+    [self requestURLPath:YFB_SENDMSG_URL
+          standbyURLPath:nil
+              withParams:params
+         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+    {
+        if (handler) {
+            handler(respStatus == QBURLResponseSuccess);
+        }
+    }];
+}
 @end

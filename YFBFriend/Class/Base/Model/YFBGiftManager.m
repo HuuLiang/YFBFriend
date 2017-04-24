@@ -77,25 +77,25 @@
     return success;
 }
 
-- (BOOL)sendGiftToUserId:(NSString *)userId giftId:(NSInteger)giftId handler:(QBCompletionHandler)handler {
-    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
-                             @"userId":[YFBUser currentUser].userId,
-                             @"token":[YFBUser currentUser].token,
-                             @"toUserId":userId,
-                             @"giftId":@(giftId)};
-    
-    BOOL success = [self requestURLPath:YFB_SENDGIFT_URL
-                         standbyURLPath:nil
-                             withParams:params
-                        responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
-                    {
-                        if (handler) {
-                            handler(respStatus == QBURLResponseSuccess,nil);
-                        }
-                    }];
-    return success;
-
-}
+//- (BOOL)sendGiftToUserId:(NSString *)userId giftId:(NSInteger)giftId handler:(QBCompletionHandler)handler {
+//    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+//                             @"userId":[YFBUser currentUser].userId,
+//                             @"token":[YFBUser currentUser].token,
+//                             @"toUserId":userId,
+//                             @"giftId":@(giftId)};
+//    
+//    BOOL success = [self requestURLPath:YFB_SENDGIFT_URL
+//                         standbyURLPath:nil
+//                             withParams:params
+//                        responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+//                    {
+//                        if (handler) {
+//                            handler(respStatus == QBURLResponseSuccess,nil);
+//                        }
+//                    }];
+//    return success;
+//
+//}
 
 
 @end

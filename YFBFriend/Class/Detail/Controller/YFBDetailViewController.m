@@ -141,7 +141,7 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
             [self pushIntoMessageVCWithUserId:self.response.userId nickName:self.response.nickName avatarUrl:self.response.portraitUrl];
         } else if (infoType == YFBFunctionSendGreet) {
             //打招呼
-            [[YFBInteractionManager manager] greetWithUserInfoList:@[self.response.userId] handler:^(BOOL success) {
+            [[YFBInteractionManager manager] greetWithUserInfoList:@[self.response.userId] toAllUsers:NO handler:^(BOOL success) {
                 if (success) {
                     [[YFBHudManager manager] showHudWithText:@"打招呼成功"];
                 }

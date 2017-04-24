@@ -8,7 +8,7 @@
 
 #import <QBEncryptedURLRequest.h>
 @class YFBRobot;
-
+@class YFBMessageModel;
 @interface YFBInteractionManager : QBEncryptedURLRequest
 
 + (instancetype)manager;
@@ -20,5 +20,7 @@
 - (void)cancleConcernUserWithUserId:(NSString *)userId handler:(void(^)(BOOL success))handler;
 
 - (void)sendAdviceWithContent:(NSString *)content Contact:(NSString *)contact handler:(void(^)(BOOL success))handler;
+
+- (void)sendMessageInfoToUserId:(NSString *)userId content:(NSString *)content type:(NSInteger)messageType handler:(void(^)(BOOL success))handler;
 
 @end

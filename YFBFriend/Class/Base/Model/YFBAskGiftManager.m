@@ -7,6 +7,8 @@
 //
 
 #import "YFBAskGiftManager.h"
+#import "YFBGiftPopViewController.h"
+
 
 @implementation YFBAskGiftManager
 
@@ -19,10 +21,13 @@
     return _manager;
 }
 
-- (void)
+- (void)getUserInfo {
+    
+}
 
 - (void)popAskGiftView {
-    
+    UIViewController *currentVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    [YFBGiftPopViewController showGiftViewInCurrentViewController:currentVC isMessagePop:NO];
 }
 
 

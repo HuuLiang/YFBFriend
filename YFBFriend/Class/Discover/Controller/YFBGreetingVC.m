@@ -137,7 +137,7 @@ QBDefineLazyPropertyInitialization(YFBGreetingInfoModel, greetInfoModel)
         headerView.greeingBlock = ^{
             @strongify(self);
             //批量打招呼 并退出推荐弹窗
-            [[YFBInteractionManager manager] greetWithUserInfoList:self.dataSource handler:^(BOOL success) {
+            [[YFBInteractionManager manager] greetWithUserInfoList:self.dataSource toAllUsers:YES handler:^(BOOL success) {
                
             }];
             [self hide];
