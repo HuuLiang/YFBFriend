@@ -50,7 +50,7 @@
         make.left.mas_equalTo(titleLabel);
         make.right.mas_equalTo(self.view).mas_offset(kWidth(-30));
     }];
-    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"1、钻石可用于赠送虚拟物品;\n2、等价钻石礼物直接纳入我的个人钱包;\n3、活动最终解释权归本APP所有;"];
+    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"1、钻石可用于赠送虚拟物品;\n2、等价钻石礼物直接纳入我的个人钱包;\n3、活动最终解释权归本APP所有;\n4.5000钻石和11000钻石（冲100送100话费)\n5.充值钻石聊天80钻石/条信息，钻石可购买礼物"];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     style.lineSpacing = kWidth(18);
     [attributeStr setAttributes:@{NSParagraphStyleAttributeName : style} range:NSMakeRange(0, attributeStr.length)];

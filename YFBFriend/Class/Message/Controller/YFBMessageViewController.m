@@ -13,6 +13,9 @@
 #import "YFBMessageFunctionView.h"
 #import "YFBGiftPopViewController.h"
 #import "YFBMessagePayPopController.h"
+#import "YFBInteractionManager.h"
+#import "YFBDredgeVipController.h"
+#import "YFBDetailModel.h"
 
 @interface YFBMessageViewController ()
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
@@ -82,12 +85,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         [self.chatMessages enumerateObjectsUsingBlock:^(YFBMessageModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             XHMessage *message;
             NSDate *date = [YFBUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong];
-            if (obj.messageType == JYMessageTypeText) {
+            if (obj.messageType == YFBMessageTypeText) {
                 message = [[XHMessage alloc] initWithText:obj.content
                                                    sender:obj.sendUserId
                                                 timestamp:date];
                 message.messageMediaType = XHBubbleMessageMediaTypeText;
-            } else if (obj.messageType == JYMessageTypePhoto) {
+            } else if (obj.messageType == YFBMessageTypePhoto) {
                 message = [[XHMessage alloc] initWithPhoto:nil
                                               thumbnailUrl:obj.content
                                             originPhotoUrl:nil
@@ -121,7 +124,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     chatMessage.sendUserId = sender;
     chatMessage.receiveUserId = receiver;
     chatMessage.messageTime = dateTime;
-    chatMessage.messageType = JYMessageTypeText;
+    chatMessage.messageType = YFBMessageTypeText;
     chatMessage.content = message;
     
     [self addChatMessage:chatMessage];
@@ -134,11 +137,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     if (self.isViewLoaded) {
         XHMessage *xhMsg;
         NSDate *date = [YFBUtil dateFromString:chatMessage.messageTime WithDateFormat:KDateFormatLong];
-        if (chatMessage.messageType == JYMessageTypeText) {
+        if (chatMessage.messageType == YFBMessageTypeText) {
             xhMsg = [[XHMessage alloc] initWithText:chatMessage.content
                                              sender:chatMessage.sendUserId
                                           timestamp:date];
-        } else if (chatMessage.messageType == JYMessageTypePhoto) {
+        } else if (chatMessage.messageType == YFBMessageTypePhoto) {
             xhMsg = [[XHMessage alloc] initWithPhoto:nil
                                         thumbnailUrl:chatMessage.content
                                       originPhotoUrl:nil
@@ -156,6 +159,21 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }
 }
 
+- (void)addPhoneOrWxWithMessageType:(YFBMessageFunciontType)type {
+    YFBDetailModel *detailModel = [[YFBDetailModel alloc] init];
+    [detailModel fetchDetailInfoWithUserId:self.userId CompletionHandler:^(BOOL success, YFBUserLoginModel * obj) {
+        if (success) {
+            NSString *content = nil;
+            if (type == YFBMessageFunciontTypePhone) {
+                content = [NSString stringWithFormat:@"我的手机号是%@",obj.userBaseInfo.mobilePhone];
+            } else if (type == YFBMessageFunciontTypeWX) {
+                content = [NSString stringWithFormat:@"我的微信号是%@",obj.userBaseInfo.weixin];
+            }
+            [self didSendText:content fromSender:self.userId onDate:[NSDate date]];
+        }
+    }];
+}
+
 - (void)configFunctionUI {
     self.messagAdView = [[YFBMessageAdView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(48))];
     _messagAdView.recordsArr = @[@"11",@"22",@"33",@"44",@"55"];
@@ -167,18 +185,35 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         @strongify(self);
         switch (type) {
             case YFBMessageFunciontTypeAttention:
-                
+                [[YFBInteractionManager manager] concernUserWithUserId:self.userId handler:^(BOOL success) {
+                    if (success) {
+                        [[YFBHudManager manager] showHudWithText:@"ga"];
+                    }
+                }];
                 break;
                 
-            case YFBMessageFunciontTypeYBi:
+            case YFBMessageFunciontTypeDiamon:
                 
                 break;
                 
             case YFBMessageFunciontTypePhone:
+                if ([YFBUtil isVip]) {
+                    [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypePhone];
+                } else {
+                    YFBDredgeVipController *vipVC = [[YFBDredgeVipController alloc] initWithTitle:@"充值"];
+                    [self.navigationController pushViewController:vipVC animated:YES];
+                }
                 
                 break;
             
             case YFBMessageFunciontTypeWX:
+                if ([YFBUtil isVip]) {
+                    [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypeWX];
+                } else {
+                    YFBDredgeVipController *vipVC = [[YFBDredgeVipController alloc] initWithTitle:@"充值"];
+                    [self.navigationController pushViewController:vipVC animated:YES];
+                }
+                
                 
                 break;
                 
@@ -193,8 +228,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     if (self.messageInputView.inputTextView.isFirstResponder) {
         [self.messageInputView.inputTextView resignFirstResponder];
     }
-//    [YFBGiftPopViewController showGiftViewInCurrentViewController:self isMessagePop:YES];
-    [self showPayView];
+    [YFBGiftPopViewController showGiftViewInCurrentViewController:self isMessagePop:YES];
 }
 
 - (void)showPayView {

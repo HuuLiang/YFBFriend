@@ -45,6 +45,8 @@ static NSString *const kYFBDredgeVipExampleReusableIdentifier = @"DredgeVipExamp
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    _tableView.tableHeaderView = [self configTableHeaderView];
+    
     {
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
@@ -54,6 +56,12 @@ static NSString *const kYFBDredgeVipExampleReusableIdentifier = @"DredgeVipExamp
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (UIImageView *)configTableHeaderView {
+    UIImageView *headerImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vipheader.jpg"]];
+    headerImageView.size = CGSizeMake(kScreenWidth, kScreenWidth*4/15);
+    return headerImageView;
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource
@@ -81,8 +89,10 @@ static NSString *const kYFBDredgeVipExampleReusableIdentifier = @"DredgeVipExamp
         YFBDredgeVipPayCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBDredgeVipPayCellReusableIdentifier forIndexPath:indexPath];
         cell.lessTime = @"30天";
         cell.lessPrice = @"¥50";
+        cell.lessTitle = @"(1.6/天) 赠10钻石";
         cell.moreTime = @"90天";
         cell.morePrice = @"¥100";
+        cell.moreTitle = @"(1.1/天) 赠30钻石";
         cell.payAction = ^(id sender){
             @strongify(self);
             //支付
@@ -96,7 +106,8 @@ static NSString *const kYFBDredgeVipExampleReusableIdentifier = @"DredgeVipExamp
         return cell;
     } else if (indexPath.section == YFBDredgeVipSectionMorePrivilege) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBDredgeVipMorePrivilegeReusableIdentifier forIndexPath:indexPath];
-        cell.textLabel.text = @"聊天80Y币/条将至仅1Y币/条";
+        cell.textLabel.numberOfLines = 2;
+        cell.textLabel.text = @"仅VIP用户可查看联系方式\n仅VIP用户可查看访问列表";
         return cell;
     } else if (indexPath.section == YFBDredgeVipSectionExample) {
         YFBPayUsersCell *payUserCell = [tableView dequeueReusableCellWithIdentifier:kYFBDredgeVipExampleReusableIdentifier forIndexPath:indexPath];
@@ -116,7 +127,7 @@ static NSString *const kYFBDredgeVipExampleReusableIdentifier = @"DredgeVipExamp
     } else if (indexPath.section == YFBDredgeVipSectionPrivilege) {
         return kWidth(130);
     } else if (indexPath.section == YFBDredgeVipSectionMorePrivilege) {
-        return kWidth(88);
+        return kWidth(100);
     } else if (indexPath.section == YFBDredgeVipSectionExample) {
         return kWidth(320);
     }

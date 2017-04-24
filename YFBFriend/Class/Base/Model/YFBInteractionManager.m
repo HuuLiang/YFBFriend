@@ -106,6 +106,8 @@ static NSString *const KYFBFriendGreetToAllUsersKeyName = @"KYFBFriendGreetToAll
             }
             robot.concerned = YES;
             [robot saveOrUpdate];
+            
+            [[YFBHudManager manager] showHudWithText:@"关注成功"];
         } else {
             [[YFBHudManager manager] showHudWithText:@"关注失败，请重试"];
         }
@@ -123,6 +125,9 @@ static NSString *const KYFBFriendGreetToAllUsersKeyName = @"KYFBFriendGreetToAll
                 }
                 robot.concerned = NO;
                 [robot saveOrUpdate];
+                
+                [[YFBHudManager manager] showHudWithText:@"关注成功"];
+                
             } else {
                 [[YFBHudManager manager] showHudWithText:@"取消关注失败，请重试"];
             }

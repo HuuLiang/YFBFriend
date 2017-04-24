@@ -35,4 +35,6 @@
 + (NSString *)timeStringFromDate:(NSDate *)date WithDateFormat:(NSString *)dateFormat;
 + (NSString *)compareCurrentTime:(NSTimeInterval)compareTimeInterval;
 
++(BOOL)isVip;
+
 @end

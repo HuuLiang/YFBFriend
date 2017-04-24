@@ -10,7 +10,7 @@
 
 typedef NS_ENUM(NSInteger,YFBMessageFunciontType) {
     YFBMessageFunciontTypeAttention = 0,
-    YFBMessageFunciontTypeYBi,
+    YFBMessageFunciontTypeDiamon,
     YFBMessageFunciontTypePhone,
     YFBMessageFunciontTypeWX
 };

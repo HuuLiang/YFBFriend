@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2655A8AAADBA5FD994FA27D4 /* libPods-YFBFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */; };
-		B32207E91E7D327D00A101E4 /* YFBMTableViewDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = B32207E81E7D327D00A101E4 /* YFBMTableViewDatasource.m */; };
 		B324038E1E78D92100E1D8EB /* YFBAttentionController.m in Sources */ = {isa = PBXBuildFile; fileRef = B324038D1E78D92100E1D8EB /* YFBAttentionController.m */; };
 		B32403911E78D9B500E1D8EB /* YFBSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B32403901E78D9B500E1D8EB /* YFBSliderView.m */; };
 		B32403941E78E6A900E1D8EB /* YFBAttentionDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = B32403931E78E6A900E1D8EB /* YFBAttentionDetailController.m */; };
@@ -16,29 +15,20 @@
 		B324039A1E791ACE00E1D8EB /* YFBMyGiftController.m in Sources */ = {isa = PBXBuildFile; fileRef = B32403991E791ACE00E1D8EB /* YFBMyGiftController.m */; };
 		B324039D1E791BE200E1D8EB /* YFBMyGiftDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = B324039C1E791BE200E1D8EB /* YFBMyGiftDetailController.m */; };
 		B33283F61E7F6E980058ED6D /* YFBPayUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B33283F51E7F6E980058ED6D /* YFBPayUserModel.m */; };
-		B33283F91E7F71490058ED6D /* YFBChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33283F81E7F71490058ED6D /* YFBChatTableViewCell.m */; };
 		B336647A1EAD988000C23E56 /* YFBMessagePayPopController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33664791EAD988000C23E56 /* YFBMessagePayPopController.m */; };
 		B33F46911E7A3AC00028BAE4 /* YFBDiamondExplainController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46901E7A3AC00028BAE4 /* YFBDiamondExplainController.m */; };
 		B33F46941E7A41F20028BAE4 /* YFBDiamondVoucherController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46931E7A41F20028BAE4 /* YFBDiamondVoucherController.m */; };
 		B33F46971E7A55520028BAE4 /* YFBDiamondPayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46961E7A55520028BAE4 /* YFBDiamondPayTypeCell.m */; };
 		B33F469A1E7A65560028BAE4 /* YFBDiamondLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46991E7A65560028BAE4 /* YFBDiamondLabel.m */; };
-		B33F46A21E7A72100028BAE4 /* YFBVipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46A11E7A72100028BAE4 /* YFBVipViewController.m */; };
-		B33F46A51E7A722B0028BAE4 /* YFBMyYMoneyController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46A41E7A722B0028BAE4 /* YFBMyYMoneyController.m */; };
-		B33F46A81E7A7A9F0028BAE4 /* YFBMyYMoneyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46A71E7A7A9F0028BAE4 /* YFBMyYMoneyCell.m */; };
-		B33F46AA1E7A81750028BAE4 /* my_ymoney.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B33F46A91E7A81750028BAE4 /* my_ymoney.jpg */; };
-		B33F46AD1E7AA9620028BAE4 /* YFBMyYMoneyPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46AC1E7AA9620028BAE4 /* YFBMyYMoneyPayCell.m */; };
 		B33F46B01E7AABDF0028BAE4 /* YFBPayUserCountUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46AF1E7AABDF0028BAE4 /* YFBPayUserCountUtil.m */; };
 		B33F46B31E7AB5DF0028BAE4 /* YFBPayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46B21E7AB5DF0028BAE4 /* YFBPayButton.m */; };
 		B3456A5E1EA5EC8C000528DA /* YFBMessageGiftFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3456A5D1EA5EC8C000528DA /* YFBMessageGiftFooterView.m */; };
 		B37A3E701E793EF300643329 /* YFBMyDiamondController.m in Sources */ = {isa = PBXBuildFile; fileRef = B37A3E6F1E793EF300643329 /* YFBMyDiamondController.m */; };
 		B37A3E731E7947B800643329 /* YFBDiamondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B37A3E721E7947B800643329 /* YFBDiamondCell.m */; };
-		B3891E2B1EA9E73000004D69 /* YFBMessageTopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3891E2A1EA9E72F00004D69 /* YFBMessageTopUpView.m */; };
 		B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */; };
-		B3AB93701E7BA981006EA5EB /* YFBPayUsersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AB936F1E7BA981006EA5EB /* YFBPayUsersCell.m */; };
 		B3B3EAE51EA738F400B97396 /* YFBMineGiftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B3EAE41EA738F400B97396 /* YFBMineGiftCell.m */; };
 		B3B3EAE81EA74D6C00B97396 /* YFBMineGiftHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B3EAE71EA74D6C00B97396 /* YFBMineGiftHeaderView.m */; };
 		B3B3EAEB1EA76DBE00B97396 /* YFBMineBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B3EAEA1EA76DBE00B97396 /* YFBMineBtn.m */; };
-		B3B4059E1EADC3BC005CE3DA /* YFBPayBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B4059D1EADC3BC005CE3DA /* YFBPayBtn.m */; };
 		B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CD81E77DBC900C7733D /* YFBMineCell.m */; };
 		B3C18CDC1E78025D00C7733D /* YFBVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */; };
 		B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */; };
@@ -276,6 +266,14 @@
 		ECB8C84A1E9DCD5B00B116AC /* POSBlobInputStreamAssetDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8C83D1E9DCD5B00B116AC /* POSBlobInputStreamAssetDataSource.m */; };
 		ECB8C84B1E9DCD5B00B116AC /* POSFastAssetReader.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8C8401E9DCD5B00B116AC /* POSFastAssetReader.m */; };
 		ECB8C84C1E9DCD5B00B116AC /* POSLocking.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8C8441E9DCD5B00B116AC /* POSLocking.m */; };
+		ECC0491C1EADDA84009E594F /* YFBMTableViewDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC049191EADDA84009E594F /* YFBMTableViewDatasource.m */; };
+		ECC0491D1EADDA84009E594F /* YFBPayUsersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0491B1EADDA84009E594F /* YFBPayUsersCell.m */; };
+		ECC049201EADDAAD009E594F /* YFBChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0491F1EADDAAD009E594F /* YFBChatTableViewCell.m */; };
+		ECC049221EADEA75009E594F /* vipheader.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC049211EADEA75009E594F /* vipheader.jpg */; };
+		ECC049251EAE2917009E594F /* YFBMessagePayPointCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC049241EAE2917009E594F /* YFBMessagePayPointCell.m */; };
+		ECC049281EAE2C76009E594F /* YFBMessagePayTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC049271EAE2C76009E594F /* YFBMessagePayTitleCell.m */; };
+		ECC0492B1EAE2C8B009E594F /* YFBMessagePayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0492A1EAE2C8B009E594F /* YFBMessagePayTypeCell.m */; };
+		ECC0492E1EAE2C9C009E594F /* YFBMessageToPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0492D1EAE2C9C009E594F /* YFBMessageToPayCell.m */; };
 		ECC785781EA1F93500221E8E /* YFBRankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC785771EA1F93500221E8E /* YFBRankModel.m */; };
 		ECC7857B1EA215CF00221E8E /* YFBDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC7857A1EA215CF00221E8E /* YFBDetailModel.m */; };
 		ECCA56C81E9CD92C00E067B1 /* YFBImageUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56C71E9CD92C00E067B1 /* YFBImageUploadManager.m */; };
@@ -291,8 +289,6 @@
 /* Begin PBXFileReference section */
 		7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YFBFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97D15D3E72F1F4490DADAEF5 /* Pods-YFBFriend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.release.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.release.xcconfig"; sourceTree = "<group>"; };
-		B32207E71E7D327D00A101E4 /* YFBMTableViewDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMTableViewDatasource.h; sourceTree = "<group>"; };
-		B32207E81E7D327D00A101E4 /* YFBMTableViewDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMTableViewDatasource.m; sourceTree = "<group>"; };
 		B324038C1E78D92100E1D8EB /* YFBAttentionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBAttentionController.h; sourceTree = "<group>"; };
 		B324038D1E78D92100E1D8EB /* YFBAttentionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBAttentionController.m; sourceTree = "<group>"; };
 		B324038F1E78D9B500E1D8EB /* YFBSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSliderView.h; sourceTree = "<group>"; };
@@ -307,8 +303,6 @@
 		B324039C1E791BE200E1D8EB /* YFBMyGiftDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMyGiftDetailController.m; sourceTree = "<group>"; };
 		B33283F41E7F6E980058ED6D /* YFBPayUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPayUserModel.h; sourceTree = "<group>"; };
 		B33283F51E7F6E980058ED6D /* YFBPayUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPayUserModel.m; sourceTree = "<group>"; };
-		B33283F71E7F71490058ED6D /* YFBChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBChatTableViewCell.h; sourceTree = "<group>"; };
-		B33283F81E7F71490058ED6D /* YFBChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBChatTableViewCell.m; sourceTree = "<group>"; };
 		B33664781EAD988000C23E56 /* YFBMessagePayPopController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessagePayPopController.h; sourceTree = "<group>"; };
 		B33664791EAD988000C23E56 /* YFBMessagePayPopController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessagePayPopController.m; sourceTree = "<group>"; };
 		B33F468F1E7A3AC00028BAE4 /* YFBDiamondExplainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondExplainController.h; sourceTree = "<group>"; };
@@ -319,15 +313,6 @@
 		B33F46961E7A55520028BAE4 /* YFBDiamondPayTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondPayTypeCell.m; sourceTree = "<group>"; };
 		B33F46981E7A65560028BAE4 /* YFBDiamondLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondLabel.h; sourceTree = "<group>"; };
 		B33F46991E7A65560028BAE4 /* YFBDiamondLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondLabel.m; sourceTree = "<group>"; };
-		B33F46A01E7A72100028BAE4 /* YFBVipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVipViewController.h; sourceTree = "<group>"; };
-		B33F46A11E7A72100028BAE4 /* YFBVipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBVipViewController.m; sourceTree = "<group>"; };
-		B33F46A31E7A722B0028BAE4 /* YFBMyYMoneyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMyYMoneyController.h; sourceTree = "<group>"; };
-		B33F46A41E7A722B0028BAE4 /* YFBMyYMoneyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMyYMoneyController.m; sourceTree = "<group>"; };
-		B33F46A61E7A7A9F0028BAE4 /* YFBMyYMoneyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMyYMoneyCell.h; sourceTree = "<group>"; };
-		B33F46A71E7A7A9F0028BAE4 /* YFBMyYMoneyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMyYMoneyCell.m; sourceTree = "<group>"; };
-		B33F46A91E7A81750028BAE4 /* my_ymoney.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = my_ymoney.jpg; sourceTree = "<group>"; };
-		B33F46AB1E7AA9620028BAE4 /* YFBMyYMoneyPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMyYMoneyPayCell.h; sourceTree = "<group>"; };
-		B33F46AC1E7AA9620028BAE4 /* YFBMyYMoneyPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMyYMoneyPayCell.m; sourceTree = "<group>"; };
 		B33F46AE1E7AABDF0028BAE4 /* YFBPayUserCountUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPayUserCountUtil.h; sourceTree = "<group>"; };
 		B33F46AF1E7AABDF0028BAE4 /* YFBPayUserCountUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPayUserCountUtil.m; sourceTree = "<group>"; };
 		B33F46B11E7AB5DF0028BAE4 /* YFBPayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPayButton.h; sourceTree = "<group>"; };
@@ -338,20 +323,14 @@
 		B37A3E6F1E793EF300643329 /* YFBMyDiamondController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMyDiamondController.m; sourceTree = "<group>"; };
 		B37A3E711E7947B800643329 /* YFBDiamondCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondCell.h; sourceTree = "<group>"; };
 		B37A3E721E7947B800643329 /* YFBDiamondCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondCell.m; sourceTree = "<group>"; };
-		B3891E291EA9E72F00004D69 /* YFBMessageTopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessageTopUpView.h; sourceTree = "<group>"; };
-		B3891E2A1EA9E72F00004D69 /* YFBMessageTopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageTopUpView.m; sourceTree = "<group>"; };
 		B3A1BD6B1E77BDD100BD6ECB /* YFBMineHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineHeaderCell.h; sourceTree = "<group>"; };
 		B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineHeaderCell.m; sourceTree = "<group>"; };
-		B3AB936E1E7BA981006EA5EB /* YFBPayUsersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPayUsersCell.h; sourceTree = "<group>"; };
-		B3AB936F1E7BA981006EA5EB /* YFBPayUsersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPayUsersCell.m; sourceTree = "<group>"; };
 		B3B3EAE31EA738F400B97396 /* YFBMineGiftCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineGiftCell.h; sourceTree = "<group>"; };
 		B3B3EAE41EA738F400B97396 /* YFBMineGiftCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineGiftCell.m; sourceTree = "<group>"; };
 		B3B3EAE61EA74D6C00B97396 /* YFBMineGiftHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineGiftHeaderView.h; sourceTree = "<group>"; };
 		B3B3EAE71EA74D6C00B97396 /* YFBMineGiftHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineGiftHeaderView.m; sourceTree = "<group>"; };
 		B3B3EAE91EA76DBE00B97396 /* YFBMineBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineBtn.h; sourceTree = "<group>"; };
 		B3B3EAEA1EA76DBE00B97396 /* YFBMineBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineBtn.m; sourceTree = "<group>"; };
-		B3B4059C1EADC3BC005CE3DA /* YFBPayBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPayBtn.h; sourceTree = "<group>"; };
-		B3B4059D1EADC3BC005CE3DA /* YFBPayBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPayBtn.m; sourceTree = "<group>"; };
 		B3C18CD71E77DBC900C7733D /* YFBMineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineCell.h; sourceTree = "<group>"; };
 		B3C18CD81E77DBC900C7733D /* YFBMineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineCell.m; sourceTree = "<group>"; };
 		B3C18CDA1E78025D00C7733D /* YFBVerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVerifyViewController.h; sourceTree = "<group>"; };
@@ -796,6 +775,21 @@
 		ECB8C8421E9DCD5B00B116AC /* POSInputStreamLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSInputStreamLibrary.h; sourceTree = "<group>"; };
 		ECB8C8431E9DCD5B00B116AC /* POSLocking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSLocking.h; sourceTree = "<group>"; };
 		ECB8C8441E9DCD5B00B116AC /* POSLocking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSLocking.m; sourceTree = "<group>"; };
+		ECC049181EADDA84009E594F /* YFBMTableViewDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMTableViewDatasource.h; sourceTree = "<group>"; };
+		ECC049191EADDA84009E594F /* YFBMTableViewDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMTableViewDatasource.m; sourceTree = "<group>"; };
+		ECC0491A1EADDA84009E594F /* YFBPayUsersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPayUsersCell.h; sourceTree = "<group>"; };
+		ECC0491B1EADDA84009E594F /* YFBPayUsersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPayUsersCell.m; sourceTree = "<group>"; };
+		ECC0491E1EADDAAD009E594F /* YFBChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBChatTableViewCell.h; sourceTree = "<group>"; };
+		ECC0491F1EADDAAD009E594F /* YFBChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBChatTableViewCell.m; sourceTree = "<group>"; };
+		ECC049211EADEA75009E594F /* vipheader.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vipheader.jpg; sourceTree = "<group>"; };
+		ECC049231EAE2917009E594F /* YFBMessagePayPointCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessagePayPointCell.h; sourceTree = "<group>"; };
+		ECC049241EAE2917009E594F /* YFBMessagePayPointCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessagePayPointCell.m; sourceTree = "<group>"; };
+		ECC049261EAE2C76009E594F /* YFBMessagePayTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessagePayTitleCell.h; sourceTree = "<group>"; };
+		ECC049271EAE2C76009E594F /* YFBMessagePayTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessagePayTitleCell.m; sourceTree = "<group>"; };
+		ECC049291EAE2C8B009E594F /* YFBMessagePayTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessagePayTypeCell.h; sourceTree = "<group>"; };
+		ECC0492A1EAE2C8B009E594F /* YFBMessagePayTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessagePayTypeCell.m; sourceTree = "<group>"; };
+		ECC0492C1EAE2C9C009E594F /* YFBMessageToPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessageToPayCell.h; sourceTree = "<group>"; };
+		ECC0492D1EAE2C9C009E594F /* YFBMessageToPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageToPayCell.m; sourceTree = "<group>"; };
 		ECC785761EA1F93500221E8E /* YFBRankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBRankModel.h; path = YFBFriend/Class/Discover/Model/YFBRankModel.h; sourceTree = SOURCE_ROOT; };
 		ECC785771EA1F93500221E8E /* YFBRankModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRankModel.m; path = YFBFriend/Class/Discover/Model/YFBRankModel.m; sourceTree = SOURCE_ROOT; };
 		ECC785791EA215CF00221E8E /* YFBDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDetailModel.h; sourceTree = "<group>"; };
@@ -847,17 +841,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		B32207E61E7D325900A101E4 /* tableView */ = {
-			isa = PBXGroup;
-			children = (
-				B32207E71E7D327D00A101E4 /* YFBMTableViewDatasource.h */,
-				B32207E81E7D327D00A101E4 /* YFBMTableViewDatasource.m */,
-				B33283F71E7F71490058ED6D /* YFBChatTableViewCell.h */,
-				B33283F81E7F71490058ED6D /* YFBChatTableViewCell.m */,
-			);
-			name = tableView;
-			sourceTree = "<group>";
-		};
 		B33F469B1E7A6E0C0028BAE4 /* 我的钻石 */ = {
 			isa = PBXGroup;
 			children = (
@@ -882,16 +865,6 @@
 			name = "我的礼物";
 			sourceTree = "<group>";
 		};
-		B33F469D1E7A6E7B0028BAE4 /* 我的Y币 */ = {
-			isa = PBXGroup;
-			children = (
-				B32207E61E7D325900A101E4 /* tableView */,
-				B33F46A31E7A722B0028BAE4 /* YFBMyYMoneyController.h */,
-				B33F46A41E7A722B0028BAE4 /* YFBMyYMoneyController.m */,
-			);
-			name = "我的Y币";
-			sourceTree = "<group>";
-		};
 		B33F469E1E7A6E880028BAE4 /* 谁关注我 */ = {
 			isa = PBXGroup;
 			children = (
@@ -908,21 +881,8 @@
 			children = (
 				B3C18CDF1E781DF600C7733D /* YFBDredgeVipController.h */,
 				B3C18CE01E781DF600C7733D /* YFBDredgeVipController.m */,
-				B33F46A01E7A72100028BAE4 /* YFBVipViewController.h */,
-				B33F46A11E7A72100028BAE4 /* YFBVipViewController.m */,
 			);
 			name = "开通VIP";
-			sourceTree = "<group>";
-		};
-		B3891E281EA9E33C00004D69 /* MessagePopView */ = {
-			isa = PBXGroup;
-			children = (
-				B3891E291EA9E72F00004D69 /* YFBMessageTopUpView.h */,
-				B3891E2A1EA9E72F00004D69 /* YFBMessageTopUpView.m */,
-				B3B4059C1EADC3BC005CE3DA /* YFBPayBtn.h */,
-				B3B4059D1EADC3BC005CE3DA /* YFBPayBtn.m */,
-			);
-			name = MessagePopView;
 			sourceTree = "<group>";
 		};
 		B3A1BD691E77BDB800BD6ECB /* Model */ = {
@@ -959,14 +919,14 @@
 				B33F46961E7A55520028BAE4 /* YFBDiamondPayTypeCell.m */,
 				B33F46981E7A65560028BAE4 /* YFBDiamondLabel.h */,
 				B33F46991E7A65560028BAE4 /* YFBDiamondLabel.m */,
-				B33F46A61E7A7A9F0028BAE4 /* YFBMyYMoneyCell.h */,
-				B33F46A71E7A7A9F0028BAE4 /* YFBMyYMoneyCell.m */,
-				B33F46AB1E7AA9620028BAE4 /* YFBMyYMoneyPayCell.h */,
-				B33F46AC1E7AA9620028BAE4 /* YFBMyYMoneyPayCell.m */,
-				B3AB936E1E7BA981006EA5EB /* YFBPayUsersCell.h */,
-				B3AB936F1E7BA981006EA5EB /* YFBPayUsersCell.m */,
 				B33F46B11E7AB5DF0028BAE4 /* YFBPayButton.h */,
 				B33F46B21E7AB5DF0028BAE4 /* YFBPayButton.m */,
+				ECC0491A1EADDA84009E594F /* YFBPayUsersCell.h */,
+				ECC0491B1EADDA84009E594F /* YFBPayUsersCell.m */,
+				ECC049181EADDA84009E594F /* YFBMTableViewDatasource.h */,
+				ECC049191EADDA84009E594F /* YFBMTableViewDatasource.m */,
+				ECC0491E1EADDAAD009E594F /* YFBChatTableViewCell.h */,
+				ECC0491F1EADDAAD009E594F /* YFBChatTableViewCell.m */,
 				EC6AE1E61E7FD30B00FF91D0 /* YFBDredgeVipPayCell.h */,
 				EC6AE1E71E7FD30B00FF91D0 /* YFBDredgeVipPayCell.m */,
 				EC6AE1E91E7FFCCB00FF91D0 /* YFBDredgeVipPrivilegeCell.h */,
@@ -1109,7 +1069,6 @@
 		EC4827081E778D3C00F03454 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B3891E281EA9E33C00004D69 /* MessagePopView */,
 				EC6DAFDF1EA4568A00D93FB3 /* YFBContactCell.h */,
 				EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */,
 				B3D6E9AB1EA4DBA900D972CC /* YFBBlagGiftView.h */,
@@ -1118,6 +1077,14 @@
 				EC2149501EA61A8C00E07592 /* YFBMessageAdView.m */,
 				EC96EB021EA70A1100365B8F /* YFBMessageFunctionView.h */,
 				EC96EB031EA70A1100365B8F /* YFBMessageFunctionView.m */,
+				ECC049231EAE2917009E594F /* YFBMessagePayPointCell.h */,
+				ECC049241EAE2917009E594F /* YFBMessagePayPointCell.m */,
+				ECC049261EAE2C76009E594F /* YFBMessagePayTitleCell.h */,
+				ECC049271EAE2C76009E594F /* YFBMessagePayTitleCell.m */,
+				ECC049291EAE2C8B009E594F /* YFBMessagePayTypeCell.h */,
+				ECC0492A1EAE2C8B009E594F /* YFBMessagePayTypeCell.m */,
+				ECC0492C1EAE2C9C009E594F /* YFBMessageToPayCell.h */,
+				ECC0492D1EAE2C9C009E594F /* YFBMessageToPayCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1139,7 +1106,6 @@
 				EC58AFAE1E8119C70022FE8C /* 个人资料 */,
 				B33F469F1E7A71A00028BAE4 /* 开通VIP */,
 				B33F469E1E7A6E880028BAE4 /* 谁关注我 */,
-				B33F469D1E7A6E7B0028BAE4 /* 我的Y币 */,
 				B33F469C1E7A6E540028BAE4 /* 我的礼物 */,
 				B33F469B1E7A6E0C0028BAE4 /* 我的钻石 */,
 				EC4827101E778DA200F03454 /* YFBMineViewController.h */,
@@ -1962,7 +1928,7 @@
 				EC7307031E83727D00D7BF70 /* provinces.plist */,
 				EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */,
 				B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */,
-				B33F46A91E7A81750028BAE4 /* my_ymoney.jpg */,
+				ECC049211EADEA75009E594F /* vipheader.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2099,6 +2065,7 @@
 				EC9A6AB41E6D3F9F0018C5FB /* VoiceBtn_BlackHL@2x.png in Resources */,
 				EC9A6ABF1E6D3F9F0018C5FB /* config.plist in Resources */,
 				EC9A6AA81E6D3F9E0018C5FB /* RecordingSignal006@2x.png in Resources */,
+				ECC049221EADEA75009E594F /* vipheader.jpg in Resources */,
 				EC9A6A991E6D3F9E0018C5FB /* multiMedia@2x.png in Resources */,
 				EC9A6AB21E6D3F9F0018C5FB /* voice_HL@2x.png in Resources */,
 				EC9A6AB11E6D3F9F0018C5FB /* voice@2x.png in Resources */,
@@ -2124,7 +2091,6 @@
 				EC9A6AA61E6D3F9E0018C5FB /* RecordingSignal004@2x.png in Resources */,
 				ECB8C82E1E9DCD4000B116AC /* version.json in Resources */,
 				EC9A6A9F1E6D3F9E0018C5FB /* ReceiverVoiceNodePlaying003@2x.png in Resources */,
-				B33F46AA1E7A81750028BAE4 /* my_ymoney.jpg in Resources */,
 				EC9A6A951E6D3F9E0018C5FB /* keyboard_HL@2x.png in Resources */,
 				EC9A6AA71E6D3F9E0018C5FB /* RecordingSignal005@2x.png in Resources */,
 				EC9A6AAD1E6D3F9F0018C5FB /* SenderVoiceNodePlaying001@2x.png in Resources */,
@@ -2198,10 +2164,8 @@
 				EC9A6A6C1E6D3F9E0018C5FB /* XHMessage.m in Sources */,
 				EC47D4291E7695E3000E9519 /* YFBNearVC.m in Sources */,
 				EC9A6A671E6D3F9E0018C5FB /* XHMessageVoiceFactory.m in Sources */,
-				B33F46A21E7A72100028BAE4 /* YFBVipViewController.m in Sources */,
 				EC58AFB11E811A150022FE8C /* YFBMineDataInfoViewController.m in Sources */,
 				EC9A6A861E6D3F9E0018C5FB /* XHMessageTextView.m in Sources */,
-				B3AB93701E7BA981006EA5EB /* YFBPayUsersCell.m in Sources */,
 				EC9A6ABE1E6D3F9F0018C5FB /* VPImageCropperViewController.m in Sources */,
 				EC9A6A5E1E6D3F9E0018C5FB /* XHDisplayTextViewController.m in Sources */,
 				EC67DE8E1E8A304200557E7A /* YFBPhotoManager.m in Sources */,
@@ -2211,16 +2175,15 @@
 				ECB8C84A1E9DCD5B00B116AC /* POSBlobInputStreamAssetDataSource.m in Sources */,
 				B32403941E78E6A900E1D8EB /* YFBAttentionDetailController.m in Sources */,
 				B324038E1E78D92100E1D8EB /* YFBAttentionController.m in Sources */,
-				B3891E2B1EA9E73000004D69 /* YFBMessageTopUpView.m in Sources */,
 				EC9A6A491E6D3F9E0018C5FB /* JKDBModel.m in Sources */,
 				EC65EE521E712A0600DA1AF9 /* YFBRegisterFirstVC.m in Sources */,
+				ECC0491C1EADDA84009E594F /* YFBMTableViewDatasource.m in Sources */,
 				EC5D659B1E7A8EA200CBE08A /* YFBDetailViewController.m in Sources */,
 				EC6DAFE41EA4C74E00D93FB3 /* YFBContactModel.m in Sources */,
 				EC7F0FAC1E70017C00F39FD9 /* YFBLoginViewController.m in Sources */,
 				ECEED79C1E9F6E8A00B47D8A /* YFBRobot.m in Sources */,
 				ECDDA2891EAA0E68006659C2 /* YFBPhotoListManager.m in Sources */,
 				EC47D42F1E76A37E000E9519 /* YFBRecommendCell.m in Sources */,
-				B33F46A81E7A7A9F0028BAE4 /* YFBMyYMoneyCell.m in Sources */,
 				EC9A6A421E6D3F9E0018C5FB /* ActionSheetDistancePicker.m in Sources */,
 				EC2A86C81E88DD0200E4B300 /* YFBSettingCell.m in Sources */,
 				EC9A6A8B1E6D3F9E0018C5FB /* XHEmotionSectionBar.m in Sources */,
@@ -2267,7 +2230,6 @@
 				EC7F0F7D1E6FA8C700F39FD9 /* YFBHudManager.m in Sources */,
 				B33F46911E7A3AC00028BAE4 /* YFBDiamondExplainController.m in Sources */,
 				B324039D1E791BE200E1D8EB /* YFBMyGiftDetailController.m in Sources */,
-				B3B4059E1EADC3BC005CE3DA /* YFBPayBtn.m in Sources */,
 				EC9A6A891E6D3F9E0018C5FB /* XHEmotionCollectionViewFlowLayout.m in Sources */,
 				B37A3E731E7947B800643329 /* YFBDiamondCell.m in Sources */,
 				EC6DAFE11EA4568A00D93FB3 /* YFBContactCell.m in Sources */,
@@ -2277,6 +2239,7 @@
 				EC9A6A2B1E6D3F9E0018C5FB /* NSString+Size.m in Sources */,
 				B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */,
 				EC9A6A691E6D3F9E0018C5FB /* XHAnnotation.m in Sources */,
+				ECC049201EADDAAD009E594F /* YFBChatTableViewCell.m in Sources */,
 				EC9A6A761E6D3F9E0018C5FB /* SETextAttachment.m in Sources */,
 				EC9A6A2A1E6D3F9E0018C5FB /* NSObject+PropertyAccessInspecting.m in Sources */,
 				EC7F0FA31E6FE8C000F39FD9 /* YFBNavigationController.m in Sources */,
@@ -2284,6 +2247,7 @@
 				EC9A6A6E1E6D3F9E0018C5FB /* FLAnimatedImage.m in Sources */,
 				EC9A6A5B1E6D3F9E0018C5FB /* XHDisplayEmotionViewController.m in Sources */,
 				EC5D659E1E7AAB0900CBE08A /* YFBDetailCell.m in Sources */,
+				ECC049251EAE2917009E594F /* YFBMessagePayPointCell.m in Sources */,
 				B33283F61E7F6E980058ED6D /* YFBPayUserModel.m in Sources */,
 				B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */,
 				EC21494E1EA6008700E07592 /* YFBPhotoBrowse.m in Sources */,
@@ -2312,14 +2276,12 @@
 				B3F0F5661EA498E7003F0D15 /* YFBGiftPopCell.m in Sources */,
 				ECB8C8481E9DCD5B00B116AC /* POSAdjustedAssetReaderIOS8.m in Sources */,
 				EC9A6A501E6D3F9E0018C5FB /* UIImage+XHRounded.m in Sources */,
-				B33F46A51E7A722B0028BAE4 /* YFBMyYMoneyController.m in Sources */,
 				EC9A6A5D1E6D3F9E0018C5FB /* XHDisplayMediaViewController.m in Sources */,
 				EC7F0F7A1E6FA86700F39FD9 /* YFBConfiguration.m in Sources */,
 				EC47D4261E769481000E9519 /* YFBRecommendVC.m in Sources */,
 				EC9A6A581E6D3F9E0018C5FB /* XHPhotographyHelper.m in Sources */,
 				EC9A6A4C1E6D3F9E0018C5FB /* UIImage+Alpha.m in Sources */,
 				EC2A86CB1E88EB8F00E4B300 /* YFBPasswordVC.m in Sources */,
-				B32207E91E7D327D00A101E4 /* YFBMTableViewDatasource.m in Sources */,
 				EC7F0F861E6FAB6500F39FD9 /* YFBApplicationManager.m in Sources */,
 				EC65EE5F1E715DCE00DA1AF9 /* YFBRegisterSecondVC.m in Sources */,
 				EC9A6A681E6D3F9E0018C5FB /* XHVideoOutputSampleBufferFactory.m in Sources */,
@@ -2328,6 +2290,7 @@
 				EC9A6A7E1E6D3F9E0018C5FB /* SETextSelectionView.m in Sources */,
 				B33F46971E7A55520028BAE4 /* YFBDiamondPayTypeCell.m in Sources */,
 				EC2149481EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m in Sources */,
+				ECC0492B1EAE2C8B009E594F /* YFBMessagePayTypeCell.m in Sources */,
 				ECB8C82A1E9DCD4000B116AC /* QiniuMultipartElement.m in Sources */,
 				ECCA56C81E9CD92C00E067B1 /* YFBImageUploadManager.m in Sources */,
 				EC7F0F801E6FAA5600F39FD9 /* YFBActivateModel.m in Sources */,
@@ -2353,11 +2316,13 @@
 				ECEED79F1E9F9A6900B47D8A /* YFBDiscoverModel.m in Sources */,
 				ECB8C8451E9DCD5B00B116AC /* ALAssetsLibrary+POS.m in Sources */,
 				B3F0F5631EA48B0D003F0D15 /* YFBGiftPopView.m in Sources */,
+				ECC0491D1EADDA84009E594F /* YFBPayUsersCell.m in Sources */,
 				EC9A6A881E6D3F9E0018C5FB /* XHEmotionCollectionViewCell.m in Sources */,
 				EC9A6A551E6D3F9E0018C5FB /* XHConfigurationHelper.m in Sources */,
 				B37A3E701E793EF300643329 /* YFBMyDiamondController.m in Sources */,
 				EC9A6A2E1E6D3F9E0018C5FB /* UIScrollView+Refresh.m in Sources */,
 				B336647A1EAD988000C23E56 /* YFBMessagePayPopController.m in Sources */,
+				ECC049281EAE2C76009E594F /* YFBMessagePayTitleCell.m in Sources */,
 				EC9A6A431E6D3F9E0018C5FB /* ActionSheetLocalePicker.m in Sources */,
 				B3B3EAEB1EA76DBE00B97396 /* YFBMineBtn.m in Sources */,
 				EC9A6A6D1E6D3F9E0018C5FB /* XHShareMenuItem.m in Sources */,
@@ -2384,7 +2349,6 @@
 				EC7F0F9E1E6FDFD900F39FD9 /* YFBLaunchViewController.m in Sources */,
 				EC9A6A661E6D3F9E0018C5FB /* XHMessageVideoConverPhotoFactory.m in Sources */,
 				EC2A86D71E88FCEC00E4B300 /* YFBPasswordView.m in Sources */,
-				B33283F91E7F71490058ED6D /* YFBChatTableViewCell.m in Sources */,
 				EC9A6A7A1E6D3F9E0018C5FB /* SETextLayout.m in Sources */,
 				EC7F0F831E6FAB1900F39FD9 /* YFBApplication.m in Sources */,
 				EC9A6A361E6D3F9E0018C5FB /* NSArray+Log.m in Sources */,
@@ -2395,6 +2359,7 @@
 				B3D6E9AD1EA4DBA900D972CC /* YFBBlagGiftView.m in Sources */,
 				EC48270B1E778D7B00F03454 /* YFBContactViewController.m in Sources */,
 				EC9A6A631E6D3F9E0018C5FB /* XHOperationNetworkKit.m in Sources */,
+				ECC0492E1EAE2C9C009E594F /* YFBMessageToPayCell.m in Sources */,
 				EC9A6A721E6D3F9E0018C5FB /* SEConstants.m in Sources */,
 				EC9A6AB81E6D3F9F0018C5FB /* TAAnimatedDotView.m in Sources */,
 				EC47D4121E766208000E9519 /* YFBRegisterDetailCell.m in Sources */,
@@ -2408,7 +2373,6 @@
 				EC9A6A471E6D3F9E0018C5FB /* SWActionSheet.m in Sources */,
 				EC9A6A4A1E6D3F9E0018C5FB /* NSString+MessageInputView.m in Sources */,
 				EC9A6A521E6D3F9E0018C5FB /* UIView+XHRemoteImage.m in Sources */,
-				B33F46AD1E7AA9620028BAE4 /* YFBMyYMoneyPayCell.m in Sources */,
 				EC65EE581E713AAD00DA1AF9 /* YFBTextField.m in Sources */,
 				EC2A86D41E88EBC600E4B300 /* YFBAboutVC.m in Sources */,
 				EC9A6A571E6D3F9E0018C5FB /* XHMessageBubbleHelper.m in Sources */,

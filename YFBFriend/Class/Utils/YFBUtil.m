@@ -186,4 +186,12 @@ static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
 }
 
 
+#pragma mark - VIP
+
++ (BOOL)isVip {
+    NSInteger random = arc4random() % 2;
+    return random == 0;
+}
+
+
 @end

@@ -1,22 +1,22 @@
 //
-//  YFBDredgeVipPayCell.m
+//  YFBMessagePayPointCell.m
 //  YFBFriend
 //
-//  Created by Liang on 2017/3/20.
+//  Created by Liang on 2017/4/24.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import "YFBDredgeVipPayCell.h"
+#import "YFBMessagePayPointCell.h"
 #import "YFBPayButton.h"
 
-@interface YFBDredgeVipPayCell ()
+@interface YFBMessagePayPointCell ()
 @property (nonatomic,strong) UILabel *titleLabel;
 @property (nonatomic,strong) YFBPayButton *payLessButton;
 @property (nonatomic,strong) YFBPayButton *payMoreButton;
 @property (nonatomic,strong) UIButton *payButton;
 @end
 
-@implementation YFBDredgeVipPayCell
+@implementation YFBMessagePayPointCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -125,5 +125,4 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 }
-
 @end

@@ -8,9 +8,9 @@
 
 #import "YFBDredgeVipPrivilegeCell.h"
 
-#define TitleArr            @[@"畅",@"倍",@"减",@"送"]
+#define TitleArr            @[@"畅",@"减",@"礼",@"送"]
 #define PrivilegeArr        @[@"特权01",@"特权02",@"特权03",@"特权04"]
-#define detailArr           @[@"可与所有女用户聊天",@"吸收灵气速度加倍",@"灵气消耗减半",@"购买Y币额外赠送10%"]
+#define detailArr           @[@"可与所有女用户聊天",@"VIP用户聊天，享受1钻石/条信息优惠",@"钻石可购买礼物",@"VIP用户购买钻石额外赠送10%"]
 
 @interface YFBDredgeVipPrivilegeCell ()
 @property (nonatomic,strong) UILabel *titleLabel;

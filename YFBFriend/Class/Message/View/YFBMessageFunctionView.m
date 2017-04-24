@@ -31,7 +31,7 @@
         [self addSubview:_attentionButton];
         
         self.yBiButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_yBiButton setTitle:@"Y币" forState:UIControlStateNormal];
+        [_yBiButton setTitle:@"钻石:" forState:UIControlStateNormal];
         [_yBiButton setTitleColor:[UIColor colorWithHexString:@"#8458D0"] forState:UIControlStateNormal];
         _yBiButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(26)];
         [self addSubview:_yBiButton];
@@ -82,7 +82,7 @@
         [_yBiButton bk_addEventHandler:^(id sender) {
             @strongify(self);
             if (self.functionType) {
-                self.functionType(YFBMessageFunciontTypeYBi);
+                self.functionType(YFBMessageFunciontTypeDiamon);
             }
         } forControlEvents:UIControlEventTouchUpInside];
 

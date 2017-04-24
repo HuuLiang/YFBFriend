@@ -12,7 +12,8 @@
 #import "YFBVerifyViewController.h"
 #import "YFBAttentionController.h"
 #import "YFBMyGiftController.h"
-#import "YFBVipViewController.h"
+//#import "YFBVipViewController.h"
+#import "YFBDredgeVipController.h"
 #import "YFBMyDiamondController.h"
 #import "YFBMineDataInfoViewController.h"
 #import "YFBSettingViewController.h"
@@ -31,14 +32,11 @@ typedef NS_ENUM(NSUInteger, YFBMineSectionType) {
 };
 
 typedef NS_ENUM(NSUInteger, YFBRecordRowType) {
-    //    YFBRecordRowTypeLootRecord,//抢夺记录
     YFBRecordRowTypeAttention,//谁关注我
     YFBRecordRowTypeCount,
 };
 
 typedef NS_ENUM(NSUInteger, YFBWlletRowType) {
-    //    YFBWlletRowTypeWllet,//我的钱包
-    YFBWlletRowTypeYmoney,//我的Y币
     YFBWlletRowTypeDiamond,//我的钻石
     YFBWlletRowTypeGift,//我的礼物
     YFBWlletRowTypeCount
@@ -115,7 +113,7 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         @weakify(self);
         headerCell.ktVipAction = ^(id sender){
             @strongify(self);
-            YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:YES];
+            YFBDredgeVipController *vipVC = [[YFBDredgeVipController alloc] initWithTitle:@"充值"];
             [self.navigationController pushViewController:vipVC animated:YES];
         };
         headerCell.attestationAction = ^(id sender){
@@ -136,15 +134,11 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
     }else if (indexPath.section == YFBMineSectionTypeWallet){
         YFBMineCell *cell = [tableView dequeueReusableCellWithIdentifier:YFBMineCellIdentifier forIndexPath:indexPath];
         cell.subTitle = nil;
-        if (indexPath.row == YFBWlletRowTypeYmoney){
-            cell.title = @"我的Y币";
-            cell.subTitle = @"10";
-            cell.iconImage = @"mine_my_Ymoney_icon";
-        }else if (indexPath.row == YFBWlletRowTypeDiamond){
+        if (indexPath.row == YFBWlletRowTypeDiamond){
             cell.title = @"我的钻石";
             cell.subTitle = @"200";
             cell.iconImage = @"mine_my_diamond_icon";
-        }else if (indexPath.row == YFBWlletRowTypeGift){
+        } else if (indexPath.row == YFBWlletRowTypeGift){
             cell.title = @"我的礼物";
             cell.iconImage = @"mine_my_gift_icon";
         }
@@ -203,10 +197,7 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
             [self.navigationController pushViewController:attentionVC animated:YES];
         }
     } else if (indexPath.section == YFBMineSectionTypeWallet){
-        if (indexPath.row == YFBWlletRowTypeYmoney){
-            YFBVipViewController *diamondVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:NO];
-            [self.navigationController pushViewController:diamondVC animated:YES];
-        } else if (indexPath.row == YFBWlletRowTypeDiamond){
+        if (indexPath.row == YFBWlletRowTypeDiamond){
             YFBMyDiamondController *diamondVC = [[YFBMyDiamondController alloc] init];
             [self.navigationController pushViewController:diamondVC animated:YES];
         } else if (indexPath.row == YFBWlletRowTypeGift){
@@ -226,6 +217,5 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         [self.navigationController pushViewController:settingVC animated:YES];
     }
 }
-
 
 @end
