@@ -12,6 +12,9 @@
 #import "YFBContactViewController.h"
 #import "YFBMineViewController.h"
 
+
+#define WakeGiftManagerTimeInterval (60 * 5)
+
 @interface YFBTabBarController () <UITabBarControllerDelegate>
 
 @end
@@ -25,12 +28,16 @@
     self.tabBar.layer.borderWidth = 0.5;
     [self setChildViewControllers];
 
-    
+    [self performSelector:@selector(wakeAskGiftManager) withObject:nil afterDelay:WakeGiftManagerTimeInterval];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)wakeAskGiftManager {
+    
 }
 
 - (void)setChildViewControllers {
