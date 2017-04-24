@@ -17,6 +17,7 @@
 		B324039D1E791BE200E1D8EB /* YFBMyGiftDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = B324039C1E791BE200E1D8EB /* YFBMyGiftDetailController.m */; };
 		B33283F61E7F6E980058ED6D /* YFBPayUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B33283F51E7F6E980058ED6D /* YFBPayUserModel.m */; };
 		B33283F91E7F71490058ED6D /* YFBChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33283F81E7F71490058ED6D /* YFBChatTableViewCell.m */; };
+		B336647A1EAD988000C23E56 /* YFBMessagePayPopController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33664791EAD988000C23E56 /* YFBMessagePayPopController.m */; };
 		B33F46911E7A3AC00028BAE4 /* YFBDiamondExplainController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46901E7A3AC00028BAE4 /* YFBDiamondExplainController.m */; };
 		B33F46941E7A41F20028BAE4 /* YFBDiamondVoucherController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46931E7A41F20028BAE4 /* YFBDiamondVoucherController.m */; };
 		B33F46971E7A55520028BAE4 /* YFBDiamondPayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33F46961E7A55520028BAE4 /* YFBDiamondPayTypeCell.m */; };
@@ -31,11 +32,13 @@
 		B3456A5E1EA5EC8C000528DA /* YFBMessageGiftFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3456A5D1EA5EC8C000528DA /* YFBMessageGiftFooterView.m */; };
 		B37A3E701E793EF300643329 /* YFBMyDiamondController.m in Sources */ = {isa = PBXBuildFile; fileRef = B37A3E6F1E793EF300643329 /* YFBMyDiamondController.m */; };
 		B37A3E731E7947B800643329 /* YFBDiamondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B37A3E721E7947B800643329 /* YFBDiamondCell.m */; };
+		B3891E2B1EA9E73000004D69 /* YFBMessageTopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3891E2A1EA9E72F00004D69 /* YFBMessageTopUpView.m */; };
 		B3A1BD6D1E77BDD100BD6ECB /* YFBMineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */; };
 		B3AB93701E7BA981006EA5EB /* YFBPayUsersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AB936F1E7BA981006EA5EB /* YFBPayUsersCell.m */; };
 		B3B3EAE51EA738F400B97396 /* YFBMineGiftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B3EAE41EA738F400B97396 /* YFBMineGiftCell.m */; };
 		B3B3EAE81EA74D6C00B97396 /* YFBMineGiftHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B3EAE71EA74D6C00B97396 /* YFBMineGiftHeaderView.m */; };
 		B3B3EAEB1EA76DBE00B97396 /* YFBMineBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B3EAEA1EA76DBE00B97396 /* YFBMineBtn.m */; };
+		B3B4059E1EADC3BC005CE3DA /* YFBPayBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B4059D1EADC3BC005CE3DA /* YFBPayBtn.m */; };
 		B3C18CD91E77DBC900C7733D /* YFBMineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CD81E77DBC900C7733D /* YFBMineCell.m */; };
 		B3C18CDC1E78025D00C7733D /* YFBVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C18CDB1E78025D00C7733D /* YFBVerifyViewController.m */; };
 		B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */; };
@@ -306,6 +309,8 @@
 		B33283F51E7F6E980058ED6D /* YFBPayUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPayUserModel.m; sourceTree = "<group>"; };
 		B33283F71E7F71490058ED6D /* YFBChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBChatTableViewCell.h; sourceTree = "<group>"; };
 		B33283F81E7F71490058ED6D /* YFBChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBChatTableViewCell.m; sourceTree = "<group>"; };
+		B33664781EAD988000C23E56 /* YFBMessagePayPopController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessagePayPopController.h; sourceTree = "<group>"; };
+		B33664791EAD988000C23E56 /* YFBMessagePayPopController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessagePayPopController.m; sourceTree = "<group>"; };
 		B33F468F1E7A3AC00028BAE4 /* YFBDiamondExplainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondExplainController.h; sourceTree = "<group>"; };
 		B33F46901E7A3AC00028BAE4 /* YFBDiamondExplainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondExplainController.m; sourceTree = "<group>"; };
 		B33F46921E7A41F20028BAE4 /* YFBDiamondVoucherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondVoucherController.h; sourceTree = "<group>"; };
@@ -333,6 +338,8 @@
 		B37A3E6F1E793EF300643329 /* YFBMyDiamondController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMyDiamondController.m; sourceTree = "<group>"; };
 		B37A3E711E7947B800643329 /* YFBDiamondCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondCell.h; sourceTree = "<group>"; };
 		B37A3E721E7947B800643329 /* YFBDiamondCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondCell.m; sourceTree = "<group>"; };
+		B3891E291EA9E72F00004D69 /* YFBMessageTopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessageTopUpView.h; sourceTree = "<group>"; };
+		B3891E2A1EA9E72F00004D69 /* YFBMessageTopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageTopUpView.m; sourceTree = "<group>"; };
 		B3A1BD6B1E77BDD100BD6ECB /* YFBMineHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineHeaderCell.h; sourceTree = "<group>"; };
 		B3A1BD6C1E77BDD100BD6ECB /* YFBMineHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineHeaderCell.m; sourceTree = "<group>"; };
 		B3AB936E1E7BA981006EA5EB /* YFBPayUsersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPayUsersCell.h; sourceTree = "<group>"; };
@@ -343,6 +350,8 @@
 		B3B3EAE71EA74D6C00B97396 /* YFBMineGiftHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineGiftHeaderView.m; sourceTree = "<group>"; };
 		B3B3EAE91EA76DBE00B97396 /* YFBMineBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineBtn.h; sourceTree = "<group>"; };
 		B3B3EAEA1EA76DBE00B97396 /* YFBMineBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineBtn.m; sourceTree = "<group>"; };
+		B3B4059C1EADC3BC005CE3DA /* YFBPayBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBPayBtn.h; sourceTree = "<group>"; };
+		B3B4059D1EADC3BC005CE3DA /* YFBPayBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBPayBtn.m; sourceTree = "<group>"; };
 		B3C18CD71E77DBC900C7733D /* YFBMineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMineCell.h; sourceTree = "<group>"; };
 		B3C18CD81E77DBC900C7733D /* YFBMineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMineCell.m; sourceTree = "<group>"; };
 		B3C18CDA1E78025D00C7733D /* YFBVerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVerifyViewController.h; sourceTree = "<group>"; };
@@ -905,6 +914,17 @@
 			name = "开通VIP";
 			sourceTree = "<group>";
 		};
+		B3891E281EA9E33C00004D69 /* MessagePopView */ = {
+			isa = PBXGroup;
+			children = (
+				B3891E291EA9E72F00004D69 /* YFBMessageTopUpView.h */,
+				B3891E2A1EA9E72F00004D69 /* YFBMessageTopUpView.m */,
+				B3B4059C1EADC3BC005CE3DA /* YFBPayBtn.h */,
+				B3B4059D1EADC3BC005CE3DA /* YFBPayBtn.m */,
+			);
+			name = MessagePopView;
+			sourceTree = "<group>";
+		};
 		B3A1BD691E77BDB800BD6ECB /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1067,6 +1087,8 @@
 				EC2149471EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m */,
 				B3D6E9A81EA4C4F000D972CC /* YFBGiftPopViewController.h */,
 				B3D6E9A91EA4C4F000D972CC /* YFBGiftPopViewController.m */,
+				B33664781EAD988000C23E56 /* YFBMessagePayPopController.h */,
+				B33664791EAD988000C23E56 /* YFBMessagePayPopController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1087,6 +1109,7 @@
 		EC4827081E778D3C00F03454 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B3891E281EA9E33C00004D69 /* MessagePopView */,
 				EC6DAFDF1EA4568A00D93FB3 /* YFBContactCell.h */,
 				EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */,
 				B3D6E9AB1EA4DBA900D972CC /* YFBBlagGiftView.h */,
@@ -2188,6 +2211,7 @@
 				ECB8C84A1E9DCD5B00B116AC /* POSBlobInputStreamAssetDataSource.m in Sources */,
 				B32403941E78E6A900E1D8EB /* YFBAttentionDetailController.m in Sources */,
 				B324038E1E78D92100E1D8EB /* YFBAttentionController.m in Sources */,
+				B3891E2B1EA9E73000004D69 /* YFBMessageTopUpView.m in Sources */,
 				EC9A6A491E6D3F9E0018C5FB /* JKDBModel.m in Sources */,
 				EC65EE521E712A0600DA1AF9 /* YFBRegisterFirstVC.m in Sources */,
 				EC5D659B1E7A8EA200CBE08A /* YFBDetailViewController.m in Sources */,
@@ -2243,6 +2267,7 @@
 				EC7F0F7D1E6FA8C700F39FD9 /* YFBHudManager.m in Sources */,
 				B33F46911E7A3AC00028BAE4 /* YFBDiamondExplainController.m in Sources */,
 				B324039D1E791BE200E1D8EB /* YFBMyGiftDetailController.m in Sources */,
+				B3B4059E1EADC3BC005CE3DA /* YFBPayBtn.m in Sources */,
 				EC9A6A891E6D3F9E0018C5FB /* XHEmotionCollectionViewFlowLayout.m in Sources */,
 				B37A3E731E7947B800643329 /* YFBDiamondCell.m in Sources */,
 				EC6DAFE11EA4568A00D93FB3 /* YFBContactCell.m in Sources */,
@@ -2332,6 +2357,7 @@
 				EC9A6A551E6D3F9E0018C5FB /* XHConfigurationHelper.m in Sources */,
 				B37A3E701E793EF300643329 /* YFBMyDiamondController.m in Sources */,
 				EC9A6A2E1E6D3F9E0018C5FB /* UIScrollView+Refresh.m in Sources */,
+				B336647A1EAD988000C23E56 /* YFBMessagePayPopController.m in Sources */,
 				EC9A6A431E6D3F9E0018C5FB /* ActionSheetLocalePicker.m in Sources */,
 				B3B3EAEB1EA76DBE00B97396 /* YFBMineBtn.m in Sources */,
 				EC9A6A6D1E6D3F9E0018C5FB /* XHShareMenuItem.m in Sources */,
@@ -2526,7 +2552,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9e34a4c6-6c68-427d-a918-967d12a121d9";
+				PROVISIONING_PROFILE = "aef97c64-cd93-43e5-9598-3ed0fbcc2ab6";
 				PROVISIONING_PROFILE_SPECIFIER = PPSocialDevlopmentProvisoningProfile;
 			};
 			name = Debug;
