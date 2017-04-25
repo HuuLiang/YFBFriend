@@ -115,9 +115,7 @@
     [UIView animateWithDuration:0.25 animations:^{
         self.view.alpha = 1;
     }];
-    
 }
-
 
 - (void)hide {
     if (!self.view.superview) {
@@ -133,12 +131,8 @@
     }];
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
-
 
 @end

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface YFBMessagePayTitleCell : UITableViewCell
-
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *subTitle;
 @end

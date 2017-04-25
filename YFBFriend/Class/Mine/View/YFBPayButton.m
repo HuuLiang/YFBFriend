@@ -56,42 +56,6 @@
     }
     
 }
-//
-//- (UILabel *)label {
-//    if (!_label) {
-//        _label = [[UILabel alloc] init];
-//        _label.font = kFont(18);
-//        _label.textColor = kColor(@"#000000");
-//        _label.textAlignment = NSTextAlignmentCenter;
-//        _label.backgroundColor = [UIColor clearColor];
-//        [self addSubview:_label];
-//    }
-//    return _label;
-//}
-//
-//- (UILabel *)subTitleLabel {
-//    if (!_subTitleLabel) {
-//        _subTitleLabel = [[UILabel alloc] init];
-//        _subTitleLabel.font = kFont(18);
-//        _subTitleLabel.textColor = kColor(@"#666666");
-//        _subTitleLabel.textAlignment = NSTextAlignmentCenter;
-//        _subTitleLabel.backgroundColor = [UIColor clearColor];
-//        [self addSubview:_subTitleLabel];
-//    }
-//    return _subTitleLabel;
-//}
-//
-//- (UILabel *)detailLabel {
-//    if (!_detailLabel) {
-//        _detailLabel = [[UILabel alloc] init];
-//        _detailLabel.font = kFont(13);
-//        _detailLabel.textColor = kColor(@"#f63f50");
-//        _detailLabel.textAlignment = NSTextAlignmentCenter;
-//        _detailLabel.backgroundColor = [UIColor clearColor];
-//        [self addSubview:_detailLabel];
-//    }
-//    return _detailLabel;
-//}
 
 - (void)setTitle:(NSString *)title {
     _title = title;
@@ -131,6 +95,14 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
+    if (_label && !_subTitleLabel && !_detailLabel) {
+        [_label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self);
+            make.centerY.equalTo(self);
+            make.height.mas_equalTo(kWidth(40));
+        }];
+    }
     
     if (_label && _subTitleLabel && _detailLabel) {
         [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

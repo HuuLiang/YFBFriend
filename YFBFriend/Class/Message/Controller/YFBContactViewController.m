@@ -225,7 +225,7 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBContactUserModel *model = nil;
-    if (indexPath.row < self.dataSource.count) {
+    if (indexPath.row < self.response.userList.count) {
         model = self.response.userList[indexPath.row];
     }
     if (tableView.isEditing) {

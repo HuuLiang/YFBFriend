@@ -130,9 +130,34 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [self addChatMessage:chatMessage];
 }
 
+- (BOOL)ableToReply {
+    //聊天记录判断今天是否还能否继续发送免费消息
+    __block BOOL ableToReply = YES;
+    //如果是vip 择返回 yes
+    if ([YFBUtil isVip]) {
+        return ableToReply;
+    }
+    //如果不是vip 遍历缓存聊天记录 找到最近的一条记录 如果是今天的消息 则说明已经发送过了 就不能继续发送了
+    //如果不是今天的记录 说明可以继续发送
+    [self.chatMessages enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(YFBMessageModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.sendUserId isEqualToString:[YFBUser currentUser].userId] && [obj.receiveUserId isEqualToString:self.userId]) {
+            if ([[YFBUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong] isToday]) {
+                ableToReply = NO;
+            }
+            * stop = YES;
+        }
+    }];
+    return ableToReply;
+}
+
 - (void)addChatMessage:(YFBMessageModel *)chatMessage {
-    [chatMessage saveOrUpdate];
-    [self.chatMessages addObject:chatMessage];
+    if ([self ableToReply] && [YFBUtil ableToReply]) {
+        [chatMessage saveOrUpdate];
+        [self.chatMessages addObject:chatMessage];
+    } else {
+        [self showPayView];
+        return;
+    }
     
     if (self.isViewLoaded) {
         XHMessage *xhMsg;

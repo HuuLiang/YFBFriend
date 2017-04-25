@@ -31,6 +31,11 @@ typedef NS_ENUM(NSInteger,YFBRankType) {
     YFBRankTypereceived //魅力榜
 };
 
+typedef NS_ENUM(NSInteger,YFBPayType) {
+    YFBPayTypeWeiXin = 0, //微信
+    YFBPayTypeAliPay //支付宝
+};
+
 typedef NS_ENUM(NSUInteger, YFBDynamicType) {
     YFBDynamicTypeOnePhoto = 0,  //1张照片
     YFBDynamicTypeTwoPhotos,     //2张照片

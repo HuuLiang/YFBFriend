@@ -36,5 +36,5 @@
 + (NSString *)compareCurrentTime:(NSTimeInterval)compareTimeInterval;
 
 +(BOOL)isVip;
-
++ (BOOL)ableToReply;
 @end

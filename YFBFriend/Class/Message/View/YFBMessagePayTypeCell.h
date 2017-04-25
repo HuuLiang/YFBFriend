@@ -10,4 +10,6 @@
 
 @interface YFBMessagePayTypeCell : UITableViewCell
 
+@property (nonatomic,copy) QBAction payTypeAction;
+
 @end
