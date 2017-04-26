@@ -321,6 +321,6 @@
 
 - (void)popGiftView;
 
-- (void)showPayView;
+//- (void)showPayView;
 
 @end

@@ -9,11 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface YFBGiftPopCell : UICollectionViewCell
-
 @property (nonatomic) NSString *imageUrl;
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSInteger diamondCount;
-
-//- (void)setBackColor:(UIColor *)color 
-
 @end

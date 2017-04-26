@@ -9,117 +9,144 @@
 #import "YFBGiftPopView.h"
 #import "YFBGiftPopCell.h"
 #import "YFBGiftFooterView.h"
-#import "YFBMessageGiftFooterView.h"
 
 static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier";
 
 @interface YFBGiftPopView ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_collectionView;
-    UIView *_footerView;
     CGFloat _footerHeight;
     CGFloat _edg;
 }
+@property (nonatomic) YFBGiftFooterView *footerView;
+@property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic) YFBGiftPopViewType type;
 @end
 
 @implementation YFBGiftPopView
 
-- (instancetype)initWithGiftModels:(NSArray *)giftModels edg:(CGFloat)edg footerHeight:(CGFloat)height backColor:(UIColor *)backColor isMessagePop:(BOOL)isMessagePop{
+- (instancetype)initWithGiftInfos:(NSArray *)giftInfos WithGiftViewType:(YFBGiftPopViewType)type {
+    self = [super init];
     
-    if (self = [super init]) {
-        _footerHeight = height;
-        _edg = edg;
-        self.backgroundColor = kColor(@"#ffffff");
+    if (self) {
+        
+        self.type = type;
+        
+        switch (type) {
+            case YFBGiftPopViewTypeList:
+                self.backgroundColor = [kColor(@"#A1A1A1") colorWithAlphaComponent:1];
+                self.layer.borderColor = [kColor(@"#000000") colorWithAlphaComponent:0.8].CGColor;
+                self.layer.borderWidth = 0.03f;
+                break;
+            case YFBGiftPopViewTypeBlag:
+                self.backgroundColor = kColor(@"#ffffff");
+                self.layer.borderColor = [kColor(@"#F3B050") colorWithAlphaComponent:1].CGColor;
+                self.layer.borderWidth = 2.0f;
+                break;
+            default:
+                break;
+        }
+        
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        flowLayout.minimumLineSpacing = kWidth(2);
-        flowLayout.minimumInteritemSpacing = kWidth(2);
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+        CGFloat footerHeight ;
+        switch (type) {
+            case YFBGiftPopViewTypeList:
+                flowLayout.minimumInteritemSpacing = 0.25;
+                flowLayout.minimumLineSpacing = 0.25;
+                footerHeight = kWidth(88);
+                break;
+                
+            case YFBGiftPopViewTypeBlag:
+                flowLayout.minimumInteritemSpacing = 1;
+                flowLayout.minimumLineSpacing = 1;
+                footerHeight = kWidth(40);
+                break;
+                
+            default:
+                break;
+        }
+        
+        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-        self.layer.borderColor = kColor(@"#f3b050").CGColor;
-        self.layer.borderWidth = edg >0 ? kWidth(4) : 0;//内边距
         _collectionView.pagingEnabled = YES;
-        //        _collectionView.contentInset = insets;
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.bounces = NO;
-        _collectionView.backgroundColor = self.backgroundColor;
-        
+        _collectionView.backgroundColor = [UIColor clearColor];
         [_collectionView registerClass:[YFBGiftPopCell class] forCellWithReuseIdentifier:YFBGiftPopCellIdentifier];
         [self addSubview:_collectionView];
-        {
-            [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.top.mas_equalTo(self).mas_offset(_edg);
-                make.right.mas_equalTo(self).mas_offset(-_edg);
-                make.bottom.mas_equalTo(self).mas_offset(-(edg + height + kWidth(2)));
-            }];
-        }
         
-        
-        if (isMessagePop) {
-            YFBMessageGiftFooterView *footerView = [[YFBMessageGiftFooterView alloc] init];
-            footerView.pageNumbers = 2;//giftModels.count % 8 == 0 ? giftModels.count/8 : giftModels.count/8 +1;
-            footerView.diamondCount = 2300;
-            footerView.sendAction = ^(id obj) {
-                QBLog(@"点击赠送")
-            };
-            footerView.topUpAction = ^(id obj) {
-                QBLog(@"点击充值")
-            };
-            _footerView = footerView;
-        }else {
-            YFBGiftFooterView *footerView = [[YFBGiftFooterView alloc] init];
-            footerView.pageNumbers = 2;//giftModels.count % 8 == 0 ? giftModels.count/8 : giftModels.count/8 +1;
-            footerView.diamondCount = 2300;
-            _footerView = footerView;
-        }
-        _footerView.backgroundColor = backColor;
+        _footerView = [[YFBGiftFooterView alloc] initWithGiftType:type];
+        _footerView.pageNumbers = 2;
+        _footerView.diamondCount = 2300;
+        @weakify(self);
+        _footerView.sendAction = ^{
+            @strongify(self);
+            if (self.sendAction) {
+                self.sendAction();
+            }
+            QBLog(@"点击赠送")
+        };
+        _footerView.payAction = ^{
+            @strongify(self);
+            if (self.payAction) {
+                self.payAction();
+            }
+            QBLog(@"点击充值")
+        };
         [self addSubview:_footerView];
         {
+            [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self).offset(3);
+                make.top.equalTo(self).offset(3);
+                make.right.equalTo(self.mas_right).offset(-3);
+                make.bottom.equalTo(self.mas_bottom).offset(-footerHeight-3);
+                make.edges.equalTo(self).mas_equalTo(UIEdgeInsetsMake(1,  1, footerHeight + 1, 1));
+            }];
+            
             [_footerView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.right.bottom.mas_equalTo(self);
-                make.top.mas_equalTo(_collectionView.mas_bottom).mas_offset(kWidth(2));
+                make.left.bottom.right.equalTo(self);
+                make.top.equalTo(_collectionView.mas_bottom).offset(1);
             }];
         }
-        
     }
     return self;
 }
 
 
 #pragma mark UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
     return 16;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YFBGiftPopCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:YFBGiftPopCellIdentifier forIndexPath:indexPath];
+    if (_type == YFBGiftPopViewTypeList) {
+        cell.backgroundColor = [kColor(@"#000000") colorWithAlphaComponent:0.8];
+    } else if (_type == YFBGiftPopViewTypeBlag) {
+        cell.backgroundColor = kColor(@"#EF5F73");
+    }
     cell.title = @"棒棒糖";
     cell.diamondCount = 1800;
-    cell.backgroundColor = _footerView.backgroundColor;//kColor(@"#ef5f73");
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = (long)(CGRectGetWidth(self.bounds)- _edg*2 - 3*kWidth(2)) /4.;
-    QBLog(@"%f",width)
-    return CGSizeMake(width, width);
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)collectionViewLayout;
+    const CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
+    const CGFloat fullHeight = CGRectGetHeight(collectionView.bounds);
+    CGFloat itemWidth = ((long)fullWidth - /*flowLayout.sectionInset.left - flowLayout.sectionInset.right -*/ flowLayout.minimumInteritemSpacing * 3) / 4;
+    CGFloat itemHeight = ((long)fullHeight - /*flowLayout.sectionInset.bottom - flowLayout.sectionInset.top -*/ flowLayout.minimumLineSpacing)/2;
+    return CGSizeMake((long)itemWidth, (long)itemHeight);
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if ( scrollView.contentOffset.x > 0) {
-        scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x +1, 0);
+    QBLog(@"%f %f",scrollView.contentOffset.x,CGRectGetWidth(self.bounds));
+    if (_footerView) {
+        _footerView.currentPage = scrollView.contentOffset.x / (CGRectGetWidth(self.bounds));
     }
-    if ([_footerView isKindOfClass:[YFBMessageGiftFooterView class]]) {
-        YFBMessageGiftFooterView *footerView = (YFBMessageGiftFooterView *)_footerView;
-        footerView.currentPage = scrollView.contentOffset.x / (CGRectGetWidth(self.bounds) - _edg*2);
-    }else {
-        YFBGiftFooterView *footerView = (YFBGiftFooterView *)_footerView;
-        footerView.currentPage = scrollView.contentOffset.x / (CGRectGetWidth(self.bounds) - _edg*2);
-    }
-    
 }
-
 
 @end

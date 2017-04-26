@@ -10,6 +10,10 @@
 
 @interface YFBMessagePayPopController : YFBBaseViewController
 
-- (void)showMessageTopUpPopViewWithCurrentVC:(UIViewController *)currentVC;
++ (void)showMessageTopUpPopViewWithType:(YFBMessagePopViewType)type onCurrentVC:(UIViewController *)currentVC;
+
+- (void)showMessageTopUpPopViewWithType:(YFBMessagePopViewType)type onCurrentVC:(UIViewController *)currentVC;
+
+- (void)hide;
 
 @end

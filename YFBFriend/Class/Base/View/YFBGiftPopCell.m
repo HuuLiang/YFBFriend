@@ -40,13 +40,12 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = kFont(9);
         _titleLabel.textColor = kColor(@"#ffffff");
-        //        _titleLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(self).mas_offset(kWidth(9));
                 make.bottom.mas_equalTo(self);
-                make.right.mas_lessThanOrEqualTo(_diamondBtn.mas_left).mas_offset(kWidth(6));//mas_equalTo(_diamondBtn.mas_left);
+                make.right.mas_lessThanOrEqualTo(_diamondBtn.mas_left).mas_offset(kWidth(6));
             }];
         }
         _imageView = [[UIImageView alloc] init];

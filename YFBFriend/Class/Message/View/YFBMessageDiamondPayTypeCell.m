@@ -9,7 +9,9 @@
 #import "YFBMessageDiamondPayTypeCell.h"
 
 @interface YFBMessageDiamondPayTypeCell ()
-@property (nonatomic) UIButton *payButton;
+@property (nonatomic) UIImageView *imageView;
+@property (nonatomic) UILabel *label;
+@property (nonatomic) UIImageView *selectedImageView;
 @end
 
 @implementation YFBMessageDiamondPayTypeCell
@@ -25,26 +27,50 @@
         self.contentView.layer.borderWidth  = 1;
         self.contentView.layer.borderColor  = kColor(@"#C8C9CA").CGColor;
         
-        self.payButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _payButton.titleLabel.font = kFont(14);
-        [self.contentView addSubview:_payButton];
+        self.imageView = [[UIImageView alloc] init];
+        [self.contentView addSubview:_imageView];
+        
+        self.label = [[UILabel alloc] init];
+        _label.textColor = kColor(@"#333333");
+        _label.font = kFont(14);
+        [self.contentView addSubview:_label];
+        
+        self.selectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_pay_normal_icon"]];
+        [self.contentView addSubview:_selectedImageView];
         
         {
-            [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self.contentView);
+            [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.contentView).offset(kWidth(60));
+                make.centerY.equalTo(self.contentView);
+                make.size.mas_equalTo(CGSizeMake(kWidth(52), kWidth(52)));
+            }];
+            
+            [_label mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView);
+                make.left.equalTo(_imageView.mas_right).offset(kWidth(6));
+                make.height.mas_equalTo(kWidth(40));
+            }];
+            
+            [_selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.contentView);
+                make.right.equalTo(self.contentView.mas_right);
+                make.size.mas_equalTo(CGSizeMake(kWidth(40), kWidth(40)));
             }];
         }
+        
     }
     return self;
 }
 
 - (void)setPayType:(YFBPayType)payType {
     if (payType == YFBPayTypeWeiXin) {
-        [_payButton setImage:[UIImage imageNamed:@"mine_wechat_pay_icon"] forState:UIControlStateNormal];
-        [_payButton setTitle:@"微信支付" forState:UIControlStateNormal];
+        _imageView.image = [UIImage imageNamed:@"mine_wechat_pay_icon"];
+        _label.text = @"微信支付";
+        _label.textColor = kColor(@"#F63F50");
     } else if (payType == YFBPayTypeAliPay) {
-        [_payButton setImage:[UIImage imageNamed:@"mine_alipay_icon"] forState:UIControlStateNormal];
-        [_payButton setTitle:@"支付宝" forState:UIControlStateNormal];
+        _imageView.image = [UIImage imageNamed:@"mine_alipay_icon"];
+        _label.text = @"支付宝";
+        _label.textColor = kColor(@"#333333");
     }
 }
 
@@ -52,13 +78,13 @@
     if (selected) {
         self.contentView.backgroundColor = kColor(@"#FFFDE4");
         self.contentView.layer.borderColor  = kColor(@"#F64152").CGColor;
-        [_payButton setTitleColor:kColor(@"#F63F50") forState:UIControlStateNormal];
-        
+        _label.textColor = kColor(@"#F63F50");
+        _selectedImageView.image = [UIImage imageNamed:@"mine_pay_selcte_icon"];
     } else {
         self.contentView.backgroundColor = kColor(@"#E6E6E6");
         self.contentView.layer.borderColor  = kColor(@"#C8C9CA").CGColor;
-        [_payButton setTitleColor:kColor(@"#333333") forState:UIControlStateNormal];
-        
+        _label.textColor = kColor(@"#333333");
+        _selectedImageView.image = [UIImage imageNamed:@"mine_pay_normal_icon"];
     }
 }
 

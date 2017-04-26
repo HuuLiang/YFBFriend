@@ -36,35 +36,48 @@ typedef NS_ENUM(NSInteger,YFBPayType) {
     YFBPayTypeAliPay //支付宝
 };
 
-typedef NS_ENUM(NSUInteger, YFBDynamicType) {
-    YFBDynamicTypeOnePhoto = 0,  //1张照片
-    YFBDynamicTypeTwoPhotos,     //2张照片
-    YFBDynamicTypeThreePhotos,   //3张照片
-    YFBDynamicTypeVideo,         //视频
-    YFBDynamicTypeCount
+typedef NS_ENUM(NSInteger,YFBGiftPopViewType) {
+    YFBGiftPopViewTypeBlag = 0, //索要礼物
+    YFBGiftPopViewTypeList      //赠送礼物
 };
 
-typedef NS_ENUM(NSUInteger, YFBMineUsersType) {
-    YFBMineUsersTypeFollow,//关注
-    YFBMineUsersTypeFans, //粉丝
-    YFBMineUsersTypeVisitor, //访客
-    YFBMineUsersTypeHeader,//头像
-    YFBMineUsersTypeCount
+typedef NS_ENUM(NSInteger, YFBMessagePopViewType) {
+    YFBMessagePopViewTypeVip, // 开通vip界面
+    YFBMessagePopViewTypeDiamond //充值钻石界面
 };
 
-typedef NS_ENUM(NSUInteger, YFBUserCreateMessageType) {
-    YFBUserCreateMessageTypeGreet,//打招呼
-    YFBUserCreateMessageTypeFollow, //关注
-    YFBUserCreateMessageTypeChat, //聊天
-    YFBUserCreateMessageTypeCount
-};
-//会员等级
-typedef NS_ENUM(NSUInteger,YFBVipType) {
-    YFBVipTypeYear = 0,
-    YFBVipTypeQuarter = 1,
-    YFBVipTypeMonth = 2,
-    YFBVipTypePacket =3 //发红包
-};
+typedef void (^YFBAction)(void);
+
+//
+//typedef NS_ENUM(NSUInteger, YFBDynamicType) {
+//    YFBDynamicTypeOnePhoto = 0,  //1张照片
+//    YFBDynamicTypeTwoPhotos,     //2张照片
+//    YFBDynamicTypeThreePhotos,   //3张照片
+//    YFBDynamicTypeVideo,         //视频
+//    YFBDynamicTypeCount
+//};
+//
+//typedef NS_ENUM(NSUInteger, YFBMineUsersType) {
+//    YFBMineUsersTypeFollow,//关注
+//    YFBMineUsersTypeFans, //粉丝
+//    YFBMineUsersTypeVisitor, //访客
+//    YFBMineUsersTypeHeader,//头像
+//    YFBMineUsersTypeCount
+//};
+//
+//typedef NS_ENUM(NSUInteger, YFBUserCreateMessageType) {
+//    YFBUserCreateMessageTypeGreet,//打招呼
+//    YFBUserCreateMessageTypeFollow, //关注
+//    YFBUserCreateMessageTypeChat, //聊天
+//    YFBUserCreateMessageTypeCount
+//};
+////会员等级
+//typedef NS_ENUM(NSUInteger,YFBVipType) {
+//    YFBVipTypeYear = 0,
+//    YFBVipTypeQuarter = 1,
+//    YFBVipTypeMonth = 2,
+//    YFBVipTypePacket =3 //发红包
+//};
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 

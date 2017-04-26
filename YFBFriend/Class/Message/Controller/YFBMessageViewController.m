@@ -155,7 +155,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         [chatMessage saveOrUpdate];
         [self.chatMessages addObject:chatMessage];
     } else {
-        [self showPayView];
+        [self showPayVipView];
         return;
     }
     
@@ -253,10 +253,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     if (self.messageInputView.inputTextView.isFirstResponder) {
         [self.messageInputView.inputTextView resignFirstResponder];
     }
-    [YFBGiftPopViewController showGiftViewInCurrentViewController:self isMessagePop:YES];
+//    [YFBGiftPopViewController showGiftViewWithType:YFBGiftPopViewTypeList InCurrentViewController:self];
+    [YFBGiftPopViewController showGiftViewWithType:YFBGiftPopViewTypeBlag InCurrentViewController:self];
 }
 
-- (void)showPayView {
+- (void)showPayVipView {
     if (self.messageInputView.inputTextView.isFirstResponder) {
         [self.messageInputView.inputTextView resignFirstResponder];
     }
@@ -278,7 +279,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     @weakify(self);
     [button bk_addEventHandler:^(id sender) {
         @strongify(self);
-        [[[YFBMessagePayPopController alloc] init] showMessageTopUpPopViewWithCurrentVC:self];
+        [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
     } forControlEvents:UIControlEventTouchUpInside];
     
     [button mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -27,7 +27,7 @@
 
 - (void)popAskGiftView {
     UIViewController *currentVC = [UIApplication sharedApplication].keyWindow.rootViewController;
-    [YFBGiftPopViewController showGiftViewInCurrentViewController:currentVC isMessagePop:NO];
+    [YFBGiftPopViewController showGiftViewWithType:YFBGiftPopViewTypeBlag InCurrentViewController:currentVC];
 }
 
 

@@ -29,7 +29,7 @@
         self.contentView.layer.borderWidth = 1;
         self.contentView.layer.borderColor = kColor(@"#C8C9CA").CGColor;
         
-        self.diamondImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_pay_normal_icon"]];
+        self.diamondImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_diamond_icon"]];
         [self.contentView addSubview:_diamondImageView];
         
         self.diamondLabel = [[UILabel alloc] init];
@@ -42,7 +42,7 @@
         _priceLabel.font = kFont(14);
         [self.contentView addSubview:_priceLabel];
         
-        self.selectedImageView = [[UIImageView alloc] init];
+        self.selectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_pay_normal_icon"]];
         [self.contentView addSubview:_selectedImageView];
         
         {
@@ -65,7 +65,8 @@
             }];
             
             [_selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.top.equalTo(self.contentView);
+                make.top.equalTo(self.contentView);
+                make.right.equalTo(self.contentView.mas_right);
                 make.size.mas_equalTo(CGSizeMake(kWidth(40), kWidth(40)));
             }];
         }
@@ -89,7 +90,7 @@
     } else {
         _selectedImageView.image = [UIImage imageNamed:@"mine_pay_normal_icon"];
         self.contentView.backgroundColor = kColor(@"#E6E6E6");
-        self.contentView.layer.borderColor = kColor(@"#F64152").CGColor;
+        self.contentView.layer.borderColor = kColor(@"#C8C9CA").CGColor;
     }
 }
 

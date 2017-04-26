@@ -10,8 +10,13 @@
 
 @interface YFBGiftFooterView : UIView
 
+- (instancetype)initWithGiftType:(YFBGiftPopViewType)type;
+
 @property (nonatomic) NSInteger currentPage;
 @property (nonatomic) NSInteger pageNumbers;
 @property (nonatomic) NSInteger diamondCount;
+
+@property (nonatomic,copy) YFBAction payAction;
+@property (nonatomic,copy) YFBAction sendAction;
 
 @end

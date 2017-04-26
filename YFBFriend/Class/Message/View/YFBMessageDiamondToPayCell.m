@@ -20,7 +20,7 @@
     if (self) {
         
         self.backgroundColor = [UIColor clearColor];
-        self.contentView.backgroundColor = [UIColor clearColor];
+        self.contentView.backgroundColor = kColor(@"#F94882");
         
         self.contentView.layer.cornerRadius = 3;
         self.contentView.layer.masksToBounds = YES;
@@ -28,7 +28,7 @@
         self.payButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_payButton setTitleColor:kColor(@"#ffffff") forState:UIControlStateNormal];
         [_payButton setTitle:@"立即充值" forState:UIControlStateNormal];
-        _payButton.backgroundColor = kColor(@"");
+        _payButton.backgroundColor = kColor(@"#F94882");
         _payButton.titleLabel.font = kFont(15);
         [self.contentView addSubview:_payButton];
         

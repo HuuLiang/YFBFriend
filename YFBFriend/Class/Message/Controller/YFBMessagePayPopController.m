@@ -44,16 +44,31 @@ static NSString *const kYFBFriendMessagePopViewDiamondToPayReusableIdentifier = 
 @interface YFBMessagePayPopController () <UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic) NSIndexPath *categoryIndexPath;
+@property (nonatomic) NSIndexPath *payTypeIndexPath;
+@property (nonatomic) YFBMessagePopViewType popViewType;
 @end
 
 @implementation YFBMessagePayPopController
+QBDefineLazyPropertyInitialization(NSIndexPath, categoryIndexPath)
+QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.35];
     
-//    [self configVipPopView];
-    [self configDiamondPopView];
+    
+    switch (self.popViewType) {
+        case YFBMessagePopViewTypeVip:
+            [self configVipPopView];
+            break;
+            
+        case YFBMessagePopViewTypeDiamond:
+            [self configDiamondPopView];
+            
+        default:
+            break;
+    }
 }
 
 - (void)configVipPopView {
@@ -88,14 +103,14 @@ static NSString *const kYFBFriendMessagePopViewDiamondToPayReusableIdentifier = 
 
 - (void)configDiamondPopView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//    layout.minimumLineSpacing = kWidth(24);
-//    layout.minimumInteritemSpacing = kWidth(22);
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [_collectionView registerClass:[YFBMessageDiamondCategoryCell class] forCellWithReuseIdentifier:kYFBFriendMessagePopViewDiamondCategoryReusableIdentifier];
     [_collectionView registerClass:[YFBMessageDiamondPayTypeCell class] forCellWithReuseIdentifier:kYFBFriendMessagePopViewDiamondPayTypeReusableIdentifier];
     [_collectionView registerClass:[YFBMessageDiamondToPayCell class] forCellWithReuseIdentifier:kYFBFriendMessagePopViewDiamondToPayReusableIdentifier];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
+    _collectionView.allowsMultipleSelection = YES;
+    _collectionView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     [self.view addSubview:_collectionView];
     
     {
@@ -104,13 +119,36 @@ static NSString *const kYFBFriendMessagePopViewDiamondToPayReusableIdentifier = 
             make.height.mas_equalTo(kWidth(590));
         }];
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)showMessageTopUpPopViewWithCurrentVC:(UIViewController *)currentVC {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (_collectionView) {
+        if (!_categoryIndexPath) {
+            self.categoryIndexPath = [NSIndexPath indexPathForItem:0 inSection:YFBPopViewDiamondSectionCategory];
+        }
+        [_collectionView selectItemAtIndexPath:self.categoryIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+        
+        if (!_payTypeIndexPath) {
+            self.payTypeIndexPath = [NSIndexPath indexPathForItem:0 inSection:YFBPopViewDiamondSectionType];
+        }
+        [_collectionView selectItemAtIndexPath:self.payTypeIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+    }
+}
+
++ (void)showMessageTopUpPopViewWithType:(YFBMessagePopViewType)type onCurrentVC:(UIViewController *)currentVC {
+    YFBMessagePayPopController *payPopView = [[YFBMessagePayPopController alloc] init];
+    [payPopView showMessageTopUpPopViewWithType:type onCurrentVC:currentVC];
+}
+
+- (void)showMessageTopUpPopViewWithType:(YFBMessagePopViewType)type onCurrentVC:(UIViewController *)currentVC {
+    self.popViewType = type;
     
     BOOL anySpreadBanner = [currentVC.childViewControllers bk_any:^BOOL(id obj) {
         if ([obj isKindOfClass:[self class]]) {
@@ -138,6 +176,13 @@ static NSString *const kYFBFriendMessagePopViewDiamondToPayReusableIdentifier = 
     }];
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self hide];
+}
+
+- (void)dealloc {
+    
+}
 
 - (void)hide {
     if (!self.view.superview) {
@@ -285,7 +330,11 @@ static NSString *const kYFBFriendMessagePopViewDiamondToPayReusableIdentifier = 
         return cell;
     } else if (indexPath.section == YFBPopViewDiamondSectionPay) {
         YFBMessageDiamondToPayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kYFBFriendMessagePopViewDiamondToPayReusableIdentifier forIndexPath:indexPath];
-        
+        @weakify(self);
+        cell.payAction = ^(id obj) {
+            @strongify(self);
+            
+        };
         return cell;
     }
     return nil;
@@ -344,24 +393,28 @@ static NSString *const kYFBFriendMessagePopViewDiamondToPayReusableIdentifier = 
     return UIEdgeInsetsZero;
 }
 
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (indexPath.section == YFBPopViewDiamondSectionCategory) {
-        
+        if (![self.categoryIndexPath isEqual:indexPath]) {
+            [_collectionView deselectItemAtIndexPath:self.categoryIndexPath animated:YES];
+            self.categoryIndexPath = indexPath;
+        }
     } else if (indexPath.section == YFBPopViewDiamondSectionType) {
-        
+        if (![self.payTypeIndexPath isEqual:indexPath]) {
+            [_collectionView deselectItemAtIndexPath:self.payTypeIndexPath animated:YES];
+            self.payTypeIndexPath = indexPath;
+        }
     } else if (indexPath.section == YFBPopViewDiamondSectionPay) {
-        
+
     }
+
+    return YES;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    if (indexPath.section == YFBPopViewDiamondSectionCategory) {
-        
-    } else if (indexPath.section == YFBPopViewDiamondSectionType) {
-        
-    } else if (indexPath.section == YFBPopViewDiamondSectionPay) {
-        
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == YFBPopViewDiamondSectionPay) {
+        //支付
     }
 }
 

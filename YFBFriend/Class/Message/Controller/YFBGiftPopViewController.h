@@ -8,8 +8,13 @@
 
 #import "YFBBaseViewController.h"
 
+
 @interface YFBGiftPopViewController : YFBBaseViewController
 
-+ (void)showGiftViewInCurrentViewController:(UIViewController *)currentViewController isMessagePop:(BOOL)isMessagePop;
++ (void)showGiftViewWithType:(YFBGiftPopViewType)type InCurrentViewController:(UIViewController *)currentViewController;
+
+- (void)showGiftViewWithType:(YFBGiftPopViewType)type InCurrentViewController:(UIViewController *)currentViewController;
+
+- (void)hide;
 
 @end
