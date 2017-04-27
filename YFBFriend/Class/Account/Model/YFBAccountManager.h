@@ -25,4 +25,5 @@ typedef void(^RegisterResult)(BOOL success);
 - (void)loginWithAccountAndPassword;
 - (void)sendAuthRespCode:(SendAuthResp *)resp;
 - (void)registerUserWithUserInfo:(YFBUser *)user handler:(void(^)(BOOL success))handler;
+- (void)updateUserInfoWithType:(NSString *)type content:(id)content handler:(void (^)(BOOL success))handler;
 @end

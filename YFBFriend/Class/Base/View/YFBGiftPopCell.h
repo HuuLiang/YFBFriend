@@ -12,4 +12,5 @@
 @property (nonatomic) NSString *imageUrl;
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSInteger diamondCount;
+@property (nonatomic) UIColor *defaultColor;
 @end

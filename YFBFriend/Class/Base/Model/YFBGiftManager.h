@@ -11,7 +11,8 @@
 @interface YFBGiftInfo : NSObject
 @property (nonatomic) NSInteger diamondCount;
 @property (nonatomic) NSInteger giftId;
-@property (nonatomic) NSString * giftUrl;
+@property (nonatomic) NSString *name;
+@property (nonatomic) NSString *giftUrl;
 @end
 
 @interface YFBGiftResponse : QBURLResponse

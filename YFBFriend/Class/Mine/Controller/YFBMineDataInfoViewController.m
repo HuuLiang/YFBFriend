@@ -12,6 +12,7 @@
 #import "YFBUserInfoEditView.h"
 #import "YFBPhotoManager.h"
 #import "YFBImageUploadManager.h"
+#import "YFBAccountManager.h"
 
 typedef NS_ENUM(NSUInteger,YFBUserInfoSection) {
     YFBUserInfoSectionIntro = 0,
@@ -50,6 +51,24 @@ typedef NS_ENUM(NSUInteger,YFBUserInfoDetailSection) {
 };
 
 static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInfoCellReusableIdentifier";
+
+static NSString *const kYFBUserInfoUpNickNameKeyName            = @"UP_NICHNAME";
+static NSString *const kYFBUserInfoUpAgeKeyName                 = @"UP_AGE";
+static NSString *const kYFBUserInfoUpProvcityKeyName            = @"UP_PROVCITY";
+static NSString *const kYFBUserInfoUpHeightKeyName              = @"UP_HEIGHT";
+static NSString *const kYFBUserInfoUpMonthIncomeKeyName         = @"UP_MONTH_INCOME";
+static NSString *const kYFBUserInfoUpMarriageStatusKeyName      = @"UP_MARRIAGE_STATUS";
+static NSString *const kYFBUserInfoUpQQKeyName                  = @"UP_QQ";
+static NSString *const kYFBUserInfoUpWeiXinKeyName              = @"UP_WEIXIN";
+static NSString *const kYFBUserInfoUpMobilePhoneKeyName         = @"UP_MOBILE_PHONE";
+static NSString *const kYFBUserInfoUpEducationKeyName           = @"UP_EDUCATION";
+static NSString *const kYFBUserInfoUpVocationKeyName            = @"UP_VOCATION";
+static NSString *const kYFBUserInfoUpBirthdayKeyName            = @"UP_BIRTHDAY";
+static NSString *const kYFBUserInfoUpWeightKeyName              = @"UP_WEIGHT";
+static NSString *const kYFBUserInfoUpConstellationKeyName       = @"UP_CONSTELLATION";
+static NSString *const kYFBUserInfoUpSignatureKeyName           = @"UP_PERSONALIZED_SIGNATURE";
+static NSString *const kYFBUserInfoUpPasswordKeyName            = @"UP_PASSWORD";
+static NSString *const kYFBUserInfoUpProtraitKeyName            = @"UP_PORTRAIT";
 
 @interface YFBMineDataInfoViewController () <UITableViewDelegate,UITableViewDataSource,ActionSheetMultipleStringPickerDelegate>
 {
@@ -288,14 +307,16 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
     if (indexPath.section == YFBUserInfoSectionIntro) {
         
     } else if (indexPath.section == YFBUserInfoSectionSignature) {
-        [self showEditingViewWithTitle:@"个性签名" handler:^(NSString *editingInfo) {
+        [self showEditingViewWithTitle:@"个性签名" handler:^(NSString *editingInfo,YFBUserInfoOpenType openType) {
             [YFBUser currentUser].signature = editingInfo;
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+            [self updateInfoWithType:kYFBUserInfoUpSignatureKeyName content:editingInfo];
         }];
     } else if (indexPath.section == YFBUserInfoSectionBaseInfo) {
         if (indexPath.row == YFBUserInfoIntroSectionNickName) {
-            [self showEditingViewWithTitle:@"昵称" handler:^(NSString *editingInfo) {
+            [self showEditingViewWithTitle:@"昵称" handler:^(NSString *editingInfo,YFBUserInfoOpenType openType) {
                 [YFBUser currentUser].nickName = editingInfo;
+                [self updateInfoWithType:kYFBUserInfoUpNickNameKeyName content:editingInfo];
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionSex) {
 //            [self showActionSheetPickerWithTitle:@"性别" rows:[YFBUser allUserSex] defaultSelection:0 atIndexPath:indexPath block:^(NSString * selectedValue) {
@@ -306,8 +327,9 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
 //                }
 //            }];
         } else if (indexPath.row == YFBUserInfoIntroSectionAge) {
-            [self showActionSheetPickerWithTitle:@"年龄" rows:[YFBUser allUserAge] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
-                [YFBUser currentUser].age = selectedValue;
+            [self showActionSheetPickerWithTitle:@"年龄:岁" rows:[YFBUser allUserAge] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
+                [YFBUser currentUser].age = [selectedValue integerValue];
+                [self updateInfoWithType:kYFBUserInfoUpAgeKeyName content:@([YFBUser currentUser].age)];
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionLiveCity) {
 //            ActionSheetMultipleStringPicker *picker = [[ActionSheetMultipleStringPicker alloc] initWithTitle:@"家乡"
@@ -325,41 +347,49 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
         } else if (indexPath.row == YFBUserInfoIntroSectionHeight) {
             [self showActionSheetPickerWithTitle:@"身高" rows:[YFBUser allUserHeight] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].height = [selectedValue integerValue];
+                [self updateInfoWithType:kYFBUserInfoUpHeightKeyName content:@([YFBUser currentUser].height)];
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionIncome) {
             [self showActionSheetPickerWithTitle:@"收入" rows:[YFBUser allUserIncome] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].income = selectedValue;
+                [self updateInfoWithType:kYFBUserInfoUpMonthIncomeKeyName content:selectedValue];
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionMarrying) {
             [self showActionSheetPickerWithTitle:@"婚姻状况" rows:[YFBUser allUserMarr] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].marriageStatus = [selectedValue isEqualToString:@"未婚"] ? YFBUserfiance : YFBUserMarried;
+                [self updateInfoWithType:kYFBUserInfoUpMarriageStatusKeyName content:@([YFBUser currentUser].marriageStatus)];
             }];
         }
     } else if (indexPath.section == YFBUserInfoSectionCantact) {
         if (indexPath.row == YFBUserInfoContactSectionQQ)  {
-            [self showEditingViewWithTitle:@"QQ" handler:^(NSString *editingInfo) {
+            [self showEditingViewWithTitle:@"QQ" handler:^(NSString *editingInfo,YFBUserInfoOpenType openType) {
                 [YFBUser currentUser].QQNumber = editingInfo;
                 [self configRegisterDetailCellWithSelectedValue:editingInfo indexPath:indexPath];
+                [self updateInfoWithType:kYFBUserInfoUpQQKeyName content:@{@"identity":editingInfo,@"openness":@(openType)}];
             }];
         } else if (indexPath.row == YFBUserInfoContactSectionWX) {
-            [self showEditingViewWithTitle:@"微信" handler:^(NSString *editingInfo) {
+            [self showEditingViewWithTitle:@"微信" handler:^(NSString *editingInfo,YFBUserInfoOpenType openType) {
                 [YFBUser currentUser].WXNumber = editingInfo;
                 [self configRegisterDetailCellWithSelectedValue:editingInfo indexPath:indexPath];
+                [self updateInfoWithType:kYFBUserInfoUpWeiXinKeyName content:@{@"identity":editingInfo,@"openness":@(openType)}];
             }];
         } else if (indexPath.row == YFBUserInfoContactSectionPhone) {
-            [self showEditingViewWithTitle:@"手机号" handler:^(NSString *editingInfo) {
+            [self showEditingViewWithTitle:@"手机号" handler:^(NSString *editingInfo,YFBUserInfoOpenType openType) {
                 [YFBUser currentUser].phoneNumber = editingInfo;
                 [self configRegisterDetailCellWithSelectedValue:editingInfo indexPath:indexPath];
+                [self updateInfoWithType:kYFBUserInfoUpMobilePhoneKeyName content:@{@"identity":editingInfo,@"openness":@(openType)}];
             }];
         }
     } else if (indexPath.section == YFBUserInfoSectionDetail) {
         if (indexPath.row == YFBUserInfoDetailSectionEdu) {
             [self showActionSheetPickerWithTitle:@"学历" rows:[YFBUser allUserEdu] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].education = selectedValue;
+                [self updateInfoWithType:kYFBUserInfoUpEducationKeyName content:selectedValue];
             }];
         } else if (indexPath.row == YFBUserInfoDetailSectionJob) {
             [self showActionSheetPickerWithTitle:@"职业" rows:[YFBUser allUserJob] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].job = selectedValue;
+                [self updateInfoWithType:kYFBUserInfoUpVocationKeyName content:selectedValue];
             }];
         } else if (indexPath.row == YFBUserInfoDetailSectionBirth) {
             [ActionSheetDatePicker showPickerWithTitle:@"生日选择"
@@ -374,16 +404,19 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
                                                      NSString *newDateStr = [YFBUtil timeStringFromDate:newDate WithDateFormat:kDateFormatChina];
                                                      [YFBUser currentUser].birthday = newDateStr;
                                                      [self configRegisterDetailCellWithSelectedValue:newDateStr indexPath:indexPath];
+                                                     [self updateInfoWithType:kYFBUserInfoUpBirthdayKeyName content:[YFBUtil timeStringFromDate:newDate WithDateFormat:kDateFormatShort]];
                                                  }
                                              } cancelBlock:nil origin:self.view];
 
         } else if (indexPath.row == YFBUserInfoDetailSectionWeight) {
             [self showActionSheetPickerWithTitle:@"体重" rows:[YFBUser allUserWeight] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].weight = selectedValue;
+                [self updateInfoWithType:kYFBUserInfoUpWeightKeyName content:selectedValue];
             }];
         } else if (indexPath.row == YFBUserInfoDetailSectionStar) {
             [self showActionSheetPickerWithTitle:@"星座" rows:[YFBUser allUserStars] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].star = selectedValue;
+                [self updateInfoWithType:kYFBUserInfoUpConstellationKeyName content:selectedValue];
             }];
         }
     }
@@ -411,6 +444,14 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:YFBUserInfoSectionIntro] withRowAnimation:UITableViewRowAnimationFade];
 }
 
+- (void)updateInfoWithType:(NSString *)type content:(id)content {
+    [[YFBAccountManager manager] updateUserInfoWithType:type content:content handler:^(BOOL success) {
+        if (success) {
+            [[YFBHudManager manager] showHudWithText:@"修改成功"];
+        }
+    }];
+}
+
 #pragma mark -- ActionSheetMultipleStringPickerDelegate
 
 - (NSArray *)refreshDataSource:(NSArray *)dataSource atSelectRow:(NSInteger)row inComponent:(NSInteger)component {
@@ -422,12 +463,12 @@ static NSString *const kYFBMineDataInfoCellReusableIdentifier = @"YFBMineDataInf
 
 #pragma mark - UIEditingView
 
-- (void)showEditingViewWithTitle:(NSString *)string handler:(void(^)(NSString *editingInfo))handler {
+- (void)showEditingViewWithTitle:(NSString *)string handler:(void(^)(NSString *editingInfo,YFBUserInfoOpenType openType))handler {
     [self.view beginLoading];
     @weakify(self);
-    _editingView = [[YFBUserInfoEditView alloc] initWithTitle:string hander:^(NSString *textFieldContent) {
+    _editingView = [[YFBUserInfoEditView alloc] initWithTitle:string hander:^(NSString *textFieldContent,YFBUserInfoOpenType openType) {
         @strongify(self);
-        handler(textFieldContent);
+        handler(textFieldContent,openType);
     }];
     _editingView.cancel = ^{
         @strongify(self);

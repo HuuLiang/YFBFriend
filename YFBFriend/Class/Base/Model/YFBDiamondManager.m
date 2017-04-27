@@ -1,26 +1,26 @@
 //
-//  YFBDiamonManager.m
+//  YFBDiamondManager.m
 //  YFBFriend
 //
 //  Created by Liang on 2017/4/19.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import "YFBDiamonManager.h"
+#import "YFBDiamondManager.h"
 
-@implementation YFBDiamonInfo
+@implementation YFBDiamondInfo
 
 @end
 
 
-@implementation YFBDiamonResponse
+@implementation YFBDiamondResponse
 - (Class)diamondPriceConfListElementClass {
-    return [YFBDiamonInfo class];
+    return [YFBDiamondInfo class];
 }
 @end
 
 
-@implementation YFBDiamonManager
+@implementation YFBDiamondManager
 
 - (QBURLRequestMethod)requestMethod {
     return QBURLPostRequest;
@@ -31,25 +31,25 @@
 }
 
 + (Class)responseClass {
-    return [YFBDiamonResponse class];
+    return [YFBDiamondResponse class];
 }
 
 + (instancetype)manager {
-    static YFBDiamonManager *_diamonModel;
+    static YFBDiamondManager *_diamondModel;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _diamonModel = [[YFBDiamonManager alloc] init];
+        _diamondModel = [[YFBDiamondManager alloc] init];
     });
-    return _diamonModel;
+    return _diamondModel;
 }
 
-- (void)getDiamonListCache {
+- (void)getDiamondListCache {
     if (self.diamonList.count == 0) {
-        [self fetchDiamonListWithCompletionHandler:^(BOOL success, NSArray <YFBDiamonInfo *> *obj) {
+        [self fetchDiamonListWithCompletionHandler:^(BOOL success, NSArray <YFBDiamondInfo *> *obj) {
             if (success) {
                 _diamonList = obj;
             } else {
-                [self performSelector:@selector(getDiamonListCache) withObject:nil afterDelay:30];
+                [self performSelector:@selector(getDiamondListCache) withObject:nil afterDelay:30];
             }
         }];
     }
@@ -65,7 +65,7 @@
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
-                        YFBDiamonResponse *resp = nil;
+                        YFBDiamondResponse *resp = nil;
                         if (respStatus == QBURLResponseSuccess) {
                             resp = self.response;
                         }

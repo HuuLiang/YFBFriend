@@ -26,6 +26,7 @@
 //#define YFB_SYSTEM_CONFIG_URL           @"/mfwcps/systemConfig.htm"              //系统配置
 #define YFB_USERCREATE_URL              @"reg.service"                          //注册
 #define YFB_LOGIN_URL                   @"login.service"                        //登录
+#define YFB_UPDATEUSERINFO_URL          @"updateUserInfo.service"               //更新用户资料
 #define YFB_GREETINFO_URL               @"oneKeyUserList.service"               //获取一键打招呼用户列表
 #define YFB_GREET_URL                   @"oneKeyGreet.service"                 //一键打招呼
 #define YFB_RMDNEARBY_URL               @"rmdNearby.service"                    //推荐和附近的人
@@ -35,7 +36,6 @@
 #define YFB_SENDMSG_URL                 @"saveMsg.service"                      //发送消息
 #define YFB_MY_GIFT_URL                 @"recvOrSendGiftList.service"           //我的礼物
 #define YFB_GIFTLIST_URL                @"giftList.service"                     //获取礼物列表
-//#define YFB_SENDGIFT_URL                @"rewardGift.service"                   //大赏礼物
 #define YFB_DIAMONLIST_URL              @"dpcList.service"                      //获取钻石数量和价格列表
 #define YFB_ATTENTIONLIST_URL           @"concernList.service"                  //用户关注列表
 #define YFB_CONCERN_URL                 @"concern.service"                      //关注
@@ -43,6 +43,9 @@
 #define YFB_FEEDBACK_URL                @"feedback.service"                     //意见反馈
 #define YFB_PHOTOLIST_URL               @"photoList.service"                    //用户相册列表
 #define YFB_SAVEPHOTO_URL               @"savePhoto.service"                    //相片上传接口
+#define YFB_SENDVERIFY_URL              @"sendVC.service"                       //发送验证码
+#define YFB_MOBILEVERIFY_URL            @"mobileVerify.service"                 //验证手机
+
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"
 #define YFB_APP_URL                     @"/iosvideo/appSpreadList.htm"

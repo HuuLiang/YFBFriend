@@ -7,6 +7,8 @@
 //
 
 #import "YFBVerifyViewController.h"
+#import "YFBPhoneVerifyManager.h"
+#import "JYRegexUtil.h"
 
 @interface YFBVerifyViewController ()
 {
@@ -28,17 +30,22 @@
     @weakify(self);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"确认" style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
-        if (self->_verifyField.text.length == 4 && self->_phoneField.text.length == 11 ) {
-            
-        }else {
-            [[YFBHudManager manager] showHudWithText:@"请确认输入是否有误"];
+        if (self->_verifyField.text.length != 4) {
+            [[YFBHudManager manager] showHudWithText:@"请确认验证码是否输入正确"];
+
         }
+        
+        [[YFBPhoneVerifyManager manager] mobileVerifyWithVerifyCode:self->_verifyField.text handler:^(BOOL success) {
+            if (success) {
+                [[YFBHudManager manager] showHudWithText:@"验证成功"];
+            }
+        }];
     }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [_timer timeInterval];
+    [_timer invalidate];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -49,6 +56,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    
 }
 
 - (void)creatHeaderImageView {
@@ -136,19 +147,30 @@
         senderBtn.selected = YES;
         senderBtn.userInteractionEnabled = NO;
         __block NSInteger seconds = 60;
-        @strongify(self);
-        self->_timer  = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
-            if (seconds >0) {
-                
-                [senderBtn setTitle:[NSString stringWithFormat:@"%zd秒后重新获取",--seconds] forState:UIControlStateNormal];
-            }else {
-                senderBtn.selected = NO;
-                senderBtn.userInteractionEnabled = YES;
-                [senderBtn setTitle:@"免费获取验证码" forState:UIControlStateNormal];
-                [timer invalidate];
-            }
-        } repeats:YES];
-        
+        NSString *phoneNumber = self->_phoneField.text;
+        if ([JYRegexUtil isPhoneNumberWithString:phoneNumber]) {
+            @strongify(self);
+            self->_timer  = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+                if (seconds >0) {
+                    [senderBtn setTitle:[NSString stringWithFormat:@"%zd秒后重新获取",--seconds] forState:UIControlStateNormal];
+                }else {
+                    senderBtn.selected = NO;
+                    senderBtn.userInteractionEnabled = YES;
+                    [senderBtn setTitle:@"免费获取验证码" forState:UIControlStateNormal];
+                    seconds = 60;
+                    [timer invalidate];
+                }
+            } repeats:YES];
+            
+            [[YFBPhoneVerifyManager manager] sendVerifyNumberWithMobileNumber:phoneNumber handler:^(BOOL success) {
+                if (success) {
+                    [YFBUser currentUser].phoneNumber = phoneNumber;
+                }
+            }];
+        } else {
+            [[YFBHudManager manager] showHudWithText:@"手机号输入有误"];
+            return ;
+        }
     } forControlEvents:UIControlEventTouchUpInside];
     
     

@@ -12,7 +12,4 @@
 
 - (instancetype)initWithGiftInfos:(NSArray *)giftInfos WithGiftViewType:(YFBGiftPopViewType)type;
 
-@property (nonatomic,copy) YFBAction payAction;
-@property (nonatomic,copy) YFBAction sendAction;
-
 @end

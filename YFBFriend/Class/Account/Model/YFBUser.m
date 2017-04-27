@@ -146,7 +146,7 @@ static NSString *const kYFBUserDefaultPasswordKeyName       = @"666666";
 }
 
 - (NSInteger)age {
-    return _age > 0 ? _age : -1;
+    return (_age >= 18 && _age <= 50) ? _age : 18 ;
 }
 
 - (NSString *)liveCity {
@@ -206,7 +206,7 @@ static NSString *const kYFBUserDefaultPasswordKeyName       = @"666666";
 + (NSArray *)allUserAge {
     NSMutableArray *allAges = [NSMutableArray array];
     for (NSInteger age = 18; age <= 50; age++) {
-        NSString *str = [NSString stringWithFormat:@"%ld岁",(long)age];
+        NSString *str = [NSString stringWithFormat:@"%ld",(long)age];
         [allAges addObject:str];
     }
     return allAges;

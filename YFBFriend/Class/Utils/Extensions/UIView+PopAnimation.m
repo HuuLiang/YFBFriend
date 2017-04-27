@@ -53,7 +53,15 @@ static NSString *const kYFBPopSpringAnimationScaleKeyName           = @"kYFBPopS
     scaleAnimation.springBounciness = 20.0f;
     scaleAnimation.springSpeed = 20.0f;
     [self.layer pop_addAnimation:scaleAnimation forKey:kYFBPopSpringAnimationScaleKeyName];
+}
 
+- (void)startAnimation {
+    POPSpringAnimation * scaleAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleAnimation.fromValue  = [NSValue valueWithCGSize:CGSizeMake(0.5, 0.5f)];
+    scaleAnimation.toValue  = [NSValue valueWithCGSize:CGSizeMake(1.0f, 1.0f)];//@(0.0f);
+    scaleAnimation.springBounciness = 20.0f;
+    scaleAnimation.springSpeed = 20.0f;
+    [self.layer pop_addAnimation:scaleAnimation forKey:kYFBPopSpringAnimationScaleKeyName];
 }
 
 @end

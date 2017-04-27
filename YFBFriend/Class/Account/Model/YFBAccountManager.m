@@ -94,6 +94,36 @@
     return success;
 }
 
+- (void)updateUserInfoWithType:(NSString *)type content:(id)content handler:(void (^)(BOOL success))handler {
+    if ([content isKindOfClass:[NSDictionary class]]) {
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:content options:NSJSONWritingPrettyPrinted error:nil];
+        if (!jsonData) {
+            return;
+        }
+        
+        content = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+                             @"userId":[YFBUser currentUser].userId,
+                             @"token":[YFBUser currentUser].token,
+                             @"type":type,
+                             @"content":content};
+    [self requestURLPath:YFB_UPDATEUSERINFO_URL
+          standbyURLPath:nil
+              withParams:params
+         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+    {
+        if (respStatus != QBURLResponseSuccess) {
+            [[YFBHudManager manager] showHudWithText:@"未知网络问题"];
+        }
+        
+        if (handler) {
+            handler(respStatus == QBURLResponseSuccess);
+        }
+    }];
+}
+
+
 - (void)loginWithWXhandler:(RegisterResult)handler {
     _result = handler;
     

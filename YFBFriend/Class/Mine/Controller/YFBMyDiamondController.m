@@ -10,18 +10,20 @@
 #import "YFBDiamondCell.h"
 #import "YFBDiamondExplainController.h"
 #import "YFBDiamondVoucherController.h"
+#import "YFBDiamondManager.h"
 
 static NSString *const kYFBDiamondCellIdentifier = @"kyfb_diamond_cell_identifier";
 
 @interface YFBMyDiamondController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_layoutTableView;
-    UITableViewCell *_headerCell;
     UILabel *_headerLabel;
 }
+@property (nonatomic) NSMutableArray *dataSource;
 @end
 
 @implementation YFBMyDiamondController
+QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,6 +36,7 @@ static NSString *const kYFBDiamondCellIdentifier = @"kyfb_diamond_cell_identifie
     _layoutTableView.tableFooterView = [UIView new];
     [_layoutTableView setSeparatorInset:UIEdgeInsetsZero];
     [_layoutTableView registerClass:[YFBDiamondCell class] forCellReuseIdentifier:kYFBDiamondCellIdentifier];
+    _layoutTableView.tableHeaderView = [self configTableHeaderView];
     [self.view addSubview:_layoutTableView];
     {
         [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -46,84 +49,73 @@ static NSString *const kYFBDiamondCellIdentifier = @"kyfb_diamond_cell_identifie
         YFBDiamondExplainController *explainVC = [[YFBDiamondExplainController alloc] init];
         [self.navigationController pushViewController:explainVC animated:YES];
     }];
+    
+    [self.dataSource addObjectsFromArray:[YFBDiamondManager manager].diamonList];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _headerLabel.text = [NSString stringWithFormat:@"可用钻石：%ld",[YFBUser currentUser].diamondCount];
+}
+
+- (UIView *)configTableHeaderView {
+    UIView *headerView = [[UIView alloc] init];
+    headerView = [[UITableViewCell alloc] init];
+    headerView.backgroundColor = kColor(@"#f7f7f7");
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_diamond_icon"]];
+    [headerView addSubview:imageView];
+    {
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(headerView);
+            make.centerX.mas_equalTo(headerView).mas_offset(-kScreenWidth *0.135);
+            make.size.mas_equalTo(CGSizeMake(kWidth(48), kWidth(40)));
+        }];
+    }
+    _headerLabel = [[UILabel alloc] init];
+    _headerLabel.textColor = kColor(@"#999999");
+    _headerLabel.font = kFont(14);
+    [headerView addSubview:_headerLabel];
+    {
+        [_headerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(imageView.mas_right).mas_offset(kWidth(5));
+            make.centerY.mas_equalTo(imageView);
+            make.right.mas_equalTo(headerView).mas_offset(kWidth(-30));
+            make.height.mas_equalTo(kWidth(32));
+        }];
+    }
+    headerView.size = CGSizeMake(kScreenWidth, kWidth(100));
+    
+    return headerView;
 }
 
 #pragma mark UITableViewDelegate,UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 7;
+    return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        if (!_headerCell) {
-            _headerCell = [[UITableViewCell alloc] init];
-            _headerCell.backgroundColor = kColor(@"#f7f7f7");
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_diamond_icon"]];
-            [_headerCell addSubview:imageView];
-            {
-                [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.centerY.mas_equalTo(_headerCell);
-                    make.centerX.mas_equalTo(_headerCell).mas_offset(-kScreenWidth *0.135);
-                    make.size.mas_equalTo(CGSizeMake(kWidth(48), kWidth(40)));
-                }];
-            }
-            _headerLabel = [[UILabel alloc] init];
-            _headerLabel.textColor = kColor(@"#999999");
-            _headerLabel.font = kFont(14);
-            [_headerCell addSubview:_headerLabel];
-            {
-                [_headerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.mas_equalTo(imageView.mas_right).mas_offset(kWidth(5));
-                    make.centerY.mas_equalTo(imageView);
-                    make.right.mas_equalTo(_headerCell).mas_offset(kWidth(-30));
-                    make.height.mas_equalTo(kWidth(32));
-                }];
-            }
-        }
-        _headerLabel.text = @"可用钻石:  100";
-        return _headerCell;
-    }
     YFBDiamondCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBDiamondCellIdentifier forIndexPath:indexPath];
-    if (indexPath.row == 1) {
-        cell.price = @10;
-        cell.title = @100;
-    }else if (indexPath.row == 2){
-        cell.price = @60;
-        cell.title = @600;
-    }else if (indexPath.row == 3){
-        cell.price = @100;
-        cell.title = @1000;
-    }else if (indexPath.row == 4){
-        cell.price = @300;
-        cell.title = @3000;
-    }else if (indexPath.row == 5){
-        cell.price = @500;
-        cell.title = @5000;
-    }else if (indexPath.row == 6){
-        cell.price = @1000;
-        cell.title = @10000;
+    if (indexPath.row < self.dataSource.count) {
+        YFBDiamondInfo *diamondInfo = self.dataSource[indexPath.row];
+        cell.title = @(diamondInfo.diamondAmount);
+        cell.price = @(diamondInfo.price/100);
     }
-    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        return kWidth(100);
-    }
     return kWidth(140);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ( indexPath.row > 0 && indexPath.row < 7) {
-        YFBDiamondCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        YFBDiamondVoucherController *voucherVC = [[YFBDiamondVoucherController alloc] initWithPrce:cell.price.floatValue diamond:cell.title.integerValue];
+    if (indexPath.row < self.dataSource.count) {
+        YFBDiamondInfo *diamondInfo = self.dataSource[indexPath.row];
+        YFBDiamondVoucherController *voucherVC = [[YFBDiamondVoucherController alloc] initWithPrice:diamondInfo.price diamond:diamondInfo.diamondAmount];
         [self.navigationController pushViewController:voucherVC animated:YES];
     }
 }

@@ -49,19 +49,24 @@
             }];
         }
         _imageView = [[UIImageView alloc] init];
-        _imageView.contentMode = UIViewContentModeCenter;
-        [_imageView sizeToFit];
-        _imageView.image = [UIImage imageNamed:@"bbt"];
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:_imageView];
         {
             [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.right.top.mas_equalTo(self);
-                make.bottom.mas_equalTo(self);
+                make.edges.equalTo(self).mas_equalTo(UIEdgeInsetsMake(kWidth(30), kWidth(30), kWidth(30), kWidth(30)));
             }];
         }
         
+        _diamondBtn.imageEdgeInsets = UIEdgeInsetsMake(_diamondBtn.imageEdgeInsets.top, _diamondBtn.imageEdgeInsets.left - 2, _diamondBtn.imageEdgeInsets.bottom, _diamondBtn.imageEdgeInsets.right + 2);
+        _diamondBtn.titleEdgeInsets = UIEdgeInsetsMake(_diamondBtn.titleEdgeInsets.top, _diamondBtn.titleEdgeInsets.left + 2, _diamondBtn.titleEdgeInsets.bottom, _diamondBtn.titleEdgeInsets.right - 2);
+        
     }
     return self;
+}
+
+- (void)setDefaultColor:(UIColor *)defaultColor {
+    _defaultColor = defaultColor;
+    self.backgroundColor = defaultColor;
 }
 
 - (void)setImageUrl:(NSString *)imageUrl {
@@ -77,6 +82,15 @@
 - (void)setDiamondCount:(NSInteger)diamondCount {
     _diamondCount = diamondCount;
     [_diamondBtn setTitle:[NSString stringWithFormat:@"%zd",diamondCount] forState:UIControlStateNormal];
+}
+
+- (void)setSelected:(BOOL)selected {
+    if (selected) {
+        self.backgroundColor = [_defaultColor colorWithAlphaComponent:0.5];
+        [_imageView startAnimation];
+    } else {
+        self.backgroundColor = _defaultColor;
+    }
 }
 
 @end

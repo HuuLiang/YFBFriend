@@ -9,21 +9,23 @@
 #import "YFBGiftPopView.h"
 #import "YFBGiftPopCell.h"
 #import "YFBGiftFooterView.h"
+#import "YFBGiftManager.h"
 
 static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier";
 
 @interface YFBGiftPopView ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_collectionView;
-    CGFloat _footerHeight;
-    CGFloat _edg;
+    NSIndexPath *_selectedIndexPath;
 }
 @property (nonatomic) YFBGiftFooterView *footerView;
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) YFBGiftPopViewType type;
+@property (nonatomic) NSMutableArray *dataSource;
 @end
 
 @implementation YFBGiftPopView
+QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (instancetype)initWithGiftInfos:(NSArray *)giftInfos WithGiftViewType:(YFBGiftPopViewType)type {
     self = [super init];
@@ -31,12 +33,13 @@ static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier
     if (self) {
         
         self.type = type;
+        _selectedIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
         
         switch (type) {
             case YFBGiftPopViewTypeList:
                 self.backgroundColor = [kColor(@"#A1A1A1") colorWithAlphaComponent:1];
                 self.layer.borderColor = [kColor(@"#000000") colorWithAlphaComponent:0.8].CGColor;
-                self.layer.borderWidth = 0.03f;
+                self.layer.borderWidth = 0.5f;
                 break;
             case YFBGiftPopViewTypeBlag:
                 self.backgroundColor = kColor(@"#ffffff");
@@ -50,17 +53,20 @@ static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         CGFloat footerHeight ;
+        CGFloat spacing;
         switch (type) {
             case YFBGiftPopViewTypeList:
-                flowLayout.minimumInteritemSpacing = 0.25;
-                flowLayout.minimumLineSpacing = 0.25;
+                flowLayout.minimumInteritemSpacing = 0.5;
+                flowLayout.minimumLineSpacing = 0.5;
                 footerHeight = kWidth(88);
+                spacing = 1;
                 break;
                 
             case YFBGiftPopViewTypeBlag:
                 flowLayout.minimumInteritemSpacing = 1;
                 flowLayout.minimumLineSpacing = 1;
                 footerHeight = kWidth(40);
+                spacing = 3;
                 break;
                 
             default:
@@ -77,32 +83,28 @@ static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier
         [_collectionView registerClass:[YFBGiftPopCell class] forCellWithReuseIdentifier:YFBGiftPopCellIdentifier];
         [self addSubview:_collectionView];
         
+        [self.dataSource addObjectsFromArray:[YFBGiftManager manager].giftList];
+        [_collectionView selectItemAtIndexPath:_selectedIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+        
         _footerView = [[YFBGiftFooterView alloc] initWithGiftType:type];
         _footerView.pageNumbers = 2;
-        _footerView.diamondCount = 2300;
+        _footerView.diamondCount = [YFBUser currentUser].diamondCount;
         @weakify(self);
         _footerView.sendAction = ^{
             @strongify(self);
-            if (self.sendAction) {
-                self.sendAction();
-            }
-            QBLog(@"点击赠送")
+            YFBGiftInfo *giftInfo = self.dataSource[self->_selectedIndexPath.item];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendMessageGiftListPayNotification object:giftInfo];
         };
         _footerView.payAction = ^{
-            @strongify(self);
-            if (self.payAction) {
-                self.payAction();
-            }
-            QBLog(@"点击充值")
+            [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendMessageGiftListPayNotification object:nil];
         };
         [self addSubview:_footerView];
         {
             [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self).offset(3);
-                make.top.equalTo(self).offset(3);
-                make.right.equalTo(self.mas_right).offset(-3);
-                make.bottom.equalTo(self.mas_bottom).offset(-footerHeight-3);
-                make.edges.equalTo(self).mas_equalTo(UIEdgeInsetsMake(1,  1, footerHeight + 1, 1));
+                make.left.equalTo(self).offset(spacing);
+                make.top.equalTo(self).offset(spacing);
+                make.right.equalTo(self.mas_right).offset(-spacing);
+                make.bottom.equalTo(self.mas_bottom).offset(-footerHeight-spacing);
             }];
             
             [_footerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -114,38 +116,46 @@ static NSString *const YFBGiftPopCellIdentifier = @"yfb_gift_pop_cell_identifier
     return self;
 }
 
-
 #pragma mark UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 16;
+    return self.dataSource.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YFBGiftPopCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:YFBGiftPopCellIdentifier forIndexPath:indexPath];
-    if (_type == YFBGiftPopViewTypeList) {
-        cell.backgroundColor = [kColor(@"#000000") colorWithAlphaComponent:0.8];
-    } else if (_type == YFBGiftPopViewTypeBlag) {
-        cell.backgroundColor = kColor(@"#EF5F73");
+    if (indexPath.item < self.dataSource.count) {
+        YFBGiftInfo *giftInfo = self.dataSource[indexPath.item];
+        
+        if (_type == YFBGiftPopViewTypeList) {
+            cell.defaultColor = [kColor(@"#000000") colorWithAlphaComponent:0.8];
+        } else if (_type == YFBGiftPopViewTypeBlag) {
+            cell.defaultColor = kColor(@"#EF5F73");
+        }
+        cell.title = giftInfo.name;
+        cell.diamondCount = giftInfo.diamondCount;
+        cell.imageUrl = giftInfo.giftUrl;
     }
-    cell.title = @"棒棒糖";
-    cell.diamondCount = 1800;
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    _selectedIndexPath = indexPath;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)collectionViewLayout;
     const CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
     const CGFloat fullHeight = CGRectGetHeight(collectionView.bounds);
-    CGFloat itemWidth = ((long)fullWidth - /*flowLayout.sectionInset.left - flowLayout.sectionInset.right -*/ flowLayout.minimumInteritemSpacing * 3) / 4;
-    CGFloat itemHeight = ((long)fullHeight - /*flowLayout.sectionInset.bottom - flowLayout.sectionInset.top -*/ flowLayout.minimumLineSpacing)/2;
+    CGFloat itemWidth = ((long)fullWidth - flowLayout.minimumInteritemSpacing * 3) / 4;
+    CGFloat itemHeight = ((long)fullHeight - flowLayout.minimumLineSpacing)/2;
     return CGSizeMake((long)itemWidth, (long)itemHeight);
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     QBLog(@"%f %f",scrollView.contentOffset.x,CGRectGetWidth(self.bounds));
     if (_footerView) {
-        _footerView.currentPage = scrollView.contentOffset.x / (CGRectGetWidth(self.bounds));
+        _footerView.currentPage = scrollView.contentOffset.x + 10 / (CGRectGetWidth(self.bounds));
     }
 }
 

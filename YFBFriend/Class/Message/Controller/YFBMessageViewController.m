@@ -18,6 +18,9 @@
 #import "YFBDetailModel.h"
 
 @interface YFBMessageViewController ()
+{
+    YFBGiftPopViewController *_giftVC;
+}
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
 @property (nonatomic,retain) YFBMessageAdView *messagAdView;
 @end
@@ -253,8 +256,21 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     if (self.messageInputView.inputTextView.isFirstResponder) {
         [self.messageInputView.inputTextView resignFirstResponder];
     }
-//    [YFBGiftPopViewController showGiftViewWithType:YFBGiftPopViewTypeList InCurrentViewController:self];
-    [YFBGiftPopViewController showGiftViewWithType:YFBGiftPopViewTypeBlag InCurrentViewController:self];
+    
+    _giftVC = [[YFBGiftPopViewController alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:_giftVC selector:@selector(payAction) name:kYFBFriendMessageGiftListPayNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:_giftVC selector:@selector(sendGiftAction:) name:kYFBFriendMessageGiftListSendNotification object:nil];
+    
+    [_giftVC showGiftViewWithType:YFBGiftPopViewTypeList InCurrentViewController:self];
+}
+
+- (void)payAction {
+    
+}
+
+- (void)sendGiftAction:(NSNotification *)notification {
+    
 }
 
 - (void)showPayVipView {

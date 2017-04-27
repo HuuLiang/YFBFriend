@@ -8,12 +8,13 @@
 
 #import "AppDelegate+configuration.h"
 #import "YFBSystemConfigModel.h"
-#import "YFBActivateModel.h"
 #import <QBPaymentManager.h>
 #import <QBPaymentConfig.h>
 #import <WXApi.h>
 #import "YFBAccountManager.h"
 #import "YFBImageUploadManager.h"
+#import "YFBDiamondManager.h"
+#import "YFBGiftManager.h"
 
 static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 
@@ -44,19 +45,7 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^ (BOOL reachable) {
-        
-//        if (reachable && ![YFBSystemConfigModel sharedModel].loaded) {
-            //系统配置
-//            [self fetchSystemConfigWithCompletionHandler:nil];
-//        }
-        
-        //激活信息
-//        if (reachable && ![YFBUtil isRegisteredUUID]) {
-//            [self registerUUID];
-//        } else {
-            [self showHomeViewController];
-//        }
-        
+        [self showHomeViewController];
         //网络错误提示
         if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![YFBUtil isRegisteredUUID] || ![YFBSystemConfigModel sharedModel].loaded)) {
             if ([YFBUtil isIpad]) {
@@ -73,65 +62,18 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
             }
         }
     };
-    
-    //    设置图片referer
-//    BOOL requestedSystemConfig = NO;
-//    NSString *imageToken = [YFBUtil imageToken];
-//    if (imageToken) {
-//        [[SDWebImageManager sharedManager].imageDownloader setValue:imageToken forHTTPHeaderField:@"Referer"];
-//        [self showHomeViewController];
-//    } else {
-//        self.window.rootViewController = [[UIViewController alloc] init];
-//        [self.window makeKeyAndVisible];
-//        
-//        [self.window beginProgressingWithTitle:@"更新系统配置..." subtitle:nil];
-//        
-//        requestedSystemConfig = [self fetchSystemConfigWithCompletionHandler:^(BOOL success) {
-//            [self.window endProgressing];
-//            [self showHomeViewController];
-//        }];
-//        
-//    }
-    
-//    if (!requestedSystemConfig) {
-//        [[YFBSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
-//            if (success) {
-//                [YFBUtil setImageToken:[YFBSystemConfigModel sharedModel].imageToken];
-//            }
-//        }];
-//    }
 }
-//
-//- (BOOL)fetchSystemConfigWithCompletionHandler:(void (^)(BOOL success))completionHandler {
-//    return [[YFBSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
-//        if (success) {
-//            NSString *fetchedToken = [YFBSystemConfigModel sharedModel].imageToken;
-//            [YFBUtil setImageToken:fetchedToken];
-//            if (fetchedToken) {
-//                [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
-//            }
-//        }
-//        QBSafelyCallBlock(completionHandler, success);
-//    }];
-//}
-
-//- (void)registerUUID {
-//    [[YFBActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *uuid) {
-//        if (success) {
-//            [YFBUtil setRegisteredWithUUID:uuid];
-//            [self showHomeViewController];
-//        }
-//    }];
-//}
 
 - (void)showHomeViewController {
+    //设置默认配置信息  微信注册  七牛注册  加载钻石 礼物信息
     [WXApi registerApp:YFB_WEXIN_APP_ID];
     [YFBImageUploadManager registerWithSecretKey:YFB_UPLOAD_SECRET_KEY accessKey:YFB_UPLOAD_ACCESS_KEY scope:YFB_UPLOAD_SCOPE];
+    [[YFBDiamondManager manager] getDiamondListCache];
+    [[YFBGiftManager manager] getGiftListCache];
+    
     self.window.rootViewController = self.rootViewController;
     [self.window makeKeyAndVisible];
 }
-
-
 
 - (QBPaymentConfig *)setDefaultPaymentConfig {
     QBPaymentConfig *config = [[QBPaymentConfig alloc] init];

@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
 
 @implementation YFBDiamondVoucherController
 
-- (instancetype)initWithPrce:(CGFloat)price diamond:(NSInteger)diamond
+- (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond
 {
     self = [super init];
     if (self) {

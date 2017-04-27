@@ -136,7 +136,7 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         cell.subTitle = nil;
         if (indexPath.row == YFBWlletRowTypeDiamond){
             cell.title = @"我的钻石";
-            cell.subTitle = @"200";
+            cell.subTitle = [NSString stringWithFormat:@"%ld",[YFBUser currentUser].diamondCount];
             cell.iconImage = @"mine_my_diamond_icon";
         } else if (indexPath.row == YFBWlletRowTypeGift){
             cell.title = @"我的礼物";

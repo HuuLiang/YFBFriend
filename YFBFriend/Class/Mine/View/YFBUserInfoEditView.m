@@ -15,11 +15,12 @@
 @property (nonatomic,strong) UIButton   *secretButton;
 @property (nonatomic,strong) UIButton   *cancleButton;
 @property (nonatomic,strong) UIButton   *enterButton;
+@property (nonatomic) YFBUserInfoOpenType openType;
 @end
 
 @implementation YFBUserInfoEditView
 
-- (instancetype)initWithTitle:(NSString *)title hander:(void (^)(NSString *textFieldContent))hander {
+- (instancetype)initWithTitle:(NSString *)title hander:(void (^)(NSString *textFieldContent,YFBUserInfoOpenType openType))hander {
     self = [super init];
     
     if (self) {
@@ -47,6 +48,7 @@
         [_vipButton setImage:[UIImage imageNamed:@"mine_datainfo_normal"] forState:UIControlStateNormal];
         [_vipButton setImage:[UIImage imageNamed:@"mine_datainfo_selected"] forState:UIControlStateSelected];
         _vipButton.selected = YES;
+        self.openType = YFBUserInfoOpenTypeVip;
         [self addSubview:_vipButton];
         
         self.secretButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -78,6 +80,7 @@
             }
             self->_vipButton.selected = !self->_vipButton.selected;
             self->_secretButton.selected = !self->_secretButton.selected;
+            self.openType = YFBUserInfoOpenTypeVip;
         } forControlEvents:UIControlEventTouchUpInside];
         
         [_secretButton bk_addEventHandler:^(id sender) {
@@ -87,6 +90,7 @@
             }
             self->_vipButton.selected = !self->_vipButton.selected;
             self->_secretButton.selected = !self->_secretButton.selected;
+            self.openType = YFBUserInfoOpenTypeClose;
         } forControlEvents:UIControlEventTouchUpInside];
         
         [_cancleButton bk_addEventHandler:^(id sender) {
@@ -96,7 +100,7 @@
         
         [_enterButton bk_addEventHandler:^(id sender) {
             @strongify(self);
-            hander(_textField.text);
+            hander(_textField.text,self.openType);
             [self removeSuperview];
         } forControlEvents:UIControlEventTouchUpInside];
 

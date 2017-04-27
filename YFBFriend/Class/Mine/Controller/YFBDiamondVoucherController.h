@@ -10,6 +10,6 @@
 
 @interface YFBDiamondVoucherController : YFBBaseViewController
 
-- (instancetype)initWithPrce:(CGFloat)price diamond:(NSInteger)diamond;
+- (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond;
 
 @end

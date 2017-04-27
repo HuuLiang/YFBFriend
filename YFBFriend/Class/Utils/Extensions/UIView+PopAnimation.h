@@ -14,4 +14,8 @@
 
 - (void)showWithPopAnimation;
 
+- (void)startAnimation;
+
+- (void)stopAnimation;
+
 @end

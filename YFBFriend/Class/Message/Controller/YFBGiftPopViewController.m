@@ -60,6 +60,7 @@
 
 - (void)configSendListView {
     self.messagePopView = [[YFBGiftPopView alloc] initWithGiftInfos:nil WithGiftViewType:YFBGiftPopViewTypeList];
+        
     [self.view addSubview:_messagePopView];
     {
         [_messagePopView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -136,6 +137,9 @@
     if (!self.view.superview) {
         return ;
     }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kYFBFriendMessageGiftListSendNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kYFBFriendMessageGiftListPayNotification object:nil];
     
     [UIView animateWithDuration:0.25 animations:^{
         self.view.alpha = 0;

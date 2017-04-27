@@ -46,6 +46,11 @@ typedef NS_ENUM(NSInteger, YFBMessagePopViewType) {
     YFBMessagePopViewTypeDiamond //充值钻石界面
 };
 
+typedef NS_ENUM(NSInteger, YFBUserInfoOpenType) {
+    YFBUserInfoOpenTypeClose = 0,//对vip用户开放
+    YFBUserInfoOpenTypeVip //保密
+};
+
 typedef void (^YFBAction)(void);
 
 //
@@ -81,10 +86,13 @@ typedef void (^YFBAction)(void);
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
-#define kPaidNotificationName                   @"YFBFriendPaidNotification"
-#define kUserLoginNotificationName              @"YFBFriendUserLoginNotification"
-#define KUserChangeInfoNotificationName         @"YFBFriendUserChangeInfoNotificationName"
-#define KUpdateContactUnReadMessageNotification @"YFBUpdateContactUnReadMessageNotification"
+#define kPaidNotificationName                           @"YFBFriendPaidNotification"
+#define kUserLoginNotificationName                      @"YFBFriendUserLoginNotification"
+#define KUserChangeInfoNotificationName                 @"YFBFriendUserChangeInfoNotificationName"
+#define KUpdateContactUnReadMessageNotification         @"YFBUpdateContactUnReadMessageNotification"
+#define kYFBFriendMessageGiftListPayNotification        @"YFBFriendMessageGiftListPayNotification"
+#define kYFBFriendMessageGiftListSendNotification       @"YFBFriendMessageGiftListSendNotification"
+
 
 #define kDateFormatShort                  @"yyyy-MM-dd"
 #define kDateFormatChina                  @"yyyy年MM月dd日"

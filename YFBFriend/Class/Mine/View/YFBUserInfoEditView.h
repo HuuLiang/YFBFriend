@@ -12,7 +12,7 @@ typedef void(^cancleBlock)(void);
 
 @interface YFBUserInfoEditView : UIView
 
-- (instancetype)initWithTitle:(NSString *)title hander:(void(^)(NSString *textFieldContent))hander;
+- (instancetype)initWithTitle:(NSString *)title hander:(void(^)(NSString *textFieldContent,YFBUserInfoOpenType openType))hander;
 
 @property (nonatomic,copy) cancleBlock cancel;
 
