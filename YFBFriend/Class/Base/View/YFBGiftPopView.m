@@ -84,7 +84,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self addSubview:_collectionView];
         
         [self.dataSource addObjectsFromArray:[YFBGiftManager manager].giftList];
-        [_collectionView selectItemAtIndexPath:_selectedIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
         
         _footerView = [[YFBGiftFooterView alloc] initWithGiftType:type];
         _footerView.pageNumbers = 2;
@@ -93,7 +92,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         _footerView.sendAction = ^{
             @strongify(self);
             YFBGiftInfo *giftInfo = self.dataSource[self->_selectedIndexPath.item];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendMessageGiftListPayNotification object:giftInfo];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendMessageGiftListSendNotification object:giftInfo];
         };
         _footerView.payAction = ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendMessageGiftListPayNotification object:nil];
@@ -114,6 +113,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         }
     }
     return self;
+}
+
+- (void)startSelectedDefaultIndexPath {
+    [_collectionView selectItemAtIndexPath:_selectedIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
 }
 
 #pragma mark UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout

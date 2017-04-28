@@ -10,7 +10,7 @@
 
 @interface YFBGiftInfo : NSObject
 @property (nonatomic) NSInteger diamondCount;
-@property (nonatomic) NSInteger giftId;
+@property (nonatomic) NSString * giftId;
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *giftUrl;
 @end

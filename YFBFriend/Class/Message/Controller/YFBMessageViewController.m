@@ -16,6 +16,7 @@
 #import "YFBInteractionManager.h"
 #import "YFBDredgeVipController.h"
 #import "YFBDetailModel.h"
+#import "YFBGiftManager.h"
 
 @interface YFBMessageViewController ()
 {
@@ -259,18 +260,29 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     _giftVC = [[YFBGiftPopViewController alloc] init];
     
-    [[NSNotificationCenter defaultCenter] addObserver:_giftVC selector:@selector(payAction) name:kYFBFriendMessageGiftListPayNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:_giftVC selector:@selector(sendGiftAction:) name:kYFBFriendMessageGiftListSendNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(payAction) name:kYFBFriendMessageGiftListPayNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftAction:) name:kYFBFriendMessageGiftListSendNotification object:nil];
     
     [_giftVC showGiftViewWithType:YFBGiftPopViewTypeList InCurrentViewController:self];
 }
 
 - (void)payAction {
-    
+    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeDiamond onCurrentVC:self];
 }
 
 - (void)sendGiftAction:(NSNotification *)notification {
-    
+    YFBGiftInfo *giftInfo = (YFBGiftInfo *)notification.object;
+    if (giftInfo.diamondCount <= [YFBUser currentUser].diamondCount) {
+        [[YFBInteractionManager manager] sendMessageInfoToUserId:self.userId content:giftInfo.giftId type:YFBMessageTypeGift handler:^(BOOL success) {
+            if (success) {
+                [[YFBHudManager manager] showHudWithText:@"礼物赠送成功"];
+                [YFBUser currentUser].diamondCount = [YFBUser currentUser].diamondCount - giftInfo.diamondCount;
+                [[YFBUser currentUser] saveOrUpdateUserInfo];
+            }
+        }];
+    } else {
+        [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeDiamond onCurrentVC:self];
+    }
 }
 
 - (void)showPayVipView {

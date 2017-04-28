@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface YFBBlagGiftView : UIView
-
 @property (nonatomic) NSString *headerImageUrl;
 @property (nonatomic) NSString *sendTitle;
 @property (nonatomic) NSString *sendSubTitle;
 @property (nonatomic,copy) QBAction closeAction;
 @property (nonatomic,copy) QBAction giftAction;
+
+- (void)startSelectedDefaultIndexPath;
+
 @end

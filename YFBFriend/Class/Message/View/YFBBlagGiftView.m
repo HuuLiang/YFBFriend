@@ -116,6 +116,10 @@
     return self;
 }
 
+- (void)startSelectedDefaultIndexPath {
+    [_popView startSelectedDefaultIndexPath];
+}
+
 - (void)setSendTitle:(NSString *)sendTitle {
     _sendTitle = sendTitle;
     NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@向你索要礼物",sendTitle]];

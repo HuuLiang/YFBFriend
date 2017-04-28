@@ -70,10 +70,6 @@
     }
 }
 
-- (void)dealloc {
-    
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -90,6 +86,13 @@
 
         default:
             break;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (_messagePopView) {
+        [_messagePopView startSelectedDefaultIndexPath];
     }
 }
 

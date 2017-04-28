@@ -12,4 +12,6 @@
 
 - (instancetype)initWithGiftInfos:(NSArray *)giftInfos WithGiftViewType:(YFBGiftPopViewType)type;
 
+- (void)startSelectedDefaultIndexPath;
+
 @end
