@@ -28,6 +28,7 @@
 @property (nonatomic) NSString *vocation;
 @property (nonatomic) NSInteger weight;
 @property (nonatomic) NSString *weixin;
+@property (nonatomic) NSString *personalizedSignature;
 @end
 
 

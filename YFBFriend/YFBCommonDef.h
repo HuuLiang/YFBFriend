@@ -43,7 +43,8 @@ typedef NS_ENUM(NSInteger,YFBGiftPopViewType) {
 
 typedef NS_ENUM(NSInteger, YFBMessagePopViewType) {
     YFBMessagePopViewTypeVip, // 开通vip界面
-    YFBMessagePopViewTypeDiamond //充值钻石界面
+    YFBMessagePopViewTypeDiamond, //充值钻石界面
+    YFBMessagePopViewTypeBuyDiamond //充值钻石界面
 };
 
 typedef NS_ENUM(NSInteger, YFBUserInfoOpenType) {
@@ -93,7 +94,7 @@ typedef void (^YFBAction)(void);
 #define kYFBFriendMessageGiftListPayNotification        @"YFBFriendMessageGiftListPayNotification"
 #define kYFBFriendMessageGiftListSendNotification       @"YFBFriendMessageGiftListSendNotification"
 
-
+#define KDateFormatShortest               @"yyyyMMdd"
 #define kDateFormatShort                  @"yyyy-MM-dd"
 #define kDateFormatChina                  @"yyyy年MM月dd日"
 #define KDateFormatLong                   @"yyyyMMddHHmmss"

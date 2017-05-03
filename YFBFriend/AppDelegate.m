@@ -42,7 +42,6 @@
     [self setCommonStyle];
     [self showHomeViewController];
     
-    
     return YES;
 }
 

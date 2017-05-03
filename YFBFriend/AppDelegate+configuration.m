@@ -7,14 +7,11 @@
 //
 
 #import "AppDelegate+configuration.h"
-#import "YFBSystemConfigModel.h"
 #import <QBPaymentManager.h>
 #import <QBPaymentConfig.h>
 #import <WXApi.h>
 #import "YFBAccountManager.h"
 #import "YFBImageUploadManager.h"
-#import "YFBDiamondManager.h"
-#import "YFBGiftManager.h"
 
 static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 
@@ -47,7 +44,7 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^ (BOOL reachable) {
         [self showHomeViewController];
         //网络错误提示
-        if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![YFBUtil isRegisteredUUID] || ![YFBSystemConfigModel sharedModel].loaded)) {
+        if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![YFBUtil isRegisteredUUID])) {
             if ([YFBUtil isIpad]) {
                 [UIAlertView bk_showAlertViewWithTitle:@"请检查您的网络连接!" message:nil cancelButtonTitle:@"确认" otherButtonTitles:nil handler:nil];
             }else{
@@ -68,8 +65,6 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     //设置默认配置信息  微信注册  七牛注册  加载钻石 礼物信息
     [WXApi registerApp:YFB_WEXIN_APP_ID];
     [YFBImageUploadManager registerWithSecretKey:YFB_UPLOAD_SECRET_KEY accessKey:YFB_UPLOAD_ACCESS_KEY scope:YFB_UPLOAD_SCOPE];
-    [[YFBDiamondManager manager] getDiamondListCache];
-    [[YFBGiftManager manager] getGiftListCache];
     
     self.window.rootViewController = self.rootViewController;
     [self.window makeKeyAndVisible];

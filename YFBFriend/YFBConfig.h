@@ -28,7 +28,7 @@
 #define YFB_LOGIN_URL                   @"login.service"                        //登录
 #define YFB_UPDATEUSERINFO_URL          @"updateUserInfo.service"               //更新用户资料
 #define YFB_GREETINFO_URL               @"oneKeyUserList.service"               //获取一键打招呼用户列表
-#define YFB_GREET_URL                   @"oneKeyGreet.service"                 //一键打招呼
+#define YFB_GREET_URL                   @"oneKeyGreet.service"                  //一键打招呼
 #define YFB_RMDNEARBY_URL               @"rmdNearby.service"                    //推荐和附近的人
 #define YFB_RANK_URL                    @"fengyun.service"                      //风云榜
 #define YFB_DETAIL_URL                  @"personDtl.service"                    //详情页
@@ -45,6 +45,9 @@
 #define YFB_SAVEPHOTO_URL               @"savePhoto.service"                    //相片上传接口
 #define YFB_SENDVERIFY_URL              @"sendVC.service"                       //发送验证码
 #define YFB_MOBILEVERIFY_URL            @"mobileVerify.service"                 //验证手机
+#define YFB_EXAMPLEHISTORY_URL          @"givePurchaseHisList.service"          //赠送礼物 开通vip 购买钻石 历史
+#define YFB_PAYCONFIG_URL               @"vdc.service"                          //支付配置
+#define YFB_REFERCONTACT_URL            @"viewContact.service"                  //查询用户联系方式
 
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"

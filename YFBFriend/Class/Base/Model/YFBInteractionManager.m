@@ -13,6 +13,10 @@
 static NSString *const kYFBFriendGreetToOneUserKeyName = @"kYFBFriendGreetToOneUserKeyName";
 static NSString *const KYFBFriendGreetToAllUsersKeyName = @"KYFBFriendGreetToAllUsersKeyName";
 
+NSString *const kYFBFriendReferContactQQKeyName     = @"QQ";
+NSString *const kYFBFriendReferContactWXKeyName     = @"WEIXIN";
+NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
+
 #define GreetToOneUserCount 20
 #define GreetToAllUsersCount 3
 
@@ -183,7 +187,7 @@ static NSString *const KYFBFriendGreetToAllUsersKeyName = @"KYFBFriendGreetToAll
                              @"token":[YFBUser currentUser].token,
                              @"toUserId":userId,
                              @"content":content,
-                             @"type":@(messageType)};
+                             @"msgType":@(messageType)};
     
     [self requestURLPath:YFB_SENDMSG_URL
           standbyURLPath:nil
@@ -195,4 +199,28 @@ static NSString *const KYFBFriendGreetToAllUsersKeyName = @"KYFBFriendGreetToAll
         }
     }];
 }
+
+//查询微信 手机 qq
+- (void)referUserContactWithType:(NSString *)type toUserId:(NSString *)userId handler:(void(^)(BOOL success,NSString *contact))handler {
+    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+                             @"userId":[YFBUser currentUser].userId,
+                             @"token":[YFBUser currentUser].token,
+                             @"toUserId":userId,
+                             @"type":type};
+    [self requestURLPath:YFB_REFERCONTACT_URL
+          standbyURLPath:nil
+              withParams:params
+         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+    {
+        YFBInteractionResponse *resp = nil;
+        if (respStatus == QBURLResponseSuccess) {
+            resp = self.response;
+        }
+        if (handler) {
+            handler(respStatus == QBURLResponseSuccess,resp.contact);
+        }
+    }];
+}
+
+
 @end

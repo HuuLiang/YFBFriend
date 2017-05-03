@@ -12,6 +12,10 @@
 #import "YFBContactViewController.h"
 #import "YFBMineViewController.h"
 
+#import "YFBDiamondManager.h"
+#import "YFBGiftManager.h"
+#import "YFBPayManager.h"
+#import "YFBExampleManager.h"
 
 #define WakeGiftManagerTimeInterval (60 * 5)
 
@@ -28,6 +32,12 @@
     self.tabBar.layer.borderWidth = 0.5;
     [self setChildViewControllers];
 
+    
+    [[YFBDiamondManager manager] getDiamondListCache];
+    [[YFBGiftManager manager] getGiftListCache];
+    [[YFBPayManager manager] getPayConfig];
+    [[YFBExampleManager manager] getExampleList];
+    
     [self performSelector:@selector(wakeAskGiftManager) withObject:nil afterDelay:WakeGiftManagerTimeInterval];
 }
 

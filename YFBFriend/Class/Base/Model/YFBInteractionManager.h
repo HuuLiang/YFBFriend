@@ -9,6 +9,11 @@
 #import <QBEncryptedURLRequest.h>
 @class YFBRobot;
 @class YFBMessageModel;
+
+@interface YFBInteractionResponse : QBURLResponse
+@property (nonatomic) NSString *contact;
+@end
+
 @interface YFBInteractionManager : QBEncryptedURLRequest
 
 + (instancetype)manager;
@@ -22,5 +27,11 @@
 - (void)sendAdviceWithContent:(NSString *)content Contact:(NSString *)contact handler:(void(^)(BOOL success))handler;
 
 - (void)sendMessageInfoToUserId:(NSString *)userId content:(NSString *)content type:(NSInteger)messageType handler:(void(^)(BOOL success))handler;
+
+- (void)referUserContactWithType:(NSString *)type toUserId:(NSString *)userId handler:(void(^)(BOOL success,NSString *contact))handler;
+
+extern NSString *const kYFBFriendReferContactQQKeyName;
+extern NSString *const kYFBFriendReferContactWXKeyName;
+extern NSString *const kYFBFriendReferContactPhoneKeyName;
 
 @end

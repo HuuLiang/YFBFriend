@@ -19,8 +19,8 @@ static NSString *const kImageTokenKeyName         = @"safiajfoaiefr$^%^$E&&$*&$*
 static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
 
 static NSString *const kYFBMessageReplyIsFirstDayKeyName = @"kYFBMessageReplyIsFirstDayKeyName";
-static NSString *const kYFBMessageReplayTimesKeyName = @"kYFBMessageReplayTimesKeyName";
-static NSString *const kYFBMessageReplayTodayKeyName = @"kYFBMessageReplayTodayKeyName";
+//static NSString *const kYFBMessageReplayTimesKeyName = @"kYFBMessageReplayTimesKeyName";
+//static NSString *const kYFBMessageReplayTodayKeyName = @"kYFBMessageReplayTodayKeyName";
 
 @implementation YFBUtil
 
@@ -191,51 +191,61 @@ static NSString *const kYFBMessageReplayTodayKeyName = @"kYFBMessageReplayTodayK
 #pragma mark - VIP
 
 + (BOOL)isVip {
-//    NSInteger random = arc4random() % 2;
-//    return random == 0;
+    NSDate *expireDate = [self dateFromString:[YFBUser currentUser].expireTime WithDateFormat:kDateFormatShort];
+    return [expireDate isInFuture];
+}
+
++ (BOOL)isFirstDay {
+    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kYFBMessageReplyIsFirstDayKeyName];
+    if (!lastDate) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kYFBMessageReplyIsFirstDayKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return YES;
+    }
+    if ([lastDate isToday]) {
+        return YES;
+    }
     return NO;
 }
 
-
-+ (BOOL)ableToReply {
-    
-    if ([self isVip]) {
-        return YES;
-    } else {
-        NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kYFBMessageReplyIsFirstDayKeyName];
-        if (!lastDate) {
-            //缓存无日期 则为第一次发消息  缓存入当日日期 发消息数 +1 上限为 3
-            [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kYFBMessageReplyIsFirstDayKeyName];
-            [[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:kYFBMessageReplayTimesKeyName];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            return YES;
-        } else {
-            //如果缓存日期存在
-            //是当日 则最多3次
-            if ([lastDate isToday]) {
-                NSInteger replyTime = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBMessageReplayTimesKeyName] integerValue];
-                if (replyTime < 3) {
-                    replyTime++;
-                    [[NSUserDefaults standardUserDefaults] setObject:@(replyTime) forKey:kYFBMessageReplayTimesKeyName];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    return YES;
-                } else {
-                    return NO;
-                }
-            } else {
-                //不是当日 则只能发一次 判断是否发过
-                NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:kYFBMessageReplayTodayKeyName];
-                if ([date isToday]) {
-                    return NO;
-                } else {
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kYFBMessageReplayTodayKeyName];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    return YES;
-                }
-            }
-        }
-    }
-}
-
+//+ (BOOL)ableToReply {
+//    
+//    if ([self isVip]) {
+//        return YES;
+//    } else {
+//        NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kYFBMessageReplyIsFirstDayKeyName];
+//        if (!lastDate) {
+//            //缓存无日期 则为第一次发消息  缓存入当日日期 发消息数 +1 上限为 3
+//            [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kYFBMessageReplyIsFirstDayKeyName];
+//            [[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:kYFBMessageReplayTimesKeyName];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//            return YES;
+//        } else {
+//            //如果缓存日期存在
+//            //是当日 则最多3次
+//            if ([lastDate isToday]) {
+//                NSInteger replyTime = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBMessageReplayTimesKeyName] integerValue];
+//                if (replyTime < 3) {
+//                    replyTime++;
+//                    [[NSUserDefaults standardUserDefaults] setObject:@(replyTime) forKey:kYFBMessageReplayTimesKeyName];
+//                    [[NSUserDefaults standardUserDefaults] synchronize];
+//                    return YES;
+//                } else {
+//                    return NO;
+//                }
+//            } else {
+//                //不是当日 则只能发一次 判断是否发过
+//                NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:kYFBMessageReplayTodayKeyName];
+//                if ([date isToday]) {
+//                    return NO;
+//                } else {
+//                    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kYFBMessageReplayTodayKeyName];
+//                    [[NSUserDefaults standardUserDefaults] synchronize];
+//                    return YES;
+//                }
+//            }
+//        }
+//    }
+//}
 
 @end

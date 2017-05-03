@@ -81,6 +81,8 @@ typedef NS_ENUM(NSInteger,YFBUserMarriageStatus) {
 
 @property (nonatomic) NSInteger diamondCount;
 
+@property (nonatomic) NSString *expireTime;
+
 - (BOOL)saveOrUpdateUserInfo;
 
 #pragma mark - 注册信息

@@ -1,68 +1,59 @@
 //
-//  YFBMessageAdView.m
+//  YFBVipExampleCell.m
 //  YFBFriend
 //
-//  Created by Liang on 2017/4/18.
+//  Created by Liang on 2017/5/2.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import "YFBMessageAdView.h"
+#import "YFBVipExampleCell.h"
 
-static NSString *const kYFBMessageAdCellReusableIdentifier = @"kYFBMessageAdCellReusableIdentifier";
+static NSString *const kYFBExampleCellReusableIdentifier = @"kYFBExampleCellReusableIdentifier";
 
-@interface YFBMessageAdView () <UITableViewDelegate,UITableViewDataSource>
+@interface YFBVipExampleCell () <UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic) NSInteger scrollIndex;
 @property (nonatomic) NSTimer *timer;
-@property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSMutableArray *dataSource;
+@property (nonatomic) UITableView *tableView;
 @end
 
-@implementation YFBMessageAdView
+@implementation YFBVipExampleCell
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        _scrollIndex = 0;
-        
-        self.backgroundColor = [UIColor colorWithHexString:@"#D3B7FF"];
-        
         self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _tableView.backgroundColor = [UIColor colorWithHexString:@"#D3B7FF"];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        [_tableView registerClass:[YFBScrollCell class] forCellReuseIdentifier:kYFBExampleCellReusableIdentifier];
         [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        [_tableView registerClass:[YFBMessageAdCell class] forCellReuseIdentifier:kYFBMessageAdCellReusableIdentifier];
-        [self addSubview:_tableView];
-        
+        _tableView.tableFooterView = [[UIView alloc] init];
+        [self.contentView addSubview:_tableView];
         
         {
             [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self);
+                make.edges.equalTo(self.contentView);
             }];
         }
+        
     }
     return self;
 }
 
-- (void)scrollTableView {
-    if (self.dataSource.count == 0) {
-        return;
-    }
-    
-    if (self.scrollIndex >= self.dataSource.count) {
-        self.scrollIndex = 0;
-    }
-    [self->_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.scrollIndex++ inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:self.scrollIndex != 1];
+- (void)setUserList:(NSArray *)userList {
+    [self.dataSource removeAllObjects];
+    [self.dataSource addObjectsFromArray:userList];
+    [_tableView reloadData];
 }
 
-- (void)setRecordsArr:(NSArray *)recordsArr {
-    [self.dataSource removeAllObjects];
-    [self.dataSource addObjectsFromArray:recordsArr];
-    [_tableView reloadData];
+- (void)scrollTableView {
+    QBLog(@"%ld",self.scrollIndex);
+    if (self.scrollIndex >= self.dataSource.count - 3) {
+        self.scrollIndex = 3;
+    }
+    [self->_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.scrollIndex++ inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:self.scrollIndex != 4];
 }
 
 - (void)setScrollStart:(BOOL)scrollStart {
@@ -81,14 +72,18 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
 }
 
-#pragma mark - UITableViewDelegate,UITableViewDataSource
+#pragma mark -UITableViewDelegate,UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    YFBMessageAdCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBMessageAdCellReusableIdentifier forIndexPath:indexPath];
+    YFBScrollCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBExampleCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.row < self.dataSource.count) {
         cell.title = self.dataSource[indexPath.row];
     }
@@ -96,29 +91,26 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kWidth(48);
+    return kWidth(40);
 }
 
 @end
 
 
-@interface YFBMessageAdCell ()
+
+@interface YFBScrollCell ()
 @property (nonatomic) UILabel *label;
 @end
 
-@implementation YFBMessageAdCell
+@implementation YFBScrollCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.contentView.backgroundColor = [UIColor colorWithHexString:@"#D3B7FF"];
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-        
         self.label = [[UILabel alloc] init];
-        _label.textColor = [UIColor colorWithHexString:@"#FFFFFF"];
-        _label.font = [UIFont systemFontOfSize:kWidth(24)];
-        _label.textAlignment = NSTextAlignmentCenter;
+        _label.textColor = kColor(@"#999999");
+        _label.font = kFont(13);
         [self.contentView addSubview:_label];
         
         {
@@ -133,5 +125,4 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)setTitle:(NSString *)title {
     _label.text = title;
 }
-
 @end

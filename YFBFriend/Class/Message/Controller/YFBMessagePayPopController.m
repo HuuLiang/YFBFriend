@@ -17,6 +17,8 @@
 #import "YFBMessageDiamondPayTypeCell.h"
 #import "YFBMessageDiamondToPayCell.h"
 
+#import "YFBDiamondManager.h"
+
 typedef NS_ENUM(NSUInteger, YFBPopViewSection) {
     YFBPopViewSectionPayPoint = 0,
     YFBPopViewSectionPayTitle,
@@ -32,6 +34,13 @@ typedef NS_ENUM(NSUInteger,YFBPopViewDiamondSection) {
     YFBPopViewDiamondSectionCount
 };
 
+typedef NS_ENUM(NSUInteger,YFBMessageBuyDiamondSection) {
+    YFBMessageBuyDiamondSectionPayPoint = 0,
+    YFBMessageBuyDiamondSectionPayType,
+    YFBMessageBuyDiamondSectionToPay,
+    YFBMessageBuyDiamondSectionCount
+};
+
 static NSString *const kYFBFriendMessagePopViewPayPointReusableIdentifier = @"kYFBFriendMessagePopViewPayPointReusableIdentifier";
 static NSString *const kYFBFriendMessagePopViewPayTitleReusableIdentifier = @"kYFBFriendMessagePopViewPayTitleReusableIdentifier";
 static NSString *const kYFBFriendMessagePopViewPayTypeReusableIdentifier  = @"kYFBFriendMessagePopViewPayTypeReusableIdentifier";
@@ -42,7 +51,8 @@ static NSString *const kYFBFriendMessagePopViewDiamondPayTypeReusableIdentifier 
 static NSString *const kYFBFriendMessagePopViewDiamondToPayReusableIdentifier = @"kYFBFriendMessagePopVIewDiamondToPayReusableIdentifier";
 
 @interface YFBMessagePayPopController () <UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
-@property (nonatomic) UITableView *tableView;
+@property (nonatomic) UITableView *diamondTableView;
+@property (nonatomic) UITableView *vipTableView;
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) NSIndexPath *categoryIndexPath;
 @property (nonatomic) NSIndexPath *payTypeIndexPath;
@@ -57,7 +67,6 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.35];
     
-    
     switch (self.popViewType) {
         case YFBMessagePopViewTypeVip:
             [self configVipPopView];
@@ -65,6 +74,11 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
             
         case YFBMessagePopViewTypeDiamond:
             [self configDiamondPopView];
+            break;
+            
+        case YFBMessagePopViewTypeBuyDiamond:
+            [self configDiamondBuyView];
+            break;
             
         default:
             break;
@@ -72,23 +86,22 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 }
 
 - (void)configVipPopView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _tableView.backgroundColor = [UIColor clearColor];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [_tableView setScrollEnabled:NO];
-    [_tableView registerClass:[YFBMessagePayPointCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayPointReusableIdentifier];
-    [_tableView registerClass:[YFBMessagePayTitleCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayTitleReusableIdentifier];
-    [_tableView registerClass:[YFBMessagePayTypeCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayTypeReusableIdentifier];
-    [_tableView registerClass:[YFBMessageToPayCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayToPayReusableIdentifier];
-    [self.view addSubview:_tableView];
+    self.vipTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _vipTableView.backgroundColor = [UIColor clearColor];
+    _vipTableView.delegate = self;
+    _vipTableView.dataSource = self;
+    [_vipTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [_vipTableView setScrollEnabled:NO];
+    [_vipTableView registerClass:[YFBMessagePayPointCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayPointReusableIdentifier];
+    [_vipTableView registerClass:[YFBMessagePayTypeCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayTypeReusableIdentifier];
+    [_vipTableView registerClass:[YFBMessageToPayCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayToPayReusableIdentifier];
+    [self.view addSubview:_vipTableView];
     
-    UIImageView *backImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"message_pay_pop_view"]];
-    [self.view insertSubview:backImageView belowSubview:_tableView];
+    UIImageView *backImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"message_diamond_pop_view"]];
+    [self.view insertSubview:backImageView belowSubview:_vipTableView];
     
     {
-        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [_vipTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.mas_equalTo(self.view).mas_offset(-kScreenWidth*0.11);
             make.height.mas_equalTo(kWidth(670));
             make.left.mas_equalTo(self.view).mas_offset(kWidth(72));
@@ -96,7 +109,37 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
         }];
         
         [backImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(_tableView);
+            make.edges.equalTo(_vipTableView);
+        }];
+    }
+}
+
+- (void)configDiamondBuyView {
+    self.diamondTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _diamondTableView.backgroundColor = [UIColor clearColor];
+    _diamondTableView.delegate = self;
+    _diamondTableView.dataSource = self;
+    [_diamondTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [_diamondTableView setScrollEnabled:NO];
+    [_diamondTableView registerClass:[YFBMessagePayPointCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayPointReusableIdentifier];
+    [_diamondTableView registerClass:[YFBMessagePayTitleCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayTitleReusableIdentifier];
+    [_diamondTableView registerClass:[YFBMessagePayTypeCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayTypeReusableIdentifier];
+    [_diamondTableView registerClass:[YFBMessageToPayCell class] forCellReuseIdentifier:kYFBFriendMessagePopViewPayToPayReusableIdentifier];
+    [self.view addSubview:_diamondTableView];
+    
+    UIImageView *backImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"message_pay_pop_view"]];
+    [self.view insertSubview:backImageView belowSubview:_diamondTableView];
+    
+    {
+        [_diamondTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(self.view).mas_offset(-kScreenWidth*0.11);
+            make.height.mas_equalTo(kWidth(670));
+            make.left.mas_equalTo(self.view).mas_offset(kWidth(72));
+            make.right.mas_equalTo(self.view).mas_offset(kWidth(-72));
+        }];
+        
+        [backImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(_diamondTableView);
         }];
     }
 }
@@ -119,7 +162,6 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
             make.height.mas_equalTo(kWidth(590));
         }];
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -201,7 +243,13 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 #pragma mark UITableViewDelegate,UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return YFBPopViewSectionCount;
+    if ([tableView isKindOfClass:[_diamondTableView class]]) {
+        return YFBPopViewSectionCount;
+    } else if ([tableView isKindOfClass:[_vipTableView class]]) {
+        return YFBMessageBuyDiamondSectionCount;
+    } else {
+        return 0;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -209,82 +257,138 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == YFBPopViewSectionPayPoint) {
-        YFBMessagePayPointCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayPointReusableIdentifier forIndexPath:indexPath];
-        cell.morePrice = @"¥100";
-        cell.moreTitle = @"赠送100元话费";
-        cell.lessPrice = @"¥50";
-        cell.lessTitle = @"赠送50元话费";
-        @weakify(self);
-        cell.payAction = ^(id obj) {
-            @strongify(self);
+    if ([tableView isKindOfClass:[_diamondTableView class]]) {
+        if (indexPath.section == YFBPopViewSectionPayPoint) {
+            YFBMessagePayPointCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayPointReusableIdentifier forIndexPath:indexPath];
+            cell.morePrice = @"¥100";
+            cell.moreTitle = @"赠送100元话费";
+            cell.lessPrice = @"¥50";
+            cell.lessTitle = @"赠送50元话费";
+            @weakify(self);
+            cell.payAction = ^(id obj) {
+                @strongify(self);
+                
+                YFBMessagePayTitleCell *cell = [self->_diamondTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:YFBPopViewSectionPayTitle]];
+                if ([obj integerValue] == 1) {
+                    cell.title = @"对应11000钻石";
+                    cell.subTitle = @"(赠送100元话费)";
+                } else if ([obj integerValue] == 2) {
+                    cell.title = @"对应5000钻石";
+                    cell.subTitle = @"(赠送50元话费)";
+                }
+            };
+            return cell;
+        } else if (indexPath.section == YFBPopViewSectionPayTitle) {
+            YFBMessagePayTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayTitleReusableIdentifier forIndexPath:indexPath];
+            cell.title = @"对应11000币";
+            cell.subTitle = @"(赠送100元话费)";
+            return cell;
+        } else if (indexPath.section == YFBPopViewSectionPayType) {
+            YFBMessagePayTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayTypeReusableIdentifier forIndexPath:indexPath];
+            @weakify(self);
+            cell.payTypeAction = ^(id obj) {
+                @strongify(self);
+                
+            };
+            return cell;
+        } else if (indexPath.section == YFBPopViewSectionGoToPay) {
+            YFBMessageToPayCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayToPayReusableIdentifier forIndexPath:indexPath];
             
-            YFBMessagePayTitleCell *cell = [self->_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:YFBPopViewSectionPayTitle]];
-            if ([obj integerValue] == 1) {
-                cell.title = @"对应11000币";
-                cell.subTitle = @"(赠送100元话费)";
-            } else if ([obj integerValue] == 2) {
-                cell.title = @"对应5000币";
-                cell.subTitle = @"(赠送50元话费)";
-            }
-        };
-        return cell;
-    } else if (indexPath.section == YFBPopViewSectionPayTitle) {
-        YFBMessagePayTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayTitleReusableIdentifier forIndexPath:indexPath];
-        cell.title = @"对应11000币";
-        cell.subTitle = @"(赠送100元话费)";
-        return cell;
-    } else if (indexPath.section == YFBPopViewSectionPayType) {
-        YFBMessagePayTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayTypeReusableIdentifier forIndexPath:indexPath];
-        @weakify(self);
-        cell.payTypeAction = ^(id obj) {
-            @strongify(self);
+            return cell;
+        }
+    } else if ([tableView isKindOfClass:[_vipTableView class]]) {
+        if (indexPath.section == YFBMessageBuyDiamondSectionPayPoint) {
+            YFBMessagePayPointCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayPointReusableIdentifier forIndexPath:indexPath];
+            cell.morePrice = @"¥100";
+            cell.moreTitle = @"赠送100元话费";
+            cell.lessPrice = @"¥50";
+            cell.lessTitle = @"可与MM发信息";
+            return cell;
+        } else if (indexPath.section == YFBMessageBuyDiamondSectionPayType) {
+            YFBMessagePayTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayTypeReusableIdentifier forIndexPath:indexPath];
+            @weakify(self);
+            cell.payTypeAction = ^(id obj) {
+                @strongify(self);
+                
+            };
+            return cell;
+        } else if (indexPath.section == YFBMessageBuyDiamondSectionToPay) {
+            YFBMessageToPayCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayToPayReusableIdentifier forIndexPath:indexPath];
             
-        };
-        return cell;
-    } else if (indexPath.section == YFBPopViewSectionGoToPay) {
-        YFBMessageToPayCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayToPayReusableIdentifier forIndexPath:indexPath];
-        
-        return cell;
+            return cell;
+        }
     }
+    
     return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == YFBPopViewSectionPayPoint) {
-        return kWidth(160);
-    } else if (indexPath.section == YFBPopViewSectionPayTitle) {
-        return kWidth(58);
-    } else if (indexPath.section == YFBPopViewSectionPayType) {
-        return kWidth(80);
-    } else if (indexPath.section == YFBPopViewSectionGoToPay) {
-        return kWidth(84);
+    if ([tableView isKindOfClass:[_diamondTableView class]]) {
+        if (indexPath.section == YFBPopViewSectionPayPoint) {
+            return kWidth(160);
+        } else if (indexPath.section == YFBPopViewSectionPayTitle) {
+            return kWidth(58);
+        } else if (indexPath.section == YFBPopViewSectionPayType) {
+            return kWidth(80);
+        } else if (indexPath.section == YFBPopViewSectionGoToPay) {
+            return kWidth(84);
+        }
+    } else if ([tableView isKindOfClass:[_vipTableView class]]) {
+        if (indexPath.section == YFBMessageBuyDiamondSectionPayPoint) {
+            return kWidth(160);
+        } else if (indexPath.section == YFBMessageBuyDiamondSectionPayType) {
+            return kWidth(80);
+        } else if (indexPath.section == YFBMessageBuyDiamondSectionToPay) {
+            return kWidth(84);
+        }
     }
+    
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == YFBPopViewSectionPayPoint) {
-        return kWidth(160);
-    } else if (section == YFBPopViewSectionPayTitle) {
-        return kWidth(32);
-    } else if (section == YFBPopViewSectionPayType) {
-        return kWidth(30);
-    } else if (section == YFBPopViewSectionGoToPay) {
-        return kWidth(32);
+    if ([tableView isKindOfClass:[_diamondTableView class]]) {
+        if (section == YFBPopViewSectionPayPoint) {
+            return kWidth(160);
+        } else if (section == YFBPopViewSectionPayTitle) {
+            return kWidth(32);
+        } else if (section == YFBPopViewSectionPayType) {
+            return kWidth(30);
+        } else if (section == YFBPopViewSectionGoToPay) {
+            return kWidth(32);
+        }
+    } else if ([tableView isKindOfClass:[_vipTableView class]]) {
+        if (section == YFBMessageBuyDiamondSectionPayPoint) {
+            return kWidth(220);
+        } else if (section == YFBMessageBuyDiamondSectionPayType) {
+            return kWidth(66);
+        } else if (section == YFBMessageBuyDiamondSectionToPay) {
+            return kWidth(32);
+        }
     }
+    
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == YFBPopViewSectionPayPoint) {
-        return 0.01f;
-    } else if (section == YFBPopViewSectionPayTitle) {
-        return 0.01f;
-    } else if (section == YFBPopViewSectionPayType) {
-        return 0.01f;
-    } else if (section == YFBPopViewSectionGoToPay) {
-        return kWidth(34);
+    if ([tableView isKindOfClass:[_diamondTableView class]]) {
+        if (section == YFBPopViewSectionPayPoint) {
+            return 0.01f;
+        } else if (section == YFBPopViewSectionPayTitle) {
+            return 0.01f;
+        } else if (section == YFBPopViewSectionPayType) {
+            return 0.01f;
+        } else if (section == YFBPopViewSectionGoToPay) {
+            return kWidth(34);
+        }
+    } else if ([tableView isKindOfClass:[_vipTableView class]]) {
+        if (section == YFBMessageBuyDiamondSectionPayPoint) {
+            return 0.01f;
+        } else if (section == YFBMessageBuyDiamondSectionPayType) {
+            return 0.01f;
+        } else if (section == YFBMessageBuyDiamondSectionToPay) {
+            return kWidth(34);
+        }
     }
     return 0;
 }
@@ -292,6 +396,27 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] init];
     headerView.backgroundColor = [UIColor clearColor];
+    if ([tableView isKindOfClass:[_vipTableView class]]) {
+        UILabel *label = [[UILabel alloc] init];
+        label.font = kFont(14);
+        label.textColor = kColor(@"#999999");
+        [headerView addSubview:label];
+        
+        if (section == YFBMessageBuyDiamondSectionPayPoint) {
+           label.text = @"开通服务";
+        } else if (section == YFBMessageBuyDiamondSectionPayType) {
+            label.text = @"支付方式";
+        }
+        
+        {
+            [label mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(headerView).offset(kWidth(40));
+                make.bottom.equalTo(headerView.mas_bottom).offset(-kWidth(16));
+                make.height.mas_equalTo(kWidth(28));
+            }];
+        }
+    }
+    
     return headerView;
 }
 
@@ -321,8 +446,11 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == YFBPopViewDiamondSectionCategory) {
         YFBMessageDiamondCategoryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kYFBFriendMessagePopViewDiamondCategoryReusableIdentifier forIndexPath:indexPath];
-        cell.diamondCount = [NSString stringWithFormat:@"%ld",100*indexPath.item];
-        cell.price = [NSString stringWithFormat:@"%ld",10*indexPath.item];
+        if (indexPath.item < [YFBDiamondManager manager].diamonList.count) {
+            YFBDiamondInfo *diamondInfo = [YFBDiamondManager manager].diamonList[indexPath.item];
+            cell.diamondCount = [NSString stringWithFormat:@"%ld",diamondInfo.diamondAmount];
+            cell.price = [NSString stringWithFormat:@"%ld",(long)(diamondInfo.price/100)];
+        }
         return cell;
     } else if (indexPath.section == YFBPopViewDiamondSectionType) {
         YFBMessageDiamondPayTypeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kYFBFriendMessagePopViewDiamondPayTypeReusableIdentifier forIndexPath:indexPath];
@@ -417,5 +545,4 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
         //支付
     }
 }
-
 @end

@@ -14,9 +14,11 @@
 #import "YFBGiftPopViewController.h"
 #import "YFBMessagePayPopController.h"
 #import "YFBInteractionManager.h"
-#import "YFBDredgeVipController.h"
+#import "YFBVipViewController.h"
 #import "YFBDetailModel.h"
 #import "YFBGiftManager.h"
+#import "YFBMessageRecordManager.h"
+#import "YFBExampleManager.h"
 
 @interface YFBMessageViewController ()
 {
@@ -134,78 +136,100 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [self addChatMessage:chatMessage];
 }
 
-- (BOOL)ableToReply {
-    //聊天记录判断今天是否还能否继续发送免费消息
-    __block BOOL ableToReply = YES;
-    //如果是vip 择返回 yes
-    if ([YFBUtil isVip]) {
-        return ableToReply;
-    }
-    //如果不是vip 遍历缓存聊天记录 找到最近的一条记录 如果是今天的消息 则说明已经发送过了 就不能继续发送了
-    //如果不是今天的记录 说明可以继续发送
-    [self.chatMessages enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(YFBMessageModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj.sendUserId isEqualToString:[YFBUser currentUser].userId] && [obj.receiveUserId isEqualToString:self.userId]) {
-            if ([[YFBUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong] isToday]) {
-                ableToReply = NO;
-            }
-            * stop = YES;
-        }
-    }];
-    return ableToReply;
-}
-
 - (void)addChatMessage:(YFBMessageModel *)chatMessage {
-    if ([self ableToReply] && [YFBUtil ableToReply]) {
+    //判断是否需要进行VIP状态检测
+    //如果信息接受者是机器人则需要
+    __block YFBMessageRecordType recordType;
+    if ([chatMessage.receiveUserId isEqualToString:self.userId]) {
+        recordType = [[YFBMessageRecordManager manager] checkMessageRecordWithChatMessages:self.chatMessages thisMessage:chatMessage];
+        if (recordType <= YFBMessageRecordTypeAllowVip) {
+            [chatMessage saveOrUpdate];
+            [self.chatMessages addObject:chatMessage];
+        } else if (recordType == YFBMessageRecordTypeBuyDiamond) {
+            [self showPayVipView];
+            QBLog(@"购买钻石");
+            return;
+        } else if (recordType == YFBMessageRecordTypeBuyVip) {
+            [self showPayVipView];
+            QBLog(@"购买VIP");
+            return;
+        } else {
+            return;
+        }
+    } else {
+        //如果不是机器人则不需要
         [chatMessage saveOrUpdate];
         [self.chatMessages addObject:chatMessage];
-    } else {
-        [self showPayVipView];
-        return;
     }
     
     if (self.isViewLoaded) {
-        XHMessage *xhMsg;
-        NSDate *date = [YFBUtil dateFromString:chatMessage.messageTime WithDateFormat:KDateFormatLong];
-        if (chatMessage.messageType == YFBMessageTypeText) {
-            xhMsg = [[XHMessage alloc] initWithText:chatMessage.content
-                                             sender:chatMessage.sendUserId
-                                          timestamp:date];
-        } else if (chatMessage.messageType == YFBMessageTypePhoto) {
-            xhMsg = [[XHMessage alloc] initWithPhoto:nil
-                                        thumbnailUrl:chatMessage.content
-                                      originPhotoUrl:nil
-                                              sender:chatMessage.sendUserId
-                                           timestamp:date];
-        }
-        
-        if ([chatMessage.sendUserId isEqualToString:[YFBUser currentUser].userId]) {
-            xhMsg.bubbleMessageType = XHBubbleMessageTypeSending;
-        } else {
-            xhMsg.bubbleMessageType = XHBubbleMessageTypeReceiving;
-        }
-        
-        [self addMessage:xhMsg];
+        @weakify(self);
+        [[YFBInteractionManager manager] sendMessageInfoToUserId:chatMessage.receiveUserId content:chatMessage.content type:chatMessage.messageType handler:^(BOOL success) {
+            @strongify(self);
+            if (success) {
+                //保存已发送消息到消息记录管理里面
+                [self saveMessageInfo:chatMessage WithRecordType:recordType];
+                
+                XHMessage *xhMsg;
+                NSDate *date = [YFBUtil dateFromString:chatMessage.messageTime WithDateFormat:KDateFormatLong];
+                if (chatMessage.messageType == YFBMessageTypeText) {
+                    xhMsg = [[XHMessage alloc] initWithText:chatMessage.content
+                                                     sender:chatMessage.sendUserId
+                                                  timestamp:date];
+                } else if (chatMessage.messageType == YFBMessageTypePhoto) {
+                    xhMsg = [[XHMessage alloc] initWithPhoto:nil
+                                                thumbnailUrl:chatMessage.content
+                                              originPhotoUrl:nil
+                                                      sender:chatMessage.sendUserId
+                                                   timestamp:date];
+                }
+                
+                if ([chatMessage.sendUserId isEqualToString:[YFBUser currentUser].userId]) {
+                    xhMsg.bubbleMessageType = XHBubbleMessageTypeSending;
+                } else {
+                    xhMsg.bubbleMessageType = XHBubbleMessageTypeReceiving;
+                }
+                
+                [self addMessage:xhMsg];
+            } else {
+                [[YFBHudManager manager] showHudWithText:@"消息发送失败"];
+            }
+        }];
     }
 }
 
+- (void)saveMessageInfo:(YFBMessageModel *)messageModel WithRecordType:(YFBMessageRecordType)type {
+    YFBMessageRecordModel *recordModel = [[YFBMessageRecordModel alloc] init];
+    recordModel.messageTime = [YFBUtil timeStringFromDate:[YFBUtil dateFromString:messageModel.messageTime WithDateFormat:KDateFormatLong] WithDateFormat:KDateFormatShortest];
+    recordModel.userId = messageModel.receiveUserId;
+    recordModel.type = type;
+    [recordModel saveOrUpdate];
+}
+
 - (void)addPhoneOrWxWithMessageType:(YFBMessageFunciontType)type {
-    YFBDetailModel *detailModel = [[YFBDetailModel alloc] init];
-    [detailModel fetchDetailInfoWithUserId:self.userId CompletionHandler:^(BOOL success, YFBUserLoginModel * obj) {
-        if (success) {
-            NSString *content = nil;
-            if (type == YFBMessageFunciontTypePhone) {
-                content = [NSString stringWithFormat:@"我的手机号是%@",obj.userBaseInfo.mobilePhone];
-            } else if (type == YFBMessageFunciontTypeWX) {
-                content = [NSString stringWithFormat:@"我的微信号是%@",obj.userBaseInfo.weixin];
-            }
-            [self didSendText:content fromSender:self.userId onDate:[NSDate date]];
+    NSString *contactType = nil;
+    if (type == YFBMessageFunciontTypePhone) {
+        contactType = kYFBFriendReferContactPhoneKeyName;
+    } else if (type == YFBMessageFunciontTypeWX) {
+        contactType = kYFBFriendReferContactWXKeyName;
+    }
+
+    @weakify(self);
+    [[YFBInteractionManager manager] referUserContactWithType:contactType toUserId:self.userId handler:^(BOOL success, NSString *contact) {
+        @strongify(self);
+        NSString *content = nil;
+        if (type == YFBMessageFunciontTypePhone) {
+            content = [NSString stringWithFormat:@"我的手机号是%@",contact];
+        } else if (type == YFBMessageFunciontTypeWX) {
+            content = [NSString stringWithFormat:@"我的微信号是%@",contact];
         }
+        [self didSendText:content fromSender:self.userId onDate:[NSDate date]];
     }];
 }
 
 - (void)configFunctionUI {
     self.messagAdView = [[YFBMessageAdView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(48))];
-    _messagAdView.recordsArr = @[@"11",@"22",@"33",@"44",@"55"];
+    _messagAdView.recordsArr = [YFBExampleManager manager].giftExampleSource;
     [self.view addSubview:_messagAdView];
     
     YFBMessageFunctionView *functionView = [[YFBMessageFunctionView alloc] initWithFrame:CGRectMake(0, kWidth(48), kScreenWidth, kWidth(72))];
@@ -216,7 +240,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
             case YFBMessageFunciontTypeAttention:
                 [[YFBInteractionManager manager] concernUserWithUserId:self.userId handler:^(BOOL success) {
                     if (success) {
-                        [[YFBHudManager manager] showHudWithText:@"ga"];
+                        [[YFBHudManager manager] showHudWithText:@"关注成功"];
                     }
                 }];
                 break;
@@ -229,8 +253,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 if ([YFBUtil isVip]) {
                     [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypePhone];
                 } else {
-                    YFBDredgeVipController *vipVC = [[YFBDredgeVipController alloc] initWithTitle:@"充值"];
-                    [self.navigationController pushViewController:vipVC animated:YES];
+                    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
                 }
                 
                 break;
@@ -239,8 +262,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 if ([YFBUtil isVip]) {
                     [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypeWX];
                 } else {
-                    YFBDredgeVipController *vipVC = [[YFBDredgeVipController alloc] initWithTitle:@"充值"];
-                    [self.navigationController pushViewController:vipVC animated:YES];
+                    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
                 }
                 
                 

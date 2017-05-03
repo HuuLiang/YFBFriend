@@ -36,5 +36,6 @@
 + (NSString *)compareCurrentTime:(NSTimeInterval)compareTimeInterval;
 
 +(BOOL)isVip;
-+ (BOOL)ableToReply;
++ (BOOL)isFirstDay;
+//+ (BOOL)ableToReply;
 @end
