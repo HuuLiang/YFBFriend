@@ -108,7 +108,7 @@ typedef NS_ENUM(NSUInteger, YFBSettingFunctionType) {
     @weakify(self);
     [button bk_addEventHandler:^(id sender) {
         @strongify(self);
-        [self.navigationController popViewControllerAnimated:YES];
+        [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
     } forControlEvents:UIControlEventTouchUpInside];
     
     [button mas_makeConstraints:^(MASConstraintMaker *make) {

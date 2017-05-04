@@ -7,7 +7,6 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
-#import "JKDBModel.h"
 
 @interface YFBRobot : JKDBModel
 @property (nonatomic) NSString *userId;

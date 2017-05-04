@@ -94,6 +94,36 @@
     return success;
 }
 
+- (BOOL)loginUserInfoWithUserId:(NSString *)userId password:(NSString *)password handler:(void (^)(BOOL success))handler {
+    NSDictionary *params = @{@"userId":userId,
+                             @"password":password};
+    BOOL success = [self requestURLPath:YFB_LOGIN_URL
+                         standbyURLPath:nil
+                             withParams:params
+                        responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+    {
+        YFBRegisterUserResponse *resp = nil;
+        if (respStatus == QBURLResponseSuccess) {
+            resp = self.response;
+            
+            [YFBUser currentUser].userId = resp.userId;
+            [YFBUser currentUser].token = resp.token;
+            [YFBUser currentUser].diamondCount = resp.myDiamonds;
+            [YFBUser currentUser].userImage = resp.portraitUrl;
+            [YFBUser currentUser].expireTime = resp.vipExpireDate;
+            [YFBUser currentUser].userSex = [resp.gender isEqualToString:@"M"] ? YFBUserSexMale : YFBUserSexFemale;
+            
+            [[YFBUser currentUser] saveOrUpdateUserInfo];
+        }
+        if (handler) {
+            handler(respStatus == QBURLResponseSuccess);
+        }
+    }];
+    return success;
+}
+
+
+
 - (void)updateUserInfoWithType:(NSString *)type content:(id)content handler:(void (^)(BOOL success))handler {
     if ([content isKindOfClass:[NSDictionary class]]) {
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:content options:NSJSONWritingPrettyPrinted error:nil];

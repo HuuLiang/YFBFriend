@@ -16,6 +16,8 @@
 #import "YFBGiftManager.h"
 #import "YFBPayManager.h"
 #import "YFBExampleManager.h"
+#import "YFBMessageRecordManager.h"
+#import "YFBAutoReplyManager.h"
 
 #define WakeGiftManagerTimeInterval (60 * 5)
 
@@ -33,10 +35,7 @@
     [self setChildViewControllers];
 
     
-    [[YFBDiamondManager manager] getDiamondListCache];
-    [[YFBGiftManager manager] getGiftListCache];
-    [[YFBPayManager manager] getPayConfig];
-    [[YFBExampleManager manager] getExampleList];
+    
     
     [self performSelector:@selector(wakeAskGiftManager) withObject:nil afterDelay:WakeGiftManagerTimeInterval];
 }
@@ -44,6 +43,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//预加载相关配置
+- (void)defaultConfig {
+    [[YFBDiamondManager manager] getDiamondListCache];                  //获取钻石列表
+    [[YFBGiftManager manager] getGiftListCache];                        //获取礼物列表
+    [[YFBPayManager manager] getPayConfig];                             //获取支付配置
+    [[YFBExampleManager manager] getExampleList];                       //获取支付例子列表
+    [[YFBMessageRecordManager manager] deleteYesterdayRecordMessages];  //删除昨日消息记录
+    [[YFBAutoReplyManager manager] deleteYesterdayMessages];            //删除昨日推送记录
+    [[YFBAutoReplyManager manager] getRobotReplyMessages];              //获取批量的机器人消息留作推送
 }
 
 - (void)wakeAskGiftManager {

@@ -8,8 +8,10 @@
 
 #import "YFBContactViewController.h"
 #import "YFBContactCell.h"
-#import "YFBContactModel.h"
 #import "YFBMessageViewController.h"
+#import "YFBContactManager.h"
+#import "YFBVisiteModel.h"
+#import "YFBVisitemeViewController.h"
 
 static NSString *const kYFBContactCellReusableIdentifier = @"kYFBContactCellReusableIdentifier";
 
@@ -18,20 +20,19 @@ static NSString *const kYFBContactCellReusableIdentifier = @"kYFBContactCellReus
     UILabel *_notiLabel;
     UIButton *_deleteButton;
     UIButton *_readButton;
+    NSInteger visitemeCount;
 }
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) UIView *editingView;
 @property (nonatomic) NSMutableArray *dataSource;
 @property (nonatomic) NSMutableArray *selectedSource;
-@property (nonatomic) YFBContactModel *contactModel;
-@property (nonatomic) YFBContactResponse *response;
+@property (nonatomic) YFBVisiteModel *visiteModel;
 @end
 
 @implementation YFBContactViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 QBDefineLazyPropertyInitialization(NSMutableArray, selectedSource)
-QBDefineLazyPropertyInitialization(YFBContactModel, contactModel)
-QBDefineLazyPropertyInitialization(YFBContactResponse, response)
+QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,23 +43,16 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
     _tableView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
     [_tableView registerClass:[YFBContactCell class] forCellReuseIdentifier:kYFBContactCellReusableIdentifier];
     [self.view addSubview:_tableView];
-    
+    _tableView.tableFooterView = [[UIView alloc] init];
+
     {
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
         }];
     }
     
+    
     @weakify(self);
-    [_tableView YFB_addPullToRefreshWithHandler:^{
-        @strongify(self);
-        [self loadData];
-    }];
-    
-    [_tableView YFB_triggerPullToRefresh];
-    
-    _tableView.tableFooterView = [[UIView alloc] init];
-    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"编辑" style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
         //进入编辑模式
@@ -79,23 +73,34 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
         }
     }];
     
+    [self loadVisitemeData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)loadData {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self loadContactData];
+}
+
+- (void)loadVisitemeData {
     @weakify(self);
-    [self.contactModel fetchContactInfoWithCompletionHandler:^(BOOL success, YFBContactResponse * obj) {
+    [self.visiteModel fetchVisitemeInfoWithCompletionHandler:^(BOOL success, YFBVisiteResponse * visiteResponse) {
         @strongify(self);
-        [self->_tableView YFB_endPullToRefresh];
         if (success) {
-            self.response = obj;
+            self->visitemeCount = visiteResponse.userList.count;
             self->_tableView.tableHeaderView = [self configHeaderView];
-            [self->_tableView reloadData];
         }
     }];
+}
+
+- (void)loadContactData {
+    [self.dataSource removeAllObjects];
+    [self.dataSource addObjectsFromArray:[[YFBContactManager manager] loadAllContactInfo]];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)animationEditingViewHidden:(BOOL)hidden {
@@ -166,7 +171,7 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
 
     
     _notiLabel = [[UILabel alloc] init];
-    _notiLabel.text = [NSString stringWithFormat:@"今天共有%ld位女性访问你",self.response.visitMeCount];
+    _notiLabel.text = [NSString stringWithFormat:@"今天共有%ld位女性访问你",self->visitemeCount];
     _notiLabel.font = [UIFont systemFontOfSize:kWidth(26)];
     _notiLabel.textColor = [UIColor colorWithHexString:@"#97BCF0"];
     [headerView addSubview:_notiLabel];
@@ -194,6 +199,13 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
         }];
     }
     
+    @weakify(self);
+    [headerView bk_whenTapped:^{
+        @strongify(self);
+        YFBVisitemeViewController *visiteVC = [[YFBVisitemeViewController alloc] initWithTitle:@"最近访客"];
+        [self.navigationController pushViewController:visiteVC animated:YES];
+    }];
+    
     return headerView;
 }
 
@@ -204,17 +216,17 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.response.userList.count;
+    return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBContactCellReusableIdentifier forIndexPath:indexPath];
-    if (indexPath.row < self.response.userList.count) {
-        YFBContactUserModel *userInfo = self.response.userList[indexPath.row];
-        cell.userImgUrl = userInfo.portraitUrl;
-        cell.nickName = userInfo.nickName;
-        cell.recentTime = [userInfo.robotMsgList lastObject].sendTime;
-        cell.msgType = [[userInfo.robotMsgList lastObject].msgType integerValue];
+    if (indexPath.row < self.dataSource.count) {
+        YFBContactModel *contactModel = self.dataSource[indexPath.row];
+        cell.userImgUrl = contactModel.portraitUrl;
+        cell.nickName = contactModel.nickName;
+        cell.recentTime = contactModel.messageTime;
+        cell.msgType = contactModel.messageType;
     }
     return cell;
 }
@@ -224,9 +236,9 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    YFBContactUserModel *model = nil;
-    if (indexPath.row < self.response.userList.count) {
-        model = self.response.userList[indexPath.row];
+    YFBContactModel *model = nil;
+    if (indexPath.row < self.dataSource.count) {
+        model = self.dataSource[indexPath.row];
     }
     if (tableView.isEditing) {
         if (!model) {
@@ -241,7 +253,7 @@ QBDefineLazyPropertyInitialization(YFBContactResponse, response)
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBContactUserModel *model = nil;
     if (indexPath.row < self.dataSource.count) {
-        model = self.response.userList[indexPath.row];
+        model = self.dataSource[indexPath.row];
     }
     if (tableView.isEditing) {
         

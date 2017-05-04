@@ -9,7 +9,7 @@
 #import "YFBMessageViewController+XHBMessageDelegate.h"
 #import "YFBDetailViewController.h"
 #import "YFBPhotoBrowse.h"
-#import "YFBContactModel.h"
+
 
 @implementation YFBMessageViewController (XHBMessageDelegate)
 

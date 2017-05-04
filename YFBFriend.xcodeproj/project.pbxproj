@@ -15,6 +15,9 @@
 		B3D6E9B01EA4EDF700D972CC /* YFBGiftFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D6E9AF1EA4EDF700D972CC /* YFBGiftFooterView.m */; };
 		B3F0F5631EA48B0D003F0D15 /* YFBGiftPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F5621EA48B0D003F0D15 /* YFBGiftPopView.m */; };
 		B3F0F5661EA498E7003F0D15 /* YFBGiftPopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F5651EA498E7003F0D15 /* YFBGiftPopCell.m */; };
+		EC1993751EBAB8F300521528 /* YFBAutoReplyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC1993741EBAB8F300521528 /* YFBAutoReplyManager.m */; };
+		EC1993781EBAFF3E00521528 /* YFBContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC1993771EBAFF3E00521528 /* YFBContactManager.m */; };
+		EC19937B1EBB04F400521528 /* YFBVisitemeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC19937A1EBB04F400521528 /* YFBVisitemeViewController.m */; };
 		EC2149451EA5E86900E07592 /* YFBMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2149441EA5E86900E07592 /* YFBMessageViewController.m */; };
 		EC2149481EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2149471EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m */; };
 		EC21494B1EA5FC0B00E07592 /* YFBMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC21494A1EA5FC0B00E07592 /* YFBMessageModel.m */; };
@@ -46,7 +49,7 @@
 		EC6758AF1EAF3A7000BC9C34 /* YFBMessageDiamondPayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6758AE1EAF3A7000BC9C34 /* YFBMessageDiamondPayTypeCell.m */; };
 		EC6758B21EAF3A8A00BC9C34 /* YFBMessageDiamondToPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6758B11EAF3A8A00BC9C34 /* YFBMessageDiamondToPayCell.m */; };
 		EC6DAFE11EA4568A00D93FB3 /* YFBContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */; };
-		EC6DAFE41EA4C74E00D93FB3 /* YFBContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6DAFE31EA4C74E00D93FB3 /* YFBContactModel.m */; };
+		EC6DAFE41EA4C74E00D93FB3 /* YFBVisiteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6DAFE31EA4C74E00D93FB3 /* YFBVisiteModel.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
 		EC7F0F7A1E6FA86700F39FD9 /* YFBConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0F791E6FA86700F39FD9 /* YFBConfiguration.m */; };
 		EC7F0F7D1E6FA8C700F39FD9 /* YFBHudManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7F0F7C1E6FA8C700F39FD9 /* YFBHudManager.m */; };
@@ -301,6 +304,12 @@
 		B3F0F5641EA498E7003F0D15 /* YFBGiftPopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBGiftPopCell.h; sourceTree = "<group>"; };
 		B3F0F5651EA498E7003F0D15 /* YFBGiftPopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBGiftPopCell.m; sourceTree = "<group>"; };
 		BD481930EA9E3A5945F3FA6C /* Pods-YFBFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.debug.xcconfig"; sourceTree = "<group>"; };
+		EC1993731EBAB8F300521528 /* YFBAutoReplyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBAutoReplyManager.h; sourceTree = "<group>"; };
+		EC1993741EBAB8F300521528 /* YFBAutoReplyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBAutoReplyManager.m; sourceTree = "<group>"; };
+		EC1993761EBAFF3E00521528 /* YFBContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBContactManager.h; sourceTree = "<group>"; };
+		EC1993771EBAFF3E00521528 /* YFBContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBContactManager.m; sourceTree = "<group>"; };
+		EC1993791EBB04F400521528 /* YFBVisitemeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVisitemeViewController.h; sourceTree = "<group>"; };
+		EC19937A1EBB04F400521528 /* YFBVisitemeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBVisitemeViewController.m; sourceTree = "<group>"; };
 		EC2149431EA5E86900E07592 /* YFBMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessageViewController.h; sourceTree = "<group>"; };
 		EC2149441EA5E86900E07592 /* YFBMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageViewController.m; sourceTree = "<group>"; };
 		EC2149461EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YFBMessageViewController+XHBMessageDelegate.h"; sourceTree = "<group>"; };
@@ -363,8 +372,8 @@
 		EC6758B11EAF3A8A00BC9C34 /* YFBMessageDiamondToPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageDiamondToPayCell.m; sourceTree = "<group>"; };
 		EC6DAFDF1EA4568A00D93FB3 /* YFBContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBContactCell.h; sourceTree = "<group>"; };
 		EC6DAFE01EA4568A00D93FB3 /* YFBContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBContactCell.m; sourceTree = "<group>"; };
-		EC6DAFE21EA4C74E00D93FB3 /* YFBContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBContactModel.h; sourceTree = "<group>"; };
-		EC6DAFE31EA4C74E00D93FB3 /* YFBContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBContactModel.m; sourceTree = "<group>"; };
+		EC6DAFE21EA4C74E00D93FB3 /* YFBVisiteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVisiteModel.h; sourceTree = "<group>"; };
+		EC6DAFE31EA4C74E00D93FB3 /* YFBVisiteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBVisiteModel.m; sourceTree = "<group>"; };
 		EC7307031E83727D00D7BF70 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		EC7F0F771E6FA2A500F39FD9 /* YFBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBExtensions.h; sourceTree = "<group>"; };
 		EC7F0F781E6FA86700F39FD9 /* YFBConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBConfiguration.h; sourceTree = "<group>"; };
@@ -908,6 +917,8 @@
 			children = (
 				EC4827091E778D7B00F03454 /* YFBContactViewController.h */,
 				EC48270A1E778D7B00F03454 /* YFBContactViewController.m */,
+				EC1993791EBB04F400521528 /* YFBVisitemeViewController.h */,
+				EC19937A1EBB04F400521528 /* YFBVisitemeViewController.m */,
 				EC2149431EA5E86900E07592 /* YFBMessageViewController.h */,
 				EC2149441EA5E86900E07592 /* YFBMessageViewController.m */,
 				EC2149461EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.h */,
@@ -923,14 +934,18 @@
 		EC4827071E778D3C00F03454 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EC6DAFE21EA4C74E00D93FB3 /* YFBContactModel.h */,
-				EC6DAFE31EA4C74E00D93FB3 /* YFBContactModel.m */,
+				EC1993761EBAFF3E00521528 /* YFBContactManager.h */,
+				EC1993771EBAFF3E00521528 /* YFBContactManager.m */,
+				EC6DAFE21EA4C74E00D93FB3 /* YFBVisiteModel.h */,
+				EC6DAFE31EA4C74E00D93FB3 /* YFBVisiteModel.m */,
 				EC2149491EA5FC0B00E07592 /* YFBMessageModel.h */,
 				EC21494A1EA5FC0B00E07592 /* YFBMessageModel.m */,
 				EC21494C1EA6008700E07592 /* YFBPhotoBrowse.h */,
 				EC21494D1EA6008700E07592 /* YFBPhotoBrowse.m */,
 				ECE1BB761EB86A5C008D5520 /* YFBMessageRecordManager.h */,
 				ECE1BB771EB86A5C008D5520 /* YFBMessageRecordManager.m */,
+				EC1993731EBAB8F300521528 /* YFBAutoReplyManager.h */,
+				EC1993741EBAB8F300521528 /* YFBAutoReplyManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2389,7 +2404,8 @@
 				EC9A6A491E6D3F9E0018C5FB /* JKDBModel.m in Sources */,
 				EC65EE521E712A0600DA1AF9 /* YFBRegisterFirstVC.m in Sources */,
 				EC5D659B1E7A8EA200CBE08A /* YFBDetailViewController.m in Sources */,
-				EC6DAFE41EA4C74E00D93FB3 /* YFBContactModel.m in Sources */,
+				EC6DAFE41EA4C74E00D93FB3 /* YFBVisiteModel.m in Sources */,
+				EC1993781EBAFF3E00521528 /* YFBContactManager.m in Sources */,
 				ECE1BB4E1EB82896008D5520 /* YFBAdviseVC.m in Sources */,
 				EC7F0FAC1E70017C00F39FD9 /* YFBLoginViewController.m in Sources */,
 				ECEED79C1E9F6E8A00B47D8A /* YFBRobot.m in Sources */,
@@ -2496,6 +2512,7 @@
 				ECE1BB681EB829BD008D5520 /* YFBDiamondLabel.m in Sources */,
 				EC65EE5F1E715DCE00DA1AF9 /* YFBRegisterSecondVC.m in Sources */,
 				EC9A6A681E6D3F9E0018C5FB /* XHVideoOutputSampleBufferFactory.m in Sources */,
+				EC19937B1EBB04F400521528 /* YFBVisitemeViewController.m in Sources */,
 				EC65EE551E712A5B00DA1AF9 /* YFBUserLoginVC.m in Sources */,
 				EC9A6A7B1E6D3F9E0018C5FB /* SETextMagnifierCaret.m in Sources */,
 				EC9A6A7E1E6D3F9E0018C5FB /* SETextSelectionView.m in Sources */,
@@ -2570,6 +2587,7 @@
 				B3D6E9AD1EA4DBA900D972CC /* YFBBlagGiftView.m in Sources */,
 				EC48270B1E778D7B00F03454 /* YFBContactViewController.m in Sources */,
 				EC9A6A631E6D3F9E0018C5FB /* XHOperationNetworkKit.m in Sources */,
+				EC1993751EBAB8F300521528 /* YFBAutoReplyManager.m in Sources */,
 				ECE1BB031EB8265F008D5520 /* YFBMineDataInfoViewController.m in Sources */,
 				ECC0492E1EAE2C9C009E594F /* YFBMessageToPayCell.m in Sources */,
 				EC9A6A721E6D3F9E0018C5FB /* SEConstants.m in Sources */,

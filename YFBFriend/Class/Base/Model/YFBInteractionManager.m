@@ -9,6 +9,7 @@
 #import "YFBInteractionManager.h"
 #import "YFBRobot.h"
 #import "YFBMessageModel.h"
+#import "YFBAutoReplyManager.h"
 
 static NSString *const kYFBFriendGreetToOneUserKeyName = @"kYFBFriendGreetToOneUserKeyName";
 static NSString *const KYFBFriendGreetToAllUsersKeyName = @"KYFBFriendGreetToAllUsersKeyName";
@@ -71,10 +72,12 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
         }
     }];
     
+    NSString *userIdString = [userIdList componentsJoinedByString:@","];
+    
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                              @"userId":[YFBUser currentUser].userId,
                              @"token":[YFBUser currentUser].token,
-                             @"userIdStr":[userIdList componentsJoinedByString:@","]};
+                             @"userIdStr":userIdString};
     
     BOOL success = [self requestURLPath:YFB_GREET_URL
                          standbyURLPath:nil
@@ -82,6 +85,8 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
                         if (respStatus == QBURLResponseSuccess) {
+                            
+                            [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:userIdString];
                             
                             [availableUserList enumerateObjectsUsingBlock:^(YFBRobot *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                                 obj.greeted = YES;
@@ -105,6 +110,9 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
     }
     [self concernOrCancleUserWithUserId:userId isConcern:YES CompletionHandler:^(BOOL success, id obj) {
         if (success) {
+            
+            [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:robot.userId];
+            
             if (!robot) {
                 robot = [[YFBRobot alloc] init];
             }
@@ -194,6 +202,10 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
               withParams:params
          responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
+        if (respStatus == QBURLResponseSuccess) {
+            [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:userId];
+        }
+        
         if (handler) {
             handler(respStatus == QBURLResponseSuccess);
         }

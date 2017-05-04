@@ -10,6 +10,7 @@
 #import "YFBRegisterFirstVC.h"
 #import "YFBAccountManager.h"
 #import "YFBTextField.h"
+#import "YFBTabBarController.h"
 
 static NSString *const kYFBAccountCacheCellReusableIdentifier = @"kYFBAccountCacheCellReusableIdentifier";
 
@@ -34,7 +35,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [self configAccountAndPassWordField];
     [self configLoginButton];
     [self configRegisterButton];
-    [self configAccountCacheTableView];
+//    [self configAccountCacheTableView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,18 +50,18 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _accountField.placeholder = @"账号";
     [self.view addSubview:_accountField];
     
-    self.chooseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _chooseButton.backgroundColor = [UIColor clearColor];
-    [_chooseButton setImage:[UIImage imageNamed:@"login_choose"] forState:UIControlStateNormal];
-    [_chooseButton setImage:[UIImage imageNamed:@"login_choose"] forState:UIControlStateSelected];
-    [self.view addSubview:_chooseButton];
-    
-    @weakify(self);
-    [_chooseButton bk_addEventHandler:^(id sender) {
-        @strongify(self);
-        [self setAccountCacheTableViewHidden:self->_chooseButton.selected];
-        self->_chooseButton.selected = !self->_chooseButton.selected;
-    } forControlEvents:UIControlEventTouchUpInside];
+//    self.chooseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    _chooseButton.backgroundColor = [UIColor clearColor];
+//    [_chooseButton setImage:[UIImage imageNamed:@"login_choose"] forState:UIControlStateNormal];
+//    [_chooseButton setImage:[UIImage imageNamed:@"login_choose"] forState:UIControlStateSelected];
+//    [self.view addSubview:_chooseButton];
+//    
+//    @weakify(self);
+//    [_chooseButton bk_addEventHandler:^(id sender) {
+//        @strongify(self);
+//        [self setAccountCacheTableViewHidden:self->_chooseButton.selected];
+//        self->_chooseButton.selected = !self->_chooseButton.selected;
+//    } forControlEvents:UIControlEventTouchUpInside];
     
     self.passwordField = [[YFBTextField alloc] init];
     _passwordField.backgroundColor = kColor(@"#ffffff");
@@ -75,11 +76,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             make.size.mas_equalTo(CGSizeMake(kScreenWidth, kWidth(98)));
         }];
         
-        [_chooseButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(_accountField);
-            make.right.equalTo(self.view);
-            make.size.mas_equalTo(CGSizeMake(kWidth(60), kWidth(98)));
-        }];
+//        [_chooseButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.centerY.equalTo(_accountField);
+//            make.right.equalTo(self.view);
+//            make.size.mas_equalTo(CGSizeMake(kWidth(60), kWidth(98)));
+//        }];
         
         [_passwordField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
@@ -106,6 +107,17 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             make.size.mas_equalTo(CGSizeMake(kWidth(630), kWidth(80)));
         }];
     }
+    
+    @weakify(self);
+    [_loginButton bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        [[YFBAccountManager manager] loginUserInfoWithUserId:_accountField.text password:_passwordField.text handler:^(BOOL success) {
+            if (success) {
+                YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
+                [self presentViewController:tabbarController animated:YES completion:nil];
+            }
+        }];
+    } forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)configRegisterButton {
@@ -183,14 +195,5 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     return kWidth(60);
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JKDBModel.h"
 
 @class YFBMessageModel;
 
@@ -30,7 +29,8 @@ typedef NS_ENUM(NSInteger,YFBMessageRecordType)  {
 
 + (instancetype)manager;
 
-- (YFBMessageRecordType)checkMessageRecordWithChatMessages:(NSArray <YFBMessageModel *>*)chatMessages thisMessage:(YFBMessageModel *)messageModel;
+- (void)deleteYesterdayRecordMessages;
 
+- (YFBMessageRecordType)checkMessageRecordWithChatMessages:(NSArray <YFBMessageModel *>*)chatMessages thisMessage:(YFBMessageModel *)messageModel;
 
 @end

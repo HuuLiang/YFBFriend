@@ -52,6 +52,14 @@ typedef NS_ENUM(NSInteger, YFBUserInfoOpenType) {
     YFBUserInfoOpenTypeVip //保密
 };
 
+typedef NS_ENUM(NSUInteger, YFBMessageType) {
+    YFBMessageTypeText = 1,      //文字消息
+    YFBMessageTypePhoto = 2,     //图片消息
+    YFBMessageTypeGift = 3,     //礼物
+    YFBMessageTypeCount
+};
+
+
 typedef void (^YFBAction)(void);
 
 //

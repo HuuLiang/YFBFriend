@@ -48,6 +48,8 @@
 #define YFB_EXAMPLEHISTORY_URL          @"givePurchaseHisList.service"          //赠送礼物 开通vip 购买钻石 历史
 #define YFB_PAYCONFIG_URL               @"vdc.service"                          //支付配置
 #define YFB_REFERCONTACT_URL            @"viewContact.service"                  //查询用户联系方式
+#define YFB_GETMSGLIST_URL              @"msgListByRobotUserIdList.service"     //根据userId获取消息列表
+#define YFB_VISITEME_URL                @"visitMeUserList.service"              //访问我的人列表
 
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"

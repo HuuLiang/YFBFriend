@@ -18,6 +18,7 @@
 #import <BlocksKit+UIKit.h>
 #import <UIImageView+WebCache.h>
 #import <UIButton+WebCache.h>
+#import "JKDBModel.h"
 
 #import <QBNetworkingConfiguration.h>
 #import <QBNetworkInfo.h>

@@ -33,11 +33,14 @@
     return _messageRecordManager;
 }
 
-- (YFBMessageRecordType)checkMessageRecordWithChatMessages:(NSArray <YFBMessageModel *>*)chatMessages thisMessage:(YFBMessageModel *)messageModel {
+- (void)deleteYesterdayRecordMessages {
     //删除数据库中不是今天的数据
     if (![YFBUtil isFirstDay]) {
-        [YFBMessageRecordModel deleteObjectsByCriteria:[NSString stringWithFormat:@"where messageTime!=\'%@\'",[YFBUtil timeStringFromDate:[NSDate date] WithDateFormat:@"yyyyMMdd"]]];
+        [YFBMessageRecordModel deleteObjectsByCriteria:[NSString stringWithFormat:@"where messageTime!=\'%@\'",[YFBUtil timeStringFromDate:[NSDate date] WithDateFormat:KDateFormatShortest]]];
     }
+}
+
+- (YFBMessageRecordType)checkMessageRecordWithChatMessages:(NSArray <YFBMessageModel *>*)chatMessages thisMessage:(YFBMessageModel *)messageModel {
     
     //如果是vip  检测钻石是否充足
     YFBMessageRecordType recordType;
@@ -139,6 +142,5 @@
     }
     return YES;
 }
-
 
 @end

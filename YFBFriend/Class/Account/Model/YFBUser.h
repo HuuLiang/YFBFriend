@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JKDBModel.h"
 
 typedef NS_ENUM(NSInteger, YFBUserSex) {
     YFBUsersexUnkown = 0,
@@ -31,7 +30,6 @@ typedef NS_ENUM(NSInteger,YFBUserMarriageStatus) {
 + (instancetype)currentUser;
 
 //用户ID
-
 
 @property (nonatomic,copy) NSString *userId;
 

@@ -8,7 +8,6 @@
 
 #import "YFBMessageViewController.h"
 #import "YFBMessageModel.h"
-#import "YFBContactModel.h"
 #import "YFBMessageAdView.h"
 #import "YFBMessageFunctionView.h"
 #import "YFBGiftPopViewController.h"
