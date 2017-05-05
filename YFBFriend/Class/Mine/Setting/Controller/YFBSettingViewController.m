@@ -108,6 +108,9 @@ typedef NS_ENUM(NSUInteger, YFBSettingFunctionType) {
     @weakify(self);
     [button bk_addEventHandler:^(id sender) {
         @strongify(self);
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kYFBFriendCurrentUserKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
     } forControlEvents:UIControlEventTouchUpInside];
     

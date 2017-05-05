@@ -35,12 +35,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [self configAccountAndPassWordField];
     [self configLoginButton];
     [self configRegisterButton];
-//    [self configAccountCacheTableView];
+    [self configAccountCacheTableView];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)configAccountAndPassWordField {
@@ -50,18 +49,18 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _accountField.placeholder = @"账号";
     [self.view addSubview:_accountField];
     
-//    self.chooseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    _chooseButton.backgroundColor = [UIColor clearColor];
-//    [_chooseButton setImage:[UIImage imageNamed:@"login_choose"] forState:UIControlStateNormal];
-//    [_chooseButton setImage:[UIImage imageNamed:@"login_choose"] forState:UIControlStateSelected];
-//    [self.view addSubview:_chooseButton];
-//    
-//    @weakify(self);
-//    [_chooseButton bk_addEventHandler:^(id sender) {
-//        @strongify(self);
-//        [self setAccountCacheTableViewHidden:self->_chooseButton.selected];
-//        self->_chooseButton.selected = !self->_chooseButton.selected;
-//    } forControlEvents:UIControlEventTouchUpInside];
+    self.chooseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _chooseButton.backgroundColor = [UIColor clearColor];
+    [_chooseButton setImage:[UIImage imageNamed:@"login_choose"] forState:UIControlStateNormal];
+    [_chooseButton setImage:[UIImage imageNamed:@"login_choose"] forState:UIControlStateSelected];
+    [self.view addSubview:_chooseButton];
+    
+    @weakify(self);
+    [_chooseButton bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        [self setAccountCacheTableViewHidden:self->_chooseButton.selected];
+        self->_chooseButton.selected = !self->_chooseButton.selected;
+    } forControlEvents:UIControlEventTouchUpInside];
     
     self.passwordField = [[YFBTextField alloc] init];
     _passwordField.backgroundColor = kColor(@"#ffffff");
@@ -76,11 +75,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             make.size.mas_equalTo(CGSizeMake(kScreenWidth, kWidth(98)));
         }];
         
-//        [_chooseButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerY.equalTo(_accountField);
-//            make.right.equalTo(self.view);
-//            make.size.mas_equalTo(CGSizeMake(kWidth(60), kWidth(98)));
-//        }];
+        [_chooseButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(_accountField);
+            make.right.equalTo(self.view);
+            make.size.mas_equalTo(CGSizeMake(kWidth(60), kWidth(98)));
+        }];
         
         [_passwordField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
@@ -145,7 +144,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)configAccountCacheTableView {
-    self.dataSource = @[@"123123",@"123123",@"123123"];
+    [self.dataSource removeAllObjects];
+    [self.dataSource addObjectsFromArray:[YFBUser findAll]];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -187,7 +187,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBAccountCacheCellReusableIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = @"123123";
+    if (indexPath.row < self.dataSource.count) {
+        YFBUser *user = self.dataSource[indexPath.row];
+        cell.textLabel.text = user.userId;
+    }
+    
     return cell;
 }
 
@@ -195,5 +199,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     return kWidth(60);
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row < self.dataSource.count) {
+        YFBUser *user = self.dataSource[indexPath.row];
+        _accountField.text = user.userId;
+        _passwordField.text = user.password;
+        [self setAccountCacheTableViewHidden:YES];
+    }
+}
 
 @end

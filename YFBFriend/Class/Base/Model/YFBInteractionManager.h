@@ -27,6 +27,7 @@
 - (void)sendAdviceWithContent:(NSString *)content Contact:(NSString *)contact handler:(void(^)(BOOL success))handler;
 
 - (void)sendMessageInfoToUserId:(NSString *)userId content:(NSString *)content type:(NSInteger)messageType handler:(void(^)(BOOL success))handler;
+- (void)sendMessageInfoToUserId:(NSString *)userId content:(NSString *)content type:(NSInteger)messageType deductDiamonds:(NSInteger)deductDiamonds handler:(void(^)(BOOL success))handler;
 
 - (void)referUserContactWithType:(NSString *)type toUserId:(NSString *)userId handler:(void(^)(BOOL success,NSString *contact))handler;
 

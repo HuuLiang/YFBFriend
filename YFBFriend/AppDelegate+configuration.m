@@ -7,11 +7,12 @@
 //
 
 #import "AppDelegate+configuration.h"
-#import <QBPaymentManager.h>
-#import <QBPaymentConfig.h>
-#import <WXApi.h>
 #import "YFBAccountManager.h"
 #import "YFBImageUploadManager.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "WXApi.h"
+#import "WeChatPayManager.h"
+#import "AlipayManager.h"
 
 static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 
@@ -33,11 +34,6 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 #ifdef DEBUG
     //    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
 #endif
-    [[QBPaymentManager sharedManager] registerPaymentWithAppId:YFB_REST_APPID
-                                                     paymentPv:@([YFB_PAYMENT_PV integerValue])
-                                                     channelNo:YFB_CHANNEL_NO
-                                                     urlScheme:kAliPaySchemeUrl
-                                                 defaultConfig:[self setDefaultPaymentConfig]];
     
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
@@ -70,29 +66,29 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     [self.window makeKeyAndVisible];
 }
 
-- (QBPaymentConfig *)setDefaultPaymentConfig {
-    QBPaymentConfig *config = [[QBPaymentConfig alloc] init];
-    
-    QBPaymentConfigDetail *configDetails = [[QBPaymentConfigDetail alloc] init];
-    //爱贝默认配置
-    QBIAppPayConfig * iAppPayConfig = [[QBIAppPayConfig alloc] init];
-    iAppPayConfig.appid = @"3009833585";
-    iAppPayConfig.privateKey = @"MIICXAIBAAKBgQCUQdOH7B8xMBvAv2W+4qGtIQnVEIPEMic+T2GYYGCtx9VCoFXB/flUv6SPGkbUcvkafk9Goh2+Qk6jPzTBYt0FlrbJg1BBs0XcKaR/YE+P8eaQVuOgdaffD4G38kMwwJBbOFzyg/n4ovQx3tyURn4Cz/4AKeiV7pyoDFhvUxfXkQIDAQABAoGAbi19RkXz6FoYReX3dyR1gnRLGkxroCKlh2j23obBUmRv2FPPZ5uW76R8ZtzgRoIrHcVApP1VnU8poagXTKBsH9lYcjuDXDx3nGkop7K69oddzwMvR+RiMva5ryBjAD8kZZYGP/1ZqNts6Hg+vXGLn4gRdrXCHFcEpaqVZeR55QECQQDKnCDUaN9c9MEtctf40JeMMRatKaMP/73BvsyXD1jfjdFJw5tER/AUTMC9omyds93rY6nPZJI0qfmQy48Q5U1LAkEAu1Mc+PdoDo81Y3ElEuClS1zicjrFya68QL5Y4q0cqU+3tjCa2J9UpBG5Qqk4j9kxPHtlHgBjIbjWmjBHkL9xEwJAU/Ql1l4uT8JLWZ3AyCUG5txgXRhnrPV3l5SMCfweA2QsWLho2f5FCORU6T8oaqBhUGxXrMwrmQ7ljo4KliGtyQJAeohaWkzTpzpsDNk1DA0gcpSWl2v0dwGyqJMaZ2QfbGz12dofX/WREyV4zq8MjaPfvhVlRmOwdJ2I2yEbnwZrOwJBAKE+Xh5mXoGv+IFaKPbenlTmk38Zcxaokx8gvdzHaJQOQtFhkf/eFOhXGGufpeQOHIdGFTjjoOKKPh5y7XzMrLc=";
-    iAppPayConfig.publicKey = @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClu8EKXBq54ne+/GGxa09a6xa/8rKJZDnQ8CFe6D9xQLdV9P84kna6A5kqSZOiz3WnWGXDeCL+4M6N+5SiVPkF1cY5Im+eFevsIi2zGO3xUQ5SuVMrEeV86jNS/2VOgWlFWlWHVYndWxAZW7S0QdY0b/Fd+B40r2gwbMAXznsu5QIDAQAB";
-    iAppPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyIpay.json";
-    iAppPayConfig.waresid = @(1);
-    configDetails.iAppPayConfig = iAppPayConfig;
-    //支付方式
-    QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
-    payConfig.alipay = kQBIAppPayConfigName;
-    payConfig.wechat = @"kQBIAppPayConfigName";
-    
-    config.configDetails = configDetails;
-    config.payConfig = payConfig;
-    [config setAsCurrentConfig];
-    
-    return config;
-}
+//- (QBPaymentConfig *)setDefaultPaymentConfig {
+//    QBPaymentConfig *config = [[QBPaymentConfig alloc] init];
+//    
+//    QBPaymentConfigDetail *configDetails = [[QBPaymentConfigDetail alloc] init];
+//    //爱贝默认配置
+//    QBIAppPayConfig * iAppPayConfig = [[QBIAppPayConfig alloc] init];
+//    iAppPayConfig.appid = @"3009833585";
+//    iAppPayConfig.privateKey = @"MIICXAIBAAKBgQCUQdOH7B8xMBvAv2W+4qGtIQnVEIPEMic+T2GYYGCtx9VCoFXB/flUv6SPGkbUcvkafk9Goh2+Qk6jPzTBYt0FlrbJg1BBs0XcKaR/YE+P8eaQVuOgdaffD4G38kMwwJBbOFzyg/n4ovQx3tyURn4Cz/4AKeiV7pyoDFhvUxfXkQIDAQABAoGAbi19RkXz6FoYReX3dyR1gnRLGkxroCKlh2j23obBUmRv2FPPZ5uW76R8ZtzgRoIrHcVApP1VnU8poagXTKBsH9lYcjuDXDx3nGkop7K69oddzwMvR+RiMva5ryBjAD8kZZYGP/1ZqNts6Hg+vXGLn4gRdrXCHFcEpaqVZeR55QECQQDKnCDUaN9c9MEtctf40JeMMRatKaMP/73BvsyXD1jfjdFJw5tER/AUTMC9omyds93rY6nPZJI0qfmQy48Q5U1LAkEAu1Mc+PdoDo81Y3ElEuClS1zicjrFya68QL5Y4q0cqU+3tjCa2J9UpBG5Qqk4j9kxPHtlHgBjIbjWmjBHkL9xEwJAU/Ql1l4uT8JLWZ3AyCUG5txgXRhnrPV3l5SMCfweA2QsWLho2f5FCORU6T8oaqBhUGxXrMwrmQ7ljo4KliGtyQJAeohaWkzTpzpsDNk1DA0gcpSWl2v0dwGyqJMaZ2QfbGz12dofX/WREyV4zq8MjaPfvhVlRmOwdJ2I2yEbnwZrOwJBAKE+Xh5mXoGv+IFaKPbenlTmk38Zcxaokx8gvdzHaJQOQtFhkf/eFOhXGGufpeQOHIdGFTjjoOKKPh5y7XzMrLc=";
+//    iAppPayConfig.publicKey = @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClu8EKXBq54ne+/GGxa09a6xa/8rKJZDnQ8CFe6D9xQLdV9P84kna6A5kqSZOiz3WnWGXDeCL+4M6N+5SiVPkF1cY5Im+eFevsIi2zGO3xUQ5SuVMrEeV86jNS/2VOgWlFWlWHVYndWxAZW7S0QdY0b/Fd+B40r2gwbMAXznsu5QIDAQAB";
+//    iAppPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyIpay.json";
+//    iAppPayConfig.waresid = @(1);
+//    configDetails.iAppPayConfig = iAppPayConfig;
+//    //支付方式
+//    QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
+//    payConfig.alipay = kQBIAppPayConfigName;
+//    payConfig.wechat = @"kQBIAppPayConfigName";
+//    
+//    config.configDetails = configDetails;
+//    config.payConfig = payConfig;
+//    [config setAsCurrentConfig];
+//    
+//    return config;
+//}
 
 - (void)setCommonStyle {
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#ffffff"]];
@@ -168,6 +164,9 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+        [[AlipayManager shareInstance] sendNotificationByResult:resultDic];
+    }];
     [WXApi handleOpenURL:url delegate:self];
     return YES;
 }
@@ -180,11 +179,17 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 - (void)onResp:(BaseResp *)resp {
     if ([resp isKindOfClass:[SendAuthResp class]]) {
         [[YFBAccountManager manager] sendAuthRespCode:(SendAuthResp *)resp];
+    } else if ([resp isKindOfClass:[PayResp class]]) {
+        YFBPayResult payResult;
+        if (resp.errCode == WXErrCodeUserCancel) {
+            payResult = YFBPayResultCancle;
+        } else if (resp.errCode == WXSuccess) {
+            payResult = YFBPayResultSuccess;
+        } else {
+            payResult = YFBPayResultFailed;
+        }
+        [[WeChatPayManager sharedInstance] sendNotificationByResult:payResult];
     }
 }
-
-#pragma mark - QQApiInterfaceDelegate
-
-
 
 @end

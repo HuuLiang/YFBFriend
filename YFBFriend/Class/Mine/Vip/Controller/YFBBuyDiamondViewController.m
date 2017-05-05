@@ -10,7 +10,7 @@
 #import "YFBDredgeVipPayCell.h"
 #import "YFBBuyDiamondPrivilegeCell.h"
 #import "YFBVipExampleCell.h"
-#import "YFBPayManager.h"
+#import "YFBPayConfigManager.h"
 
 #define MorePrivilegeArray            @[@"1.仅VIP用户可查看联系方式",@"2.仅VIP用户可查看访问列表",@"3.充值钻石聊天80钻石/条信息",@"4.钻石可购买礼物"]
 
@@ -98,12 +98,12 @@ typedef NS_ENUM(NSUInteger, YFBBuyDiamondSection) {
     @weakify(self);
     if (indexPath.section == YFBBuyDiamondSectionPay) {
         YFBDredgeVipPayCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendBuyDiamondCellReusableIdentifier forIndexPath:indexPath];
-        cell.lessTime = [NSString stringWithFormat:@"%ld钻石",[YFBPayManager manager].diamondInfo.firstInfo.amount];
-        cell.lessPrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayManager manager].diamondInfo.firstInfo.price/100)];
-        cell.lessTitle = [YFBPayManager manager].diamondInfo.firstInfo.detail;
-        cell.moreTime = [NSString stringWithFormat:@"%ld钻石",[YFBPayManager manager].diamondInfo.secondInfo.amount];
-        cell.morePrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayManager manager].diamondInfo.secondInfo.price/100)];
-        cell.moreTitle = [YFBPayManager manager].diamondInfo.secondInfo.detail;
+        cell.lessTime = [NSString stringWithFormat:@"%ld钻石",[YFBPayConfigManager manager].diamondInfo.firstInfo.amount];
+        cell.lessPrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].diamondInfo.firstInfo.price/100)];
+        cell.lessTitle = [YFBPayConfigManager manager].diamondInfo.firstInfo.detail;
+        cell.moreTime = [NSString stringWithFormat:@"%ld钻石",[YFBPayConfigManager manager].diamondInfo.secondInfo.amount];
+        cell.morePrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].diamondInfo.secondInfo.price/100)];
+        cell.moreTitle = [YFBPayConfigManager manager].diamondInfo.secondInfo.detail;
         cell.payAction = ^(id sender){
             @strongify(self);
             //支付

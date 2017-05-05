@@ -11,7 +11,7 @@
 #import "YFBDredgeVipPrivilegeCell.h"
 #import "YFBBuyDiamondPrivilegeCell.h"
 #import "YFBVipExampleCell.h"
-#import "YFBPayManager.h"
+#import "YFBPayConfigManager.h"
 
 #define MorePrivilegeArray            @[@"1.仅VIP用户可查看联系方式",@"2.仅VIP用户可查看访问列表"]
 
@@ -98,12 +98,12 @@ static NSString *const kYFBFriendVipExampleCellReusableIdentifier = @"kYFBFriend
     @weakify(self);
     if (indexPath.section == YFBDredgeVipSectionPay) {
         YFBDredgeVipPayCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBDredgeVipPayCellReusableIdentifier forIndexPath:indexPath];
-        cell.lessTime = [NSString stringWithFormat:@"%ld天",[YFBPayManager manager].vipInfo.firstInfo.amount];
-        cell.lessPrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayManager manager].vipInfo.firstInfo.price/100)];
-        cell.lessTitle = [NSString stringWithFormat:@"(%.1f元/天)",(float)[YFBPayManager manager].vipInfo.firstInfo.price/100/[YFBPayManager manager].vipInfo.firstInfo.amount];
-        cell.moreTime = [NSString stringWithFormat:@"%ld天",[YFBPayManager manager].vipInfo.secondInfo.amount];
-        cell.morePrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayManager manager].vipInfo.secondInfo.price/100)];
-        cell.moreTitle = [NSString stringWithFormat:@"(%.1f元/天)",(float)[YFBPayManager manager].vipInfo.secondInfo.price/100/[YFBPayManager manager].vipInfo.secondInfo.amount];
+        cell.lessTime = [NSString stringWithFormat:@"%ld天",[YFBPayConfigManager manager].vipInfo.firstInfo.amount];
+        cell.lessPrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].vipInfo.firstInfo.price/100)];
+        cell.lessTitle = [NSString stringWithFormat:@"(%.1f元/天)",(float)[YFBPayConfigManager manager].vipInfo.firstInfo.price/100/[YFBPayConfigManager manager].vipInfo.firstInfo.amount];
+        cell.moreTime = [NSString stringWithFormat:@"%ld天",[YFBPayConfigManager manager].vipInfo.secondInfo.amount];
+        cell.morePrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].vipInfo.secondInfo.price/100)];
+        cell.moreTitle = [NSString stringWithFormat:@"(%.1f元/天)",(float)[YFBPayConfigManager manager].vipInfo.secondInfo.price/100/[YFBPayConfigManager manager].vipInfo.secondInfo.amount];
         cell.payAction = ^(id sender){
             @strongify(self);
             //支付

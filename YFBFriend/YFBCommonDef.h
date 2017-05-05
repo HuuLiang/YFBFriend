@@ -59,39 +59,17 @@ typedef NS_ENUM(NSUInteger, YFBMessageType) {
     YFBMessageTypeCount
 };
 
+typedef NS_ENUM(NSInteger, YFBPayResult) {
+    YFBPayResultUnknow = 0,     //未知状态
+    YFBPayResultSuccess = 1,    //成功
+    YFBPayResultCancle = 2,     //取消
+    YFBPayResultFailed = 3      //失败
+};
 
 typedef void (^YFBAction)(void);
 
-//
-//typedef NS_ENUM(NSUInteger, YFBDynamicType) {
-//    YFBDynamicTypeOnePhoto = 0,  //1张照片
-//    YFBDynamicTypeTwoPhotos,     //2张照片
-//    YFBDynamicTypeThreePhotos,   //3张照片
-//    YFBDynamicTypeVideo,         //视频
-//    YFBDynamicTypeCount
-//};
-//
-//typedef NS_ENUM(NSUInteger, YFBMineUsersType) {
-//    YFBMineUsersTypeFollow,//关注
-//    YFBMineUsersTypeFans, //粉丝
-//    YFBMineUsersTypeVisitor, //访客
-//    YFBMineUsersTypeHeader,//头像
-//    YFBMineUsersTypeCount
-//};
-//
-//typedef NS_ENUM(NSUInteger, YFBUserCreateMessageType) {
-//    YFBUserCreateMessageTypeGreet,//打招呼
-//    YFBUserCreateMessageTypeFollow, //关注
-//    YFBUserCreateMessageTypeChat, //聊天
-//    YFBUserCreateMessageTypeCount
-//};
-////会员等级
-//typedef NS_ENUM(NSUInteger,YFBVipType) {
-//    YFBVipTypeYear = 0,
-//    YFBVipTypeQuarter = 1,
-//    YFBVipTypeMonth = 2,
-//    YFBVipTypePacket =3 //发红包
-//};
+
+static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurrentUserKeyName";
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
@@ -101,6 +79,9 @@ typedef void (^YFBAction)(void);
 #define KUpdateContactUnReadMessageNotification         @"YFBUpdateContactUnReadMessageNotification"
 #define kYFBFriendMessageGiftListPayNotification        @"YFBFriendMessageGiftListPayNotification"
 #define kYFBFriendMessageGiftListSendNotification       @"YFBFriendMessageGiftListSendNotification"
+
+#define kYFBFriendAliPaySchemeUrl                       @"comyuefenbaappalipayschemeurl"
+#define kYFBFriendWXPaySchemeUrl                        @"wx2b2846687e296e95"
 
 #define KDateFormatShortest               @"yyyyMMdd"
 #define kDateFormatShort                  @"yyyy-MM-dd"

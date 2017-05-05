@@ -16,7 +16,8 @@
 #define YFB_PACKAGE_CERTIFICATE      @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 
 #define YFB_REST_APP_VERSION         ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
-//#define YFB_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", YFB_REST_APPID, YFB_CHANNEL_NO]
+#define YFB_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", YFB_REST_APPID, YFB_CHANNEL_NO]
+#define YFB_PAYMENT_ORDERID          [NSString stringWithFormat:@"%@_%@", [YFB_CHANNEL_NO substringFromIndex:YFB_CHANNEL_NO.length-14], [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)]]
 
 #define YFB_BASE_URL                    @"http://120.24.252.114/friend"//@"http://mcps.dswtg.com"
 #define YFB_STANDBY_BASE_URL            @"http://sfs.dswtg.com"
@@ -50,7 +51,7 @@
 #define YFB_REFERCONTACT_URL            @"viewContact.service"                  //查询用户联系方式
 #define YFB_GETMSGLIST_URL              @"msgListByRobotUserIdList.service"     //根据userId获取消息列表
 #define YFB_VISITEME_URL                @"visitMeUserList.service"              //访问我的人列表
-
+#define YFB_UPDATEORDER_URL             @"ovpd.service"                         //订单协议
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"
 #define YFB_APP_URL                     @"/iosvideo/appSpreadList.htm"

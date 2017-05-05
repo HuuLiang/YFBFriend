@@ -10,7 +10,6 @@
 
 static YFBUser *_currentUser;
 
-static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurrentUserKeyName";
 
 //static NSString *const kYFBFriendCurrentUserIdKeyName       = @"kYFBFriendCurrentUserIdKeyName";
 //static NSString *const kYFBFriendCurrentUserTokenKeyName    = @"kYFBFriendCurrentUserTokenKeyName";

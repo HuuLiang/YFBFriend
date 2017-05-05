@@ -55,8 +55,8 @@ static NSString *const kYFBMessageReplyIsFirstDayKeyName = @"kYFBMessageReplyIsF
 #pragma mark - 判断用户是否登录
 
 + (BOOL)checkUserIsLogin {
-//    return YES;
-    if ([YFBUser currentUser].userId.length > 0) {
+    NSString *currentUserId = [[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendCurrentUserKeyName];
+    if (currentUserId.length > 0) {
         return YES;
     }
     return NO;

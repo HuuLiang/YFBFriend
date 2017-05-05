@@ -43,16 +43,6 @@ PODS:
   - QBNetworking (0.0.19):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
-  - QBPayment/Core (106):
-    - Aspects (~> 1.4.1)
-    - MBProgressHUD (~> 0.9.2)
-    - QBExtensions (~> 0.0.6)
-    - QBNetworking (~> 0.0.4)
-  - QBPayment/CorePay (106):
-    - OpenSSL (~> 1.0.208)
-  - QBPayment/IappPay (106):
-    - QBPayment/Core
-    - QBPayment/CorePay
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
@@ -60,14 +50,17 @@ PODS:
   - UMengAnalytics-NO-IDFA (4.1.9)
 
 DEPENDENCIES:
+  - Aspects (~> 1.4.1)
   - BlocksKit (~> 2.2.5)
   - FMDB (~> 2.6.2)
   - Masonry (~> 0.6.3)
   - MBProgressHUD (~> 0.9.2)
   - MGSwipeTableCell (~> 1.5.6)
   - MJRefresh (~> 2.4.12)
+  - OpenSSL (~> 1.0.208)
   - pop (~> 1.0.9)
-  - QBPayment/IappPay
+  - QBExtensions
+  - QBNetworking
   - SDWebImage (= 3.7.3)
   - SFHFKeychainUtils (~> 0.0.1)
   - UMengAnalytics-NO-IDFA (~> 4.1.1)
@@ -85,11 +78,10 @@ SPEC CHECKSUMS:
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   QBExtensions: 02e2121ad8cfbcb9770a1627bc6edf4a6a92fd09
   QBNetworking: e9521a25ec83f6e1cc29f0d88da9fa3713078170
-  QBPayment: b6401acb5887e00f5ba2c2ddf86826a428df5811
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
   UMengAnalytics-NO-IDFA: 985292af177111685325c90c321094172b95d2cb
 
-PODFILE CHECKSUM: 469c4d1f37424378296316788fea0c367085867f
+PODFILE CHECKSUM: 0b5f7d21b65ffbd573b92560a8e84bb2b4a230c9
 
 COCOAPODS: 1.2.0.beta.3

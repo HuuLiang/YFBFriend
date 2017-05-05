@@ -7,7 +7,7 @@
 //
 
 #import "YFBAccountManager.h"
-#import <WXApi.h>
+#import "WXApi.h"
 #import <AFNetworking.h>
 
 

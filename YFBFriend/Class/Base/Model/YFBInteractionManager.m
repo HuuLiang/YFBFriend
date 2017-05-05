@@ -44,8 +44,10 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 }
 
 //打招呼
-- (void)greetWithUserInfoList:(NSArray<YFBRobot *> *)userList toAllUsers:(BOOL)toAll handler:(void (^)(BOOL))handler {
-    
+- (void)greetWithUserInfoList:(NSArray<YFBRobot *> *)userList
+                   toAllUsers:(BOOL)toAll
+                      handler:(void (^)(BOOL))handler
+{
     NSInteger userCount = [[[NSUserDefaults standardUserDefaults] objectForKey:toAll ? KYFBFriendGreetToAllUsersKeyName : kYFBFriendGreetToOneUserKeyName] integerValue];
     if (userCount > toAll ? GreetToAllUsersCount : GreetToOneUserCount) {
         [[YFBHudManager manager] showHudWithText:toAll ? @"超出每日群体招呼次数限制" : @"超出每日单人招呼次数限制"];
@@ -61,7 +63,9 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
     }];
 }
 
-- (BOOL)fetchGreetingInfoWithUserIdStr:(NSArray <YFBRobot *> *)userList CompletionHandler:(QBCompletionHandler)handler {
+- (BOOL)fetchGreetingInfoWithUserIdStr:(NSArray <YFBRobot *> *)userList
+                     CompletionHandler:(QBCompletionHandler)handler
+{
     NSMutableArray *availableUserList = [NSMutableArray array];
     NSMutableArray *userIdList = [NSMutableArray array];
     
@@ -102,7 +106,9 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 }
 
 //关注
-- (void)concernUserWithUserId:(NSString *)userId handler:(void (^)(BOOL))handler {
+- (void)concernUserWithUserId:(NSString *)userId
+                      handler:(void (^)(BOOL))handler
+{
     __block YFBRobot *robot = [YFBRobot findFirstByCriteria:[NSString stringWithFormat:@"WHRER userId=\'%@\'",userId]];
     if (robot.concerned) {
         [[YFBHudManager manager] showHudWithText:@"已经关注过了"];
@@ -127,7 +133,9 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 }
 
 //取消关注
-- (void)cancleConcernUserWithUserId:(NSString *)userId handler:(void (^)(BOOL))handler {
+- (void)cancleConcernUserWithUserId:(NSString *)userId
+                            handler:(void (^)(BOOL))handler
+{
     __block YFBRobot *robot = [YFBRobot findFirstByCriteria:[NSString stringWithFormat:@"WHRER userId=\'%@\'",userId]];
     if (robot.concerned) {
         [self concernOrCancleUserWithUserId:userId isConcern:NO CompletionHandler:^(BOOL success, id obj) {
@@ -150,7 +158,10 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 
 }
 
-- (BOOL)concernOrCancleUserWithUserId:(NSString *)userId isConcern:(BOOL)isConcern CompletionHandler:(QBCompletionHandler)handler {
+- (BOOL)concernOrCancleUserWithUserId:(NSString *)userId
+                            isConcern:(BOOL)isConcern
+                    CompletionHandler:(QBCompletionHandler)handler
+{
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                              @"userId":[YFBUser currentUser].userId,
                              @"token":[YFBUser currentUser].token,
@@ -170,7 +181,10 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 
 //意见反馈
 
-- (void)sendAdviceWithContent:(NSString *)content Contact:(NSString *)contact handler:(void (^)(BOOL))handler {
+- (void)sendAdviceWithContent:(NSString *)content
+                      Contact:(NSString *)contact
+                      handler:(void (^)(BOOL))handler
+{
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                              @"userId":[YFBUser currentUser].userId,
                              @"token":[YFBUser currentUser].token,
@@ -189,27 +203,45 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 }
 
 //发送消息
-- (void)sendMessageInfoToUserId:(NSString *)userId content:(NSString *)content type:(NSInteger)messageType handler:(void (^)(BOOL))handler {
+- (void)sendMessageInfoToUserId:(NSString *)userId
+                        content:(NSString *)content
+                           type:(NSInteger)messageType
+                        handler:(void (^)(BOOL))handler {
+    [self sendMessageInfoToUserId:userId
+                          content:content
+                             type:messageType
+                   deductDiamonds:0
+                          handler:handler];
+}
+
+- (void)sendMessageInfoToUserId:(NSString *)userId
+                        content:(NSString *)content
+                           type:(NSInteger)messageType
+                 deductDiamonds:(NSInteger)deductDiamonds
+                        handler:(void (^)(BOOL))handler
+{
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                              @"userId":[YFBUser currentUser].userId,
                              @"token":[YFBUser currentUser].token,
                              @"toUserId":userId,
                              @"content":content,
-                             @"msgType":@(messageType)};
+                             @"msgType":@(messageType),
+                             @"deductDiamonds":@(deductDiamonds)};
     
     [self requestURLPath:YFB_SENDMSG_URL
           standbyURLPath:nil
               withParams:params
          responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
-    {
-        if (respStatus == QBURLResponseSuccess) {
-            [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:userId];
-        }
-        
-        if (handler) {
-            handler(respStatus == QBURLResponseSuccess);
-        }
-    }];
+     {
+         if (respStatus == QBURLResponseSuccess) {
+             [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:userId];
+         }
+         
+         if (handler) {
+             handler(respStatus == QBURLResponseSuccess);
+         }
+     }];
+
 }
 
 //查询微信 手机 qq
@@ -233,6 +265,5 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
         }
     }];
 }
-
 
 @end

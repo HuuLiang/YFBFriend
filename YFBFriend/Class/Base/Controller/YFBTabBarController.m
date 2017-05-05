@@ -14,7 +14,7 @@
 
 #import "YFBDiamondManager.h"
 #import "YFBGiftManager.h"
-#import "YFBPayManager.h"
+#import "YFBPayConfigManager.h"
 #import "YFBExampleManager.h"
 #import "YFBMessageRecordManager.h"
 #import "YFBAutoReplyManager.h"
@@ -34,8 +34,7 @@
     self.tabBar.layer.borderWidth = 0.5;
     [self setChildViewControllers];
 
-    
-    
+    [self loadDefaultConfig];
     
     [self performSelector:@selector(wakeAskGiftManager) withObject:nil afterDelay:WakeGiftManagerTimeInterval];
 }
@@ -46,10 +45,10 @@
 }
 
 //预加载相关配置
-- (void)defaultConfig {
+- (void)loadDefaultConfig {
     [[YFBDiamondManager manager] getDiamondListCache];                  //获取钻石列表
     [[YFBGiftManager manager] getGiftListCache];                        //获取礼物列表
-    [[YFBPayManager manager] getPayConfig];                             //获取支付配置
+    [[YFBPayConfigManager manager] getPayConfig];                       //获取支付配置
     [[YFBExampleManager manager] getExampleList];                       //获取支付例子列表
     [[YFBMessageRecordManager manager] deleteYesterdayRecordMessages];  //删除昨日消息记录
     [[YFBAutoReplyManager manager] deleteYesterdayMessages];            //删除昨日推送记录

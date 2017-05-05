@@ -9,6 +9,7 @@
 #import "YFBDiamondVoucherController.h"
 #import "YFBDiamondPayTypeCell.h"
 #import "YFBDiamondLabel.h"
+#import "YFBPaymentManager.h"
 
 
 static NSString *const kYFBDiamondPayTypeCellIdentifier = @"kyfb_diamond_pay_type_cell_identifier";
@@ -154,8 +155,6 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == YFBDiamondPayTypePayType) {
-        //        NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"选择支付方式"];
-        //        [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#666666")} range:NSMakeRange(0, attributeStr.length)];
         return @"选择支付方式";
     }else if (section == YFBDiamondPayTypeSubTitle){
         return @"充值疑难解答";
@@ -194,8 +193,15 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
     if (indexPath.section == YFBDiamondPayTypePayType) {
         if (indexPath.row == 0) {
             QBLog(@"支付宝支付");
-        }else if (indexPath.row == 1){
-        QBLog(@"微信支付")
+            [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:YFBPayTypeAliPay price:self->_price count:self->_diamond handler:^(BOOL success) {
+                
+            }];
+        } else if (indexPath.row == 1){
+            QBLog(@"微信支付")
+            [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:YFBPayTypeWeiXin price:self->_price count:self->_diamond handler:^(BOOL success) {
+                
+            }];
+
         }
         
     }else if (indexPath.section == YFBDiamondPayTypeSubTitle){
