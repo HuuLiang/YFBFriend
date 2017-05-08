@@ -14,6 +14,7 @@
 @property (nonatomic) NSString *portraitUrl;
 @property (nonatomic) NSString *messageTime;
 @property (nonatomic) NSString *messageContent;
+@property (nonatomic) NSInteger unreadMsgCount;
 @property (nonatomic) YFBMessageType messageType;
 @end
 

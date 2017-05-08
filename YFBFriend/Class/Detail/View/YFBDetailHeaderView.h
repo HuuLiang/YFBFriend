@@ -17,6 +17,6 @@
 @property (nonatomic,copy) NSString *userLocation;
 @property (nonatomic,copy) NSString *distance;
 @property (nonatomic,copy) NSString *albumCount;
-@property (nonatomic,copy) NSString *followCount;
+@property (nonatomic) NSInteger followCount;
 
 @end

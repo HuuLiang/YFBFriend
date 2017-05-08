@@ -18,4 +18,8 @@
 
 - (void)stopAnimation;
 
+- (void)downAnimation;
+
+- (void)upAnimation;
+
 @end

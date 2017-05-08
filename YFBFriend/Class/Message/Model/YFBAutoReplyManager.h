@@ -15,7 +15,10 @@
 @property (nonatomic) NSString *content;
 @property (nonatomic) NSInteger msgId;
 @property (nonatomic) NSString *msgType;
-@property (nonatomic) NSString *sendTime;
+@property (nonatomic) NSTimeInterval replyTime;
+@property (nonatomic) NSInteger age;
+@property (nonatomic) NSInteger height;
+@property (nonatomic) NSString *gender;
 @end
 
 @interface YFBRobotMsgModel : NSObject
@@ -29,6 +32,9 @@
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) NSString *portraitUrl;
 @property (nonatomic) NSString *userId;
+@property (nonatomic) NSInteger age;
+@property (nonatomic) NSInteger height;
+@property (nonatomic) NSString *gender;
 @property (nonatomic) NSArray <YFBRobotMsgModel *> *robotMsgList;
 @end
 

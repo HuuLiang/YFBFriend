@@ -173,6 +173,7 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
             self.response = obj;
             [self configTableHeaderView];
             [self configFooterView];
+            [self->_tableView reloadData];
         }
     }];
 }

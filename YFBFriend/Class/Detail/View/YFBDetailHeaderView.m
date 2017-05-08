@@ -183,8 +183,8 @@
     [_albumButton setTitle:albumCount forState:UIControlStateNormal];
 }
 
-- (void)setFollowCount:(NSString *)followCount {
-    [_followButton setTitle:followCount forState:UIControlStateNormal];
+- (void)setFollowCount:(NSInteger )followCount {
+    [_followButton setTitle:[NSString stringWithFormat:@"%ld",followCount] forState:UIControlStateNormal];
 }
 
 @end

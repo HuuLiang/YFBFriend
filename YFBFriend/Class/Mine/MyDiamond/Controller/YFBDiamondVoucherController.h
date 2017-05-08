@@ -12,4 +12,6 @@
 
 - (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond;
 
+- (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond Action:(NSString *)payAction;
+
 @end

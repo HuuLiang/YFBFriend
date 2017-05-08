@@ -11,6 +11,9 @@
 #import "YFBBuyDiamondPrivilegeCell.h"
 #import "YFBVipExampleCell.h"
 #import "YFBPayConfigManager.h"
+#import "YFBDiamondVoucherController.h"
+#import "YFBPaymentManager.h"
+#import "YFBExampleManager.h"
 
 #define MorePrivilegeArray            @[@"1.仅VIP用户可查看联系方式",@"2.仅VIP用户可查看访问列表",@"3.充值钻石聊天80钻石/条信息",@"4.钻石可购买礼物"]
 
@@ -56,11 +59,6 @@ typedef NS_ENUM(NSUInteger, YFBBuyDiamondSection) {
     }
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    _exampleCell.scrollStart = YES;
-//}
-//
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     _exampleCell.scrollStart = NO;
@@ -104,9 +102,28 @@ typedef NS_ENUM(NSUInteger, YFBBuyDiamondSection) {
         cell.moreTime = [NSString stringWithFormat:@"%ld钻石",[YFBPayConfigManager manager].diamondInfo.secondInfo.amount];
         cell.morePrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].diamondInfo.secondInfo.price/100)];
         cell.moreTitle = [YFBPayConfigManager manager].diamondInfo.secondInfo.detail;
-        cell.payAction = ^(id sender){
+        cell.payAction = ^(NSNumber * selectedIndex){
             @strongify(self);
             //支付
+            NSInteger payCount = 0;
+            NSInteger payPrice = 0;
+            switch ([selectedIndex integerValue]) {
+                case 0:
+                    payCount = [YFBPayConfigManager manager].diamondInfo.firstInfo.amount;
+                    payPrice = (long)([YFBPayConfigManager manager].diamondInfo.firstInfo.price);
+                    break;
+                    
+                case 1:
+                    payCount = [YFBPayConfigManager manager].diamondInfo.secondInfo.amount;
+                    payPrice = (long)([YFBPayConfigManager manager].diamondInfo.secondInfo.price);
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+            YFBDiamondVoucherController *payVC = [[YFBDiamondVoucherController alloc] initWithPrice:payPrice diamond:payCount Action:kYFBPaymentActionPURCHASEDIAMONDKeyName];
+            [self.navigationController pushViewController:payVC animated:YES];
         };
         return cell;
     } else if (indexPath.section == YFBBuyDiamondSectionPrivilege) {
@@ -117,7 +134,7 @@ typedef NS_ENUM(NSUInteger, YFBBuyDiamondSection) {
         return cell;
     } else if (indexPath.section == YFBBuyDiamondSectionExample) {
         _exampleCell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendBuyDiamondExampleCellReusableIdentifier forIndexPath:indexPath];
-        _exampleCell.userList = @[@"111",@"222",@"333",@"444",@"555",@"666",@"777",@"888",@"999",@"101010",@"111111",@"121212",@"131313"];
+        _exampleCell.userList = [YFBExampleManager manager].diamondExampleSource;
         return _exampleCell;
     }
     return nil;
@@ -196,7 +213,9 @@ typedef NS_ENUM(NSUInteger, YFBBuyDiamondSection) {
 - (void)tableView:(UITableView *)tableView willDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == YFBBuyDiamondSectionExample) {
         YFBVipExampleCell *exampleCell = (YFBVipExampleCell *)cell;
-        exampleCell.scrollStart = YES;
+        if ([YFBExampleManager manager].diamondExampleSource.count > 3) {
+            exampleCell.scrollStart = YES;
+        }
     }
 }
 

@@ -35,7 +35,7 @@
                 self.wxPayButton.selected = !self.wxPayButton.selected;
                 self.aliPayButton.selected = !self.aliPayButton.selected;
                 if (self.payTypeAction) {
-                    self.payTypeAction(@(1));
+                    self.payTypeAction(@(YFBPayTypeWeiXin));
                 }
             }
         } forControlEvents:UIControlEventTouchUpInside];
@@ -50,7 +50,7 @@
                 self.wxPayButton.selected = !self.wxPayButton.selected;
                 self.aliPayButton.selected = !self.aliPayButton.selected;
                 if (self.payTypeAction) {
-                    self.payTypeAction(@(2));
+                    self.payTypeAction(@(YFBPayTypeAliPay));
                 }
             }
         } forControlEvents:UIControlEventTouchUpInside];

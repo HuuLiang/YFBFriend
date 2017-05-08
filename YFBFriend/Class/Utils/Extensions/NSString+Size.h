@@ -11,4 +11,5 @@
 @interface NSString (Size)
 - (CGSize)sizeWithFont:(UIFont *)font maxWidth:(CGFloat)maxW;
 - (CGSize)sizeWithFont:(UIFont *)font;
+- (CGSize)sizeWithFont:(UIFont *)font maxHeight:(CGFloat)maxH;
 @end

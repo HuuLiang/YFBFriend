@@ -87,6 +87,7 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_ALIPAY";
         case YFBPayResultSuccess:
             payStatus = kYFBPaymentStatusSucessKeyName;
             [[YFBHudManager manager] showHudWithText:@"支付成功"];
+            
             break;
             
         case YFBPayResultFailed:
@@ -104,9 +105,17 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_ALIPAY";
     }
     
     NSString *payCountKeyName;
+    
     if ([_payAction isEqualToString:kYFBPaymentActionOpenVipKeyName]) {
+        NSTimeInterval newExpireTimeInterval = [[YFBUtil dateFromString:[YFBUser currentUser].expireTime WithDateFormat:kDateFormateLongest] timeIntervalSince1970] + _payCount * 24 * 60 * 60;
+        [YFBUser currentUser].expireTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:newExpireTimeInterval] WithDateFormat:kDateFormateLongest];
+        [[YFBUser currentUser] saveOrUpdateUserInfo];
+        
         payCountKeyName = @"days";
     } else if ([_payAction isEqualToString:kYFBPaymentActionPURCHASEDIAMONDKeyName]) {
+        [YFBUser currentUser].diamondCount += _payCount;
+        [[YFBUser currentUser] saveOrUpdateUserInfo];
+
         payCountKeyName = @"amount";
     }
     
@@ -129,8 +138,6 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_ALIPAY";
              QBLog(@"订单上传成功");
          }
      }];
-
-
 }
 
 @end

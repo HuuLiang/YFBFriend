@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
 {
     CGFloat _price;
     NSInteger _diamond;
+    NSString * _payAction;
     UITableView *_layoutTableView;
     UITableViewCell *_titleCell;
     UITableViewCell *_subTitleCell;
@@ -38,10 +39,15 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
 
 - (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond
 {
+    return [self initWithPrice:price diamond:diamond Action:nil];
+}
+
+- (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond Action:(NSString *)payAction {
     self = [super init];
     if (self) {
         _price = price;
         _diamond = diamond;
+        _payAction = payAction;
     }
     return self;
 }
@@ -93,7 +99,14 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
         if (!_titleCell) {
             _titleCell = [[UITableViewCell alloc] init];
             _titleCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"订单信息:  充值%zd钻石  %.1f元",_diamond,_price]];
+            NSString *descStr;
+            if ([_payAction isEqualToString:kYFBPaymentActionOpenVipKeyName]) {
+                descStr = [NSString stringWithFormat:@"订单信息:  充值%zd天VIP  %.1f元",_diamond,_price/100];
+            } else if ([_payAction isEqualToString:kYFBPaymentActionPURCHASEDIAMONDKeyName]) {
+                descStr = [NSString stringWithFormat:@"订单信息:  充值%zd钻石  %.1f元",_diamond,_price/100];
+            }
+            
+            NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:descStr];
             NSString *priceStr = [NSString stringWithFormat:@"%.1f元",_price];
             [attributeStr setAttributes:@{NSForegroundColorAttributeName : kColor(@"#ffb76a")} range:NSMakeRange(attributeStr.length-priceStr.length, priceStr.length)];
             _titleCell.textLabel.attributedText = attributeStr;
@@ -194,12 +207,18 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
         if (indexPath.row == 0) {
             QBLog(@"支付宝支付");
             [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:YFBPayTypeAliPay price:self->_price count:self->_diamond handler:^(BOOL success) {
-                
+                if (success) {
+                    [YFBUser currentUser].diamondCount += self->_diamond;
+                    [[YFBUser currentUser] saveOrUpdateUserInfo];
+                }
             }];
         } else if (indexPath.row == 1){
             QBLog(@"微信支付")
             [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:YFBPayTypeWeiXin price:self->_price count:self->_diamond handler:^(BOOL success) {
-                
+                if (success) {
+                    [YFBUser currentUser].diamondCount += self->_diamond;
+                    [[YFBUser currentUser] saveOrUpdateUserInfo];
+                }
             }];
 
         }

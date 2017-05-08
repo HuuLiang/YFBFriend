@@ -13,6 +13,9 @@ static NSString *const kYFBPopSpringAnimationOpacityKeyName         = @"kYFBPopS
 static NSString *const kYFBPopSpringAnimationPositionKeyName        = @"kYFBPopSpringAnimationPositionKeyName";
 static NSString *const kYFBPopSpringAnimationScaleKeyName           = @"kYFBPopSpringAnimationScaleKeyName";
 
+static NSString *const kYFBPopSpringAnimationTranslationYDownKeyName = @"kYFBPopSpringAnimationTranslationYDownKeyName";
+static NSString *const kYFBPopSpringAnimationTranslationYUpKeyName  = @"kYFBPopSpringAnimationTranslationYUpKeyName";
+
 @implementation UIView (PopAnimation)
 
 - (void)hiddenWithPopAnimation {
@@ -46,7 +49,6 @@ static NSString *const kYFBPopSpringAnimationScaleKeyName           = @"kYFBPopS
 //    positionAnimation.toValue = [NSValue valueWithCGPoint:VisiblePosition];
 //    [self.layer pop_addAnimation:positionAnimation forKey:kYFBPopSpringAnimationPositionKeyName];
     
-    
     POPSpringAnimation *scaleAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
     scaleAnimation.fromValue  = [NSValue valueWithCGSize:CGSizeMake(0.5, 0.5f)];
     scaleAnimation.toValue  = [NSValue valueWithCGSize:CGSizeMake(1.0f, 1.0f)];//@(0.0f);
@@ -62,6 +64,24 @@ static NSString *const kYFBPopSpringAnimationScaleKeyName           = @"kYFBPopS
     scaleAnimation.springBounciness = 20.0f;
     scaleAnimation.springSpeed = 20.0f;
     [self.layer pop_addAnimation:scaleAnimation forKey:kYFBPopSpringAnimationScaleKeyName];
+}
+
+- (void)downAnimation {
+    POPSpringAnimation *downAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerTranslationY];
+    downAnimation.fromValue = @0;
+    downAnimation.toValue = @(kWidth(160));
+    downAnimation.springBounciness = 20.0f;
+    downAnimation.springSpeed = 20.0f;
+    [self.layer pop_addAnimation:downAnimation forKey:kYFBPopSpringAnimationTranslationYDownKeyName];
+}
+
+- (void)upAnimation {
+    POPSpringAnimation *downAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerTranslationY];
+    downAnimation.fromValue = @0;
+    downAnimation.toValue = @(-kWidth(160));
+    downAnimation.springBounciness = 20.0f;
+    downAnimation.springSpeed = 20.0f;
+    [self.layer pop_addAnimation:downAnimation forKey:kYFBPopSpringAnimationTranslationYUpKeyName];
 }
 
 @end

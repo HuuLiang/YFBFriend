@@ -14,6 +14,7 @@
 @property (nonatomic,strong) YFBPayButton *payLessButton;
 @property (nonatomic,strong) YFBPayButton *payMoreButton;
 @property (nonatomic,strong) UIButton *payButton;
+@property (nonatomic,copy) NSNumber *selectedButton;
 @end
 
 @implementation YFBDredgeVipPayCell
@@ -24,6 +25,7 @@
     if (self) {
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.selectedButton = @(0);
         
         self.titleLabel = [[UILabel alloc] init];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -38,6 +40,7 @@
         [_payLessButton bk_addEventHandler:^(id sender) {
             @strongify(self);
             if (!self->_payLessButton.selected) {
+                self.selectedButton = @(0);
                 self->_payLessButton.selected = !self->_payLessButton.selected;
                 self->_payMoreButton.selected = !self->_payMoreButton.selected;
             }
@@ -49,6 +52,7 @@
         [_payMoreButton bk_addEventHandler:^(id sender) {
             @strongify(self);
             if (!self->_payMoreButton.selected) {
+                self.selectedButton = @(1);
                 self->_payLessButton.selected = !self->_payLessButton.selected;
                 self->_payMoreButton.selected = !self->_payMoreButton.selected;
             }
@@ -63,7 +67,7 @@
         [_payButton bk_addEventHandler:^(id sender) {
             @strongify(self);
             if (self.payAction) {
-                self.payAction(self);
+                self.payAction(self.selectedButton);
             }
         } forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_payButton];

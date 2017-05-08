@@ -79,6 +79,7 @@ static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurren
 #define KUpdateContactUnReadMessageNotification         @"YFBUpdateContactUnReadMessageNotification"
 #define kYFBFriendMessageGiftListPayNotification        @"YFBFriendMessageGiftListPayNotification"
 #define kYFBFriendMessageGiftListSendNotification       @"YFBFriendMessageGiftListSendNotification"
+#define kYFBFriendShowMessageNotification               @"kYFBFriendShowMessageNotification"
 
 #define kYFBFriendAliPaySchemeUrl                       @"comyuefenbaappalipayschemeurl"
 #define kYFBFriendWXPaySchemeUrl                        @"wx2b2846687e296e95"
@@ -87,6 +88,7 @@ static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurren
 #define kDateFormatShort                  @"yyyy-MM-dd"
 #define kDateFormatChina                  @"yyyy年MM月dd日"
 #define KDateFormatLong                   @"yyyyMMddHHmmss"
+#define kDateFormateLongest               @"yyyy-MM-dd HH-mm-ss"
 #define kBirthDayMinDate                  @"1942-01-01"
 #define kBirthDayMaxDate                  @"2017-02-01"
 #define KBirthDaySeletedDate              @"2000-01-01"

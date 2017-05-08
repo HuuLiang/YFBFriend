@@ -22,6 +22,14 @@
     CGSize maxSize = CGSizeMake(maxW, MAXFLOAT);
 
     return [self boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:attrs context:nil].size;
-
 }
+
+- (CGSize)sizeWithFont:(UIFont *)font maxHeight:(CGFloat)maxH {
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+    attrs[NSFontAttributeName] = font;
+    CGSize maxSize = CGSizeMake(MAXFLOAT, maxH);
+    
+    return [self boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:attrs context:nil].size;
+}
+
 @end

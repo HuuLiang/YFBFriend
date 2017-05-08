@@ -19,6 +19,10 @@
 #import "YFBMessageRecordManager.h"
 #import "YFBAutoReplyManager.h"
 
+#import "YFBAutoReplyManager.h"
+#import "YFBContactView.h"
+#import "YFBMessageViewController.h"
+
 #define WakeGiftManagerTimeInterval (60 * 5)
 
 @interface YFBTabBarController () <UITabBarControllerDelegate>
@@ -44,6 +48,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showContactViewWithContactInfo:) name:kYFBFriendShowMessageNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 //预加载相关配置
 - (void)loadDefaultConfig {
     [[YFBDiamondManager manager] getDiamondListCache];                  //获取钻石列表
@@ -53,6 +69,7 @@
     [[YFBMessageRecordManager manager] deleteYesterdayRecordMessages];  //删除昨日消息记录
     [[YFBAutoReplyManager manager] deleteYesterdayMessages];            //删除昨日推送记录
     [[YFBAutoReplyManager manager] getRobotReplyMessages];              //获取批量的机器人消息留作推送
+    [[YFBAutoReplyManager manager] startAutoRollingToReply];            //开始推送机器人
 }
 
 - (void)wakeAskGiftManager {
@@ -84,5 +101,22 @@
     self.viewControllers = @[discoverNav,contactNav,mineNav];
 }
 
+
+- (void)showContactViewWithContactInfo:(NSNotification *)notification {
+    YFBAutoReplyMessage *messageInfo = (YFBAutoReplyMessage *)[notification object];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        @weakify(self);
+        YFBContactView *contactView = [[YFBContactView alloc] initWithContactInfo:messageInfo replyHandler:^(NSString *userId, NSString *nickName, NSString *portraitUrl) {
+            @strongify(self);
+            [YFBMessageViewController showMessageWithUserId:userId nickName:nickName avatarUrl:portraitUrl inViewController:self];
+        }];
+        contactView.frame = CGRectMake(0, -kWidth(160), kScreenWidth, kWidth(160));
+        [self.view addSubview:contactView];
+        
+        [contactView downAnimation];
+        [contactView performSelector:@selector(upAnimation) withObject:nil afterDelay:4];
+        [contactView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:6];
+    });
+}
 
 @end

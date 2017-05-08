@@ -24,14 +24,14 @@ static NSString *const kYFBContactCellReusableIdentifier = @"kYFBContactCellReus
 }
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) UIView *editingView;
-@property (nonatomic) NSMutableArray *dataSource;
-@property (nonatomic) NSMutableArray *selectedSource;
+@property (nonatomic) NSMutableArray <YFBContactModel *>*dataSource;
+@property (nonatomic) NSMutableArray *selectedIndexPathes;
 @property (nonatomic) YFBVisiteModel *visiteModel;
 @end
 
 @implementation YFBContactViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
-QBDefineLazyPropertyInitialization(NSMutableArray, selectedSource)
+QBDefineLazyPropertyInitialization(NSMutableArray, selectedIndexPathes)
 QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
 
 - (void)viewDidLoad {
@@ -41,6 +41,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
+    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [_tableView registerClass:[YFBContactCell class] forCellReuseIdentifier:kYFBContactCellReusableIdentifier];
     [self.view addSubview:_tableView];
     _tableView.tableFooterView = [[UIView alloc] init];
@@ -62,10 +63,33 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
             [_tableView setEditing:YES animated:YES];
             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"全选" style:UIBarButtonItemStylePlain handler:^(id sender) {
                 @strongify(self);
-                //全选
+                if ([self.navigationItem.leftBarButtonItem.title isEqualToString:@"全选"]) {
+                    //全选
+                    //获取表格视图内容的尺寸
+                    CGSize size = self.tableView.contentSize;
+                    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+                    //获取指定区域的cell的indexPath
+                    NSArray * indexPathes = [self.tableView indexPathsForRowsInRect:rect];
+                    for (NSIndexPath * indexPath in indexPathes) {
+                        //使用代码方式选中一行
+                        [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+                    }
+                    [self.selectedIndexPathes removeAllObjects];
+                    [self.selectedIndexPathes addObjectsFromArray:indexPathes];
+
+                } else if ([self.navigationItem.leftBarButtonItem.title isEqualToString:@"全不选"]) {
+                    for (NSIndexPath * indexPath in self.selectedIndexPathes) {
+                        //使用代码方式取消选中一行
+                        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+                    }
+                    //清空选中cell的记录数组
+                    [self.selectedIndexPathes removeAllObjects];
+                    self.navigationItem.leftBarButtonItem.title = @"全选";
+                }
+                
             }];
         } else if ([self.navigationItem.rightBarButtonItem.title isEqualToString:@"取消"]) {
-            [self.selectedSource removeAllObjects];
+            [self.selectedIndexPathes removeAllObjects];
             self.navigationItem.rightBarButtonItem.title = @"编辑";
             [self animationEditingViewHidden:YES];
             [self->_tableView setEditing:NO animated:YES];
@@ -83,7 +107,8 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self loadContactData];
+    [self updateBadgeNumber];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeNumber) name:KUpdateContactUnReadMessageNotification object:nil];
 }
 
 - (void)loadVisitemeData {
@@ -103,10 +128,36 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
 }
 
+- (void)updateBadgeNumber {
+    
+    __block NSInteger unreadMessages = 0;
+    [[[YFBContactManager manager] loadAllContactInfo] enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        unreadMessages += obj.unreadMsgCount;
+    }];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self loadContactData];
+
+        if (unreadMessages > 0) {
+            if (unreadMessages < 100) {
+                self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
+            } else {
+                self.navigationController.tabBarItem.badgeValue = @"99+";
+            }
+        } else {
+            self.navigationController.tabBarItem.badgeValue = nil;
+        }
+        
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    });
+                
+}
+
 - (void)animationEditingViewHidden:(BOOL)hidden {
     if (!_editingView) {
         self.editingView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kWidth(98))];
         [self.view addSubview:_editingView];
+        [self.view bringSubviewToFront:_editingView];
         
         _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
@@ -123,6 +174,30 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
         _readButton.layer.cornerRadius = 5;
         _readButton.layer.masksToBounds = YES;
         [_editingView addSubview:_readButton];
+        
+        @weakify(self);
+        [_deleteButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            //删除数组的元素会影响后面的顺序，需要倒序删除
+            NSArray * newIndexPathes = [self.selectedIndexPathes sortedArrayUsingSelector:@selector(compare:)];
+            for (NSInteger i = newIndexPathes.count-1; i>= 0 ; i--) {
+                NSIndexPath * indexPath = newIndexPathes[i];
+                //删除数据源中的数据
+                YFBContactModel *contactModel = self.dataSource[indexPath.row];
+                [contactModel deleteObject];
+                [self.dataSource removeObjectAtIndex:indexPath.row];
+            }
+            [self.tableView deleteRowsAtIndexPaths:self.selectedIndexPathes withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.selectedIndexPathes removeAllObjects];
+            
+        } forControlEvents:UIControlEventTouchUpInside];
+        
+        [_readButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            [self.dataSource enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                obj.unreadMsgCount = 0;
+            }];
+        } forControlEvents:UIControlEventTouchUpInside];
         
         {
             [_deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -227,6 +302,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
         cell.nickName = contactModel.nickName;
         cell.recentTime = contactModel.messageTime;
         cell.msgType = contactModel.messageType;
+        cell.unreadMsg = contactModel.unreadMsgCount;
     }
     return cell;
 }
@@ -241,24 +317,26 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
         model = self.dataSource[indexPath.row];
     }
     if (tableView.isEditing) {
-        if (!model) {
-            [self.selectedSource addObject:model];
+        [self.selectedIndexPathes addObject:indexPath];
+        if (self.selectedIndexPathes.count == self.dataSource.count) {
+            self.navigationItem.leftBarButtonItem.title = @"全不选";
         }
     } else {
         //进入聊天界面
+        model.unreadMsgCount = 0;
+        [model saveOrUpdate];
+        [self updateBadgeNumber];
         [self pushIntoMessageVCWithUserId:model.userId nickName:model.userId avatarUrl:model.portraitUrl];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    YFBContactUserModel *model = nil;
-    if (indexPath.row < self.dataSource.count) {
-        model = self.dataSource[indexPath.row];
-    }
     if (tableView.isEditing) {
-        
-    } else {
-        
+        [self.selectedIndexPathes removeObject:indexPath];
+        if (self.selectedIndexPathes.count == 0) {
+            self.navigationItem.rightBarButtonItem.title = @"取消";
+            self.navigationItem.leftBarButtonItem.title = @"全选";
+        }
     }
 }
 

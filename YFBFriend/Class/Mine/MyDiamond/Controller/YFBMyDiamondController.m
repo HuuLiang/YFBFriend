@@ -11,6 +11,7 @@
 #import "YFBDiamondExplainController.h"
 #import "YFBDiamondVoucherController.h"
 #import "YFBDiamondManager.h"
+#import "YFBPaymentManager.h"
 
 static NSString *const kYFBDiamondCellIdentifier = @"kyfb_diamond_cell_identifier";
 
@@ -115,7 +116,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row < self.dataSource.count) {
         YFBDiamondInfo *diamondInfo = self.dataSource[indexPath.row];
-        YFBDiamondVoucherController *voucherVC = [[YFBDiamondVoucherController alloc] initWithPrice:diamondInfo.price diamond:diamondInfo.diamondAmount];
+        YFBDiamondVoucherController *voucherVC = [[YFBDiamondVoucherController alloc] initWithPrice:diamondInfo.price diamond:diamondInfo.diamondAmount Action:kYFBPaymentActionPURCHASEDIAMONDKeyName];
         [self.navigationController pushViewController:voucherVC animated:YES];
     }
 }

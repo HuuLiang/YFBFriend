@@ -33,6 +33,14 @@
         _payButton.layer.cornerRadius = 6;
         [self.contentView addSubview:_payButton];
         
+        @weakify(self);
+        [_payButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            if (self.payAction) {
+                self.payAction();
+            }
+        } forControlEvents:UIControlEventTouchUpInside];
+        
         {
             [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.bottom.equalTo(self.contentView);

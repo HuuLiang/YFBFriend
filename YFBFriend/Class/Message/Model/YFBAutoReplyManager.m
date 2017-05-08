@@ -7,6 +7,11 @@
 //
 
 #import "YFBAutoReplyManager.h"
+#import "YFBMessageModel.h"
+#import "YFBContactManager.h"
+#import "YFBContactView.h"
+
+static const NSUInteger kRollingTimeInterval = 5;
 
 @implementation YFBAutoReplyMessage
 @end
@@ -24,6 +29,10 @@
 - (Class)userListElementClass {
     return [YFBRobotContactModel class];
 }
+@end
+
+@interface YFBAutoReplyManager ()
+@property (nonatomic,retain) dispatch_queue_t replyQueue;
 @end
 
 @implementation YFBAutoReplyManager
@@ -110,11 +119,92 @@
                   autoReplyMessage.content = robotMsg.content;
                   autoReplyMessage.msgId = robotMsg.msgId;
                   autoReplyMessage.msgType = robotMsg.msgType;
-                  autoReplyMessage.sendTime = robotMsg.sendTime;
+                  autoReplyMessage.age = contactRobot.age;
+                  autoReplyMessage.height = contactRobot.height;
+                  autoReplyMessage.gender = contactRobot.gender;
                   [autoReplyMessage saveOrUpdate];
               }
           }];
      }];
+}
+
+//获取所有的自动回复信息
+- (NSArray <YFBAutoReplyMessage *>*)findAllAutoReplyMessages {
+    NSArray *array = [YFBAutoReplyMessage findByCriteria:[NSString stringWithFormat:@"order by replyTime asc"]];
+    if (array.count > 0) {
+        return array;
+    }
+    return nil;
+}
+
+
+- (void)startAutoRollingToReply {
+    if (self.replyQueue) {
+        return;
+    }
+    self.replyQueue = dispatch_queue_create("YFBFriend.AutoReply.Queue", nil);
+    [self rollingReplayMessages];
+}
+
+- (void)rollingReplayMessages {
+    dispatch_async(self.replyQueue, ^{
+        
+        __block uint nextRollingReplyTime = kRollingTimeInterval;
+        
+        NSArray *array = [self findAllAutoReplyMessages];
+        
+        
+        [array enumerateObjectsUsingBlock:^(YFBAutoReplyMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSTimeInterval currentTimeInterval = [[NSDate date] timeIntervalSince1970];
+            if (obj.replyTime <= currentTimeInterval) {
+                //向聊天详情中插入一条记录
+                YFBMessageModel *msgModel = [[YFBMessageModel alloc] init];
+                msgModel.sendUserId = obj.userId;
+                msgModel.receiveUserId = [YFBUser currentUser].userId;
+                msgModel.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:obj.replyTime] WithDateFormat:KDateFormatLong];
+                msgModel.messageType = [obj.msgType integerValue];
+                msgModel.content = obj.content;
+                [msgModel saveOrUpdate];
+                
+                //向消息记录中插入一条最近消息
+                YFBContactModel *contact =  [YFBContactModel findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=\'%@\'",obj.userId]];
+                if (!contact) {
+                    contact = [[YFBContactModel alloc] init];
+                    contact.userId = obj.userId;
+                    contact.portraitUrl = obj.portraitUrl;
+                    contact.nickName = obj.nickName;
+                }
+                if ([obj.msgType integerValue] == YFBMessageTypePhoto) {
+                   contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一张图片",obj.nickName];
+                } else {
+                    contact.messageContent = obj.content;
+                }
+                contact.unreadMsgCount += 1;
+                [contact saveOrUpdate];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendShowMessageNotification object:obj];
+                
+                //删除已经回复过的缓存
+                [obj deleteObject];
+                //向消息界面发出通知更改角标数字
+                [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:obj];
+            } else {
+                NSTimeInterval nextTime = obj.replyTime - [[NSDate date] timeIntervalSince1970];
+                if (nextTime < nextRollingReplyTime) {
+                    nextRollingReplyTime = nextTime;
+                }
+                QBLog(@"下次循环推送时间 %d",nextRollingReplyTime);
+            }
+        }];
+        
+        QBLog(@"回复池数量%ld 下次循环推送时间 %d",array.count,nextRollingReplyTime);
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            sleep(nextRollingReplyTime);
+            [self rollingReplayMessages];
+        });
+        
+    });
 }
 
 @end

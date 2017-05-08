@@ -10,4 +10,5 @@
 
 @interface YFBMessageToPayCell : UITableViewCell
 
+@property (nonatomic,copy) YFBAction payAction;
 @end

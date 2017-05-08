@@ -49,7 +49,8 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
                       handler:(void (^)(BOOL))handler
 {
     NSInteger userCount = [[[NSUserDefaults standardUserDefaults] objectForKey:toAll ? KYFBFriendGreetToAllUsersKeyName : kYFBFriendGreetToOneUserKeyName] integerValue];
-    if (userCount > toAll ? GreetToAllUsersCount : GreetToOneUserCount) {
+    NSInteger count = toAll ? GreetToAllUsersCount : GreetToOneUserCount;
+    if (userCount >= count) {
         [[YFBHudManager manager] showHudWithText:toAll ? @"超出每日群体招呼次数限制" : @"超出每日单人招呼次数限制"];
         return;
     } else {

@@ -12,6 +12,9 @@
 #import "YFBBuyDiamondPrivilegeCell.h"
 #import "YFBVipExampleCell.h"
 #import "YFBPayConfigManager.h"
+#import "YFBDiamondVoucherController.h"
+#import "YFBPaymentManager.h"
+#import "YFBExampleManager.h"
 
 #define MorePrivilegeArray            @[@"1.仅VIP用户可查看联系方式",@"2.仅VIP用户可查看访问列表"]
 
@@ -104,9 +107,28 @@ static NSString *const kYFBFriendVipExampleCellReusableIdentifier = @"kYFBFriend
         cell.moreTime = [NSString stringWithFormat:@"%ld天",[YFBPayConfigManager manager].vipInfo.secondInfo.amount];
         cell.morePrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].vipInfo.secondInfo.price/100)];
         cell.moreTitle = [NSString stringWithFormat:@"(%.1f元/天)",(float)[YFBPayConfigManager manager].vipInfo.secondInfo.price/100/[YFBPayConfigManager manager].vipInfo.secondInfo.amount];
-        cell.payAction = ^(id sender){
+        cell.payAction = ^(NSNumber * selectedIndex){
             @strongify(self);
             //支付
+            NSInteger payCount = 0;
+            NSInteger payPrice = 0;
+            switch ([selectedIndex integerValue]) {
+                case 0:
+                    payCount = [YFBPayConfigManager manager].vipInfo.firstInfo.amount;
+                    payPrice = (long)([YFBPayConfigManager manager].vipInfo.firstInfo.price);
+                    break;
+                    
+                case 1:
+                    payCount = [YFBPayConfigManager manager].vipInfo.secondInfo.amount;
+                    payPrice = (long)([YFBPayConfigManager manager].vipInfo.secondInfo.price);
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+            YFBDiamondVoucherController *payVC = [[YFBDiamondVoucherController alloc] initWithPrice:payPrice diamond:payCount Action:kYFBPaymentActionOpenVipKeyName];
+            [self.navigationController pushViewController:payVC animated:YES];
         };
         return cell;
     } else if (indexPath.section == YFBDredgeVipSectionPrivilege) {
@@ -121,7 +143,7 @@ static NSString *const kYFBFriendVipExampleCellReusableIdentifier = @"kYFBFriend
         return cell;
     } else if (indexPath.section == YFBDredgeVipSectionExample) {
         _exampleCell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendVipExampleCellReusableIdentifier forIndexPath:indexPath];
-        _exampleCell.userList = @[@"111",@"222",@"333",@"444",@"555",@"666",@"777",@"888",@"999",@"101010",@"111111",@"121212",@"131313"];
+        _exampleCell.userList = [YFBExampleManager manager].vipExampleSource;
         return _exampleCell;
     }
     return nil;
@@ -203,7 +225,9 @@ static NSString *const kYFBFriendVipExampleCellReusableIdentifier = @"kYFBFriend
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == YFBDredgeVipSectionExample) {
         YFBVipExampleCell *exampleCell = (YFBVipExampleCell *)cell;
-        exampleCell.scrollStart = YES;
+        if ([YFBExampleManager manager].vipExampleSource.count > 3) {
+            exampleCell.scrollStart = YES;
+        }
     }
 }
 @end
