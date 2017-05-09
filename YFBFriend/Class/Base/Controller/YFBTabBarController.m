@@ -22,6 +22,7 @@
 #import "YFBAutoReplyManager.h"
 #import "YFBContactView.h"
 #import "YFBMessageViewController.h"
+#import "AppDelegate.h"
 
 #define WakeGiftManagerTimeInterval (60 * 5)
 
@@ -108,7 +109,7 @@
         @weakify(self);
         YFBContactView *contactView = [[YFBContactView alloc] initWithContactInfo:messageInfo replyHandler:^(NSString *userId, NSString *nickName, NSString *portraitUrl) {
             @strongify(self);
-            [YFBMessageViewController showMessageWithUserId:userId nickName:nickName avatarUrl:portraitUrl inViewController:self];
+            [YFBMessageViewController presentMessageWithUserId:userId nickName:nickName avatarUrl:portraitUrl inViewController:self];
         }];
         contactView.frame = CGRectMake(0, -kWidth(160), kScreenWidth, kWidth(160));
         [self.view addSubview:contactView];

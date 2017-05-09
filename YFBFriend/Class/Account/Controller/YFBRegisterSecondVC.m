@@ -114,6 +114,8 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
         if (success) {
             YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
             [self presentViewController:tabbarController animated:YES completion:nil];
+            [UIApplication sharedApplication].keyWindow.rootViewController = tabbarController;
+            [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
         } else {
             [[YFBHudManager manager] showHudWithText:@"注册失败"];
         }

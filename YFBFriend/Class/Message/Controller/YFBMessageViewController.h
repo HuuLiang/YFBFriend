@@ -20,6 +20,11 @@
 
 + (instancetype)showMessageWithUserId:(NSString *)userId nickName:(NSString *)nickName avatarUrl:(NSString *)avatarUrl inViewController:(UIViewController *)viewController;
 
++ (instancetype)presentMessageWithUserId:(NSString *)userId
+                                nickName:(NSString *)nickName
+                               avatarUrl:(NSString *)avatarUrl
+                        inViewController:(UIViewController *)viewController;
+
 - (void)addTextMessage:(NSString *)message
             withSender:(NSString *)sender
               receiver:(NSString *)receiver

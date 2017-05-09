@@ -125,7 +125,7 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
     _headerView.nickName = self.response.nickName;
     _headerView.userId = self.response.userId;
     _headerView.userLocation = self.response.userBaseInfo.city;
-    _headerView.distance = self.response.distance;
+    _headerView.distance = @"3km以内";//self.response.distance;
     _headerView.albumCount = @"相册:5";
     _headerView.followCount = self.response.userBaseInfo.concernNum;
     _tableView.tableHeaderView = _headerView;

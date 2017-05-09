@@ -12,6 +12,8 @@
 #import "YFBActivityVC.h"
 #import "YFBAboutVC.h"
 #import "YFBAdviseVC.h"
+#import "YFBNavigationController.h"
+#import "YFBLaunchViewController.h"
 
 static NSString *const kYFBSettingCellReusableIdentifier = @"YFBSettingCellReusableIdentifier";
 
@@ -111,7 +113,13 @@ typedef NS_ENUM(NSUInteger, YFBSettingFunctionType) {
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kYFBFriendCurrentUserKeyName];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+        
+        [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
+            YFBLaunchViewController *launchVC = [[YFBLaunchViewController alloc] init];
+            YFBNavigationController *launchNav = [[YFBNavigationController alloc] initWithRootViewController:launchVC];
+            [UIApplication sharedApplication].keyWindow.rootViewController = launchNav;
+            [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
+        }];
     } forControlEvents:UIControlEventTouchUpInside];
     
     [button mas_makeConstraints:^(MASConstraintMaker *make) {

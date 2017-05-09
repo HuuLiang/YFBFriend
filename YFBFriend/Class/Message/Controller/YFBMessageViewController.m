@@ -18,6 +18,7 @@
 #import "YFBGiftManager.h"
 #import "YFBMessageRecordManager.h"
 #import "YFBExampleManager.h"
+#import "YFBNavigationController.h"
 
 @interface YFBMessageViewController ()
 {
@@ -41,6 +42,23 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [viewController.navigationController pushViewController:messageVC animated:YES];
     return messageVC;
 
+}
+
++ (instancetype)presentMessageWithUserId:(NSString *)userId
+                                nickName:(NSString *)nickName
+                               avatarUrl:(NSString *)avatarUrl
+                        inViewController:(UIViewController *)viewController {
+    YFBMessageViewController *messageVC = [[self alloc] initWithUserId:userId nickName:nickName avatarUrl:avatarUrl];
+    messageVC.allowsSendFace = NO;
+    messageVC.allowsSendMultiMedia = NO;
+    messageVC.allowsSendVoice = NO;
+    YFBNavigationController *messageNav = [[YFBNavigationController alloc] initWithRootViewController:messageVC];
+    [viewController presentViewController:messageNav animated:YES completion:^{
+        messageNav.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:^(id sender) {
+            [messageNav dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }];
+    return messageVC;
 }
 
 - (instancetype)initWithUserId:(NSString *)userId nickName:(NSString *)nickName avatarUrl:(NSString *)avatarUrl {

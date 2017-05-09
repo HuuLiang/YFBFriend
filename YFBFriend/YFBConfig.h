@@ -62,7 +62,7 @@
 
 #define YFB_WEXIN_APP_ID                @"wx2b2846687e296e95"
 #define YFB_WECHAT_TOKEN                @"https://api.weixin.qq.com/sns/oauth2/access_token?"
-#define YFB_WECHAT_SECRET               @"812993d98872f297bd11486512bf6141"
+#define YFB_WECHAT_SECRET               @"0a4e146c0c399b706514f22ad2f1e078"
 #define YFB_WECHAT_USERINFO             @"https://api.weixin.qq.com/sns/userinfo?"
 
 #define YFB_UPLOAD_SCOPE                @"mfw-image"
