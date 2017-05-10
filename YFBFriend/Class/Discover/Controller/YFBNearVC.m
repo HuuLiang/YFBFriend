@@ -92,7 +92,17 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
             }
             [self.dataSource addObjectsFromArray:obj.userList];
         }
+        [self setAutoDistance];
         [self->_tableView reloadData];
+    }];
+}
+
+- (void)setAutoDistance {
+    __block CGFloat distance = 1.1f;
+    [self.dataSource enumerateObjectsUsingBlock:^(YFBRobot *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        QBLog(@"%f",distance);
+        distance = distance + (float)(arc4random() % 10)/100 + 0.02;
+        obj.distance = distance;
     }];
 }
 
@@ -156,7 +166,7 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         cell.userHeight = info.height;
         cell.distance = info.distance;
         cell.userSex = [info.gender isEqualToString:@"M"] ? YFBUserSexMale : YFBUserSexFemale;
-        cell.greeted = [YFBRobot checkUserIsGreetedWithUserId:info.userId];
+        cell.cityStr = info.city;
         @weakify(self);
         cell.greeting = ^(id sender) {
             @strongify(self);
@@ -176,11 +186,23 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    YFBRecommendCell *recommendCell = (YFBRecommendCell *)cell;
+    if (indexPath.row < self.dataSource.count) {
+        YFBRobot *info = self.dataSource[indexPath.row];
+        recommendCell.greeted = [YFBRobot checkUserIsGreetedWithUserId:info.userId];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row < self.dataSource.count) {
         YFBRobot *robot = self.dataSource[indexPath.row];
         [self pushIntoDetailVC:robot.userId];
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return kWidth(198);
 }
 
 @end

@@ -14,4 +14,12 @@
     return [self findByCriteria:[NSString stringWithFormat:@"WHERE sendUserId=\'%@\' or receiveUserId=\'%@\'",userId,userId]];
 }
 
++ (void)deleteAllPreviouslyMessages {
+    [[YFBMessageModel findAll] enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBMessageModel *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![[YFBUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong] isToday]) {
+            [obj deleteObject];
+        }
+    }];
+}
+
 @end

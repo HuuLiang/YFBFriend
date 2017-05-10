@@ -14,4 +14,6 @@
 - (NSString *)decryptedStringWithPassword:(NSString *)password;
 - (NSString *)decryptedStringWithKeys:(NSArray *)keys;
 
+- (NSString *)decryptedString;
+
 @end

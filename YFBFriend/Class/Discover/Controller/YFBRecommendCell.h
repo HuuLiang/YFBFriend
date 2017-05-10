@@ -18,7 +18,7 @@
 @property (nonatomic,copy)   NSString *cityStr;
 @property (nonatomic,assign) BOOL greeted;
 
-@property (nonatomic)   NSInteger distance;
+@property (nonatomic)   CGFloat distance;
 
 @property (nonatomic,copy) QBAction greeting;
 

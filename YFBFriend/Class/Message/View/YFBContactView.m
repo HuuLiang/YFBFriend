@@ -60,6 +60,7 @@
         _contentLabel = [[UILabel alloc] init];
         _contentLabel.textColor = kColor(@"#ffffff");
         _contentLabel.font = kFont(13);
+        _contentLabel.numberOfLines = 0;
         if ([contactModel.msgType integerValue] == YFBMessageTypeText) {
             _contentLabel.text = contactModel.content;
         } else if ([contactModel.msgType integerValue] == YFBMessageTypePhoto) {
@@ -106,17 +107,20 @@
                 make.size.mas_equalTo(CGSizeMake(kWidth(90), kWidth(30)));
             }];
             
-            [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_userImageV.mas_right).offset(kWidth(22));
-                make.bottom.equalTo(self.mas_bottom).offset(-kWidth(42));
-                make.height.mas_equalTo(kWidth(28));
-            }];
             
             [_replyButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(self.mas_bottom).offset(-kWidth(50));
                 make.right.equalTo(self.mas_right).offset(-kWidth(20));
                 make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(60)));
             }];
+            
+            [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_userImageV.mas_right).offset(kWidth(22));
+                make.top.equalTo(_ageButton.mas_bottom).offset(kWidth(16));
+                make.right.equalTo(_replyButton.mas_left).offset(-kWidth(20));
+                make.height.mas_equalTo(kWidth(60));
+            }];
+
         }
     }
     return self;

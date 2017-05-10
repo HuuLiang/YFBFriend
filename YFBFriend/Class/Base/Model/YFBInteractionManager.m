@@ -111,9 +111,13 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
                       handler:(void (^)(BOOL))handler
 {
     __block YFBRobot *robot = [YFBRobot findFirstByCriteria:[NSString stringWithFormat:@"WHRER userId=\'%@\'",userId]];
-    if (robot.concerned) {
+    if (robot && robot.concerned) {
         [[YFBHudManager manager] showHudWithText:@"已经关注过了"];
         return;
+    }
+    if (!robot) {
+        robot = [[YFBRobot alloc] init];
+        robot.userId = userId;
     }
     [self concernOrCancleUserWithUserId:userId isConcern:YES CompletionHandler:^(BOOL success, id obj) {
         if (success) {

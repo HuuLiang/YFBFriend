@@ -29,4 +29,21 @@
     return allContacts;
 }
 
+- (YFBContactModel *)findContactInfoWithUserId:(NSString *)userId {
+    YFBContactModel *contactModel = [YFBContactModel findFirstByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",userId]];
+    if (!contactModel) {
+        contactModel = [[YFBContactModel alloc] init];
+    }
+    return contactModel;
+}
+
+- (void)deleteAllPreviouslyContactInfo {
+    [[self loadAllContactInfo] enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![[YFBUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong] isToday]) {
+            obj.messageTime = @"";
+            obj.messageContent = @"";
+        }
+    }];
+}
+
 @end

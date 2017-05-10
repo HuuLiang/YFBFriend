@@ -13,8 +13,9 @@
 @property (nonatomic) NSString *sendUserId;
 @property (nonatomic) NSString *receiveUserId;
 @property (nonatomic) NSString *messageTime;
+@property (nonatomic) NSString *nickName;
 @property (nonatomic) YFBMessageType messageType;
 
 + (NSArray <YFBMessageModel *>*)allMessagesWithUserId:(NSString *)userId;
-
++ (void)deleteAllPreviouslyMessages;
 @end

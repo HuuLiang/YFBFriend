@@ -72,6 +72,60 @@ static NSString *const kPrivateKeyPool = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk
     return resultString;
 }
 
+- (NSString *)decryptedString {
+    NSData *hexData = [[NSData alloc] initWithBase64EncodedString:self options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    NSString *encryptedString = [[self class] hexStringFromBuffer:(void *)[hexData bytes] length:hexData.length];
+    
+    CCOperation op = kCCDecrypt;
+    NSData *cryptedData;
+    NSString *password = @"fr050917@2017upR";
+    NSMutableData *data = [NSMutableData dataWithCapacity:encryptedString.length / 2];
+    unsigned char whole_byte;
+    char byte_chars[3] = {'\0','\0','\0'};
+    int i;
+    for (i=0; i < [encryptedString length] / 2; i++) {
+        byte_chars[0] = [encryptedString characterAtIndex:i*2];
+        byte_chars[1] = [encryptedString characterAtIndex:i*2+1];
+        whole_byte = strtol(byte_chars, NULL, 16);
+        [data appendBytes:&whole_byte length:1];
+    }
+    cryptedData = data;
+    // 'key' should be 32 bytes for AES256, will be null-padded otherwise
+    char keyPtr[kCCKeySizeAES256+1]; // room for terminator (unused)
+    bzero(keyPtr, sizeof(keyPtr)); // fill with zeroes (for padding)
+    
+    // fetch key data
+    [password getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
+    
+    NSUInteger dataLength = [cryptedData length];
+    
+    //See the doc: For block ciphers, the output size will always be less than or
+    //equal to the input size plus the size of one block.
+    //That's why we need to add the size of one block here
+    size_t bufferSize = dataLength + kCCBlockSizeAES128;
+    void *buffer = malloc(bufferSize);
+    bzero(buffer, bufferSize);
+    
+    NSData *iv = [@"0987654321friend" dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *resultString;
+    size_t numBytesEncrypted = 0;
+    CCCryptorStatus cryptStatus = CCCrypt(op, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
+                                          keyPtr, kCCKeySizeAES128,
+                                          [iv bytes] /* initialization vector (optional) */,
+                                          [cryptedData bytes], dataLength, /* input */
+                                          buffer, bufferSize, /* output */
+                                          &numBytesEncrypted);
+    if (cryptStatus == kCCSuccess) {
+        //the returned NSData takes ownership of the buffer and will free it on deallocation
+        //NSData *data = [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];
+        //return [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        resultString = [[NSString alloc] initWithBytes:buffer length:numBytesEncrypted encoding:NSUTF8StringEncoding];
+    }
+    
+    free(buffer); //free the buffer;
+    return resultString;}
+
+
 - (NSString *)encryptedStringWithPassword:(NSString *)password {
     return [self cryptedStringWithPassword:password withOperation:kCCEncrypt]; 
 }

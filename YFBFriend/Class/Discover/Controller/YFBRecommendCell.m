@@ -96,13 +96,13 @@
             
             [_userName mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_userImgV.mas_right).offset(kWidth(32));
-                make.top.equalTo(_userImgV.mas_top).offset(kWidth(24));
-                make.height.mas_equalTo(30);
+                make.top.equalTo(_userImgV.mas_top).offset(kWidth(16));
+                make.height.mas_equalTo(26);
             }];
             
             [_sexButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_userImgV.mas_right).offset(kWidth(32));
-                make.top.equalTo(_userName.mas_bottom).offset(kWidth(20));
+                make.top.equalTo(_userName.mas_bottom).offset(kWidth(18));
                 make.size.mas_equalTo(CGSizeMake(kWidth(84), kWidth(36)));
             }];
             
@@ -114,8 +114,8 @@
             
             [_localCity mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_userImgV.mas_right).offset(kWidth(32));
-                make.bottom.equalTo(_userImgV.mas_bottom).offset(-kWidth(18));
-                make.height.mas_equalTo(24);
+                make.bottom.equalTo(_userImgV.mas_bottom).offset(-kWidth(10));
+                make.height.mas_equalTo(22);
             }];
             
             [_greetButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -150,6 +150,13 @@
     [_sexButton setTitle:userAge forState:UIControlStateNormal];
 }
 
+- (void)setCityStr:(NSString *)cityStr {
+    NSArray *cityArr = [cityStr componentsSeparatedByString:@"省"];
+    if (cityArr) {
+        _localCity.text = [cityArr lastObject];
+    }
+}
+
 - (void)setUserSex:(YFBUserSex)userSex {
     if (userSex == YFBUserSexFemale) {
         [_sexButton setImage:[UIImage imageNamed:@"discover_female"] forState:UIControlStateNormal];
@@ -168,9 +175,9 @@
     _greetButton.enabled = !greeted;
 }
 
-- (void)setDistance:(NSInteger)distance {
+- (void)setDistance:(CGFloat)distance {
     _distanceLabel.hidden = NO;
-    _distanceLabel.text = [NSString stringWithFormat:@"%ldkm",distance];
+    _distanceLabel.text = [NSString stringWithFormat:@"%.2fkm",distance];
 }
 
 - (void)drawRect:(CGRect)rect {

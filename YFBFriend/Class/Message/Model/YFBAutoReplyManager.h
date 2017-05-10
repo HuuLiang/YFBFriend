@@ -19,6 +19,7 @@
 @property (nonatomic) NSInteger age;
 @property (nonatomic) NSInteger height;
 @property (nonatomic) NSString *gender;
+@property (nonatomic) BOOL replyed;
 @end
 
 @interface YFBRobotMsgModel : NSObject

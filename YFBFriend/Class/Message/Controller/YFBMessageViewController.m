@@ -19,6 +19,7 @@
 #import "YFBMessageRecordManager.h"
 #import "YFBExampleManager.h"
 #import "YFBNavigationController.h"
+#import "YFBContactManager.h"
 
 @interface YFBMessageViewController ()
 {
@@ -26,6 +27,7 @@
 }
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
 @property (nonatomic,retain) YFBMessageAdView *messagAdView;
+@property (nonatomic) BOOL needReturn;
 @end
 
 @implementation YFBMessageViewController
@@ -49,15 +51,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                                avatarUrl:(NSString *)avatarUrl
                         inViewController:(UIViewController *)viewController {
     YFBMessageViewController *messageVC = [[self alloc] initWithUserId:userId nickName:nickName avatarUrl:avatarUrl];
+    messageVC.needReturn = YES;
     messageVC.allowsSendFace = NO;
     messageVC.allowsSendMultiMedia = NO;
     messageVC.allowsSendVoice = NO;
     YFBNavigationController *messageNav = [[YFBNavigationController alloc] initWithRootViewController:messageVC];
-    [viewController presentViewController:messageNav animated:YES completion:^{
-        messageNav.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:^(id sender) {
-            [messageNav dismissViewControllerAnimated:YES completion:nil];
-        }];
-    }];
+    [viewController presentViewController:messageNav animated:YES completion:nil];
     return messageVC;
 }
 
@@ -79,6 +78,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     self.messageSender = [YFBUser currentUser].userId;
     
     [self configFunctionUI];
+    
+    if (_needReturn) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:^(id sender) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,6 +104,27 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [super viewWillDisappear:animated];
     _messagAdView.scrollStart = NO;
     
+    YFBMessageModel *lastMessage = [self.chatMessages lastObject];
+    YFBContactModel *contactModel = [[YFBContactManager manager] findContactInfoWithUserId:self.userId];
+    
+    contactModel.portraitUrl = self.avatarUrl;
+    contactModel.nickName = self.nickName;
+    contactModel.userId = self.userId;
+    
+    if (lastMessage.messageType <= YFBMessageTypePhoto && lastMessage != nil) {
+        //时间
+        contactModel.messageTime = lastMessage.messageTime;
+        //内容
+        if (lastMessage.messageType == YFBMessageTypeText) {
+            contactModel.messageContent = lastMessage.content;
+        } else if (lastMessage.messageType == YFBMessageTypePhoto) {
+            contactModel.messageContent = @"[图片]";
+        }
+
+    }
+    contactModel.unreadMsgCount = 0;
+    [contactModel saveOrUpdate];
+
 }
 
 - (void)reloadChatMessages {

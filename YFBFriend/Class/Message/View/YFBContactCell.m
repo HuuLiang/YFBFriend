@@ -90,7 +90,11 @@
 }
 
 - (void)setRecentTime:(NSString *)recentTime {
-    NSDate *date = [YFBUtil dateFromString:recentTime WithDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    if (recentTime.length == 0) {
+        _timeLabel.text = @"";
+        return;
+    }
+    NSDate *date = [YFBUtil dateFromString:recentTime WithDateFormat:KDateFormatLong];
     _timeLabel.text = [YFBUtil compareCurrentTime:[date timeIntervalSince1970]];
 }
 

@@ -33,6 +33,7 @@
 		EC48270B1E778D7B00F03454 /* YFBContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC48270A1E778D7B00F03454 /* YFBContactViewController.m */; };
 		EC4CCAFA1E793F01001950B9 /* YFBGreetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4CCAF91E793F01001950B9 /* YFBGreetingVC.m */; };
 		EC58190D1EA8B21A00640129 /* YFBInteractionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC58190C1EA8B21A00640129 /* YFBInteractionManager.m */; };
+		EC58CE771EC1634F00A78EC3 /* YFBLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC58CE761EC1634F00A78EC3 /* YFBLocalNotificationManager.m */; };
 		EC5D658E1E7A308D00CBE08A /* YFBGreetingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5D658D1E7A308D00CBE08A /* YFBGreetingCell.m */; };
 		EC5D65911E7A30B100CBE08A /* YFBGreetingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5D65901E7A30B100CBE08A /* YFBGreetingHeaderView.m */; };
 		EC5D65941E7A609E00CBE08A /* YFBRankDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5D65931E7A609E00CBE08A /* YFBRankDetailCell.m */; };
@@ -360,6 +361,8 @@
 		EC4CCAF91E793F01001950B9 /* YFBGreetingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBGreetingVC.m; path = YFBFriend/Class/Discover/Controller/YFBGreetingVC.m; sourceTree = SOURCE_ROOT; };
 		EC58190B1EA8B21A00640129 /* YFBInteractionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBInteractionManager.h; sourceTree = "<group>"; };
 		EC58190C1EA8B21A00640129 /* YFBInteractionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBInteractionManager.m; sourceTree = "<group>"; };
+		EC58CE751EC1634F00A78EC3 /* YFBLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBLocalNotificationManager.h; sourceTree = "<group>"; };
+		EC58CE761EC1634F00A78EC3 /* YFBLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBLocalNotificationManager.m; sourceTree = "<group>"; };
 		EC5D658C1E7A308D00CBE08A /* YFBGreetingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBGreetingCell.h; path = YFBFriend/Class/Discover/Controller/YFBGreetingCell.h; sourceTree = SOURCE_ROOT; };
 		EC5D658D1E7A308D00CBE08A /* YFBGreetingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBGreetingCell.m; path = YFBFriend/Class/Discover/Controller/YFBGreetingCell.m; sourceTree = SOURCE_ROOT; };
 		EC5D658F1E7A30B100CBE08A /* YFBGreetingHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBGreetingHeaderView.h; path = YFBFriend/Class/Discover/Controller/YFBGreetingHeaderView.h; sourceTree = SOURCE_ROOT; };
@@ -1276,6 +1279,8 @@
 				ECE1BB7D1EB9DA82008D5520 /* YFBExampleManager.m */,
 				ECBF245C1EBC5930003BB041 /* YFBPaymentManager.h */,
 				ECBF245D1EBC5930003BB041 /* YFBPaymentManager.m */,
+				EC58CE751EC1634F00A78EC3 /* YFBLocalNotificationManager.h */,
+				EC58CE761EC1634F00A78EC3 /* YFBLocalNotificationManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2741,6 +2746,7 @@
 				EC9A6A631E6D3F9E0018C5FB /* XHOperationNetworkKit.m in Sources */,
 				EC1993751EBAB8F300521528 /* YFBAutoReplyManager.m in Sources */,
 				ECE1BB031EB8265F008D5520 /* YFBMineDataInfoViewController.m in Sources */,
+				EC58CE771EC1634F00A78EC3 /* YFBLocalNotificationManager.m in Sources */,
 				ECC0492E1EAE2C9C009E594F /* YFBMessageToPayCell.m in Sources */,
 				EC9A6A721E6D3F9E0018C5FB /* SEConstants.m in Sources */,
 				EC9A6AB81E6D3F9F0018C5FB /* TAAnimatedDotView.m in Sources */,
@@ -2905,7 +2911,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "aef97c64-cd93-43e5-9598-3ed0fbcc2ab6";
+				PROVISIONING_PROFILE = "9e34a4c6-6c68-427d-a918-967d12a121d9";
 				PROVISIONING_PROFILE_SPECIFIER = PPSocialDevlopmentProvisoningProfile;
 			};
 			name = Debug;
@@ -2936,7 +2942,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "51221846-87db-4da3-b1f6-320b5ca14803";
+				PROVISIONING_PROFILE = "f2fa357f-3495-40cd-8060-c326dd81823d";
 				PROVISIONING_PROFILE_SPECIFIER = PPSocialDistributionProvisoningProfile;
 			};
 			name = Release;

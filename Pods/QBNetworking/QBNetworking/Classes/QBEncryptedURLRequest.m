@@ -97,7 +97,7 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
         return jsonObject;
     } else if (self.configuration.encryptedType == QBURLEncryptedTypeNew) {
         NSString *str = [[NSString alloc] initWithData:encryptedResponse encoding:NSUTF8StringEncoding];
-//        NSString *decryptedStr = [str decryptedStringWithPassword:[(self.configuration.encryptionPasssword ?: kNewEncryptionPassword).md5 substringToIndex:16]];
+        str =  [str decryptedString];
         NSData *jsonData = [str dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:nil];
         return responseJSON;

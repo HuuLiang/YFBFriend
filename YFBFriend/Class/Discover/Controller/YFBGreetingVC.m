@@ -123,8 +123,8 @@ QBDefineLazyPropertyInitialization(YFBGreetingInfoModel, greetInfoModel)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YFBGreetingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kYFBGreetingCellReusableIdentifier forIndexPath:indexPath];
-    if (indexPath.item < self.dataSource.count) {
-        YFBRobot *info = self.dataSource[indexPath.item];
+    if (indexPath.item < self.dataSource.count - 1) {
+        YFBRobot *info = self.dataSource[indexPath.item + 1];
         cell.imageUrl = info.portraitUrl;
     }
     return cell;
@@ -145,7 +145,7 @@ QBDefineLazyPropertyInitialization(YFBGreetingInfoModel, greetInfoModel)
         YFBRobot *info = [self.dataSource firstObject];
         if (info) {
             headerView.backImageUrl = info.onKeyGreetImgUrl;
-            headerView.frontImageUrl = info.onKeyGreetImgUrl;
+            headerView.frontImageUrl = info.portraitUrl;
         }
         return headerView;
     }

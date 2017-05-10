@@ -171,6 +171,10 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     return YES;
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    [application setApplicationIconBadgeNumber:0];
+}
+
 #pragma mark - WXApiDelegate
 - (void)onReq:(BaseReq *)req {
     QBLog(@"%@",req);

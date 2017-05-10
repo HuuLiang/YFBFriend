@@ -20,7 +20,7 @@ static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
 
 static NSString *const kYFBMessageReplyIsFirstDayKeyName = @"kYFBMessageReplyIsFirstDayKeyName";
 //static NSString *const kYFBMessageReplayTimesKeyName = @"kYFBMessageReplayTimesKeyName";
-//static NSString *const kYFBMessageReplayTodayKeyName = @"kYFBMessageReplayTodayKeyName";
+static NSString *const kYFBMessageReplayTodayKeyName = @"kYFBMessageReplayTodayKeyName";
 
 @implementation YFBUtil
 
@@ -206,6 +206,23 @@ static NSString *const kYFBMessageReplyIsFirstDayKeyName = @"kYFBMessageReplyIsF
         return YES;
     }
     return NO;
+}
+
++ (BOOL)isToday {
+    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kYFBMessageReplayTodayKeyName];
+    if (!lastDate) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kYFBMessageReplayTodayKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return YES;
+    }
+    
+    if ([lastDate isToday]) {
+        return YES;
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kYFBMessageReplayTodayKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return NO;
+    }
 }
 
 //+ (BOOL)ableToReply {

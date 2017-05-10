@@ -9,14 +9,19 @@
 #import "YFBAboutVC.h"
 
 @interface YFBAboutVC ()
-
+@property (nonatomic) UIImageView *imageView;
+@property (nonatomic) UILabel *label;
+@property (nonatomic) UILabel *subLabel;
 @end
 
 @implementation YFBAboutVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.view.backgroundColor = kColor(@"#ffffff");
+    
+    [self configAboutUI];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +29,43 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)configAboutUI {
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"appicon"]];
+    [self.view addSubview:_imageView];
+    
+    self.label = [[UILabel alloc] init];
+    _label.textColor = kColor(@"#B9B9B9");
+    _label.font = kFont(12);
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.text = @"jiaouyoukf@126.com";
+    [self.view addSubview:_label];
+    
+    self.subLabel = [[UILabel alloc] init];
+    _subLabel.textColor = kColor(@"#B9B9B9");
+    _subLabel.font = kFont(12);
+    _subLabel.textAlignment = NSTextAlignmentCenter;
+    _subLabel.text = @"Copyright@2017";
+    [self.view addSubview:_subLabel];
+    
+    {
+        [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(self.view).offset(kWidth(88));
+            make.size.mas_equalTo(CGSizeMake(kWidth(104), kWidth(104)));
+        }];
+        
+        [_label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(_imageView.mas_bottom).offset(kWidth(50));
+            make.height.mas_equalTo(kWidth(30));
+        }];
+        
+        [_subLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(160));
+            make.height.mas_equalTo(kWidth(30));
+        }];
+    }
 }
-*/
 
 @end

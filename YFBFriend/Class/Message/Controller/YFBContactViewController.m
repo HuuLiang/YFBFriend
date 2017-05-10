@@ -301,6 +301,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
         cell.userImgUrl = contactModel.portraitUrl;
         cell.nickName = contactModel.nickName;
         cell.recentTime = contactModel.messageTime;
+        cell.content = contactModel.messageContent;
         cell.msgType = contactModel.messageType;
         cell.unreadMsg = contactModel.unreadMsgCount;
     }
@@ -326,7 +327,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
         model.unreadMsgCount = 0;
         [model saveOrUpdate];
         [self updateBadgeNumber];
-        [self pushIntoMessageVCWithUserId:model.userId nickName:model.userId avatarUrl:model.portraitUrl];
+        [self pushIntoMessageVCWithUserId:model.userId nickName:model.nickName avatarUrl:model.portraitUrl];
     }
 }
 

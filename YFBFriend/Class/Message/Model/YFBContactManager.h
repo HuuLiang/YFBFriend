@@ -24,4 +24,8 @@
 
 - (NSArray <YFBContactModel *> *)loadAllContactInfo;
 
+- (YFBContactModel *)findContactInfoWithUserId:(NSString *)userId;
+
+- (void)deleteAllPreviouslyContactInfo;
+
 @end

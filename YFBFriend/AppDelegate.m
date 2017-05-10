@@ -10,6 +10,7 @@
 #import "AppDelegate+configuration.h"
 #import "YFBLaunchViewController.h"
 #import "YFBNavigationController.h"
+#import "YFBLocalNotificationManager.h"
 
 @interface AppDelegate () 
 
@@ -70,9 +71,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[YFBLocalNotificationManager manager] setAutoNotification];
 }
-
-
 
 
 @end

@@ -27,7 +27,8 @@
         [self addSubview:_backImageView];
         
         self.shadowView = [[UIView alloc] init];
-        [self addSubview:_shadowView];
+        _shadowView.backgroundColor = [kColor(@"#ffffff") colorWithAlphaComponent:0.58];
+        [_backImageView addSubview:_shadowView];
         
         self.frontImageView = [[UIImageView alloc] init];
         _frontImageView.layer.cornerRadius = kWidth(145);
