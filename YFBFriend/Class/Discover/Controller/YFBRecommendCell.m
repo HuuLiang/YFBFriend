@@ -97,25 +97,25 @@
             [_userName mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_userImgV.mas_right).offset(kWidth(32));
                 make.top.equalTo(_userImgV.mas_top).offset(kWidth(16));
-                make.height.mas_equalTo(26);
+                make.height.mas_equalTo(22);
             }];
             
             [_sexButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_userImgV.mas_right).offset(kWidth(32));
                 make.top.equalTo(_userName.mas_bottom).offset(kWidth(18));
-                make.size.mas_equalTo(CGSizeMake(kWidth(84), kWidth(36)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(94), kWidth(36)));
             }];
             
             [_userHeightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(_sexButton);
                 make.left.equalTo(_sexButton.mas_right).offset(kWidth(12));
-                make.size.mas_equalTo(CGSizeMake(kWidth(84), kWidth(36)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(94), kWidth(36)));
             }];
             
             [_localCity mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_userImgV.mas_right).offset(kWidth(32));
                 make.bottom.equalTo(_userImgV.mas_bottom).offset(-kWidth(10));
-                make.height.mas_equalTo(22);
+                make.height.mas_equalTo(16);
             }];
             
             [_greetButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -185,8 +185,8 @@
     
     CGRect greetButtonFrame = _greetButton.frame;
     CGFloat imageInsetsLeft = (greetButtonFrame.size.width - _greetButton.imageView.frame.size.width)/2;
-    _greetButton.imageEdgeInsets = UIEdgeInsetsMake(-(greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft, (greetButtonFrame.size.height-_greetButton.imageView.size.height)/2, imageInsetsLeft);
-    _greetButton.titleEdgeInsets = UIEdgeInsetsMake(_greetButton.imageView.size.height, -_greetButton.frame.size.width, 0, -(_greetButton.frame.size.width-_greetButton.imageView.frame.size.width));
+    _greetButton.imageEdgeInsets = UIEdgeInsetsMake(-(greetButtonFrame.size.height-_greetButton.imageView.size.height)/2-5, imageInsetsLeft, (greetButtonFrame.size.height-_greetButton.imageView.size.height)/2+5, imageInsetsLeft);
+    _greetButton.titleEdgeInsets = UIEdgeInsetsMake(_greetButton.imageView.size.height+5, -_greetButton.frame.size.width, -5, -(_greetButton.frame.size.width-_greetButton.imageView.frame.size.width));
 }
 
 @end

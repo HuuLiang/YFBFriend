@@ -12,6 +12,7 @@
 #import "YFBGreetingInfoModel.h"
 #import "YFBRobot.h"
 #import "YFBInteractionManager.h"
+#import "YFBExampleManager.h"
 
 static NSString *const kYFBNearCellReusableIdentifier = @"kYFBNearCellReusableIdentifier";
 
@@ -56,14 +57,20 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     [_tableView YFB_addPullToRefreshWithHandler:^{
         @strongify(self);
         [self loadDataWithPageCount:1 refresh:YES];
+        [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:kYFBNearRefreshKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }];
-    
-    [_tableView YFB_addPagingRefreshWithHandler:^{
+        
+    [_tableView YFB_addPagingRefreshWithKeyName:kYFBNearRefreshKeyName Handler:^{
         @strongify(self);
         if (self.response.pageNum < self.response.pageCount) {
             self.response.pageNum++;
-        } else if (self.response.pageNum) {
-            [[YFBHudManager manager] showHudWithText:@"所有数据加载完成"];
+        } else {
+            if (![[[NSUserDefaults standardUserDefaults] objectForKey:kYFBNearRefreshKeyName] boolValue]) {
+                [[YFBHudManager manager] showHudWithText:@"所有数据加载完成"];
+                [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kYFBNearRefreshKeyName];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
             [self->_tableView YFB_endPullToRefresh];
             return ;
         }
@@ -106,15 +113,6 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     }];
 }
 
-
-- (void)viewDidLayoutSubviews {
-    UIEdgeInsets imageEdge = _greetAllButton.imageEdgeInsets;
-    UIEdgeInsets titleEdge = _greetAllButton.titleEdgeInsets;
-    
-    _greetAllButton.imageEdgeInsets = UIEdgeInsetsMake(imageEdge.top, imageEdge.left - 5, imageEdge.bottom, imageEdge.right + 5);
-    _greetAllButton.titleEdgeInsets = UIEdgeInsetsMake(titleEdge.top, titleEdge.left + 5 , titleEdge.bottom, titleEdge.right - 5);
-}
-
 - (UIView *)tableFooterView {
     UIView *footerView = [[UIView alloc] init];
     self.greetAllButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -143,6 +141,13 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     }];
     
     footerView.size = CGSizeMake(kScreenWidth, kWidth(108));
+    
+    UIEdgeInsets imageEdge = _greetAllButton.imageEdgeInsets;
+    UIEdgeInsets titleEdge = _greetAllButton.titleEdgeInsets;
+    
+    _greetAllButton.imageEdgeInsets = UIEdgeInsetsMake(imageEdge.top, imageEdge.left - 5, imageEdge.bottom, imageEdge.right + 5);
+    _greetAllButton.titleEdgeInsets = UIEdgeInsetsMake(titleEdge.top, titleEdge.left + 5 , titleEdge.bottom, titleEdge.right - 5);
+
     return footerView;
 }
 

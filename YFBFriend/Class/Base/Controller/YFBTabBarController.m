@@ -18,7 +18,6 @@
 #import "YFBExampleManager.h"
 #import "YFBMessageRecordManager.h"
 #import "YFBAutoReplyManager.h"
-#import "YFBLocalNotificationManager.h"
 
 #import "YFBAutoReplyManager.h"
 #import "YFBContactView.h"
@@ -71,7 +70,6 @@
     [[YFBAutoReplyManager manager] deleteYesterdayMessages];            //删除昨日推送记录
     [[YFBAutoReplyManager manager] getRobotReplyMessages];              //获取批量的机器人消息留作推送
     [[YFBAutoReplyManager manager] startAutoRollingToReply];            //开始推送机器人
-    [[YFBLocalNotificationManager manager] startAutoLocalNotification]; //开启本地通知轮循
 }
 
 - (void)wakeAskGiftManager {

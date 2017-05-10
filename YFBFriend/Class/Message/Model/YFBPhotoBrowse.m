@@ -25,7 +25,7 @@
 }
 
 - (void)showPhotoBrowseWithImageUrl:(NSString *)imageUrl onSuperView:(UIView *)superView {
-    self.bounds = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+    self.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
     self.backgroundColor = [UIColor colorWithHexString:@"#000000"];
     [superView.window addSubview:self];
     
@@ -33,8 +33,9 @@
         self.alpha = 1;
     }];
     
-    self.imageView = [[UIImageView alloc] initWithFrame:superView.window.bounds];
+    self.imageView = [[UIImageView alloc] initWithFrame:superView.window.frame];
     _imageView.userInteractionEnabled = YES;
+    _imageView.contentMode = UIViewContentModeCenter;
     [self addSubview:_imageView];
     
     [_imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];

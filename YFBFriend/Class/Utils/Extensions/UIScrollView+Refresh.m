@@ -9,6 +9,10 @@
 #import "UIScrollView+Refresh.h"
 #import <MJRefresh.h>
 
+NSString *const kYFBNearRefreshKeyName = @"kYFBNearReRreshKeyName";
+NSString *const kYFBRankRefreshKeyName = @"kYFBRankRefreshKeyName";
+NSString *const kYFBRecommendRefreshKeyName = @"kYFBRecommendRefreshKeyName";
+
 @implementation UIScrollView (Refresh)
 
 - (void)YFB_addPullToRefreshWithHandler:(void (^)(void))handler {
@@ -34,6 +38,25 @@
         self.footer = refreshFooter;
     }
 }
+
+- (void)YFB_addPagingRefreshWithKeyName:(NSString *)keyName Handler:(void (^)(void))handler {
+    
+    if (!self.footer) {
+        NSString *vipNotice = nil;
+        BOOL loadOver = [[[NSUserDefaults standardUserDefaults] objectForKey:keyName] boolValue];
+        if (loadOver) {
+            vipNotice = @"—————— 我是有底线的 ——————";
+        } else {
+            vipNotice = @"上拉加载更多";
+        }
+        
+        MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:handler];
+        [refreshFooter setTitle:vipNotice forState:MJRefreshStateIdle];
+        self.footer = refreshFooter;
+    }
+
+}
+
 
 - (void)YFB_pagingRefreshNoMoreData {
     [self.footer endRefreshingWithNoMoreData];

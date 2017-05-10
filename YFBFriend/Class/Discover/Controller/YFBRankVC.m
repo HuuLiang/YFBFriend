@@ -95,14 +95,20 @@ QBDefineLazyPropertyInitialization(YFBRankFentYunListModel, response)
     [_tableView YFB_addPullToRefreshWithHandler:^{
         @strongify(self);
         [self loadDataWithPageCount:1 refresh:YES];
+        [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:kYFBRankRefreshKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }];
     
-    [_tableView YFB_addPagingRefreshWithHandler:^{
+    [_tableView YFB_addPagingRefreshWithKeyName:kYFBRankRefreshKeyName Handler:^{
         @strongify(self);
         if (self.response.pageNum < self.response.pageCount) {
             self.response.pageNum++;
-        } else if (self.response.pageNum) {
-            [[YFBHudManager manager] showHudWithText:@"所有数据加载完成"];
+        } else {
+            if (![[[NSUserDefaults standardUserDefaults] objectForKey:kYFBRankRefreshKeyName] boolValue]) {
+                [[YFBHudManager manager] showHudWithText:@"所有数据加载完成"];
+                [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kYFBRankRefreshKeyName];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
             [self->_tableView YFB_endPullToRefresh];
             return ;
         }

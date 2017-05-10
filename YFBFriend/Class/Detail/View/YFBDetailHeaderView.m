@@ -168,7 +168,7 @@
 }
 
 - (void)setUserId:(NSString *)userId {
-    _userIdLabel.text = userId;
+    _userIdLabel.text = [NSString stringWithFormat:@"ID:%@",userId];
 }
 
 - (void)setUserLocation:(NSString *)userLocation {

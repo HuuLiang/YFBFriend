@@ -65,16 +65,17 @@
                 make.height.mas_equalTo(kWidth(32));
             }];
             
-            [_messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_userImageView.mas_right).offset(kWidth(20));
-                make.bottom.equalTo(_userImageView.mas_bottom).offset(-kWidth(14));
-                make.height.mas_equalTo(kWidth(26));
-            }];
-            
             [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.contentView.mas_right).offset(-kWidth(120));
                 make.top.equalTo(_userImageView.mas_top);
                 make.height.mas_equalTo(kWidth(24));
+            }];
+            
+            [_messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_userImageView.mas_right).offset(kWidth(20));
+                make.bottom.equalTo(_userImageView.mas_bottom).offset(-kWidth(14));
+                make.height.mas_equalTo(kWidth(26));
+                make.right.equalTo(self.contentView.mas_right).offset(-kWidth(60));
             }];
         }
     }
@@ -128,7 +129,7 @@
                 make.centerX.equalTo(_userImageView.mas_right).offset(-kWidth(10));
                 make.centerY.equalTo(_userImageView.mas_top).offset(kWidth(10));
                 make.height.mas_equalTo(kWidth(36));
-                make.width.mas_equalTo(size.width+10);
+                make.width.mas_equalTo(size.width+13);
             }];
         }
     } else {

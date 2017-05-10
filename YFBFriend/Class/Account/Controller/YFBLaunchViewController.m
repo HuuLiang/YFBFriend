@@ -37,7 +37,6 @@
 }
 
 - (void)presentTabBarController {
-    [[UIApplication sharedApplication].keyWindow.rootViewController.view beginLoading];
     //    进入首页
     YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:tabbarController animated:YES completion:^{
@@ -45,10 +44,17 @@
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication].keyWindow.rootViewController.view beginLoading];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if ([YFBUtil checkUserIsLogin]) {
         [self performSelector:@selector(presentTabBarController) withObject:nil afterDelay:1];
+    } else {
+        [[UIApplication sharedApplication].keyWindow.rootViewController.view endLoading];
     }
 }
 

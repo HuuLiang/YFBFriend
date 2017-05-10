@@ -19,7 +19,7 @@ NSString *const kYFBFriendReferContactWXKeyName     = @"WEIXIN";
 NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 
 #define GreetToOneUserCount 20
-#define GreetToAllUsersCount 3
+#define GreetToAllUsersCount 4
 
 @interface YFBInteractionManager ()
 @end
@@ -48,15 +48,17 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
                    toAllUsers:(BOOL)toAll
                       handler:(void (^)(BOOL))handler
 {
-    NSInteger userCount = [[[NSUserDefaults standardUserDefaults] objectForKey:toAll ? KYFBFriendGreetToAllUsersKeyName : kYFBFriendGreetToOneUserKeyName] integerValue];
-    NSInteger count = toAll ? GreetToAllUsersCount : GreetToOneUserCount;
-    if (userCount >= count) {
-        [[YFBHudManager manager] showHudWithText:toAll ? @"超出每日群体招呼次数限制" : @"超出每日单人招呼次数限制"];
-        return;
-    } else {
-        userCount++;
-        [[NSUserDefaults standardUserDefaults] setObject:@(userCount) forKey:toAll ? KYFBFriendGreetToAllUsersKeyName : kYFBFriendGreetToOneUserKeyName];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+    if (![YFBUtil isVip]) {
+        NSInteger userCount = [[[NSUserDefaults standardUserDefaults] objectForKey:toAll ? KYFBFriendGreetToAllUsersKeyName : kYFBFriendGreetToOneUserKeyName] integerValue];
+        NSInteger count = toAll ? GreetToAllUsersCount : GreetToOneUserCount;
+        if (userCount >= count) {
+            [[YFBHudManager manager] showHudWithText:toAll ? @"超出每日群体招呼次数限制" : @"超出每日单人招呼次数限制"];
+            return;
+        } else {
+            userCount++;
+            [[NSUserDefaults standardUserDefaults] setObject:@(userCount) forKey:toAll ? KYFBFriendGreetToAllUsersKeyName : kYFBFriendGreetToOneUserKeyName];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
     }
     
     [self fetchGreetingInfoWithUserIdStr:userList CompletionHandler:^(BOOL success, id obj) {

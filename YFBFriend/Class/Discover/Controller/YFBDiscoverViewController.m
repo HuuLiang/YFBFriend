@@ -11,6 +11,7 @@
 #import "YFBRecommendVC.h"
 #import "YFBNearVC.h"
 #import "YFBRankVC.h"
+#import "YFBLocalNotificationManager.h"
 
 @interface YFBDiscoverViewController () <UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 {
@@ -65,9 +66,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
                            context:nil];
     self.navigationItem.titleView = _segmentedControl;
     
-    YFBGreetingVC *greetingVC = [[YFBGreetingVC alloc] init];
-    [greetingVC showInViewController:self];
-    
+    if ([UIApplication sharedApplication].scheduledLocalNotifications.count == 0) {
+        YFBGreetingVC *greetingVC = [[YFBGreetingVC alloc] init];
+        [greetingVC showInViewController:self];
+    }
+    [[YFBLocalNotificationManager manager] startAutoLocalNotification]; //开启本地通知轮循
 }
 
 - (NSUInteger)currentIndex {

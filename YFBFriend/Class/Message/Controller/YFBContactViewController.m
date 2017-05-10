@@ -155,11 +155,12 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
 
 - (void)animationEditingViewHidden:(BOOL)hidden {
     if (!_editingView) {
-        self.editingView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, kWidth(98))];
-        [self.view addSubview:_editingView];
-        [self.view bringSubviewToFront:_editingView];
+        self.editingView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight - kWidth(98) + 49 - 64, kScreenWidth, kWidth(98))];
+        _editingView.backgroundColor = kColor(@"#000000");
+        [[UIApplication sharedApplication].keyWindow addSubview:_editingView];
         
         _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _deleteButton.frame = CGRectMake(kWidth(20), kWidth(13), kWidth(348), kWidth(72));
         [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
         _deleteButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
         _deleteButton.backgroundColor = [UIColor colorWithHexString:@"#d8d8d8"];
@@ -168,6 +169,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
         [_editingView addSubview:_deleteButton];
         
         _readButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _readButton.frame = CGRectMake(kWidth(388) , kWidth(13), kWidth(348), kWidth(72));
         [_readButton setTitle:@"全部设为已读" forState:UIControlStateNormal];
         _readButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
         _readButton.backgroundColor = [UIColor colorWithHexString:@"#8458D0"];
@@ -196,35 +198,18 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
             @strongify(self);
             [self.dataSource enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 obj.unreadMsgCount = 0;
+                [obj saveOrUpdate];
             }];
+            [self updateBadgeNumber];
         } forControlEvents:UIControlEventTouchUpInside];
-        
-        {
-            [_deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(_editingView);
-                make.left.equalTo(_editingView).offset(kWidth(20));
-                make.right.equalTo(_editingView.mas_centerX).offset(-kWidth(7));
-                make.height.mas_equalTo(kWidth(72));
-            }];
-            
-            [_readButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(_editingView);
-                make.right.equalTo(_editingView).offset(-kWidth(20));
-                make.left.equalTo(_editingView.mas_centerX).offset(kWidth(7));
-                make.height.mas_equalTo(kWidth(72));
-            }];
-        }
     }
     self.navigationItem.leftBarButtonItem.customView.hidden = hidden;
-
-    if (hidden) {
-        [UIView animateWithDuration:0.5 animations:^{
-            _editingView.frame = CGRectMake(0, kScreenHeight, kScreenWidth, kWidth(98));
-        }];
+    self.tabBarController.tabBar.hidden = !hidden;
+    
+    if (!hidden) {
+        [_editingView showWithPopAnimation];
     } else {
-        [UIView animateWithDuration:0.5 animations:^{
-            _editingView.frame = CGRectMake(0, kScreenHeight-kWidth(98), kScreenWidth, kWidth(98));
-        }];
+        [_editingView hiddenWithPopAnimation];
     }
 }
 
@@ -277,6 +262,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
     @weakify(self);
     [headerView bk_whenTapped:^{
         @strongify(self);
+        [self animationEditingViewHidden:YES];
         YFBVisitemeViewController *visiteVC = [[YFBVisitemeViewController alloc] initWithTitle:@"最近访客"];
         [self.navigationController pushViewController:visiteVC animated:YES];
     }];

@@ -38,5 +38,7 @@
 +(BOOL)isVip;
 + (BOOL)isFirstDay;
 + (BOOL)isToday;
-//+ (BOOL)ableToReply;
+
+
+
 @end

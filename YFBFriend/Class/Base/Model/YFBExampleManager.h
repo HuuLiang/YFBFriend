@@ -20,4 +20,5 @@
 @property (nonatomic) NSArray *giftExampleSource;
 + (instancetype)manager;
 - (void)getExampleList;
+
 @end

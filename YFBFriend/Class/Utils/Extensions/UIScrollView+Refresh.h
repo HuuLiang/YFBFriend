@@ -15,12 +15,17 @@
 - (void)YFB_endPullToRefresh;
 
 - (void)YFB_addPagingRefreshWithHandler:(void (^)(void))handler;
+
+- (void)YFB_addPagingRefreshWithKeyName:(NSString *)keyName Handler:(void (^)(void))handler;
+
 - (void)YFB_pagingRefreshNoMoreData;
 
 - (void)YFB_addIsRefreshing;
 
 - (void)YFB_addVIPNotiRefreshWithHandler:(void (^)(void))handler;
 
-//- (void)YFB_addVipDetailNotiWithVipLevel:(PPVipLevel)vipLevel RefreshWithHandler:(void (^)(void))handler;
-
 @end
+
+extern NSString *const kYFBNearRefreshKeyName;
+extern NSString *const kYFBRankRefreshKeyName;
+extern NSString *const kYFBRecommendRefreshKeyName;
