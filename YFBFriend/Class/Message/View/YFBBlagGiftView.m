@@ -98,7 +98,7 @@
             [_titileLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.equalTo(backImage);
                 make.top.equalTo(backImage.mas_top).offset(kWidth(104));
-                make.height.mas_equalTo(kWidth(16));
+                make.height.mas_equalTo(kWidth(32));
             }];
 
             [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

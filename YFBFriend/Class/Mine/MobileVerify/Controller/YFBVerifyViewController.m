@@ -38,6 +38,7 @@
         [[YFBPhoneVerifyManager manager] mobileVerifyWithVerifyCode:self->_verifyField.text handler:^(BOOL success) {
             if (success) {
                 [[YFBHudManager manager] showHudWithText:@"验证成功"];
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }];
     }];
@@ -167,7 +168,6 @@
                 if (success) {
                     [YFBUser currentUser].phoneNumber = phoneNumber;
                     [[YFBUser currentUser] saveOrUpdate];
-                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }];
         } else {

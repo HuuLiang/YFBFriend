@@ -88,8 +88,13 @@
     [self.view addSubview:_maleButton];
     {
         [_maleButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.view).offset(kWidth(163));
-            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(100));
+            if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0) {
+                make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(100));
+                make.left.equalTo(self.view).offset(kWidth(163));
+            } else {
+                make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(80));
+                make.left.equalTo(self.view).offset(kWidth(170));
+            }
             make.size.mas_equalTo(CGSizeMake(kWidth(70), kWidth(82)));
         }];
     }
@@ -111,8 +116,13 @@
     [self.view addSubview:_femaleButton];
     {
         [_femaleButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.view.mas_right).offset(-kWidth(163));
-            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(100));
+            if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0) {
+                make.right.equalTo(self.view.mas_right).offset(-kWidth(163));
+                make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(100));
+            } else {
+                make.right.equalTo(self.view.mas_right).offset(-kWidth(163));
+                make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(80));
+            }
             make.size.mas_equalTo(CGSizeMake(kWidth(70), kWidth(82)));
         }];
     }

@@ -135,7 +135,7 @@ static const NSUInteger kRollingTimeInterval = 5;
                                                      usingBlock:^(YFBRobotMsgModel * _Nonnull robotMsg, NSUInteger idx, BOOL * _Nonnull stop)
           {
               timeInterval += arc4random() % 4 + 4;
-              YFBAutoReplyMessage *autoReplyMessage = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where msgId=%ld",robotMsg.msgId]];
+              YFBAutoReplyMessage *autoReplyMessage = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where msgId=%ld",(long)robotMsg.msgId]];
               if (!autoReplyMessage) {
                   YFBAutoReplyMessage *autoReplyMessage = [[YFBAutoReplyMessage alloc] init];
                   autoReplyMessage.userId = contactRobot.userId;
@@ -180,7 +180,9 @@ static const NSUInteger kRollingTimeInterval = 5;
             __block uint nextRollingReplyTime = kRollingTimeInterval;
             
             NSArray *array = [self findAllAutoReplyMessages];
-            
+            if (array.count == 0) {
+                
+            }
             
             [array enumerateObjectsUsingBlock:^(YFBAutoReplyMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSTimeInterval currentTimeInterval = [[NSDate date] timeIntervalSince1970];
@@ -204,6 +206,7 @@ static const NSUInteger kRollingTimeInterval = 5;
                         contact.nickName = obj.nickName;
                         contact.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:obj.replyTime] WithDateFormat:KDateFormatLong];
                         contact.messageType = [obj.msgType integerValue];
+                        contact.unreadMsgCount = 0;
                     }
                     if ([obj.msgType integerValue] == YFBMessageTypePhoto) {
                         contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一张图片",obj.nickName];
@@ -220,7 +223,7 @@ static const NSUInteger kRollingTimeInterval = 5;
                     [obj saveOrUpdate];
                     
                     //向消息界面发出通知更改角标数字
-                    [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:obj];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:contact];
                 } else {
                     NSTimeInterval nextTime = obj.replyTime - [[NSDate date] timeIntervalSince1970];
                     if (nextTime < nextRollingReplyTime) {

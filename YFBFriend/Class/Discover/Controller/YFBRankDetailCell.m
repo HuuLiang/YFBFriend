@@ -101,7 +101,7 @@
             }];
             
             [_rankTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(self.contentView.mas_right).offset(-kWidth(126));
+                make.right.equalTo(self.contentView.mas_right).offset(-kWidth(140));
                 make.centerY.equalTo(self.contentView);
                 make.height.mas_equalTo(kWidth(26));
             }];

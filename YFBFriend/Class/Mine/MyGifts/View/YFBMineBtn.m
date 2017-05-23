@@ -17,6 +17,9 @@
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
     CGRect imageRect = [self imageRectForContentRect:contentRect];
+    if ([YFBUtil deviceType] < YFBDeviceType_iPhone5) {
+        return CGRectMake(0, contentRect.origin.y - 3, CGRectGetWidth(contentRect) - (CGRectGetWidth(imageRect)), CGRectGetHeight(imageRect) + 6);
+    }
     return CGRectMake(0,contentRect.origin.y , CGRectGetWidth(contentRect) - (CGRectGetWidth(imageRect)), CGRectGetHeight(imageRect));
 }
 

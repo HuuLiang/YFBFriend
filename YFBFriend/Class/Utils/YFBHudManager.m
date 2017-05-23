@@ -29,6 +29,22 @@
     return self.textHud;
 }
 
+- (MBProgressHUD *)textHud {
+    if (!_textHud) {
+        UIWindow *keyWindow = [[UIApplication sharedApplication].delegate window];
+        _textHud = [[MBProgressHUD alloc] initWithWindow:keyWindow];
+        _textHud.userInteractionEnabled = NO;
+        _textHud.mode = MBProgressHUDModeText;
+        _textHud.minShowTime = 2;
+        _textHud.detailsLabelFont = [UIFont systemFontOfSize:16.];
+        _textHud.labelFont = [UIFont systemFontOfSize:20.];
+        //self.textHud.yOffset = [UIScreen mainScreen].bounds.size.height / 4;
+        _textHud.removeFromSuperViewOnHide = YES;
+        [keyWindow addSubview:_textHud];
+    }
+    return _textHud;
+}
+
 -(instancetype)init {
     self = [super init];
     if (!self) {
@@ -43,6 +59,7 @@
     self.textHud.detailsLabelFont = [UIFont systemFontOfSize:16.];
     self.textHud.labelFont = [UIFont systemFontOfSize:20.];
     //self.textHud.yOffset = [UIScreen mainScreen].bounds.size.height / 4;
+    self.textHud.removeFromSuperViewOnHide = YES;
     [keyWindow addSubview:self.textHud];
     
     return self;
@@ -50,7 +67,7 @@
 
 -(void)showHudWithText:(NSString *)text {
     if (text) {
-        if (text.length < 10) {
+        if (text.length < 15) {
             self.textHud.labelText = text;
             self.textHud.detailsLabelText = nil;
         } else {
@@ -60,6 +77,7 @@
         
         [self.textHud show:YES];
         [self.textHud hide:YES];
+        self.textHud = nil;
     }
 }
 
@@ -95,7 +113,6 @@
         self.progressHud.mode = MBProgressHUDModeAnnularDeterminate;
         self.progressHud.labelText = title;
         self.progressHud.minShowTime = duration;
-        //        [self.progressHud show:YES];
         
         [self.progressHud hide:YES];
         

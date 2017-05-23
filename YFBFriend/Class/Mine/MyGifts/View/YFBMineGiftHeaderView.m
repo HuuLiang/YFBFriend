@@ -55,6 +55,9 @@
             [_allGiftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.mas_equalTo(self).mas_offset(kWidth(-30));
                 make.centerY.mas_equalTo(_titleLabel).mas_offset(kWidth(3));
+                if ([YFBUtil deviceType] < YFBDeviceType_iPhone5) {
+                    make.height.mas_equalTo(kWidth(40));
+                }
             }];
         }
         @weakify(self);

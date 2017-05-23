@@ -7,6 +7,7 @@
 //
 
 #import "YFBRecommendCell.h"
+#import "YFBRobot.h"
 
 @interface YFBRecommendCell ()
 @property (nonatomic,strong) UIImageView *userImgV;
@@ -59,10 +60,6 @@
         [self.contentView addSubview:_localCity];
         
         self.greetButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_greetButton setImage:[UIImage imageNamed:@"discover_greet"] forState:UIControlStateNormal];
-        [_greetButton setImage:[UIImage imageNamed:@"discover_greeted"] forState:UIControlStateSelected];
-        [_greetButton setTitle:@"打招呼" forState:UIControlStateNormal];
-        [_greetButton setTitle:@"已打招呼" forState:UIControlStateSelected];
         [_greetButton setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
         _greetButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(24)];
         [self.contentView addSubview:_greetButton];
@@ -174,7 +171,6 @@
     [_greetButton setTitle:greeted ? @"已打招呼" : @"打招呼" forState:UIControlStateNormal];
     _greetButton.enabled = !greeted;
 }
-
 - (void)setDistance:(CGFloat)distance {
     _distanceLabel.hidden = NO;
     _distanceLabel.text = [NSString stringWithFormat:@"%.2fkm",distance];

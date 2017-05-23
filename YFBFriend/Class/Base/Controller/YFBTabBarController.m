@@ -7,7 +7,7 @@
 //
 
 #import "YFBTabBarController.h"
-#import "YFBNavigationController.h"
+//#import "UINavigationController.h"
 #import "YFBDiscoverViewController.h"
 #import "YFBContactViewController.h"
 #import "YFBMineViewController.h"
@@ -53,19 +53,22 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSInteger unreadMessages = [[YFBContactManager manager] allUnReadMessageCount];
-    
-    UITabBarItem *contactItem = self.tabBar.items[1];
-    
-    if (unreadMessages > 0) {
-        if (unreadMessages < 100) {
-            contactItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
-        } else {
-            contactItem.badgeValue = @"99+";
-        }
-    } else {
-        contactItem.badgeValue = nil;
-    }
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSInteger unreadMessages = [[YFBContactManager manager] allUnReadMessageCount];
+        UITabBarItem *contactItem = self.tabBar.items[1];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (unreadMessages > 0) {
+                if (unreadMessages < 100) {
+                    contactItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
+                } else {
+                    contactItem.badgeValue = @"99+";
+                }
+            } else {
+                contactItem.badgeValue = nil;
+            }
+        });
+    });
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showContactViewWithContactInfo:) name:kYFBFriendShowMessageNotification object:nil];
 }
@@ -96,19 +99,19 @@
 
 - (void)setChildViewControllers {
     YFBDiscoverViewController *discoverVC = [[YFBDiscoverViewController alloc] initWithTitle:@"发现"];
-    YFBNavigationController *discoverNav = [[YFBNavigationController alloc] initWithRootViewController:discoverVC];
+    UINavigationController *discoverNav = [[UINavigationController alloc] initWithRootViewController:discoverVC];
     discoverNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:discoverVC.title
                                                           image:[[UIImage imageNamed:@"discover_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
                                                   selectedImage:[[UIImage imageNamed:@"discover_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     YFBContactViewController *contactVC = [[YFBContactViewController alloc] initWithTitle:@"消息"];
-    YFBNavigationController *contactNav = [[YFBNavigationController alloc] initWithRootViewController:contactVC];
+    UINavigationController *contactNav = [[UINavigationController alloc] initWithRootViewController:contactVC];
     contactNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:contactVC.title
                                                            image:[[UIImage imageNamed:@"contact_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                                    selectedImage:[[UIImage imageNamed:@"contact_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 
     YFBMineViewController *mineVC = [[YFBMineViewController alloc] initWithTitle:@"我的"];
-    YFBNavigationController *mineNav = [[YFBNavigationController alloc] initWithRootViewController:mineVC];
+    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
     mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:mineVC.title
                                                           image:[[UIImage imageNamed:@"mine_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                                   selectedImage:[[UIImage imageNamed:@"mine_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];

@@ -9,7 +9,7 @@
 #import "YFBPasswordView.h"
 #include "YFBTextField.h"
 
-@interface YFBPasswordView ()
+@interface YFBPasswordView () <UITextFieldDelegate>
 @property (nonatomic,strong) UILabel *titleLabel;
 @property (nonatomic,strong) YFBTextField *textField;
 @end
@@ -30,9 +30,11 @@
         
         self.textField = [[YFBTextField alloc] init];
         _textField.placeholder = placeholder;
+        _textField.delegate = self;
         [self addSubview:_textField];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTextFieldContent) name:UITextFieldTextDidChangeNotification object:nil];
+        [_textField addTarget:self action:@selector(changeTextFieldContent:) forControlEvents:UIControlEventEditingChanged];
+        
         
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,13 +55,10 @@
     return _textField.text;
 }
 
-- (void)changeTextFieldContent {
+- (void)changeTextFieldContent:(UITextField *)textField {
     if ([self.delegate respondsToSelector:@selector(textFieldEditingContent:)]) {
-        [self.delegate textFieldEditingContent:_textField.text];
+        [self.delegate textFieldEditingContent:textField.text];
     }
 }
-
-
-
 
 @end

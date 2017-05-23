@@ -118,7 +118,7 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
     {
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.centerY.right.mas_equalTo(headerView);
-            make.height.mas_equalTo(kWidth(30));
+            make.height.mas_equalTo(kWidth(40));
         }];
     }
     NSString *titleStr = _isSendGift ? @"当前送出的礼物：" : @"当前收到的礼物：";

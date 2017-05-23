@@ -52,6 +52,16 @@
         _timeLabel.font = [UIFont systemFontOfSize:kWidth(24)];
         [self.contentView addSubview:_timeLabel];
         
+        _unreadLabel.backgroundColor = [UIColor redColor];
+        _unreadLabel.textColor = kColor(@"#ffffff");
+        _unreadLabel.font = kFont(14);
+        _unreadLabel.layer.cornerRadius = kWidth(18);
+        _unreadLabel.layer.masksToBounds = YES;
+        _unreadLabel.textAlignment = NSTextAlignmentCenter;
+//        _unreadLabel.text = [NSString stringWithFormat:@"%ld",unreadMsg];
+        [self.contentView addSubview:_unreadLabel];
+
+        
         {
             [_userImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(self.contentView);
@@ -77,6 +87,14 @@
                 make.height.mas_equalTo(kWidth(26));
                 make.right.equalTo(self.contentView.mas_right).offset(-kWidth(60));
             }];
+            
+            [_unreadLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(_userImageView.mas_right).offset(-kWidth(10));
+                make.centerY.equalTo(_userImageView.mas_top).offset(kWidth(10));
+                make.height.mas_equalTo(kWidth(36));
+                make.width.mas_equalTo(20);
+            }];
+
         }
     }
     return self;
@@ -113,27 +131,10 @@
 
 - (void)setUnreadMsg:(NSInteger)unreadMsg {
     if (unreadMsg > 0) {
-        _unreadLabel.backgroundColor = [UIColor redColor];
-        _unreadLabel.textColor = kColor(@"#ffffff");
-        _unreadLabel.font = kFont(14);
-        _unreadLabel.layer.cornerRadius = kWidth(18);
-        _unreadLabel.layer.masksToBounds = YES;
-        _unreadLabel.textAlignment = NSTextAlignmentCenter;
-        _unreadLabel.text = [NSString stringWithFormat:@"%ld",unreadMsg];
-        [self.contentView addSubview:_unreadLabel];
-        
-        CGSize size = [_unreadLabel.text sizeWithFont:_unreadLabel.font maxHeight:kWidth(36)];
-        
-        {
-            [_unreadLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(_userImageView.mas_right).offset(-kWidth(10));
-                make.centerY.equalTo(_userImageView.mas_top).offset(kWidth(10));
-                make.height.mas_equalTo(kWidth(36));
-                make.width.mas_equalTo(size.width+13);
-            }];
-        }
+        _unreadLabel.hidden = NO;
+        _unreadLabel.text = [NSString stringWithFormat:@"%ld",(long)unreadMsg];
     } else {
-        [_unreadLabel removeFromSuperview];
+        _unreadLabel.hidden = YES;
     }
 }
 

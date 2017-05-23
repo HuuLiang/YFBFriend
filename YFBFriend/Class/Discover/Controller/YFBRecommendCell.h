@@ -17,7 +17,7 @@
 @property (nonatomic)   NSInteger  userHeight;
 @property (nonatomic,copy)   NSString *cityStr;
 @property (nonatomic,assign) BOOL greeted;
-
+@property (nonatomic) NSString *userId;
 @property (nonatomic)   CGFloat distance;
 
 @property (nonatomic,copy) QBAction greeting;

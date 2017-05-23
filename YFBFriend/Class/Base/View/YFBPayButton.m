@@ -91,10 +91,11 @@
     _detailLabel.textAlignment = NSTextAlignmentCenter;
     _detailLabel.backgroundColor = [UIColor clearColor];
     [self addSubview:_detailLabel];
+    
+
 }
 
 - (void)layoutSubviews {
-    [super layoutSubviews];
     
     if (_label && !_subTitleLabel && !_detailLabel) {
         [_label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -136,8 +137,11 @@
             make.top.equalTo(self.mas_centerY).offset(kWidth(6));
             make.height.mas_equalTo(kWidth(40));
         }];
-
+        
     }
+
+    
+    [super layoutSubviews];
 }
 
 @end

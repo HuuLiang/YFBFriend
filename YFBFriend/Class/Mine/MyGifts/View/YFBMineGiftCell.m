@@ -105,6 +105,7 @@
                 make.centerY.mas_equalTo(_bgView);
                 make.right.mas_equalTo(self).mas_offset(kWidth(-52));
                 make.height.mas_equalTo(kWidth(52));
+                make.width.mas_equalTo(kWidth(140));
                 //                make.left.mas_lessThanOrEqualTo(_diamondBtn.mas_right).mas_offset(kWidth(20));
             }];
         }

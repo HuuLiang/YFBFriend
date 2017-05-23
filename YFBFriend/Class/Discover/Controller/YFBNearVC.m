@@ -46,7 +46,7 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     
     {
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.left.right.top.equalTo(self.view);
             make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(108));
         }];
     }
@@ -61,29 +61,33 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         [[NSUserDefaults standardUserDefaults] synchronize];
     }];
         
-    MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    NSString *vipNotice = nil;
+    BOOL loadOver = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBRecommendRefreshKeyName] boolValue];
+    if (loadOver) {
+        vipNotice = @"—————— 我是有底线的 ——————";
+    } else {
+        vipNotice = @"上拉加载更多";
+    }
+    
+    __block MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         @strongify(self);
         if (self.response.pageNum < self.response.pageCount) {
             self.response.pageNum++;
         } else {
-            if (![[[NSUserDefaults standardUserDefaults] objectForKey:kYFBNearRefreshKeyName] boolValue]) {
+            if (![[[NSUserDefaults standardUserDefaults] objectForKey:kYFBRecommendRefreshKeyName] boolValue]) {
                 [[YFBHudManager manager] showHudWithText:@"所有数据加载完成"];
-                [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kYFBNearRefreshKeyName];
+                [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kYFBRecommendRefreshKeyName];
                 [[NSUserDefaults standardUserDefaults] synchronize];
+                [refreshFooter setTitle:@"—————— 我是有底线的 ——————" forState:MJRefreshStateIdle];
             }
             [self->_tableView YFB_endPullToRefresh];
             return ;
         }
         [self loadDataWithPageCount:self.response.pageNum refresh:NO];
     }];
-    NSString *vipNotice = nil;
-    BOOL loadOver = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBNearRefreshKeyName] boolValue];
-    if (loadOver) {
-        vipNotice = @"—————— 我是有底线的 ——————";
-    } else {
-        vipNotice = @"上拉加载更多";
-    }
     [refreshFooter setTitle:vipNotice forState:MJRefreshStateIdle];
+    
+    
     _tableView.footer = refreshFooter;
     
     [_tableView YFB_triggerPullToRefresh];
@@ -105,7 +109,10 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
             if (isRefresh) {
                 [self.dataSource removeAllObjects];
             }
-            [self.dataSource addObjectsFromArray:obj.userList];
+            [obj.userList enumerateObjectsUsingBlock:^(YFBRobot * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                obj.greeted = [YFBRobot checkUserIsGreetedWithUserId:obj.userId];
+                [self.dataSource addObject:obj];
+            }];
         }
         [self setAutoDistance];
         [self->_tableView reloadData];
@@ -188,6 +195,7 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         cell.distance = info.distance;
         cell.userSex = [info.gender isEqualToString:@"M"] ? YFBUserSexMale : YFBUserSexFemale;
         cell.cityStr = info.city;
+        cell.greeted = info.greeted;
         @weakify(self);
         cell.greeting = ^(id sender) {
             @strongify(self);
@@ -197,22 +205,15 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
                 //打招呼
                 [[YFBInteractionManager manager] greetWithUserInfoList:@[info] toAllUsers:NO handler:^(BOOL success) {
                     if (success) {
-                        YFBRecommendCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                        cell.greeted  = YES;
+                        info.greeted = YES;
+                        [self.dataSource replaceObjectAtIndex:indexPath.row withObject:info];
+                        [self->_tableView reloadData];
                     }
                 }];
             }
         };
     }
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    YFBRecommendCell *recommendCell = (YFBRecommendCell *)cell;
-    if (indexPath.row < self.dataSource.count) {
-        YFBRobot *info = self.dataSource[indexPath.row];
-        recommendCell.greeted = [YFBRobot checkUserIsGreetedWithUserId:info.userId];
-    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

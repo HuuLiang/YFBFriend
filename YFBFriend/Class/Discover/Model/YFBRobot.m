@@ -12,6 +12,9 @@
 
 + (BOOL)checkUserIsGreetedWithUserId:(NSString *)userId {
     YFBRobot *robot = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=\'%@\'",userId]];
+    if (!robot) {
+        return NO;
+    }
     if (robot) {
         return robot.greeted;
     }

@@ -100,29 +100,33 @@ QBDefineLazyPropertyInitialization(YFBRankFentYunListModel, response)
         [[NSUserDefaults standardUserDefaults] synchronize];
     }];
     
-    MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    NSString *vipNotice = nil;
+    BOOL loadOver = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBRecommendRefreshKeyName] boolValue];
+    if (loadOver) {
+        vipNotice = @"—————— 我是有底线的 ——————";
+    } else {
+        vipNotice = @"上拉加载更多";
+    }
+    
+    __block MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         @strongify(self);
         if (self.response.pageNum < self.response.pageCount) {
             self.response.pageNum++;
         } else {
-            if (![[[NSUserDefaults standardUserDefaults] objectForKey:kYFBRankRefreshKeyName] boolValue]) {
+            if (![[[NSUserDefaults standardUserDefaults] objectForKey:kYFBRecommendRefreshKeyName] boolValue]) {
                 [[YFBHudManager manager] showHudWithText:@"所有数据加载完成"];
-                [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kYFBRankRefreshKeyName];
+                [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kYFBRecommendRefreshKeyName];
                 [[NSUserDefaults standardUserDefaults] synchronize];
+                [refreshFooter setTitle:@"—————— 我是有底线的 ——————" forState:MJRefreshStateIdle];
             }
             [self->_tableView YFB_endPullToRefresh];
             return ;
         }
         [self loadDataWithPageCount:self.response.pageNum refresh:NO];
     }];
-    NSString *vipNotice = nil;
-    BOOL loadOver = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBRankRefreshKeyName] boolValue];
-    if (loadOver) {
-        vipNotice = @"—————— 我是有底线的 ——————";
-    } else {
-        vipNotice = @"上拉加载更多";
-    }
     [refreshFooter setTitle:vipNotice forState:MJRefreshStateIdle];
+    
+    
     _tableView.footer = refreshFooter;
     
     [_tableView YFB_triggerPullToRefresh];
@@ -228,8 +232,8 @@ QBDefineLazyPropertyInitialization(YFBRankFentYunListModel, response)
         cell.userImageUrl = robot.portraitUrl;
         cell.nickName = robot.nickName;
         cell.userSex = [robot.gender isEqualToString:@"M"] ? YFBUserSexMale : YFBUserSexFemale;
-        cell.age = [NSString stringWithFormat:@"%ld岁",robot.age];
-        cell.distance = [NSString stringWithFormat:@"%ldkm",robot.distance];
+        cell.age = [NSString stringWithFormat:@"%ld岁",(long)robot.age];
+        cell.distance = [NSString stringWithFormat:@"%ldkm",(long)robot.distance];
         cell.rankType = _rankType;
         cell.giftCount = _rankType == YFBRankTypeSend ? robot.sendGiftCount : robot.recvGiftCount;
     }

@@ -97,6 +97,9 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
         }
     }];
     
+    [self.dataSource addObjectsFromArray:[[YFBContactManager manager] loadAllContactInfo]];
+    [_tableView reloadData];
+    
     [self loadVisitemeData];
 }
 
@@ -106,9 +109,31 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self updateBadgeNumber];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeNumber) name:KUpdateContactUnReadMessageNotification object:nil];
+    [self refreshBadege];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeNumber:) name:KUpdateContactUnReadMessageNotification object:nil];
+}
+
+- (void)refreshBadege {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        __block NSInteger unreadMsgCount = 0;
+        NSArray *array = [NSArray arrayWithArray:self.dataSource];
+        [array enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            unreadMsgCount += obj.unreadMsgCount;
+        }];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (unreadMsgCount > 0) {
+                if (unreadMsgCount < 100) {
+                    self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMsgCount];
+                } else {
+                    self.navigationController.tabBarItem.badgeValue = @"99+";
+                }
+            } else {
+                self.navigationController.tabBarItem.badgeValue = nil;
+            }
+            [self.tableView reloadData];
+        });
+    });
 }
 
 - (void)loadVisitemeData {
@@ -122,32 +147,57 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
     }];
 }
 
-- (void)loadContactData {
-    [self.dataSource removeAllObjects];
-    [self.dataSource addObjectsFromArray:[[YFBContactManager manager] loadAllContactInfo]];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-}
-
-- (void)updateBadgeNumber {
-    
-    __block NSInteger unreadMessages = [[YFBContactManager manager] allUnReadMessageCount];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self loadContactData];
-
-        if (unreadMessages > 0) {
-            if (unreadMessages < 100) {
-                self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
-            } else {
-                self.navigationController.tabBarItem.badgeValue = @"99+";
+- (void)updateBadgeNumber:(NSNotification *)notification {
+    if (self.viewLoaded) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            YFBContactModel *contactModel = nil;
+            if (notification) {
+                contactModel = (YFBContactModel *)[notification object];
             }
-        } else {
-            self.navigationController.tabBarItem.badgeValue = nil;
-        }
-        
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-    });
+            if (contactModel) {
+                __block BOOL alreadyRobot = NO;
+                __block NSUInteger index;
+                [self.dataSource enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj.userId isEqualToString:contactModel.userId]) {
+                        obj.messageTime = contactModel.messageTime;
+                        obj.messageContent = contactModel.messageContent;
+                        obj.messageType = contactModel.messageType;
+                        obj.unreadMsgCount = contactModel.unreadMsgCount;
+                        index = idx;
+                        alreadyRobot = YES;
+                        * stop = YES;
+                    }
+                }];
+                if (!alreadyRobot) {
+                    [self.dataSource insertObject:contactModel atIndex:0];
+                } else {
+                    [self.dataSource exchangeObjectAtIndex:index withObjectAtIndex:0];
+                }
                 
+            }
+            if (self.view.window && !self->_tableView.isEditing) {
+                NSInteger unreadMsgCount = [self.navigationController.tabBarItem.badgeValue integerValue];
+                unreadMsgCount = unreadMsgCount + contactModel.unreadMsgCount;
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (unreadMsgCount > 0) {
+                        if (unreadMsgCount < 100) {
+                            self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMsgCount];
+                        } else {
+                            self.navigationController.tabBarItem.badgeValue = @"99+";
+                        }
+                    } else {
+                        self.navigationController.tabBarItem.badgeValue = nil;
+                    }
+                });
+
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self refreshBadege];
+            });
+        });
+    }
 }
 
 - (void)animationEditingViewHidden:(BOOL)hidden {
@@ -196,8 +246,9 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
             [self.dataSource enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 obj.unreadMsgCount = 0;
                 [obj saveOrUpdate];
+                [self.dataSource replaceObjectAtIndex:idx withObject:obj];
             }];
-            [self updateBadgeNumber];
+            self.navigationController.tabBarItem.badgeValue = nil;
         } forControlEvents:UIControlEventTouchUpInside];
     }
     self.navigationItem.leftBarButtonItem.customView.hidden = hidden;
@@ -309,7 +360,9 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
         //进入聊天界面
         model.unreadMsgCount = 0;
         [model saveOrUpdate];
-        [self updateBadgeNumber];
+        
+        [self.dataSource replaceObjectAtIndex:indexPath.row withObject:model];
+        
         [self pushIntoMessageVCWithUserId:model.userId nickName:model.nickName avatarUrl:model.portraitUrl];
     }
 }

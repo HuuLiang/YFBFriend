@@ -23,6 +23,7 @@
 @interface YFBMessageViewController ()
 {
     YFBGiftPopViewController *_giftVC;
+    UIView *_payView;
 }
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
 @property (nonatomic,retain) YFBMessageAdView *messagAdView;
@@ -128,7 +129,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }
     contactModel.unreadMsgCount = 0;
     [contactModel saveOrUpdate];
-
+    
+    //向消息界面发出通知更改角标数字
+    [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:contactModel];
 }
 
 - (void)reloadChatMessages {
@@ -166,7 +169,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         });
     });
 }
-
 
 
 - (void)addTextMessage:(NSString *)message
@@ -343,6 +345,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     if (self.functionView) {
         _functionView.diamondCount = [YFBUser currentUser].diamondCount;
     }
+    if (self.messageInputView.hidden) {
+        self.messageInputView.hidden = NO;
+    }
 }
 
 - (void)popGiftView {
@@ -381,8 +386,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     CGRect payFrame = self.messageInputView.frame;
     self.messageInputView.hidden = YES;
     
-    UIView *payView = [[UIView alloc] initWithFrame:payFrame];
-    [self.view addSubview:payView];
+    _payView = [[UIView alloc] initWithFrame:payFrame];
+    [self.view addSubview:_payView];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"回复并索要联系方式" forState:UIControlStateNormal];
@@ -391,7 +396,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     button.backgroundColor = [UIColor colorWithHexString:@"#8458D0"];
     button.layer.cornerRadius = 5;
     button.layer.masksToBounds = YES;
-    [payView addSubview:button];
+    [_payView addSubview:button];
     
     @weakify(self);
     [button bk_addEventHandler:^(id sender) {
@@ -400,8 +405,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     } forControlEvents:UIControlEventTouchUpInside];
     
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(payView);
-        make.size.mas_equalTo(CGSizeMake(payView.size.width*0.9, payView.size.height * 0.9));
+        make.center.equalTo(_payView);
+        make.size.mas_equalTo(CGSizeMake(_payView.size.width*0.9, _payView.size.height * 0.9));
     }];
 }
 
