@@ -12,9 +12,9 @@
 
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *headerUrl;
-@property (nonatomic) NSString *age;
+@property (nonatomic) NSInteger age;
 @property (nonatomic) NSInteger photoCount;
 
-@property (nonatomic,copy) QBAction attentionAction;
+@property (nonatomic,copy) YFBAction attentionAction;
 
 @end

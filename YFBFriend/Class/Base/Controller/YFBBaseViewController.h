@@ -18,4 +18,6 @@
 
 - (void)pushIntoMessageVCWithUserId:(NSString *)userId nickName:(NSString *)nickName avatarUrl:(NSString *)avatarUrl;
 
+- (void)pushIntoPayVC;
+
 @end

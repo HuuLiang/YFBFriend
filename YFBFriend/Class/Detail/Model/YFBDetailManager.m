@@ -1,12 +1,12 @@
 //
-//  YFBDetailModel.m
+//  YFBDetailManager.m
 //  YFBFriend
 //
 //  Created by Liang on 2017/4/15.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import "YFBDetailModel.h"
+#import "YFBDetailManager.h"
 
 @implementation YFBUserBaseInfoModel
 
@@ -25,7 +25,17 @@
 @end
 
 
-@implementation YFBDetailModel
+@implementation YFBDetailManager
+
++ (instancetype)manager {
+    static YFBDetailManager *_detailManager;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _detailManager = [[YFBDetailManager alloc] init];
+    });
+    return _detailManager;
+}
+
 
 - (QBURLRequestMethod)requestMethod {
     return QBURLPostRequest;

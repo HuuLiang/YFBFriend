@@ -9,6 +9,7 @@
 #import "YFBPaymentManager.h"
 #import "AlipayManager.h"
 #import "WeChatPayManager.h"
+#import "YFBDetailManager.h"
 
 NSString *const kYFBPaymentActionOpenVipKeyName             = @"OPEN_VIP";
 NSString *const kYFBPaymentActionPURCHASEDIAMONDKeyName     = @"PURCHASE_DIAMOND";
@@ -17,8 +18,8 @@ NSString *const kYFBPaymentStatusSucessKeyName              = @"FR_PAY_SUCC";
 NSString *const kYFBPaymentStatusCancleKeyName              = @"FR_PAY_CANCEL";
 NSString *const kYFBPaymentStatusFailedKeyName              = @"FR_PAY_FAIL";
 
-NSString *const kYFBPaymentMethodAliKeyName                 = @"FR_WEIXIN";
-NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_ALIPAY";
+NSString *const kYFBPaymentMethodAliKeyName                 = @"FR_ALIPAY";
+NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
 
 @interface YFBPaymentManager()
 @property (nonatomic) NSString *payOrderNo;
@@ -29,6 +30,14 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_ALIPAY";
 @end
 
 @implementation YFBPaymentManager
+
+- (QBURLRequestMethod)requestMethod {
+    return QBURLPostRequest;
+}
+
+- (NSTimeInterval)requestTimeInterval {
+    return 10;
+}
 
 + (instancetype)manager {
     static YFBPaymentManager *_paymentManager;
@@ -57,6 +66,8 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_ALIPAY";
         default:
             break;
     }
+    
+    _payPrice = 1;
     
     if (payType == YFBPayTypeAliPay) {
         [[AlipayManager shareInstance] startAlipay:_payOrderNo
@@ -107,15 +118,8 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_ALIPAY";
     NSString *payCountKeyName;
     
     if ([_payAction isEqualToString:kYFBPaymentActionOpenVipKeyName]) {
-        NSTimeInterval newExpireTimeInterval = [[YFBUtil dateFromString:[YFBUser currentUser].expireTime WithDateFormat:kDateFormateLongest] timeIntervalSince1970] + _payCount * 24 * 60 * 60;
-        [YFBUser currentUser].expireTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:newExpireTimeInterval] WithDateFormat:kDateFormateLongest];
-        [[YFBUser currentUser] saveOrUpdateUserInfo];
-        
         payCountKeyName = @"days";
     } else if ([_payAction isEqualToString:kYFBPaymentActionPURCHASEDIAMONDKeyName]) {
-        [YFBUser currentUser].diamondCount += _payCount;
-        [[YFBUser currentUser] saveOrUpdateUserInfo];
-
         payCountKeyName = @"amount";
     }
     
@@ -129,13 +133,25 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_ALIPAY";
                              @"price":@(_payPrice),
                              payCountKeyName:@(_payCount)};
     
-    [self requestURLPath:YFB_PAYMENT_ORDERID
+    [self requestURLPath:YFB_UPDATEORDER_URL
           standbyURLPath:nil
               withParams:params
          responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
      {
          if (respStatus == QBURLResponseSuccess) {
              QBLog(@"订单上传成功");
+             if (result == YFBPayResultSuccess) {
+                 [[YFBDetailManager manager] fetchDetailInfoWithUserId:[YFBUser currentUser].userId CompletionHandler:^(BOOL success, YFBUserLoginModel * obj) {
+                     if (success) {
+                         [YFBUser currentUser].diamondCount = obj.userBaseInfo.myDiamonds;
+                         [YFBUser currentUser].expireTime = obj.userBaseInfo.vipExpireDate;
+                         [[YFBUser currentUser] saveOrUpdateUserInfo];
+                         
+                         [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+                         [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
+                     }
+                 }];
+             }
          }
      }];
 }

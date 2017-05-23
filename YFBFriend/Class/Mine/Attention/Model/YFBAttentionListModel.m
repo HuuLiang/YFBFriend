@@ -9,7 +9,7 @@
 #import "YFBAttentionListModel.h"
 
 NSString *const kYFBAttentionListConcernKeyName = @"concern";
-NSString *const kYFBAttentionListCOncernedKeyName = @"concerned";
+NSString *const kYFBAttentionListConcernedKeyName = @"concerned";
 
 
 @implementation YFBAttentionInfo

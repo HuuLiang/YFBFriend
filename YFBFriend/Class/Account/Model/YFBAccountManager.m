@@ -192,7 +192,7 @@
         [YFBUser currentUser].userImage = userInfoDic[@"headimgurl"];
         [YFBUser currentUser].userSex = [userInfoDic[@"sex"] integerValue];
         [YFBUser currentUser].loginName = userInfoDic[@"openid"];
-        BOOL success = [[YFBUser currentUser] saveOrUpdateUserInfo];
+        BOOL success = [[YFBUser currentUser] saveOrUpdate];
 
         if (success && self.result) {
             QBSafelyCallBlock(self.result,success);

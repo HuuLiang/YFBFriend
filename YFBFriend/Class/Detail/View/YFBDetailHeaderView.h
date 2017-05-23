@@ -10,13 +10,14 @@
 
 @interface YFBDetailHeaderView : UIView
 
-@property (nonatomic,copy) NSString *backImageUrl;
 @property (nonatomic,copy) NSString *userImageUrl;
 @property (nonatomic,copy) NSString *nickName;
 @property (nonatomic,copy) NSString *userId;
 @property (nonatomic,copy) NSString *userLocation;
 @property (nonatomic,copy) NSString *distance;
-@property (nonatomic,copy) NSString *albumCount;
+@property (nonatomic) NSInteger albumCount;
 @property (nonatomic) NSInteger followCount;
+
+@property (nonatomic) YFBAction clickAction;
 
 @end

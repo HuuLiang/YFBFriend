@@ -8,6 +8,9 @@
 
 #import "YFBBaseViewController.h"
 
+@class  YFBContactModel;
+
+
 
 @interface YFBGiftPopViewController : YFBBaseViewController
 
@@ -17,5 +20,9 @@
 
 - (void)hide;
 
+@property (nonatomic) YFBContactModel *contactInfo;
+
+@property (nonatomic,copy) YFBAction payAction;
+@property (nonatomic,copy) QBAction sendGiftAction;
 
 @end

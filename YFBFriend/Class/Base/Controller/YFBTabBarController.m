@@ -18,6 +18,8 @@
 #import "YFBExampleManager.h"
 #import "YFBMessageRecordManager.h"
 #import "YFBAutoReplyManager.h"
+#import "YFBContactManager.h"
+#import "YFBAskGiftManager.h"
 
 #import "YFBAutoReplyManager.h"
 #import "YFBContactView.h"
@@ -51,6 +53,20 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    NSInteger unreadMessages = [[YFBContactManager manager] allUnReadMessageCount];
+    
+    UITabBarItem *contactItem = self.tabBar.items[1];
+    
+    if (unreadMessages > 0) {
+        if (unreadMessages < 100) {
+            contactItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
+        } else {
+            contactItem.badgeValue = @"99+";
+        }
+    } else {
+        contactItem.badgeValue = nil;
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showContactViewWithContactInfo:) name:kYFBFriendShowMessageNotification object:nil];
 }
 
@@ -62,14 +78,16 @@
 
 //预加载相关配置
 - (void)loadDefaultConfig {
-    [[YFBDiamondManager manager] getDiamondListCache];                  //获取钻石列表
-    [[YFBGiftManager manager] getGiftListCache];                        //获取礼物列表
-    [[YFBPayConfigManager manager] getPayConfig];                       //获取支付配置
-    [[YFBExampleManager manager] getExampleList];                       //获取支付例子列表
-    [[YFBMessageRecordManager manager] deleteYesterdayRecordMessages];  //删除昨日消息记录
-    [[YFBAutoReplyManager manager] deleteYesterdayMessages];            //删除昨日推送记录
-    [[YFBAutoReplyManager manager] getRobotReplyMessages];              //获取批量的机器人消息留作推送
-    [[YFBAutoReplyManager manager] startAutoRollingToReply];            //开始推送机器人
+    [[YFBDiamondManager manager] getDiamondListCache];                              //获取钻石列表
+    [[YFBGiftManager manager] getGiftListCache];                                    //获取礼物列表
+    [[YFBPayConfigManager manager] getPayConfig];                                   //获取支付配置
+    [[YFBExampleManager manager] getExampleList];                                   //获取支付例子列表
+    [[YFBMessageRecordManager manager] deleteYesterdayRecordMessages];              //删除昨日消息记录
+    [[YFBAutoReplyManager manager] deleteYesterdayMessages];                        //删除昨日推送记录
+    [[YFBContactManager manager] deleteAllPreviouslyContactInfo];                   //删除昨日的消息列表消息里的消息内容
+    [[YFBAutoReplyManager manager] getRobotReplyMessages];                          //获取批量的机器人消息留作推送
+    [[YFBAutoReplyManager manager] startAutoRollingToReply];                        //开始推送机器人
+    [[YFBAskGiftManager manager] startAutoBlagActionInViewController:self];         //开始索要礼物功能
 }
 
 - (void)wakeAskGiftManager {

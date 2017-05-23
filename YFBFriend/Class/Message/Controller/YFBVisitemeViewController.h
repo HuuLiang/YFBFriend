@@ -16,6 +16,10 @@
 @property (nonatomic) YFBAction payAction;
 @end
 
+@interface YFBVisiteMeCountFooterView : UICollectionReusableView
+@property (nonatomic) NSInteger visiteMeCount;
+@end
+
 @interface YFBVisitemeViewController : YFBBaseViewController
 
 @end

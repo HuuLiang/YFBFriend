@@ -10,6 +10,7 @@
 
 @interface YFBMineGiftCell ()
 {
+    UIView *_bgView;
     UIImageView *_imageView;
     UILabel *_nameLabel;
     UILabel *_timeLabel;
@@ -21,7 +22,7 @@
 
 @implementation YFBMineGiftCell
 
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = 0;
         UIView *lineView = [[UIView alloc] init];
@@ -34,17 +35,26 @@
                 make.height.mas_equalTo(1);
             }];
         }
-        _imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bbt"]];
-        _imageView.backgroundColor = kColor(@"#f0f0f0");
-        _imageView.contentMode = UIViewContentModeCenter;
-        _imageView.layer.cornerRadius = kWidth(10);
-        _imageView.clipsToBounds = YES;
-        [self addSubview:_imageView];
+        
+        _bgView = [[UIView alloc] init];
+        _bgView.backgroundColor = kColor(@"#f0f0f0");
+        _bgView.layer.cornerRadius = kWidth(10);
+        _bgView.layer.masksToBounds = YES;
+        [self addSubview:_bgView];
+        
         {
-            [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            [_bgView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.mas_equalTo(self);
                 make.left.mas_equalTo(self).mas_offset(kWidth(108));
                 make.size.mas_equalTo(CGSizeMake(kWidth(110), kWidth(110)));
+            }];
+        }
+        
+        _imageView = [[UIImageView alloc] init];
+        [_bgView addSubview:_imageView];
+        {
+            [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(_bgView).mas_equalTo(UIEdgeInsetsMake(kWidth(10), kWidth(10), kWidth(10), kWidth(10)));
             }];
         }
         
@@ -54,8 +64,8 @@
         [self addSubview:_nameLabel];
         {
             [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.mas_equalTo(_imageView.mas_right).mas_offset(kWidth(24));
-                make.top.mas_equalTo(_imageView).mas_offset(kWidth(10));
+                make.left.mas_equalTo(_bgView.mas_right).mas_offset(kWidth(24));
+                make.top.mas_equalTo(_bgView).mas_offset(kWidth(10));
             }];
         }
         
@@ -92,7 +102,7 @@
         [self addSubview:_giveBtn];
         {
             [_giveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.mas_equalTo(_imageView);
+                make.centerY.mas_equalTo(_bgView);
                 make.right.mas_equalTo(self).mas_offset(kWidth(-52));
                 make.height.mas_equalTo(kWidth(52));
                 //                make.left.mas_lessThanOrEqualTo(_diamondBtn.mas_right).mas_offset(kWidth(20));
@@ -101,7 +111,7 @@
         @weakify(self);
         [_giveBtn bk_addEventHandler:^(id sender) {
             @strongify(self);
-            QBSafelyCallBlock(self.giveAction,self)
+            QBSafelyCallBlock(self.giveAction)
         } forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
@@ -125,6 +135,10 @@
 - (void)setGiveStr:(NSString *)giveStr {
     _giveStr = giveStr;
     [_giveBtn setTitle:giveStr forState:UIControlStateNormal];
+}
+
+- (void)setGiftUrl:(NSString *)giftUrl {
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:giftUrl]];
 }
 
 - (void)layoutSubviews {

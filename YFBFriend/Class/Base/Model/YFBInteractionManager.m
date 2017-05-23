@@ -21,6 +21,9 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 #define GreetToOneUserCount 20
 #define GreetToAllUsersCount 4
 
+@implementation YFBInteractionResponse
+@end
+
 @interface YFBInteractionManager ()
 @end
 
@@ -41,6 +44,10 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 
 - (NSTimeInterval)requestTimeInterval {
     return 10;
+}
+
++ (Class)responseClass {
+    return [YFBInteractionResponse class];
 }
 
 //打招呼
@@ -79,6 +86,11 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
         }
     }];
     
+    if (userIdList.count == 0) {
+        [[YFBHudManager manager] showHudWithText:@"已打过招呼"];
+        return YES;
+    }
+    
     NSString *userIdString = [userIdList componentsJoinedByString:@","];
     
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
@@ -112,7 +124,7 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 - (void)concernUserWithUserId:(NSString *)userId
                       handler:(void (^)(BOOL))handler
 {
-    __block YFBRobot *robot = [YFBRobot findFirstByCriteria:[NSString stringWithFormat:@"WHRER userId=\'%@\'",userId]];
+    __block YFBRobot *robot = [YFBRobot findFirstByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",userId]];
     if (robot && robot.concerned) {
         [[YFBHudManager manager] showHudWithText:@"已经关注过了"];
         return;
@@ -128,6 +140,7 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
             
             if (!robot) {
                 robot = [[YFBRobot alloc] init];
+                robot.userId = userId;
             }
             robot.concerned = YES;
             [robot saveOrUpdate];
@@ -136,6 +149,9 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
         } else {
             [[YFBHudManager manager] showHudWithText:@"关注失败，请重试"];
         }
+        if (handler) {
+            handler(success);
+        }
     }];
 }
 
@@ -143,26 +159,29 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 - (void)cancleConcernUserWithUserId:(NSString *)userId
                             handler:(void (^)(BOOL))handler
 {
-    __block YFBRobot *robot = [YFBRobot findFirstByCriteria:[NSString stringWithFormat:@"WHRER userId=\'%@\'",userId]];
+    __block YFBRobot *robot = [YFBRobot findFirstByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",userId]];
     if (robot.concerned) {
         [self concernOrCancleUserWithUserId:userId isConcern:NO CompletionHandler:^(BOOL success, id obj) {
             if (success) {
                 if (!robot) {
                     robot = [[YFBRobot alloc] init];
+                    robot.userId = userId;
                 }
                 robot.concerned = NO;
                 [robot saveOrUpdate];
                 
-                [[YFBHudManager manager] showHudWithText:@"关注成功"];
+                [[YFBHudManager manager] showHudWithText:@"取消关注成功"];
                 
             } else {
                 [[YFBHudManager manager] showHudWithText:@"取消关注失败，请重试"];
+            }
+            if (handler) {
+                handler(success);
             }
         }];
     } else {
         [[YFBHudManager manager] showHudWithText:@"您还未关注TA哦"];
     }
-
 }
 
 - (BOOL)concernOrCancleUserWithUserId:(NSString *)userId
@@ -210,16 +229,16 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
 }
 
 //发送消息
-- (void)sendMessageInfoToUserId:(NSString *)userId
-                        content:(NSString *)content
-                           type:(NSInteger)messageType
-                        handler:(void (^)(BOOL))handler {
-    [self sendMessageInfoToUserId:userId
-                          content:content
-                             type:messageType
-                   deductDiamonds:0
-                          handler:handler];
-}
+//- (void)sendMessageInfoToUserId:(NSString *)userId
+//                        content:(NSString *)content
+//                           type:(NSInteger)messageType
+//                        handler:(void (^)(BOOL))handler {
+//    [self sendMessageInfoToUserId:userId
+//                          content:content
+//                             type:messageType
+//                   deductDiamonds:0
+//                          handler:handler];
+//}
 
 - (void)sendMessageInfoToUserId:(NSString *)userId
                         content:(NSString *)content
@@ -242,6 +261,8 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
      {
          if (respStatus == QBURLResponseSuccess) {
              [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:userId];
+             [YFBUser currentUser].diamondCount += deductDiamonds;
+             [[YFBUser currentUser] saveOrUpdate];
          }
          
          if (handler) {

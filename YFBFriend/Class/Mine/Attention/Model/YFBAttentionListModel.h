@@ -11,7 +11,7 @@
 @interface YFBAttentionInfo : NSObject
 @property (nonatomic) NSInteger age;
 @property (nonatomic) NSString *nickName;
-@property (nonatomic) NSString *protraitUrl;
+@property (nonatomic) NSString *portraitUrl;
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSInteger photoCount;
 @end
@@ -27,4 +27,4 @@
 @end
 
 extern NSString *const kYFBAttentionListConcernKeyName;
-extern NSString *const kYFBAttentionListCOncernedKeyName;
+extern NSString *const kYFBAttentionListConcernedKeyName;

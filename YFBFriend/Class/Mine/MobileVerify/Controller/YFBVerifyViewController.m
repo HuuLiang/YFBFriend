@@ -163,8 +163,11 @@
             } repeats:YES];
             
             [[YFBPhoneVerifyManager manager] sendVerifyNumberWithMobileNumber:phoneNumber handler:^(BOOL success) {
+                @strongify(self);
                 if (success) {
                     [YFBUser currentUser].phoneNumber = phoneNumber;
+                    [[YFBUser currentUser] saveOrUpdate];
+                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }];
         } else {

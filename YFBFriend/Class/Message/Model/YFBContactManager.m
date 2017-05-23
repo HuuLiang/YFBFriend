@@ -25,7 +25,7 @@
 }
 
 - (NSArray <YFBContactModel *> *)loadAllContactInfo {
-    NSArray *allContacts = [YFBContactModel findAll];
+    NSArray *allContacts = [YFBContactModel findByCriteria:[NSString stringWithFormat:@"order by messageTime desc"]];
     return allContacts;
 }
 
@@ -42,8 +42,18 @@
         if (![[YFBUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong] isToday]) {
             obj.messageTime = @"";
             obj.messageContent = @"";
+            obj.unreadMsgCount = 0;
+            [obj saveOrUpdate];
         }
     }];
+}
+
+- (NSInteger)allUnReadMessageCount {
+    __block NSInteger unreadMessages = 0;
+    [[self loadAllContactInfo] enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        unreadMessages += obj.unreadMsgCount;
+    }];
+    return unreadMessages;
 }
 
 @end

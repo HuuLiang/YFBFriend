@@ -11,6 +11,7 @@
 #import "YFBLaunchViewController.h"
 #import "YFBNavigationController.h"
 #import "YFBLocalNotificationManager.h"
+#import "YFBTabBarController.h"
 
 @interface AppDelegate () 
 
@@ -27,14 +28,23 @@
     return _window;
 }
 
-- (UIViewController *)rootViewController {
-    if (_rootViewController) {
-        return _rootViewController;
+- (UIViewController *)contentViewController {
+    if (_contentViewController) {
+        return _contentViewController;
     }
+    YFBTabBarController *tabbarVC = [[YFBTabBarController alloc] init];
+    _contentViewController = tabbarVC;
+    return _contentViewController;
+}
+
+- (UIViewController *)launchViewController {
+//    if (_launchViewController) {
+//        return _launchViewController;
+//    }
     YFBLaunchViewController *launchVC = [[YFBLaunchViewController alloc] init];
     YFBNavigationController *launchNav = [[YFBNavigationController alloc] initWithRootViewController:launchVC];
-    _rootViewController = launchNav;
-    return _rootViewController;
+    _launchViewController = launchNav;
+    return _launchViewController;
 }
 
 

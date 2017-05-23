@@ -7,7 +7,7 @@
 //
 
 #import "YFBLocalNotificationManager.h"
-#import <UserNotifications/UserNotifications.h>
+#import "YFBContactManager.h"
 
 @implementation YFBLocalNotificationManager
 
@@ -75,18 +75,20 @@
 - (void)checkLocalNotificatin {
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0) {
         if ([[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone) {
-            [self registerLocalNotification];
+//            [self registerLocalNotification];
+            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+
         }
     } else {
         if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes] == UIRemoteNotificationTypeNone) {
-            [self registerLocalNotification];
+            // 定义远程通知类型(Remote.远程 - Badge.标记 Alert.提示 Sound.声音)
+            UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+            
+            // 注册远程通知 -根据远程通知类型
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
         }
     }
-}
-
-- (void)registerLocalNotification {
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 
 - (void)setAutoNotification {
@@ -98,7 +100,7 @@
     localNotification.soundName = UILocalNotificationDefaultSoundName;
     localNotification.alertBody = @"您有未阅读的消息";
     localNotification.alertAction = @"您有未阅读的消息";
-    localNotification.applicationIconBadgeNumber = 1;
+    localNotification.applicationIconBadgeNumber = [[YFBContactManager manager] allUnReadMessageCount] + 1;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 

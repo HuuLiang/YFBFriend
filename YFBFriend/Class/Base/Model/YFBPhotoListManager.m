@@ -71,10 +71,9 @@
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                              @"userId":[YFBUser currentUser].userId,
                              @"token":[YFBUser currentUser].token,
-                             @"toUserId":[YFBUser currentUser].userId,
                              @"photoStr":url};
     
-    BOOL success =  [self requestURLPath:YFB_PHOTOLIST_URL
+    BOOL success =  [self requestURLPath:YFB_SAVEPHOTO_URL
                           standbyURLPath:nil
                               withParams:params
                          responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)

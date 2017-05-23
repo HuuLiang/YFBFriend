@@ -31,6 +31,14 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
     return _photoManager;
 }
 
+- (QBURLRequestMethod)requestMethod {
+    return QBURLPostRequest;
+}
+
+- (NSTimeInterval)requestTimeInterval {
+    return 10;
+}
+
 //- (void)saveAllImageKeys:(NSArray *)imageKeys {
 //    [[NSUserDefaults standardUserDefaults] setObject:imageKeys forKey:kYFBPhotoCacheKeyName];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
@@ -111,5 +119,22 @@ QBDefineLazyPropertyInitialization(XHPhotographyHelper, photographyHelper)
     return  resultString;
 
 }
+
+//- (void)uploadImageUrlWithUrlStr:(NSString *)urlStr handler:(void (^)(BOOL))handler {
+//    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+//                             @"userId":[YFBUser currentUser].userId,
+//                             @"token":[YFBUser currentUser].token,
+//                             @"photoStr":urlStr};
+//    
+//    [self requestURLPath:YFB_SAVEPHOTO_URL
+//          standbyURLPath:nil
+//              withParams:params
+//         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+//    {
+//        if (handler) {
+//            handler(respStatus == QBURLResponseSuccess);
+//        }
+//    }];
+//}
 
 @end

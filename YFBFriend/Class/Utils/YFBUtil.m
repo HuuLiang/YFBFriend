@@ -191,7 +191,7 @@ static NSString *const kYFBMessageReplayTodayKeyName = @"kYFBMessageReplayTodayK
 #pragma mark - VIP
 
 + (BOOL)isVip {
-    NSDate *expireDate = [self dateFromString:[YFBUser currentUser].expireTime WithDateFormat:kDateFormatShort];
+    NSDate *expireDate = [self dateFromString:[YFBUser currentUser].expireTime WithDateFormat:kDateFormateLongest];
     return [expireDate isInFuture];
 }
 

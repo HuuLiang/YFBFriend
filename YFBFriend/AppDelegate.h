@@ -12,7 +12,9 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (nonatomic) UIViewController *rootViewController;
+@property (nonatomic) UIViewController *launchViewController;
+
+@property (nonatomic) UIViewController *contentViewController;
 
 @end
 

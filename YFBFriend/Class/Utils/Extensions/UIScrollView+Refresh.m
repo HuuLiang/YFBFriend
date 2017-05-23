@@ -40,9 +40,9 @@ NSString *const kYFBRecommendRefreshKeyName = @"kYFBRecommendRefreshKeyName";
 }
 
 - (void)YFB_addPagingRefreshWithKeyName:(NSString *)keyName Handler:(void (^)(void))handler {
-    
     if (!self.footer) {
         NSString *vipNotice = nil;
+        
         BOOL loadOver = [[[NSUserDefaults standardUserDefaults] objectForKey:keyName] boolValue];
         if (loadOver) {
             vipNotice = @"—————— 我是有底线的 ——————";
@@ -54,7 +54,6 @@ NSString *const kYFBRecommendRefreshKeyName = @"kYFBRecommendRefreshKeyName";
         [refreshFooter setTitle:vipNotice forState:MJRefreshStateIdle];
         self.footer = refreshFooter;
     }
-
 }
 
 

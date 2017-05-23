@@ -8,6 +8,10 @@
 
 #import "YFBPasswordVC.h"
 #import "YFBPasswordView.h"
+#import "YFBAccountManager.h"
+
+static NSString *const kYFBUserInfoUpPasswordKeyName            = @"UP_PASSWORD";
+
 
 @interface YFBPasswordVC () <YFBPasswordTextFieldDelegate>
 @property (nonatomic,strong) UILabel *noticeLabel;
@@ -45,10 +49,19 @@
         return;
     }
     
-    //更新密码
-    [YFBUser currentUser].password = _createView.content;
-    [[YFBUser currentUser] saveOrUpdateUserInfo];
-    [self.navigationController popViewControllerAnimated:YES];
+    NSDictionary *params = @{@"originalPassword":_originalView.content,
+                             @"password":_createView.content,
+                             @"confirmPassword":_affirmView.content};
+    
+    [[YFBAccountManager manager] updateUserInfoWithType:kYFBUserInfoUpPasswordKeyName content:params handler:^(BOOL success) {
+        if (success) {
+            //更新密码
+            [YFBUser currentUser].password = _createView.content;
+            [[YFBUser currentUser] saveOrUpdateUserInfo];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }];
+    
 }
 
 - (void)configNoticeLabel {

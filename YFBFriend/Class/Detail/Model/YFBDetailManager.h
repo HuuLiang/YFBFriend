@@ -1,5 +1,5 @@
 //
-//  YFBDetailModel.h
+//  YFBDetailManager.h
 //  YFBFriend
 //
 //  Created by Liang on 2017/4/15.
@@ -29,6 +29,8 @@
 @property (nonatomic) NSInteger weight;
 @property (nonatomic) NSString *weixin;
 @property (nonatomic) NSString *personalizedSignature;
+@property (nonatomic) NSInteger myDiamonds;
+@property (nonatomic) NSString *vipExpireDate;
 @end
 
 
@@ -45,6 +47,9 @@
 @property (nonatomic) YFBUserLoginModel *userLoginInfo;
 @end
 
-@interface YFBDetailModel : QBEncryptedURLRequest
+@interface YFBDetailManager : QBEncryptedURLRequest
+
++ (instancetype)manager;
+
 - (BOOL)fetchDetailInfoWithUserId:(NSString *)userId CompletionHandler:(QBCompletionHandler)handler;
 @end

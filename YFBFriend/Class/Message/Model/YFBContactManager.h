@@ -28,4 +28,6 @@
 
 - (void)deleteAllPreviouslyContactInfo;
 
+- (NSInteger)allUnReadMessageCount;
+
 @end

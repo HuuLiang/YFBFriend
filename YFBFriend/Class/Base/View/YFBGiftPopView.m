@@ -92,10 +92,15 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         _footerView.sendAction = ^{
             @strongify(self);
             YFBGiftInfo *giftInfo = self.dataSource[self->_selectedIndexPath.item];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendMessageGiftListSendNotification object:giftInfo];
+            if (self.sendGiftAction) {
+                self.sendGiftAction(giftInfo);
+            }
         };
         _footerView.payAction = ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendMessageGiftListPayNotification object:nil];
+            @strongify(self);
+            if (self.payAction) {
+                self.payAction();
+            }
         };
         [self addSubview:_footerView];
         {
@@ -144,6 +149,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     _selectedIndexPath = indexPath;
+    if (self.type == YFBGiftPopViewTypeBlag) {
+        YFBGiftInfo *giftInfo = self.dataSource[indexPath.item];
+        if (giftInfo && self.sendGiftAction) {
+            self.sendGiftAction(giftInfo);
+        }
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -160,6 +171,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (_footerView) {
         _footerView.currentPage = scrollView.contentOffset.x + 10 / (CGRectGetWidth(self.bounds));
     }
+}
+
+- (void)setDiamondCount:(NSInteger)diamondCount {
+    _footerView.diamondCount = diamondCount;
 }
 
 @end

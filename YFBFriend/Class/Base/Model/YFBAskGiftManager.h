@@ -12,6 +12,6 @@
 
 + (instancetype)manager;
 
-- (void)popAskGiftView;
+- (void)startAutoBlagActionInViewController:(UIViewController *)viewController;
 
 @end

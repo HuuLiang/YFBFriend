@@ -102,9 +102,55 @@ typedef NS_ENUM(NSInteger,YFBVisitemeSection) {
     }
     return self;
 }
-
 @end
 
+
+
+@interface YFBVisiteMeCountFooterView ()
+@property (nonatomic) UIImageView *lineImgV;
+@property (nonatomic) UILabel *label;
+@end
+
+@implementation YFBVisiteMeCountFooterView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        self.lineImgV = [[UIImageView alloc] init];
+        _lineImgV.backgroundColor = kColor(@"#E6E6E6");
+        [self addSubview:_lineImgV];
+        
+        self.label = [[UILabel alloc] init];
+        _label.font = kFont(13);
+        _label.textColor = kColor(@"#666666");
+        _label.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_label];
+        
+        {
+            [_lineImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(self);
+                make.top.equalTo(self).offset(kWidth(5));
+                make.size.mas_equalTo(CGSizeMake(kWidth(710), 1));
+            }];
+            
+            [_label mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(self);
+                make.bottom.equalTo(self.mas_bottom);
+                make.height.mas_equalTo(kWidth(26));
+            }];
+        }
+
+    }
+    return self;
+}
+
+- (void)setVisiteMeCount:(NSInteger)visiteMeCount {
+    _label.text = [NSString stringWithFormat:@"当前有%ld个人查看了你",visiteMeCount];
+}
+
+@end
 
 
 @interface YFBVisitemeViewController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
@@ -130,7 +176,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteResponse, response)
     _collectionView.dataSource = self;
     _collectionView.backgroundColor = kColor(@"#ffffff");
     [_collectionView registerClass:[YFBVisitemeCell class] forCellWithReuseIdentifier:kYFBFriendVisiteCellReusableIdentifier];
-    [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kYFBFriendVisiteContentFooterReusableIdentifier];
+    [_collectionView registerClass:[YFBVisiteMeCountFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kYFBFriendVisiteContentFooterReusableIdentifier];
     [_collectionView registerClass:[YFBVisitemeFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kYFBFriendVisiteFooterViewReusableIdentifier];
     [self.view addSubview:_collectionView];
     
@@ -165,6 +211,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteResponse, response)
         if (success) {
             self.response = obj;
         }
+        [self->_collectionView reloadData];
     }];
 }
 
@@ -230,41 +277,15 @@ QBDefineLazyPropertyInitialization(YFBVisiteResponse, response)
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == YFBVisitemeSectionContent) {
-        UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kYFBFriendVisiteContentFooterReusableIdentifier forIndexPath:indexPath];
-        
-        UIImageView *lineImgV = [[UIImageView alloc] init];
-        lineImgV.backgroundColor = kColor(@"#E6E6E6");
-        [footerView addSubview:lineImgV];
-        
-        UILabel *label = [[UILabel alloc] init];
-        label.text = [NSString stringWithFormat:@"当前有%ld个人查看了你",self.response.userList.count];
-        label.font = kFont(13);
-        label.textColor = kColor(@"#666666");
-        label.textAlignment = NSTextAlignmentCenter;
-        [footerView addSubview:label];
-        
-        {
-            [lineImgV mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(footerView);
-                make.top.equalTo(footerView).offset(kWidth(5));
-                make.size.mas_equalTo(CGSizeMake(kWidth(710), 1));
-            }];
-            
-            [label mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(footerView);
-                make.bottom.equalTo(footerView.mas_bottom);
-                make.height.mas_equalTo(kWidth(26));
-            }];
-        }
-        
+        YFBVisiteMeCountFooterView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kYFBFriendVisiteContentFooterReusableIdentifier forIndexPath:indexPath];
+        footerView.visiteMeCount = self.response.userList.count;
         return footerView;
     } else if (indexPath.section == YFBVisitemeSectionVip) {
         YFBVisitemeFooterView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kYFBFriendVisiteFooterViewReusableIdentifier forIndexPath:indexPath];
         @weakify(self);
         footerView.payAction = ^{
             @strongify(self);
-            YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:YES];
-            [self.navigationController pushViewController:vipVC animated:YES];
+            [self pushIntoPayVC];
         };
         return footerView;
     }

@@ -35,17 +35,17 @@
     _attentionBtn.titleLabel.font = kFont(14);
     [self addSubview:_attentionBtn];
     {
-    [_attentionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self).mas_offset(kWidth(-30));
-        make.centerY.mas_equalTo(_nameLabel);
-        make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(40)));
-    }];
+        [_attentionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(self).mas_offset(kWidth(-30));
+            make.centerY.mas_equalTo(_nameLabel);
+            make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(40)));
+        }];
     }
     @weakify(self);
     [_attentionBtn bk_addEventHandler:^(id sender) {
         @strongify(self);
         if (self.attentionAction) {
-            self.attentionAction(sender);
+            self.attentionAction();
         }
     } forControlEvents:UIControlEventTouchUpInside];
     return _attentionBtn;
@@ -86,7 +86,8 @@
             [_ageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(_nameLabel);
                 make.bottom.mas_equalTo(self).mas_offset(kWidth(-26));
-                make.size.mas_equalTo(CGSizeMake(kWidth(70), kWidth(28)));
+//                make.size.mas_equalTo(CGSizeMake(kWidth(70), kWidth(28)));
+                make.height.mas_equalTo(kWidth(28));
             }];
         }
         
@@ -108,7 +109,8 @@
             [_photoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(_photoImageView.mas_right).mas_offset(kWidth(12));
                 make.centerY.mas_equalTo(_ageLabel);
-                make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(28)));
+//                make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(28)));
+                make.height.mas_equalTo(kWidth(28));
             }];
         }
     }
@@ -127,9 +129,9 @@
     _nameLabel.text = name;
 }
 
-- (void)setAge:(NSString *)age {
+- (void)setAge:(NSInteger)age {
     _age = age;
-    _ageLabel.text = [NSString stringWithFormat:@"%@岁",age];
+    _ageLabel.text = [NSString stringWithFormat:@"%ld岁",age];
 }
 
 - (void)setPhotoCount:(NSInteger)photoCount {
@@ -137,7 +139,7 @@
     _photoLabel.text = [NSString stringWithFormat:@"%zd照片",photoCount];
 }
 
-- (void)setAttentionAction:(QBAction)attentionAction {
+- (void)setAttentionAction:(YFBAction)attentionAction {
     _attentionAction = attentionAction;
     self.attentionBtn.backgroundColor = [UIColor clearColor];
 }

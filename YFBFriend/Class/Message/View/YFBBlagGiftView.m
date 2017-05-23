@@ -8,6 +8,7 @@
 
 #import "YFBBlagGiftView.h"
 #import "YFBGiftPopView.h"
+#import "YFBGiftManager.h"
 
 @interface YFBBlagGiftView ()
 {
@@ -17,6 +18,7 @@
     UIButton *_sendBtn;
     YFBGiftPopView *_popView;
 }
+@property (nonatomic) YFBGiftInfo *giftInfo;
 @end
 
 @implementation YFBBlagGiftView
@@ -55,6 +57,11 @@
         
         _popView = [[YFBGiftPopView alloc] initWithGiftInfos:nil WithGiftViewType:YFBGiftPopViewTypeBlag];
         [backImage addSubview:_popView];
+        @weakify(self);
+        _popView.sendGiftAction = ^(YFBGiftInfo * obj) {
+            @strongify(self);
+            self.giftInfo = obj;
+        };
         
         _sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sendBtn setBackgroundColor:kColor(@"#f3b050")];
@@ -63,10 +70,11 @@
         _sendBtn.titleLabel.font = kFont(15);
         [_sendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_sendBtn setTitle:@"打赏礼物" forState:UIControlStateNormal];
-        @weakify(self);
         [_sendBtn bk_addEventHandler:^(id sender) {
             @strongify(self);
-            QBSafelyCallBlock(self.giftAction,self);
+            if (self.sendGiftAction && self.giftInfo) {
+                self.sendGiftAction(self.giftInfo);
+            }
         } forControlEvents:UIControlEventTouchUpInside];
         [backImage addSubview:_sendBtn];
         
@@ -135,6 +143,10 @@
 - (void)setHeaderImageUrl:(NSString *)headerImageUrl {
     _headerImageUrl = headerImageUrl;
     [_headerImageView sd_setImageWithURL:[NSURL URLWithString:headerImageUrl]];
+}
+
+- (void)setDiamondCount:(NSInteger)diamondCount {
+    _popView.diamondCount = diamondCount;
 }
 
 @end

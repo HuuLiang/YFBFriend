@@ -9,6 +9,7 @@
 #import "YFBBaseViewController.h"
 #import "YFBDetailViewController.h"
 #import "YFBMessageViewController.h"
+#import "YFBVipViewController.h"
 
 @interface YFBBaseViewController ()
 
@@ -46,5 +47,9 @@
     [YFBMessageViewController showMessageWithUserId:userId nickName:nickName avatarUrl:avatarUrl inViewController:self];
 }
 
+- (void)pushIntoPayVC {
+    YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:YES];
+    [self.navigationController pushViewController:vipVC animated:YES];
+}
 
 @end

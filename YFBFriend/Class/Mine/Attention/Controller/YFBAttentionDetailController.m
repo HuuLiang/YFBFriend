@@ -9,6 +9,8 @@
 #import "YFBAttentionDetailController.h"
 #import "YFBAttentionTableViewCell.h"
 #import "YFBAttentionListModel.h"
+#import "YFBInteractionManager.h"
+#import "YFBRobot.h"
 
 static NSString *const kAttentionOtherCellIdentifier = @"yfb_attention_other_identifier";
 static NSString *const kAttentionMeCellIdentifier = @"yfb_attention_me_identifier";
@@ -73,7 +75,7 @@ QBDefineLazyPropertyInitialization(YFBAttentionListModel, attentionModel)
 
 - (void)loadData {
     @weakify(self);
-    [self.attentionModel fetchAttentionListWithType:self->_isAttentionMe ? kYFBAttentionListConcernKeyName : kYFBAttentionListCOncernedKeyName
+    [self.attentionModel fetchAttentionListWithType:self->_isAttentionMe ? kYFBAttentionListConcernedKeyName : kYFBAttentionListConcernKeyName
                                   CompletionHandler:^(BOOL success, NSArray <YFBAttentionInfo *>* userList)
     {
         @strongify(self);
@@ -82,6 +84,18 @@ QBDefineLazyPropertyInitialization(YFBAttentionListModel, attentionModel)
         if (success) {
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:userList];
+            if (!self->_isAttentionMe) {
+                [userList enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBAttentionInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    YFBRobot *robot = [YFBRobot findFirstByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",obj.userId]];
+                    if (!robot) {
+                        robot = [[YFBRobot alloc] init];
+                        robot.userId = obj.userId;
+                        robot.concerned = YES;
+                    }
+                    [robot saveOrUpdate];
+                }];
+            }
+            
             [self->_layoutTableView reloadData];
         }
     }];
@@ -97,14 +111,19 @@ QBDefineLazyPropertyInitialization(YFBAttentionListModel, attentionModel)
     if (indexPath.row < self.dataSource.count) {
         YFBAttentionInfo *info = self.dataSource[indexPath.row];
         cell.name = info.nickName;
-        cell.headerUrl = info.protraitUrl;
-        cell.age = [NSString stringWithFormat:@"%ld岁",info.age];
+        cell.headerUrl = info.portraitUrl;
+        cell.age = (long)info.age;
         cell.photoCount = info.photoCount;
-        if (_isAttentionMe) {
+        if (!_isAttentionMe) {
             @weakify(self);
-            cell.attentionAction = ^(id obj) {
+            cell.attentionAction = ^ {
                 @strongify(self);
-                
+                [[YFBInteractionManager manager] cancleConcernUserWithUserId:info.userId handler:^(BOOL success) {
+                    if (success) {
+                        [self.dataSource removeObject:info];
+                        [self->_layoutTableView reloadData];
+                    }
+                }];
             };
         }
     }

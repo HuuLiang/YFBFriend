@@ -10,7 +10,7 @@
 #import "YFBDetailCell.h"
 #import "YFBDetailHeaderView.h"
 #import "YFBDetailFooterView.h"
-#import "YFBDetailModel.h"
+#import "YFBDetailManager.h"
 #import "YFBInteractionManager.h"
 #import "YFBRobot.h"
 
@@ -71,12 +71,10 @@ static NSString *const kYFBDetailCellReusableIdentifier = @"YFBDetailCellReusabl
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) YFBDetailHeaderView *headerView;
 @property (nonatomic,strong) YFBDetailFooterView *footerView;
-@property (nonatomic,strong) YFBDetailModel *detailModel;
 @property (nonatomic,strong) YFBUserLoginModel *response;
 @end
 
 @implementation YFBDetailViewController
-QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
 QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
 
 - (instancetype)initWithUserId:(NSString *)userId {
@@ -121,14 +119,26 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
 - (void)configTableHeaderView {
     self.headerView = [[YFBDetailHeaderView alloc] init];
     _headerView.size = CGSizeMake(kScreenWidth, kWidth(418));
-    _headerView.backImageUrl = self.response.portraitUrl;
     _headerView.userImageUrl = self.response.portraitUrl;
     _headerView.nickName = self.response.nickName;
     _headerView.userId = self.response.userId;
     _headerView.userLocation = self.response.userBaseInfo.city;
     _headerView.distance = @"3km以内";//self.response.distance;
-    _headerView.albumCount = @"相册:5";
+    _headerView.albumCount = arc4random() % 4 + 2;
     _headerView.followCount = self.response.userBaseInfo.concernNum;
+    @weakify(self);
+    _headerView.clickAction = ^{
+        @strongify(self);
+        if (![YFBUtil isVip]) {
+            [UIAlertView bk_showAlertViewWithTitle:@"您非VIP用户，不可以查看用户相册！可以先给TA打个招呼，等待TA的回复"
+                                           message:@""
+                                 cancelButtonTitle:@"再等等" otherButtonTitles:@[@"去开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                     if (buttonIndex == 1) {
+                                         [self pushIntoPayVC];
+                                     }
+                                 }];
+        }
+    };
     _tableView.tableHeaderView = _headerView;
 }
 
@@ -139,7 +149,17 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
         @strongify(self);
         if (infoType == YFBFunctionSendMsg) {
             //发信
-            [self pushIntoMessageVCWithUserId:self.response.userId nickName:self.response.nickName avatarUrl:self.response.portraitUrl];
+            if ([YFBUtil isVip]) {
+                [self pushIntoMessageVCWithUserId:self.response.userId nickName:self.response.nickName avatarUrl:self.response.portraitUrl];
+            } else {
+                [UIAlertView bk_showAlertViewWithTitle:@"您非VIP用户，不可以直接发信！可以先给TA打个招呼，等待TA的回复"
+                                               message:@""
+                                     cancelButtonTitle:@"再等等" otherButtonTitles:@[@"去开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                         if (buttonIndex == 1) {
+                                             [self pushIntoPayVC];
+                                         }
+                }];
+            }
         } else if (infoType == YFBFunctionSendGreet) {
             //打招呼
             YFBRobot *robot = [[YFBRobot alloc] init];
@@ -169,7 +189,8 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
 
 - (void)loadData {
     @weakify(self);
-    [self.detailModel fetchDetailInfoWithUserId:self->_userId CompletionHandler:^(BOOL success, YFBUserLoginModel * obj) {
+    
+    [[YFBDetailManager manager] fetchDetailInfoWithUserId:self->_userId CompletionHandler:^(BOOL success, YFBUserLoginModel *obj) {
         @strongify(self);
         [self->_tableView YFB_endPullToRefresh];
         if (success) {

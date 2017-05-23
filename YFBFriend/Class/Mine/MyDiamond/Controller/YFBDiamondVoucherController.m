@@ -137,13 +137,20 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
             qqBtn.titleLabel.font = kFont(15);
             [qqBtn setBackgroundColor:kColor(@"#8458d0")];
             [_subTitleCell addSubview:qqBtn];
+            
+            @weakify(self);
+            [qqBtn bk_addEventHandler:^(id sender) {
+                @strongify(self);
+                [self contactCustomerService];
+            } forControlEvents:UIControlEventTouchUpInside];
+            
             {
-            [qqBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(_subTitleCell).mas_offset(kWidth(-32));
-                make.left.mas_equalTo(_subTitleCell).mas_offset(kWidth(kWidth(24)));
-                make.right.mas_equalTo(_subTitleCell).mas_offset(kWidth(-20));
-                make.height.mas_equalTo(kWidth(80));
-            }];
+                [qqBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.mas_equalTo(_subTitleCell).mas_offset(kWidth(-32));
+                    make.left.mas_equalTo(_subTitleCell).mas_offset(kWidth(kWidth(24)));
+                    make.right.mas_equalTo(_subTitleCell).mas_offset(kWidth(-20));
+                    make.height.mas_equalTo(kWidth(80));
+                }];
             }
             
             YFBDiamondLabel *titleLabel = [[YFBDiamondLabel alloc] init];
@@ -206,52 +213,46 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
     if (indexPath.section == YFBDiamondPayTypePayType) {
         if (indexPath.row == 0) {
             QBLog(@"支付宝支付");
-            [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:YFBPayTypeAliPay price:self->_price count:self->_diamond handler:^(BOOL success) {
+            [[YFBPaymentManager manager] payForAction:_payAction WithPayType:YFBPayTypeAliPay price:self->_price count:self->_diamond handler:^(BOOL success) {
                 if (success) {
-                    [YFBUser currentUser].diamondCount += self->_diamond;
-                    [[YFBUser currentUser] saveOrUpdateUserInfo];
                 }
             }];
         } else if (indexPath.row == 1){
             QBLog(@"微信支付")
-            [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:YFBPayTypeWeiXin price:self->_price count:self->_diamond handler:^(BOOL success) {
+            [[YFBPaymentManager manager] payForAction:_payAction WithPayType:YFBPayTypeWeiXin price:self->_price count:self->_diamond handler:^(BOOL success) {
                 if (success) {
-                    [YFBUser currentUser].diamondCount += self->_diamond;
-                    [[YFBUser currentUser] saveOrUpdateUserInfo];
                 }
             }];
-
+            
         }
-        
-    }else if (indexPath.section == YFBDiamondPayTypeSubTitle){
+    } else if (indexPath.section == YFBDiamondPayTypeSubTitle){
         if (indexPath.row == 1) {
 //            [self contactCustomerService];
         }
     }
-
 }
 //qq客服
-//- (void)contactCustomerService {
-//    NSString *contactScheme = [YFBSystemConfigModel sharedModel].contactScheme;
-//    NSString *contactName = [YFBSystemConfigModel sharedModel].contactName;
-//    
-//    if (contactScheme.length == 0) {
-//        return ;
-//    }
-//    
-//    [UIAlertView bk_showAlertViewWithTitle:nil
-//                                   message:[NSString stringWithFormat:@"是否联系客服%@？", contactName ?: @""]
-//                         cancelButtonTitle:@"取消"
-//                         otherButtonTitles:@[@"确认"]
-//                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-//     {
-//         if (buttonIndex == 1) {
-//             if ([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:contactScheme]]) {
-//                 
-//                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:contactScheme]];
-//             }
-//         }
-//     }];
-//}
+- (void)contactCustomerService {
+    NSString *contactScheme = @"mqq://im/chat?chat_type=wpa&uin=3057185386&version=1&src_type=web";
+    NSString *contactName = @"QQ:3057185386";
+    
+    if (contactScheme.length == 0) {
+        return ;
+    }
+    
+    [UIAlertView bk_showAlertViewWithTitle:nil
+                                   message:[NSString stringWithFormat:@"是否联系客服%@？", contactName ?: @""]
+                         cancelButtonTitle:@"取消"
+                         otherButtonTitles:@[@"确认"]
+                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+     {
+         if (buttonIndex == 1) {
+             if ([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:contactScheme]]) {
+                 
+                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:contactScheme]];
+             }
+         }
+     }];
+}
 
 @end

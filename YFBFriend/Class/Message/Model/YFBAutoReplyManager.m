@@ -66,7 +66,6 @@ static const NSUInteger kRollingTimeInterval = 5;
     if(![YFBUtil isToday]) {
         [YFBAutoReplyMessage deleteObjectsByCriteria:[NSString stringWithFormat:@"where messageTime!=\'%@\'",[YFBUtil timeStringFromDate:[NSDate date] WithDateFormat:KDateFormatShortest]]];
         [YFBMessageModel deleteAllPreviouslyMessages];
-        [[YFBContactManager manager] deleteAllPreviouslyContactInfo];
     }
 }
 

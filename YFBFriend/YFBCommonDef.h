@@ -43,7 +43,7 @@ typedef NS_ENUM(NSInteger,YFBGiftPopViewType) {
 
 typedef NS_ENUM(NSInteger, YFBMessagePopViewType) {
     YFBMessagePopViewTypeVip, // 开通vip界面
-    YFBMessagePopViewTypeDiamond, //充值钻石界面
+    YFBMessagePopViewTypeDiamond, //充值钻石列表界面
     YFBMessagePopViewTypeBuyDiamond //充值钻石界面
 };
 
@@ -77,9 +77,9 @@ static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurren
 #define kUserLoginNotificationName                      @"YFBFriendUserLoginNotification"
 #define KUserChangeInfoNotificationName                 @"YFBFriendUserChangeInfoNotificationName"
 #define KUpdateContactUnReadMessageNotification         @"YFBUpdateContactUnReadMessageNotification"
-#define kYFBFriendMessageGiftListPayNotification        @"YFBFriendMessageGiftListPayNotification"
-#define kYFBFriendMessageGiftListSendNotification       @"YFBFriendMessageGiftListSendNotification"
 #define kYFBFriendShowMessageNotification               @"kYFBFriendShowMessageNotification"
+#define kYFBUpdateMessageDiamondCountNotification       @"kYFBUpdateMessageDiamondCountNotification"
+#define kYFBUpdateGiftDiamondCountNotification          @"kYFBUpdateGiftDiamondCountNotification"
 
 #define kYFBFriendAliPaySchemeUrl                       @"comyuefenbaappalipayschemeurl"
 #define kYFBFriendWXPaySchemeUrl                        @"wx2b2846687e296e95"

@@ -39,7 +39,7 @@
     }
     
     if ([YFBUser currentUser].age > 0) {
-        _passwordField.text = [NSString stringWithFormat:@"%ld",[YFBUser currentUser].age];
+        _passwordField.text = [NSString stringWithFormat:@"%ld",(long)[YFBUser currentUser].age];
     }
 }
 
@@ -115,6 +115,14 @@
     [YFBUser currentUser].age = [_passwordField.text integerValue];
     return YES;
 }
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    
+    [_accountField resignFirstResponder];
+    [_passwordField resignFirstResponder];
+}
+
 
 /*
 #pragma mark - Navigation

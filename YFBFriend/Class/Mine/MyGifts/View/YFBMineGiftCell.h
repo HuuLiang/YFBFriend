@@ -14,6 +14,7 @@
 @property (nonatomic) NSString *diamond;
 @property (nonatomic) NSString *time;
 @property (nonatomic) NSString *giveStr;
-@property (nonatomic,copy) QBAction giveAction;
+@property (nonatomic) NSString *giftUrl;
+@property (nonatomic,copy) YFBAction giveAction;
 
 @end

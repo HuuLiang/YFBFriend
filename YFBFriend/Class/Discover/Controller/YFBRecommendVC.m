@@ -12,6 +12,7 @@
 #import "YFBGreetingInfoModel.h"
 #import "YFBRobot.h"
 #import "YFBInteractionManager.h"
+#import <MJRefresh.h>
 
 static NSString *const kYFBRecommendCellReusableIdentifier = @"kYFBRecommendCellReusableIdentifier";
 
@@ -54,7 +55,7 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         [[NSUserDefaults standardUserDefaults] synchronize];
     }];
     
-    [_tableView YFB_addPagingRefreshWithKeyName:kYFBRecommendRefreshKeyName Handler:^{
+    MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         @strongify(self);
         if (self.response.pageNum < self.response.pageCount) {
             self.response.pageNum++;
@@ -69,6 +70,15 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         }
         [self loadDataWithPageCount:self.response.pageNum refresh:NO];
     }];
+    NSString *vipNotice = nil;
+    BOOL loadOver = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBRecommendRefreshKeyName] boolValue];
+    if (loadOver) {
+        vipNotice = @"—————— 我是有底线的 ——————";
+    } else {
+        vipNotice = @"上拉加载更多";
+    }
+    [refreshFooter setTitle:vipNotice forState:MJRefreshStateIdle];
+    _tableView.footer = refreshFooter;
     
     [_tableView YFB_triggerPullToRefresh];
 }

@@ -28,7 +28,7 @@
     if (self) {
         self.backgroundColor = kColor(@"#efefef");
         
-        self.backImageView = [[UIImageView alloc] init];
+        self.backImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"detail_bg.jpg"]];
         [self addSubview:_backImageView];
         
         self.userImageView = [[UIImageView alloc] init];
@@ -65,6 +65,17 @@
         _albumButton.titleLabel.font = kFont(12);
         [_albumButton setImage:[UIImage imageNamed:@"detail_local_album"] forState:UIControlStateNormal];
         [self addSubview:_albumButton];
+        
+        @weakify(self);
+        [_albumButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            if (self.albumCount == 0) {
+                return ;
+            }
+            if (self.clickAction) {
+                self.clickAction();
+            }
+        } forControlEvents:UIControlEventTouchUpInside];
         
         self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_followButton setBackgroundColor:kColor(@"#ffffff")];
@@ -175,12 +186,16 @@
     _liveLabel.text = userLocation;
 }
 
-- (void)setDistance:(NSString *)distanc {
-    [_distanceButton setTitle:distanc forState:UIControlStateNormal];
+- (void)setDistance:(NSString *)distance {
+    [_distanceButton setTitle:distance forState:UIControlStateNormal];
 }
 
-- (void)setAlbumCount:(NSString *)albumCount {
-    [_albumButton setTitle:albumCount forState:UIControlStateNormal];
+- (void)setAlbumCount:(NSInteger)albumCount {
+    if ([YFBUtil isVip]) {
+        albumCount = 0;
+    }
+    _albumCount = albumCount;
+    [_albumButton setTitle:[NSString stringWithFormat:@"相册：%ld",albumCount] forState:UIControlStateNormal];
 }
 
 - (void)setFollowCount:(NSInteger )followCount {

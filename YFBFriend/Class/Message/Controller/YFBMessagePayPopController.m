@@ -174,15 +174,14 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
             make.height.mas_equalTo(kWidth(590));
         }];
     }
+    [self setDefaultSelectedIndex];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
+- (void)setDefaultSelectedIndex {
     if (_collectionView) {
         if (!_categoryIndexPath) {
             self.categoryIndexPath = [NSIndexPath indexPathForItem:0 inSection:YFBPopViewDiamondSectionCategory];
@@ -194,6 +193,11 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
         }
         [_collectionView selectItemAtIndexPath:self.payTypeIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setDefaultSelectedIndex];
 }
 
 + (void)showMessageTopUpPopViewWithType:(YFBMessagePopViewType)type onCurrentVC:(UIViewController *)currentVC {
@@ -320,7 +324,9 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
             cell.payAction = ^{
                 @strongify(self);
                 [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:self.selectedPayType price:self.selectedPrice count:self.selectedCount handler:^(BOOL success) {
-                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
+                    [self hide];
                 }];
             };
             return cell;
@@ -328,9 +334,9 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
     } else if ([tableView isKindOfClass:[_vipTableView class]]) {
         if (indexPath.section == YFBMessageBuyDiamondSectionPayPoint) {
             YFBMessagePayPointCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayPointReusableIdentifier forIndexPath:indexPath];
-            cell.morePrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].vipInfo.secondInfo.price)];;
+            cell.morePrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].vipInfo.secondInfo.price)/100];;
             cell.moreTitle = [NSString stringWithFormat:@"%@",[YFBPayConfigManager manager].vipInfo.secondInfo.detail];
-            cell.lessPrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].vipInfo.firstInfo.price)];;
+            cell.lessPrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].vipInfo.firstInfo.price)/100];;
             cell.lessTitle = [NSString stringWithFormat:@"%@",[YFBPayConfigManager manager].vipInfo.firstInfo.detail];
             return cell;
         } else if (indexPath.section == YFBMessageBuyDiamondSectionPayType) {
@@ -352,7 +358,9 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
                 @strongify(self);
                 [[YFBPaymentManager manager] payForAction:kYFBPaymentActionOpenVipKeyName WithPayType:self.selectedPayType price:self.selectedPrice count:self.selectedCount handler:^(BOOL success) {
                     if (success) {
-                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
+                        [self hide];
                     }
                 }];
             };
@@ -489,7 +497,7 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
         YFBMessageDiamondCategoryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kYFBFriendMessagePopViewDiamondCategoryReusableIdentifier forIndexPath:indexPath];
         if (indexPath.item < [YFBDiamondManager manager].diamonList.count) {
             YFBDiamondInfo *diamondInfo = [YFBDiamondManager manager].diamonList[indexPath.item];
-            cell.diamondCount = [NSString stringWithFormat:@"%ld",diamondInfo.diamondAmount];
+            cell.diamondCount = [NSString stringWithFormat:@"%ld",(long)diamondInfo.diamondAmount];
             cell.price = [NSString stringWithFormat:@"%ld",(long)(diamondInfo.price/100)];
         }
         return cell;
@@ -506,7 +514,9 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
             //支付
             [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:self.payTypeIndexPath.item price:diamondInfo.price count:diamondInfo.diamondAmount handler:^(BOOL success) {
                 if (success) {
-                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
+                    [self hide];
                 }
             }];
         };

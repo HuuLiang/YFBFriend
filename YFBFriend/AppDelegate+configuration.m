@@ -13,6 +13,8 @@
 #import "WXApi.h"
 #import "WeChatPayManager.h"
 #import "AlipayManager.h"
+#import <UMMobClick/MobClick.h>
+
 
 static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 
@@ -57,38 +59,29 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     };
 }
 
+- (void)setupMobStatistics {
+#ifdef DEBUG
+    [MobClick setLogEnabled:YES];
+#endif
+    if (XcodeAppVersion) {
+        [MobClick setAppVersion:XcodeAppVersion];
+    }
+    UMConfigInstance.appKey = YFB_UMENG_APP_ID;
+    UMConfigInstance.channelId = YFB_CHANNEL_NO;
+    [MobClick startWithConfigure:UMConfigInstance];
+}
+
+
 - (void)showHomeViewController {
     //设置默认配置信息  微信注册  七牛注册  加载钻石 礼物信息
     [WXApi registerApp:YFB_WEXIN_APP_ID];
+    [self setupMobStatistics];
     [YFBImageUploadManager registerWithSecretKey:YFB_UPLOAD_SECRET_KEY accessKey:YFB_UPLOAD_ACCESS_KEY scope:YFB_UPLOAD_SCOPE];
     
-    self.window.rootViewController = self.rootViewController;
+    self.window.rootViewController = self.launchViewController;
+    
     [self.window makeKeyAndVisible];
 }
-
-//- (QBPaymentConfig *)setDefaultPaymentConfig {
-//    QBPaymentConfig *config = [[QBPaymentConfig alloc] init];
-//    
-//    QBPaymentConfigDetail *configDetails = [[QBPaymentConfigDetail alloc] init];
-//    //爱贝默认配置
-//    QBIAppPayConfig * iAppPayConfig = [[QBIAppPayConfig alloc] init];
-//    iAppPayConfig.appid = @"3009833585";
-//    iAppPayConfig.privateKey = @"MIICXAIBAAKBgQCUQdOH7B8xMBvAv2W+4qGtIQnVEIPEMic+T2GYYGCtx9VCoFXB/flUv6SPGkbUcvkafk9Goh2+Qk6jPzTBYt0FlrbJg1BBs0XcKaR/YE+P8eaQVuOgdaffD4G38kMwwJBbOFzyg/n4ovQx3tyURn4Cz/4AKeiV7pyoDFhvUxfXkQIDAQABAoGAbi19RkXz6FoYReX3dyR1gnRLGkxroCKlh2j23obBUmRv2FPPZ5uW76R8ZtzgRoIrHcVApP1VnU8poagXTKBsH9lYcjuDXDx3nGkop7K69oddzwMvR+RiMva5ryBjAD8kZZYGP/1ZqNts6Hg+vXGLn4gRdrXCHFcEpaqVZeR55QECQQDKnCDUaN9c9MEtctf40JeMMRatKaMP/73BvsyXD1jfjdFJw5tER/AUTMC9omyds93rY6nPZJI0qfmQy48Q5U1LAkEAu1Mc+PdoDo81Y3ElEuClS1zicjrFya68QL5Y4q0cqU+3tjCa2J9UpBG5Qqk4j9kxPHtlHgBjIbjWmjBHkL9xEwJAU/Ql1l4uT8JLWZ3AyCUG5txgXRhnrPV3l5SMCfweA2QsWLho2f5FCORU6T8oaqBhUGxXrMwrmQ7ljo4KliGtyQJAeohaWkzTpzpsDNk1DA0gcpSWl2v0dwGyqJMaZ2QfbGz12dofX/WREyV4zq8MjaPfvhVlRmOwdJ2I2yEbnwZrOwJBAKE+Xh5mXoGv+IFaKPbenlTmk38Zcxaokx8gvdzHaJQOQtFhkf/eFOhXGGufpeQOHIdGFTjjoOKKPh5y7XzMrLc=";
-//    iAppPayConfig.publicKey = @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClu8EKXBq54ne+/GGxa09a6xa/8rKJZDnQ8CFe6D9xQLdV9P84kna6A5kqSZOiz3WnWGXDeCL+4M6N+5SiVPkF1cY5Im+eFevsIi2zGO3xUQ5SuVMrEeV86jNS/2VOgWlFWlWHVYndWxAZW7S0QdY0b/Fd+B40r2gwbMAXznsu5QIDAQAB";
-//    iAppPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyIpay.json";
-//    iAppPayConfig.waresid = @(1);
-//    configDetails.iAppPayConfig = iAppPayConfig;
-//    //支付方式
-//    QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
-//    payConfig.alipay = kQBIAppPayConfigName;
-//    payConfig.wechat = @"kQBIAppPayConfigName";
-//    
-//    config.configDetails = configDetails;
-//    config.payConfig = payConfig;
-//    [config setAsCurrentConfig];
-//    
-//    return config;
-//}
 
 - (void)setCommonStyle {
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#ffffff"]];
@@ -99,19 +92,7 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithHexString:@"#ffffff"]];
     [[UINavigationBar appearance] setBarTintColor:kColor(@"#8458D0")];
     [[UINavigationBar appearance] setBackgroundColor:kColor(@"#8458D0")];
-    [[UINavigationBar appearance] setTranslucent:YES];
-    
-//    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"navi_back"]];
-//    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"navi_back"]];
-    
-//    [UIViewController aspect_hookSelector:@selector(viewDidLoad)
-//                              withOptions:AspectPositionAfter
-//                               usingBlock:^(id<AspectInfo> aspectInfo){
-//                                   UIViewController *thisVC = [aspectInfo instance];
-//                                   thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"  " style:UIBarButtonItemStylePlain handler:nil];
-//                                   thisVC.navigationController.navigationBar.translucent = NO;
-//                               } error:nil];
-    
+        
     [UITabBarController aspect_hookSelector:@selector(shouldAutorotate)
                                 withOptions:AspectPositionInstead
                                  usingBlock:^(id<AspectInfo> aspectInfo){

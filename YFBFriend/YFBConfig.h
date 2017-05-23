@@ -57,7 +57,7 @@
 #define YFB_APP_URL                     @"/iosvideo/appSpreadList.htm"
 #define YFB_APP_SPREAD_BANNER_URL       @"/iosvideo/appSpreadBanner.htm"
 
-#define YFB_UMENG_APP_ID                @"587ad129ae1bf845be000294"
+#define YFB_UMENG_APP_ID                @"5914208be88bad6c13000e6e"
 #define YFB_QQ_APP_ID                   @""
 
 #define YFB_WEXIN_APP_ID                @"wx2b2846687e296e95"

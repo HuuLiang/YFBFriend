@@ -19,6 +19,7 @@ typedef void(^MessageFunctionType)(YFBMessageFunciontType type);
 
 @interface YFBMessageFunctionView : UIView
 
+@property (nonatomic) NSUInteger diamondCount;
 @property (nonatomic) MessageFunctionType functionType;
 
 @end

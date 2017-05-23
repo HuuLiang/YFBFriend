@@ -9,6 +9,9 @@
 #import "YFBGiftPopViewController.h"
 #import "YFBBlagGiftView.h"
 #import "YFBGiftPopView.h"
+#import "YFBGiftManager.h"
+#import "YFBContactManager.h"
+#import "YFBInteractionManager.h"
 
 @interface YFBGiftPopViewController ()
 
@@ -21,17 +24,22 @@
 
 - (void)configBlagGiftView {
     self.popView = [[YFBBlagGiftView alloc] init];
-    _popView.sendTitle = @"乔乔";
+    _popView.sendTitle = self.contactInfo.nickName;;
     _popView.sendSubTitle = @"来个礼物呀";
-    _popView.headerImageUrl = @"http://wx.qlogo.cn/mmopen/HJaMb8lIRuK64l3yOf6OO1FAkvMjXuaicMfmJXkthIsW6AQTrFoRaG0aibAcrshUmQJoDeLs9dcAQccF0aHqHSibQ/0";
+    _popView.headerImageUrl = self.contactInfo.portraitUrl;
     @weakify(self);
     _popView.closeAction = ^(id obj) {
         @strongify(self);
         [self hide];
     };
-    _popView.giftAction = ^(id obj) {
-        QBLog(@"打赏礼物")
+    
+    _popView.sendGiftAction = ^(YFBGiftInfo * obj) {
+        @strongify(self);
+        if (self.sendGiftAction) {
+            self.sendGiftAction(obj);
+        }
     };
+    
     [self.view addSubview:_popView];
     
     UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -60,18 +68,33 @@
 
 - (void)configSendListView {
     self.messagePopView = [[YFBGiftPopView alloc] initWithGiftInfos:nil WithGiftViewType:YFBGiftPopViewTypeList];
-        
     [self.view addSubview:_messagePopView];
+    
     {
         [_messagePopView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.left.right.equalTo(self.view);
             make.height.mas_equalTo(kWidth(464));
         }];
     }
+    @weakify(self);
+    _messagePopView.sendGiftAction = ^(YFBGiftInfo * obj) {
+        @strongify(self);
+        if (self.sendGiftAction) {
+            self.sendGiftAction(obj);
+        }
+    };
+    _messagePopView.payAction = ^{
+        @strongify(self);
+        if (self.payAction) {
+            self.payAction();
+        }
+    };
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDiamondCount) name:kYFBUpdateGiftDiamondCountNotification object:nil];
     
     self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.35];
     
@@ -93,6 +116,15 @@
     [super viewDidAppear:animated];
     if (_messagePopView) {
         [_messagePopView startSelectedDefaultIndexPath];
+    }
+}
+
+- (void)updateDiamondCount {
+    if (_popView) {
+        _popView.diamondCount = [YFBUser currentUser].diamondCount;
+    }
+    if (_messagePopView) {
+        _messagePopView.diamondCount = [YFBUser currentUser].diamondCount;
     }
 }
 
@@ -137,12 +169,11 @@
 }
 
 - (void)hide {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     if (!self.view.superview) {
         return ;
     }
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kYFBFriendMessageGiftListSendNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kYFBFriendMessageGiftListPayNotification object:nil];
     
     [UIView animateWithDuration:0.25 animations:^{
         self.view.alpha = 0;

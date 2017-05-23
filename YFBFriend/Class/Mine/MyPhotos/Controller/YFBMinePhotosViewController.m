@@ -70,7 +70,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self->_colleciontView YFB_endPullToRefresh];
         if (success) {
             [self.dataSource removeAllObjects];
-            [self.dataSource addObjectsFromArray:photoList];
+            [photoList enumerateObjectsUsingBlock:^(YFBPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self.dataSource addObject:obj.photoUrl];
+            }];
             [self->_colleciontView reloadData];
         }
     }];
@@ -119,7 +121,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             @strongify(self);
             [[SDImageCache sharedImageCache] storeImage:pickerImage forKey:keyName];
 //            [[YFBPhotoManager manager] saveOneImageKey:keyName];
-            [self->_colleciontView YFB_triggerPullToRefresh];
+//            [self->_colleciontView YFB_triggerPullToRefresh];
             NSString *name = [NSString stringWithFormat:@"_%@.jpg",keyName];
             [YFBImageUploadManager uploadImage:pickerImage withName:name completionHandler:^(BOOL success, NSString * imageUrl) {
                 if (success) {

@@ -130,10 +130,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
 
 - (void)updateBadgeNumber {
     
-    __block NSInteger unreadMessages = 0;
-    [[[YFBContactManager manager] loadAllContactInfo] enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        unreadMessages += obj.unreadMsgCount;
-    }];
+    __block NSInteger unreadMessages = [[YFBContactManager manager] allUnReadMessageCount];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self loadContactData];

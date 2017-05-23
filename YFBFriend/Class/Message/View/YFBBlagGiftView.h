@@ -13,8 +13,11 @@
 @property (nonatomic) NSString *sendTitle;
 @property (nonatomic) NSString *sendSubTitle;
 @property (nonatomic,copy) QBAction closeAction;
-@property (nonatomic,copy) QBAction giftAction;
 
 - (void)startSelectedDefaultIndexPath;
+
+@property (nonatomic) NSInteger diamondCount;
+@property (nonatomic,copy) YFBAction payAction;
+@property (nonatomic,copy) QBAction sendGiftAction;
 
 @end

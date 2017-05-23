@@ -6,11 +6,11 @@
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <QBEncryptedURLRequest.h>
 
 typedef void(^ImagePicker)(UIImage *pickerImage,NSString *keyName);
 
-@interface YFBPhotoManager : NSObject
+@interface YFBPhotoManager : QBEncryptedURLRequest
 
 + (instancetype)manager;
 
@@ -23,5 +23,7 @@ typedef void(^ImagePicker)(UIImage *pickerImage,NSString *keyName);
 
 
 - (void)getImageInCurrentViewController:(UIViewController *)viewController handler:(ImagePicker)picker;
+
+//- (void)uploadImageUrlWithUrlStr:(NSString *)urlStr handler:(void(^)(BOOL success))handler;
 
 @end

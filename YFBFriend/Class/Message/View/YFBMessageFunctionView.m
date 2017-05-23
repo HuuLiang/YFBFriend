@@ -31,7 +31,7 @@
         [self addSubview:_attentionButton];
         
         self.yBiButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_yBiButton setTitle:@"钻石:" forState:UIControlStateNormal];
+//        [_yBiButton setTitle:[NSString stringWithFormat:@"钻石:%ld",[YFBUser currentUser].diamondCount] forState:UIControlStateNormal];
         [_yBiButton setTitleColor:[UIColor colorWithHexString:@"#8458D0"] forState:UIControlStateNormal];
         _yBiButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(26)];
         [self addSubview:_yBiButton];
@@ -102,6 +102,10 @@
         
     }
     return self;
+}
+
+- (void)setDiamondCount:(NSUInteger)diamondCount {
+    [_yBiButton setTitle:[NSString stringWithFormat:@"钻石:%ld",diamondCount] forState:UIControlStateNormal];
 }
 
 - (void)drawRect:(CGRect)rect {

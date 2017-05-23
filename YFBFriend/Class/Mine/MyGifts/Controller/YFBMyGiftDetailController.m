@@ -10,6 +10,7 @@
 #import "YFBMineGiftCell.h"
 #import "YFBMineGiftHeaderView.h"
 #import "YFBMyGiftModel.h"
+#import "YFBInteractionManager.h"
 
 static NSString *const YFBMineGiftCellIdentifier = @"yfb_mine_gift_cell_identifier";
 
@@ -70,6 +71,7 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
             [self setRowCount];
             [self->_layoutTableView reloadData];
         }
+        [self reloadSectionHeaderView];
         [self->_layoutTableView YFB_endPullToRefresh];
     }];
 }
@@ -81,9 +83,28 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
     self->_layoutTableView.tableHeaderView = [self getTabelHeaderView];
 }
 
+- (void)reloadSectionHeaderView {
+    [self.giftList enumerateObjectsUsingBlock:^(YFBGiftListModel * _Nonnull giftModel, NSUInteger idx, BOOL * _Nonnull stop) {
+        YFBMineGiftHeaderView *headerView = (YFBMineGiftHeaderView *)[self tableView:_layoutTableView viewForHeaderInSection:idx];
+        if (_isSendGift) {
+            headerView.title = [self getAttributeStrWithName:giftModel.nickName title:@"收到您送的礼物"];
+        }else{
+            headerView.title = [self getAttributeStrWithName:giftModel.nickName title:@"送给你礼物"];
+        }
+        headerView.imageUrl = giftModel.portraitUrl;
+        headerView.allGift = giftModel.giftList.count;
+        @weakify(self);
+        headerView.action = ^(UIButton *btn) {
+            @strongify(self);
+            [self.rowCounts replaceObjectAtIndex:idx withObject:btn.selected ? @(giftModel.giftList.count) : @1];
+            [self->_layoutTableView reloadSections:[NSIndexSet indexSetWithIndex:idx] withRowAnimation:UITableViewRowAnimationAutomatic];
+        };
+
+    }];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (UIView *)getTabelHeaderView {
@@ -137,11 +158,30 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
         cell.name = gift.name;
         cell.diamond = [NSString stringWithFormat:@"%@颗钻石",gift.diamondCount];
         cell.time = gift.recvOrSendTime;
+        cell.giftUrl = gift.giftUrl;
         if (_isSendGift) {
             cell.giveStr = @"再送一个";
         }else{
             cell.giveStr = @"回赠";
         }
+        @weakify(self);
+        cell.giveAction = ^{
+            @strongify(self);
+            if ([gift.diamondCount integerValue] > [YFBUser currentUser].diamondCount) {
+                [[YFBHudManager manager] showHudWithText:@"钻石不足，请充值"];
+                return ;
+            }
+            [[YFBInteractionManager manager] sendMessageInfoToUserId:giftModel.userId content:gift.giftId type:YFBMessageTypeGift deductDiamonds:-[gift.diamondCount integerValue] handler:^(BOOL success) {
+                if (success) {
+                    if (_isSendGift) {
+                        [[YFBHudManager manager] showHudWithText:@"赠送成功"];
+                    } else {
+                        [[YFBHudManager manager] showHudWithText:@"回赠成功"];
+                    }
+                }
+                [self->_layoutTableView YFB_triggerPullToRefresh];
+            }];
+        };
         return cell;
     }
     return nil;

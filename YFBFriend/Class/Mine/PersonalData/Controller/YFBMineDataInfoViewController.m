@@ -13,7 +13,7 @@
 #import "YFBPhotoManager.h"
 #import "YFBImageUploadManager.h"
 #import "YFBAccountManager.h"
-#import "YFBDetailModel.h"
+#import "YFBDetailManager.h"
 
 typedef NS_ENUM(NSUInteger,YFBUserInfoSection) {
     YFBUserInfoSectionIntro = 0,
@@ -79,11 +79,9 @@ static NSString *const kYFBUserInfoUpProtraitKeyName            = @"UP_PORTRAIT"
 @property (nonatomic,strong) UIView *avatarView;
 @property (nonatomic,strong) UIImageView *userImageView;
 @property (nonatomic,strong) UILabel *userIdLabel;
-@property (nonatomic,strong) YFBDetailModel *detailModel;
 @end
 
 @implementation YFBMineDataInfoViewController
-QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -128,8 +126,9 @@ QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
 
 - (void)loadData {
     @weakify(self);
-    [self.detailModel fetchDetailInfoWithUserId:[YFBUser currentUser].userId CompletionHandler:^(BOOL success, YFBUserLoginModel * obj) {
+    [[YFBDetailManager manager] fetchDetailInfoWithUserId:[YFBUser currentUser].userId CompletionHandler:^(BOOL success, YFBUserLoginModel * obj) {
         @strongify(self);
+        [self->_tableView YFB_endPullToRefresh];
         if (success) {
             if (obj.userBaseInfo.personalizedSignature) {
                 [YFBUser currentUser].signature = obj.userBaseInfo.personalizedSignature;
@@ -162,7 +161,9 @@ QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
             if (obj.userBaseInfo.vocation) {
                 [YFBUser currentUser].job = obj.userBaseInfo.vocation;
             }
+            [[YFBUser currentUser] saveOrUpdateUserInfo];
         }
+        [self->_tableView reloadData];
     }];
 }
 
@@ -240,7 +241,7 @@ QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBUserDataInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBMineDataInfoCellReusableIdentifier forIndexPath:indexPath];
     if (indexPath.section == YFBUserInfoSectionIntro) {
-        NSString *content = [NSString stringWithFormat:@"%@,%ld,%ld,%@",[YFBUser currentUser].userSex == YFBUserSexMale?@"男" :@"女",[YFBUser currentUser].age,[YFBUser currentUser].height,[YFBUser currentUser].liveCity];
+        NSString *content = [NSString stringWithFormat:@"%@,%ld,%ld,%@",[YFBUser currentUser].userSex == YFBUserSexMale?@"男" :@"女",(long)[YFBUser currentUser].age,(long)[YFBUser currentUser].height,[YFBUser currentUser].liveCity];
         [cell setDescTitle:content font:kFont(14)];
     } else if (indexPath.section == YFBUserInfoSectionSignature) {
         [cell setDescTitle:[YFBUser currentUser].signature font:kFont(14)];
@@ -259,7 +260,7 @@ QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
             cell.subTitle = [YFBUser currentUser].liveCity;
         } else if (indexPath.row == YFBUserInfoIntroSectionHeight) {
             cell.title = @"身高";
-            cell.subTitle = [NSString stringWithFormat:@"%ldcm",[YFBUser currentUser].height];
+            cell.subTitle = [NSString stringWithFormat:@"%ldcm",(long)[YFBUser currentUser].height];
         } else if (indexPath.row == YFBUserInfoIntroSectionIncome) {
             cell.title = @"月收入";
             cell.subTitle = [YFBUser currentUser].income;
@@ -383,18 +384,30 @@ QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
                 [self updateInfoWithType:kYFBUserInfoUpAgeKeyName content:@([YFBUser currentUser].age)];
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionLiveCity) {
-//            ActionSheetMultipleStringPicker *picker = [[ActionSheetMultipleStringPicker alloc] initWithTitle:@"家乡"
-//                                                                                                        rows:[YFBUser defaultHometown]
-//                                                                                            initialSelection:@[@0,@0]
-//                                                                                                   doneBlock:^(ActionSheetMultipleStringPicker *picker, NSArray *selectedIndexes, id selectedValues)
-//                                                       {
-//                                                           @strongify(self);
-//                                                           NSString *liveCity = [NSString stringWithFormat:@"%@%@",[selectedValues firstObject],[selectedValues lastObject]];
-//                                                           [YFBUser currentUser].liveCity = liveCity;
-//                                                           [self configRegisterDetailCellWithSelectedValue:liveCity indexPath:indexPath];
-//                                                       } cancelBlock:nil origin:self.view];
-//            picker.actionSheetDelegate = self;
-//            [picker showActionSheetPicker];
+            if ([YFBUtil isVip]) {
+                            ActionSheetMultipleStringPicker *picker = [[ActionSheetMultipleStringPicker alloc] initWithTitle:@"家乡"
+                                                                                                                        rows:[YFBUser defaultHometown]
+                                                                                                            initialSelection:@[@0,@0]
+                                                                                                                   doneBlock:^(ActionSheetMultipleStringPicker *picker, NSArray *selectedIndexes, id selectedValues)
+                                                                       {
+                                                                           @strongify(self);
+                                                                           NSString *liveCity = [NSString stringWithFormat:@"%@%@",[selectedValues firstObject],[selectedValues lastObject]];
+                                                                           [YFBUser currentUser].liveCity = liveCity;
+                                                                           [self configRegisterDetailCellWithSelectedValue:liveCity indexPath:indexPath];
+                                                                           [self updateInfoWithType:kYFBUserInfoUpProvcityKeyName content:liveCity];
+                                                                       } cancelBlock:nil origin:self.view];
+                            picker.actionSheetDelegate = self;
+                            [picker showActionSheetPicker];
+            } else {
+                [UIAlertView bk_showAlertViewWithTitle:@"您非VIP用户，不可以修改！开通VIP即可修改自己的定位。"
+                                               message:@""
+                                     cancelButtonTitle:@"再等等" otherButtonTitles:@[@"去开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                         if (buttonIndex == 1) {
+                                             [self pushIntoPayVC];
+                                         }
+                                     }];
+
+            }
         } else if (indexPath.row == YFBUserInfoIntroSectionHeight) {
             [self showActionSheetPickerWithTitle:@"身高" rows:[YFBUser allUserHeight] defaultSelection:0 atIndexPath:indexPath block:^(id selectedValue) {
                 [YFBUser currentUser].height = [selectedValue integerValue];
@@ -496,6 +509,25 @@ QBDefineLazyPropertyInitialization(YFBDetailModel, detailModel)
 }
 
 - (void)updateInfoWithType:(NSString *)type content:(id)content {
+    NSString *contentStr = nil;
+    if ([content isKindOfClass:[NSString class]]) {
+        contentStr = [NSString stringWithFormat:@"%@",content];
+    }
+    if ([type isEqualToString:kYFBUserInfoUpSignatureKeyName] || [type isEqualToString:kYFBUserInfoUpQQKeyName] || [type isEqualToString:kYFBUserInfoUpMobilePhoneKeyName] || [type isEqualToString:kYFBUserInfoUpWeiXinKeyName]) {
+        if (contentStr.length == 0) {
+            contentStr = @" ";
+        }
+    } else if ([type isEqualToString:kYFBUserInfoUpNickNameKeyName]) {
+        if (contentStr.length < 2) {
+            [[YFBHudManager manager] showHudWithText:@"昵称太短啦，换个长点的吧"];
+            return;
+        }
+    }
+    
+    if (contentStr) {
+        content = contentStr;
+    }
+        
     [[YFBAccountManager manager] updateUserInfoWithType:type content:content handler:^(BOOL success) {
         if (success) {
             [[YFBHudManager manager] showHudWithText:@"修改成功"];

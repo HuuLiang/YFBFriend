@@ -14,6 +14,7 @@
 #import "YFBPhotoManager.h"
 #import "YFBImageUploadManager.h"
 #import "YFBAccountManager.h"
+#import "AppDelegate.h"
 
 static NSString *const kYFBRegisterDetailCellReusableIdentifier = @"kYFBRegisterDetailCellReusableIdentifier";
 
@@ -112,10 +113,11 @@ typedef NS_ENUM(NSUInteger, YFBRegisterDetailRow) {
     [[YFBAccountManager manager] registerUserWithUserInfo:[YFBUser currentUser] handler:^(BOOL success) {
         @strongify(self);
         if (success) {
-            YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
-            [self presentViewController:tabbarController animated:YES completion:nil];
-            [UIApplication sharedApplication].keyWindow.rootViewController = tabbarController;
-            [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
+            AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            [self presentViewController:appDelegate.contentViewController animated:YES completion:^ {
+                [UIApplication sharedApplication].keyWindow.rootViewController = appDelegate.contentViewController;
+                [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
+            }];
         } else {
             [[YFBHudManager manager] showHudWithText:@"注册失败"];
         }

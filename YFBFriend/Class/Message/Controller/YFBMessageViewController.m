@@ -14,7 +14,6 @@
 #import "YFBMessagePayPopController.h"
 #import "YFBInteractionManager.h"
 #import "YFBVipViewController.h"
-#import "YFBDetailModel.h"
 #import "YFBGiftManager.h"
 #import "YFBMessageRecordManager.h"
 #import "YFBExampleManager.h"
@@ -27,6 +26,7 @@
 }
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
 @property (nonatomic,retain) YFBMessageAdView *messagAdView;
+@property (nonatomic,retain) YFBMessageFunctionView *functionView;
 @property (nonatomic) BOOL needReturn;
 @end
 
@@ -93,6 +93,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self reloadChatMessages];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDiamondCount) name:kYFBUpdateMessageDiamondCountNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -102,6 +103,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     _messagAdView.scrollStart = NO;
     
     YFBMessageModel *lastMessage = [self.chatMessages lastObject];
@@ -183,17 +187,23 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     //判断是否需要进行VIP状态检测
     //如果信息接受者是机器人则需要
     __block YFBMessageRecordType recordType;
+    NSInteger messageDiamondCount = 0;
     if ([chatMessage.receiveUserId isEqualToString:self.userId]) {
         recordType = [[YFBMessageRecordManager manager] checkMessageRecordWithChatMessages:self.chatMessages thisMessage:chatMessage];
         if (recordType <= YFBMessageRecordTypeAllowVip) {
             [chatMessage saveOrUpdate];
             [self.chatMessages addObject:chatMessage];
+            if (recordType == YFBMessageRecordTypeAllowDiamond) {
+                messageDiamondCount = -80;
+            } else if (recordType == YFBMessageRecordTypeAllowVip) {
+                messageDiamondCount = -1;
+            }
         } else if (recordType == YFBMessageRecordTypeBuyDiamond) {
-            [self showPayVipView];
+            [self showPayVipViewWithType:YFBMessagePopViewTypeDiamond];
             QBLog(@"购买钻石");
             return;
         } else if (recordType == YFBMessageRecordTypeBuyVip) {
-            [self showPayVipView];
+            [self showPayVipViewWithType:YFBMessagePopViewTypeVip];
             QBLog(@"购买VIP");
             return;
         } else {
@@ -207,9 +217,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     if (self.isViewLoaded) {
         @weakify(self);
-        [[YFBInteractionManager manager] sendMessageInfoToUserId:chatMessage.receiveUserId content:chatMessage.content type:chatMessage.messageType handler:^(BOOL success) {
+        [[YFBInteractionManager manager] sendMessageInfoToUserId:chatMessage.receiveUserId content:chatMessage.content type:chatMessage.messageType deductDiamonds:messageDiamondCount handler:^(BOOL success) {
             @strongify(self);
             if (success) {
+                //刷新上部功能菜单里的钻石数量
+                [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+                
                 //保存已发送消息到消息记录管理里面
                 [self saveMessageInfo:chatMessage WithRecordType:recordType];
                 
@@ -261,12 +274,18 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [[YFBInteractionManager manager] referUserContactWithType:contactType toUserId:self.userId handler:^(BOOL success, NSString *contact) {
         @strongify(self);
         NSString *content = nil;
+        if ([contact isEqualToString:@"用户尚未设置"]) {
+            [[YFBHudManager manager] showHudWithText:@"用户尚未设置"];
+            return ;
+        }
         if (type == YFBMessageFunciontTypePhone) {
             content = [NSString stringWithFormat:@"我的手机号是%@",contact];
         } else if (type == YFBMessageFunciontTypeWX) {
             content = [NSString stringWithFormat:@"我的微信号是%@",contact];
         }
-        [self didSendText:content fromSender:self.userId onDate:[NSDate date]];
+        [self addTextMessage:content withSender:self.userId receiver:[YFBUser currentUser].userId dateTime:[YFBUtil timeStringFromDate:[NSDate date] WithDateFormat:KDateFormatLong]];
+        [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
+        [self scrollToBottomAnimated:YES];
     }];
 }
 
@@ -275,9 +294,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     _messagAdView.recordsArr = [YFBExampleManager manager].giftExampleSource;
     [self.view addSubview:_messagAdView];
     
-    YFBMessageFunctionView *functionView = [[YFBMessageFunctionView alloc] initWithFrame:CGRectMake(0, kWidth(48), kScreenWidth, kWidth(72))];
+    self.functionView = [[YFBMessageFunctionView alloc] initWithFrame:CGRectMake(0, kWidth(48), kScreenWidth, kWidth(72))];
+    _functionView.diamondCount = [YFBUser currentUser].diamondCount;
     @weakify(self);
-    functionView.functionType = ^(YFBMessageFunciontType type) {
+    _functionView.functionType = ^(YFBMessageFunciontType type) {
         @strongify(self);
         switch (type) {
             case YFBMessageFunciontTypeAttention:
@@ -289,7 +309,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 break;
                 
             case YFBMessageFunciontTypeDiamon:
-                
+                [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeDiamond onCurrentVC:self];
                 break;
                 
             case YFBMessageFunciontTypePhone:
@@ -315,7 +335,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 break;
         }
     };
-    [self.view addSubview:functionView];
+    [self.view addSubview:_functionView];
+}
+
+//刷新上部功能菜单里的钻石数量
+- (void)updateDiamondCount {
+    if (self.functionView) {
+        _functionView.diamondCount = [YFBUser currentUser].diamondCount;
+    }
 }
 
 - (void)popGiftView {
@@ -324,33 +351,30 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }
     
     _giftVC = [[YFBGiftPopViewController alloc] init];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(payAction) name:kYFBFriendMessageGiftListPayNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendGiftAction:) name:kYFBFriendMessageGiftListSendNotification object:nil];
-    
     [_giftVC showGiftViewWithType:YFBGiftPopViewTypeList InCurrentViewController:self];
-}
-
-- (void)payAction {
-    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeDiamond onCurrentVC:self];
-}
-
-- (void)sendGiftAction:(NSNotification *)notification {
-    YFBGiftInfo *giftInfo = (YFBGiftInfo *)notification.object;
-    if (giftInfo.diamondCount <= [YFBUser currentUser].diamondCount) {
-        [[YFBInteractionManager manager] sendMessageInfoToUserId:self.userId content:giftInfo.giftId type:YFBMessageTypeGift handler:^(BOOL success) {
-            if (success) {
-                [[YFBHudManager manager] showHudWithText:@"礼物赠送成功"];
-                [YFBUser currentUser].diamondCount = [YFBUser currentUser].diamondCount - giftInfo.diamondCount;
-                [[YFBUser currentUser] saveOrUpdateUserInfo];
-            }
-        }];
-    } else {
+    @weakify(self);
+    _giftVC.payAction = ^{
+        @strongify(self);
         [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeDiamond onCurrentVC:self];
-    }
+    };
+    _giftVC.sendGiftAction = ^(YFBGiftInfo * giftInfo) {
+        @strongify(self);
+        if (giftInfo.diamondCount <= [YFBUser currentUser].diamondCount) {
+            [[YFBInteractionManager manager] sendMessageInfoToUserId:self.userId content:giftInfo.giftId type:YFBMessageTypeGift deductDiamonds:-giftInfo.diamondCount handler:^(BOOL success) {
+                if (success) {
+                    [[YFBHudManager manager] showHudWithText:@"礼物赠送成功"];
+                    //刷新上部功能菜单里的钻石数量 即礼物赠送界面的钻石数量
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
+                }
+            }];
+        } else {
+            [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeDiamond onCurrentVC:self];
+        }
+    };
 }
 
-- (void)showPayVipView {
+- (void)showPayVipViewWithType:(YFBMessagePopViewType)type {
     if (self.messageInputView.inputTextView.isFirstResponder) {
         [self.messageInputView.inputTextView resignFirstResponder];
     }
@@ -372,7 +396,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     @weakify(self);
     [button bk_addEventHandler:^(id sender) {
         @strongify(self);
-        [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
+        [YFBMessagePayPopController showMessageTopUpPopViewWithType:type onCurrentVC:self];
     } forControlEvents:UIControlEventTouchUpInside];
     
     [button mas_makeConstraints:^(MASConstraintMaker *make) {

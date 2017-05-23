@@ -13,6 +13,7 @@
 #import "YFBRobot.h"
 #import "YFBInteractionManager.h"
 #import "YFBExampleManager.h"
+#import <MJRefresh.h>
 
 static NSString *const kYFBNearCellReusableIdentifier = @"kYFBNearCellReusableIdentifier";
 
@@ -34,7 +35,7 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     self.view.backgroundColor = [UIColor whiteColor];
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _tableView.backgroundColor = kColor(@"#efefef");
+    _tableView.backgroundColor = kColor(@"#ffffff");
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [_tableView setSeparatorColor:kColor(@"#E6E6E6")];
@@ -46,12 +47,11 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     {
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
+            make.bottom.equalTo(self.view.mas_bottom).offset(-kWidth(108));
         }];
     }
-
     
-    _tableView.tableFooterView = [self tableFooterView];
-    _tableView.tableFooterView.hidden = YES;
+    [self configFooterView];
     
     @weakify(self);
     [_tableView YFB_addPullToRefreshWithHandler:^{
@@ -61,7 +61,7 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         [[NSUserDefaults standardUserDefaults] synchronize];
     }];
         
-    [_tableView YFB_addPagingRefreshWithKeyName:kYFBNearRefreshKeyName Handler:^{
+    MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         @strongify(self);
         if (self.response.pageNum < self.response.pageCount) {
             self.response.pageNum++;
@@ -76,6 +76,15 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         }
         [self loadDataWithPageCount:self.response.pageNum refresh:NO];
     }];
+    NSString *vipNotice = nil;
+    BOOL loadOver = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBNearRefreshKeyName] boolValue];
+    if (loadOver) {
+        vipNotice = @"—————— 我是有底线的 ——————";
+    } else {
+        vipNotice = @"上拉加载更多";
+    }
+    [refreshFooter setTitle:vipNotice forState:MJRefreshStateIdle];
+    _tableView.footer = refreshFooter;
     
     [_tableView YFB_triggerPullToRefresh];
 
@@ -92,7 +101,6 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         @strongify(self);
         [self->_tableView YFB_endPullToRefresh];
         if (success) {
-            self->_tableView.tableFooterView.hidden = NO;
             self.response = obj;
             if (isRefresh) {
                 [self.dataSource removeAllObjects];
@@ -113,8 +121,9 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     }];
 }
 
-- (UIView *)tableFooterView {
+- (void)configFooterView {
     UIView *footerView = [[UIView alloc] init];
+    footerView.backgroundColor = kColor(@"#efefef");
     self.greetAllButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_greetAllButton setTitle:@"群打招呼" forState:UIControlStateNormal];
     [_greetAllButton setTitleColor:kColor(@"#ffffff") forState:UIControlStateNormal];
@@ -148,7 +157,14 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     _greetAllButton.imageEdgeInsets = UIEdgeInsetsMake(imageEdge.top, imageEdge.left - 5, imageEdge.bottom, imageEdge.right + 5);
     _greetAllButton.titleEdgeInsets = UIEdgeInsetsMake(titleEdge.top, titleEdge.left + 5 , titleEdge.bottom, titleEdge.right - 5);
 
-    return footerView;
+    [self.view addSubview:footerView];
+    
+    {
+        [footerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(self.view);
+            make.top.equalTo(_tableView.mas_bottom);
+        }];
+    }
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource

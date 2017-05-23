@@ -114,6 +114,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             if (success) {
                 YFBTabBarController *tabbarController = [[YFBTabBarController alloc] init];
                 [self presentViewController:tabbarController animated:YES completion:nil];
+            } else {
+                [[YFBHudManager manager] showHudWithText:@"错误"];
             }
         }];
     } forControlEvents:UIControlEventTouchUpInside];
@@ -177,6 +179,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self->_tableView showWithPopAnimation];
         [self->_tableView reloadData];
     }
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    [self setAccountCacheTableViewHidden:YES];
+    [_accountField resignFirstResponder];
+    [_passwordField resignFirstResponder];
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource

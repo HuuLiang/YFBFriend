@@ -18,6 +18,7 @@
 		EC1993751EBAB8F300521528 /* YFBAutoReplyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC1993741EBAB8F300521528 /* YFBAutoReplyManager.m */; };
 		EC1993781EBAFF3E00521528 /* YFBContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC1993771EBAFF3E00521528 /* YFBContactManager.m */; };
 		EC19937B1EBB04F400521528 /* YFBVisitemeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC19937A1EBB04F400521528 /* YFBVisitemeViewController.m */; };
+		EC1E1A7D1EC45CA0002D94AF /* detail_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */; };
 		EC2149451EA5E86900E07592 /* YFBMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2149441EA5E86900E07592 /* YFBMessageViewController.m */; };
 		EC2149481EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2149471EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.m */; };
 		EC21494B1EA5FC0B00E07592 /* YFBMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC21494A1EA5FC0B00E07592 /* YFBMessageModel.m */; };
@@ -251,7 +252,7 @@
 		ECC0492B1EAE2C8B009E594F /* YFBMessagePayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0492A1EAE2C8B009E594F /* YFBMessagePayTypeCell.m */; };
 		ECC0492E1EAE2C9C009E594F /* YFBMessageToPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC0492D1EAE2C9C009E594F /* YFBMessageToPayCell.m */; };
 		ECC785781EA1F93500221E8E /* YFBRankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC785771EA1F93500221E8E /* YFBRankModel.m */; };
-		ECC7857B1EA215CF00221E8E /* YFBDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC7857A1EA215CF00221E8E /* YFBDetailModel.m */; };
+		ECC7857B1EA215CF00221E8E /* YFBDetailManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC7857A1EA215CF00221E8E /* YFBDetailManager.m */; };
 		ECCA56C81E9CD92C00E067B1 /* YFBImageUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCA56C71E9CD92C00E067B1 /* YFBImageUploadManager.m */; };
 		ECDDA2801EAA0DCA006659C2 /* YFBAskGiftManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDDA27F1EAA0DCA006659C2 /* YFBAskGiftManager.m */; };
 		ECDDA2871EAA0E68006659C2 /* YFBDiamondManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDDA2821EAA0E68006659C2 /* YFBDiamondManager.m */; };
@@ -331,6 +332,7 @@
 		EC1993771EBAFF3E00521528 /* YFBContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBContactManager.m; sourceTree = "<group>"; };
 		EC1993791EBB04F400521528 /* YFBVisitemeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVisitemeViewController.h; sourceTree = "<group>"; };
 		EC19937A1EBB04F400521528 /* YFBVisitemeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBVisitemeViewController.m; sourceTree = "<group>"; };
+		EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = detail_bg.jpg; sourceTree = "<group>"; };
 		EC2149431EA5E86900E07592 /* YFBMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBMessageViewController.h; sourceTree = "<group>"; };
 		EC2149441EA5E86900E07592 /* YFBMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageViewController.m; sourceTree = "<group>"; };
 		EC2149461EA5E9B800E07592 /* YFBMessageViewController+XHBMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YFBMessageViewController+XHBMessageDelegate.h"; sourceTree = "<group>"; };
@@ -767,8 +769,8 @@
 		ECC0492D1EAE2C9C009E594F /* YFBMessageToPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBMessageToPayCell.m; sourceTree = "<group>"; };
 		ECC785761EA1F93500221E8E /* YFBRankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFBRankModel.h; path = YFBFriend/Class/Discover/Model/YFBRankModel.h; sourceTree = SOURCE_ROOT; };
 		ECC785771EA1F93500221E8E /* YFBRankModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YFBRankModel.m; path = YFBFriend/Class/Discover/Model/YFBRankModel.m; sourceTree = SOURCE_ROOT; };
-		ECC785791EA215CF00221E8E /* YFBDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDetailModel.h; sourceTree = "<group>"; };
-		ECC7857A1EA215CF00221E8E /* YFBDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDetailModel.m; sourceTree = "<group>"; };
+		ECC785791EA215CF00221E8E /* YFBDetailManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDetailManager.h; sourceTree = "<group>"; };
+		ECC7857A1EA215CF00221E8E /* YFBDetailManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDetailManager.m; sourceTree = "<group>"; };
 		ECCA56C61E9CD92C00E067B1 /* YFBImageUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBImageUploadManager.h; sourceTree = "<group>"; };
 		ECCA56C71E9CD92C00E067B1 /* YFBImageUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBImageUploadManager.m; sourceTree = "<group>"; };
 		ECDDA27E1EAA0DCA006659C2 /* YFBAskGiftManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBAskGiftManager.h; sourceTree = "<group>"; };
@@ -1075,8 +1077,8 @@
 		EC5D65971E7A8E7400CBE08A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				ECC785791EA215CF00221E8E /* YFBDetailModel.h */,
-				ECC7857A1EA215CF00221E8E /* YFBDetailModel.m */,
+				ECC785791EA215CF00221E8E /* YFBDetailManager.h */,
+				ECC7857A1EA215CF00221E8E /* YFBDetailManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1874,6 +1876,7 @@
 				EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */,
 				B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */,
 				ECC049211EADEA75009E594F /* vipheader.jpg */,
+				EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2390,7 +2393,7 @@
 				TargetAttributes = {
 					EC9A67711E6D3E4A0018C5FB = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = NS6846Q9KM;
+						DevelopmentTeam = S954G7B2DA;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -2464,6 +2467,7 @@
 				ECB8C82E1E9DCD4000B116AC /* version.json in Resources */,
 				EC9A6A9F1E6D3F9E0018C5FB /* ReceiverVoiceNodePlaying003@2x.png in Resources */,
 				EC9A6A951E6D3F9E0018C5FB /* keyboard_HL@2x.png in Resources */,
+				EC1E1A7D1EC45CA0002D94AF /* detail_bg.jpg in Resources */,
 				EC9A6AA71E6D3F9E0018C5FB /* RecordingSignal005@2x.png in Resources */,
 				EC9A6AAD1E6D3F9F0018C5FB /* SenderVoiceNodePlaying001@2x.png in Resources */,
 				EC9A6A941E6D3F9E0018C5FB /* keyboard@2x.png in Resources */,
@@ -2771,7 +2775,7 @@
 				EC9A6A511E6D3F9E0018C5FB /* UIScrollView+XHkeyboardControl.m in Sources */,
 				EC9A69D51E6D3F9E0018C5FB /* JYNextButton.m in Sources */,
 				B3D6E9B01EA4EDF700D972CC /* YFBGiftFooterView.m in Sources */,
-				ECC7857B1EA215CF00221E8E /* YFBDetailModel.m in Sources */,
+				ECC7857B1EA215CF00221E8E /* YFBDetailManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2893,7 +2897,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = NS6846Q9KM;
+				DEVELOPMENT_TEAM = S954G7B2DA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2909,10 +2913,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YFBFriend/Class/Vendor/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuanfenba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9e34a4c6-6c68-427d-a918-967d12a121d9";
-				PROVISIONING_PROFILE_SPECIFIER = PPSocialDevlopmentProvisoningProfile;
+				PROVISIONING_PROFILE = "61dce651-5eff-482c-ab57-0c0134bd1a42";
+				PROVISIONING_PROFILE_SPECIFIER = YuanFenBaDevelopmentProvisioningProfiles;
 			};
 			name = Debug;
 		};
@@ -2924,7 +2928,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = NS6846Q9KM;
+				DEVELOPMENT_TEAM = S954G7B2DA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2940,10 +2944,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YFBFriend/Class/Vendor/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuanfenba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f2fa357f-3495-40cd-8060-c326dd81823d";
-				PROVISIONING_PROFILE_SPECIFIER = PPSocialDistributionProvisoningProfile;
+				PROVISIONING_PROFILE = "9d1a1fe7-f584-4e1b-80e4-df79f076fee7";
+				PROVISIONING_PROFILE_SPECIFIER = YuanFenBaDistributionProvisionProfiles;
 			};
 			name = Release;
 		};
