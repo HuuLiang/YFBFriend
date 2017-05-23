@@ -169,7 +169,6 @@
 - (void)setGreeted:(BOOL)greeted {
     [_greetButton setImage:[UIImage imageNamed:greeted ? @"discover_greeted" : @"discover_greet"] forState:UIControlStateNormal];
     [_greetButton setTitle:greeted ? @"已打招呼" : @"打招呼" forState:UIControlStateNormal];
-    _greetButton.enabled = !greeted;
 }
 - (void)setDistance:(CGFloat)distance {
     _distanceLabel.hidden = NO;

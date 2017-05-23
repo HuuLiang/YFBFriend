@@ -63,6 +63,9 @@ QBDefineLazyPropertyInitialization(YFBGreetingInfoModel, greetInfoModel)
     [self.greetInfoModel fetchGreetingInfoWithCompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (success) {
+            if (!self) {
+                return ;
+            }
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:obj];
             [self->_layoutCollectionView reloadData];

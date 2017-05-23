@@ -21,4 +21,6 @@
 
 @property (nonatomic,weak) id <YFBPasswordTextFieldDelegate> delegate;
 
+- (void)resignFirstResponse;
+
 @end

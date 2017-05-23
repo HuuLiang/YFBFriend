@@ -91,12 +91,30 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
     [super didReceiveMemoryWarning];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.dataSource.count > 0) {
+        [self checkDataSource];
+        [_tableView reloadData];
+    }
+}
+
+- (void)checkDataSource {
+    [self.dataSource enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBRobot * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.greeted = [YFBRobot checkUserIsGreetedWithUserId:obj.userId];
+        [self.dataSource replaceObjectAtIndex:idx withObject:obj];
+    }];
+}
+
 - (void)loadDataWithPageCount:(NSInteger)pageNum refresh:(BOOL)isRefresh {
     @weakify(self);
     [self.discoverModel fetchUserInfoWithType:kYFBFriendDiscoverRecommendKeyName pageNum:pageNum CompletionHandler:^(BOOL success, YFBRmdNearByDtoModel * obj) {
         @strongify(self);
         [self->_tableView YFB_endPullToRefresh];
         if (success) {
+            if (!self) {
+                return ;
+            }
             self.response = obj;
             if (isRefresh) {
                 [self.dataSource removeAllObjects];
@@ -136,6 +154,9 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
                 //打招呼                
                 [[YFBInteractionManager manager] greetWithUserInfoList:@[info] toAllUsers:NO handler:^(BOOL success) {
                     if (success) {
+                        if (!self) {
+                            return ;
+                        }
                         info.greeted = YES;
                         [self.dataSource replaceObjectAtIndex:indexPath.row withObject:info];
                         [self->_tableView reloadData];

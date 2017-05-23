@@ -105,6 +105,9 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         @strongify(self);
         [self->_tableView YFB_endPullToRefresh];
         if (success) {
+            if (!self) {
+                return ;
+            }
             self.response = obj;
             if (isRefresh) {
                 [self.dataSource removeAllObjects];

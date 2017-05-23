@@ -67,6 +67,9 @@ QBDefineLazyPropertyInitialization(YFBMyGiftModel, giftModel)
     [self.giftModel fetchMyGiftModelWithType:_isSendGift ? @"send":@"recv" CompleteHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (success) {
+            if (!self) {
+                return ;
+            }
             self.giftList = obj;
             [self setRowCount];
             [self->_layoutTableView reloadData];

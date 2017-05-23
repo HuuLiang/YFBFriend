@@ -82,6 +82,9 @@ QBDefineLazyPropertyInitialization(YFBAttentionListModel, attentionModel)
         
         [self->_layoutTableView YFB_endPullToRefresh];
         if (success) {
+            if (!self) {
+                return ;
+            }
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:userList];
             if (!self->_isAttentionMe) {

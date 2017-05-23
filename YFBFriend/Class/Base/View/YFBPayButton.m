@@ -91,8 +91,6 @@
     _detailLabel.textAlignment = NSTextAlignmentCenter;
     _detailLabel.backgroundColor = [UIColor clearColor];
     [self addSubview:_detailLabel];
-    
-
 }
 
 - (void)layoutSubviews {

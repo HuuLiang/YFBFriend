@@ -52,9 +52,13 @@ static NSString *const kYFBUserInfoUpPasswordKeyName            = @"UP_PASSWORD"
     NSDictionary *params = @{@"originalPassword":_originalView.content,
                              @"password":_createView.content,
                              @"confirmPassword":_affirmView.content};
-    
+    @weakify(self);
     [[YFBAccountManager manager] updateUserInfoWithType:kYFBUserInfoUpPasswordKeyName content:params handler:^(BOOL success) {
+        @strongify(self);
         if (success) {
+            if (!self) {
+                return ;
+            }
             //更新密码
             [YFBUser currentUser].password = _createView.content;
             [[YFBUser currentUser] saveOrUpdateUserInfo];
@@ -135,6 +139,13 @@ static NSString *const kYFBUserInfoUpPasswordKeyName            = @"UP_PASSWORD"
             make.size.mas_equalTo(CGSizeMake(kWidth(650), kWidth(88)));
         }];
     }
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    [_originalView resignFirstResponse];
+    [_createView resignFirstResponse];
+    [_affirmView resignFirstResponse];
 }
 
 #pragma mark - YFBPasswordDelegate

@@ -27,6 +27,7 @@ static NSString *const kYFBContactCellReusableIdentifier = @"kYFBContactCellReus
 @property (nonatomic) NSMutableArray <YFBContactModel *>*dataSource;
 @property (nonatomic) NSMutableArray *selectedIndexPathes;
 @property (nonatomic) YFBVisiteModel *visiteModel;
+@property (nonatomic) dispatch_queue_t mainQueue;
 @end
 
 @implementation YFBContactViewController
@@ -147,9 +148,16 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
     }];
 }
 
+- (dispatch_queue_t)mainQueue {
+    if (!_mainQueue) {
+        _mainQueue = dispatch_queue_create("update_Badge_Number_queue", NULL);
+    }
+    return _mainQueue;
+}
+
 - (void)updateBadgeNumber:(NSNotification *)notification {
     if (self.viewLoaded) {
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        dispatch_async(self.mainQueue, ^{
             YFBContactModel *contactModel = nil;
             if (notification) {
                 contactModel = (YFBContactModel *)[notification object];
@@ -168,29 +176,12 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
                         * stop = YES;
                     }
                 }];
+                
                 if (!alreadyRobot) {
                     [self.dataSource insertObject:contactModel atIndex:0];
                 } else {
                     [self.dataSource exchangeObjectAtIndex:index withObjectAtIndex:0];
                 }
-                
-            }
-            if (self.view.window && !self->_tableView.isEditing) {
-                NSInteger unreadMsgCount = [self.navigationController.tabBarItem.badgeValue integerValue];
-                unreadMsgCount = unreadMsgCount + contactModel.unreadMsgCount;
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (unreadMsgCount > 0) {
-                        if (unreadMsgCount < 100) {
-                            self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMsgCount];
-                        } else {
-                            self.navigationController.tabBarItem.badgeValue = @"99+";
-                        }
-                    } else {
-                        self.navigationController.tabBarItem.badgeValue = nil;
-                    }
-                });
-
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{

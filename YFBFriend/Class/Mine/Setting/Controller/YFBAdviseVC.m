@@ -102,6 +102,9 @@
         //发送信息
         [[YFBInteractionManager manager] sendAdviceWithContent:self->_textView.text Contact:self.contactView.content handler:^(BOOL success) {
             if (success) {
+                if (!self) {
+                    return ;
+                }
                 [[YFBHudManager manager] showHudWithText:@"发送成功"];
                 self.textView.text = @"";
             }

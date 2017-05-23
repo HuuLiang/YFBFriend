@@ -166,6 +166,9 @@
             [[YFBPhoneVerifyManager manager] sendVerifyNumberWithMobileNumber:phoneNumber handler:^(BOOL success) {
                 @strongify(self);
                 if (success) {
+                    if (!self) {
+                        return ;
+                    }
                     [YFBUser currentUser].phoneNumber = phoneNumber;
                     [[YFBUser currentUser] saveOrUpdate];
                 }

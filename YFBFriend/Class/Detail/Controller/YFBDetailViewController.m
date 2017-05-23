@@ -166,13 +166,20 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
             robot.userId = self.response.userId;
             [[YFBInteractionManager manager] greetWithUserInfoList:@[robot] toAllUsers:NO handler:^(BOOL success) {
                 if (success) {
+                    if (!self) {
+                        return ;
+                    }
                     [[YFBHudManager manager] showHudWithText:@"打招呼成功"];
                 }
             }];
         } else if (infoType == YFBFunctionSendFollow) {
             //关注
             [[YFBInteractionManager manager] concernUserWithUserId:self.response.userId handler:^(BOOL success) {
-                
+                if (success) {
+                    if (!self) {
+                        return ;
+                    }
+                }
             }];
         }
     };
@@ -189,11 +196,13 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
 
 - (void)loadData {
     @weakify(self);
-    
     [[YFBDetailManager manager] fetchDetailInfoWithUserId:self->_userId CompletionHandler:^(BOOL success, YFBUserLoginModel *obj) {
         @strongify(self);
         [self->_tableView YFB_endPullToRefresh];
         if (success) {
+            if (!self) {
+                return ;
+            }
             self.response = obj;
             [self configTableHeaderView];
             [self configFooterView];

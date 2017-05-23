@@ -215,12 +215,18 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
             QBLog(@"支付宝支付");
             [[YFBPaymentManager manager] payForAction:_payAction WithPayType:YFBPayTypeAliPay price:self->_price count:self->_diamond handler:^(BOOL success) {
                 if (success) {
+                    if (!self) {
+                        return ;
+                    }
                 }
             }];
         } else if (indexPath.row == 1){
             QBLog(@"微信支付")
             [[YFBPaymentManager manager] payForAction:_payAction WithPayType:YFBPayTypeWeiXin price:self->_price count:self->_diamond handler:^(BOOL success) {
                 if (success) {
+                    if (!self) {
+                        return ;
+                    }
                 }
             }];
             

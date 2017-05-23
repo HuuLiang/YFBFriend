@@ -55,6 +55,10 @@
     return _textField.text;
 }
 
+- (void)resignFirstResponse {
+    [_textField resignFirstResponder];
+}
+
 - (void)changeTextFieldContent:(UITextField *)textField {
     if ([self.delegate respondsToSelector:@selector(textFieldEditingContent:)]) {
         [self.delegate textFieldEditingContent:textField.text];

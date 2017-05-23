@@ -149,6 +149,9 @@ QBDefineLazyPropertyInitialization(YFBRankFentYunListModel, response)
         @strongify(self);
         [self->_tableView YFB_endPullToRefresh];
         if (success) {
+            if (!self) {
+                return ;
+            }
             self->_tableView.tableFooterView.hidden = NO;
             self.response = obj;
             if (isRefresh) {

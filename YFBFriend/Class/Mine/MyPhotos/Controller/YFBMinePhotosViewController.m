@@ -125,8 +125,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             NSString *name = [NSString stringWithFormat:@"_%@.jpg",keyName];
             [YFBImageUploadManager uploadImage:pickerImage withName:name completionHandler:^(BOOL success, NSString * imageUrl) {
                 if (success) {
+                    if (!self) {
+                        return ;
+                    }
                     [[YFBPhotoListManager manager] savePhotoWithUrl:imageUrl CompletionHandler:^(BOOL success, id obj) {
                         if (success) {
+                            if (!self) {
+                                return ;
+                            }
                             [self.dataSource addObject:imageUrl];
                             [self->_colleciontView reloadData];
                             [[YFBHudManager manager] showHudWithText:@"图片上传成功"];

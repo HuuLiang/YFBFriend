@@ -347,6 +347,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }
     if (self.messageInputView.hidden) {
         self.messageInputView.hidden = NO;
+        if ([self.view.subviews containsObject:_payView]) {
+            [_payView removeFromSuperview];
+        }
+        
+        if (_payView) {
+            _payView = nil;
+        }
     }
 }
 

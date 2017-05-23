@@ -130,6 +130,9 @@ static NSString *const kYFBUserInfoUpProtraitKeyName            = @"UP_PORTRAIT"
         @strongify(self);
         [self->_tableView YFB_endPullToRefresh];
         if (success) {
+            if (!self) {
+                return ;
+            }
             if (obj.userBaseInfo.personalizedSignature) {
                 [YFBUser currentUser].signature = obj.userBaseInfo.personalizedSignature;
             }
