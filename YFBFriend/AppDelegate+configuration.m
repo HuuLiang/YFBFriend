@@ -14,6 +14,8 @@
 #import "WeChatPayManager.h"
 #import "AlipayManager.h"
 #import <UMMobClick/MobClick.h>
+#import "YFBAutoReplyManager.h"
+#import "YFBContactManager.h"
 
 
 static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
@@ -153,7 +155,24 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    [application setApplicationIconBadgeNumber:0];
+    if ([[notification.userInfo valueForKey:kYFBAutoNotificationTypeKeyName] isEqualToString:kYFBAutoNotificationContentKeyName]) {
+        [[YFBAutoReplyManager manager] getRandomReplyMessage];
+    }
+    [application setApplicationIconBadgeNumber:[[YFBContactManager manager] allUnReadMessageCount]];
+}
+
+- (void)checkLocalNotificationWithLaunchOptionsOptions:(NSDictionary *)launchOptions {
+    UILocalNotification *localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
+    if (!localNotification) {
+        return;
+    }
+    if ([[localNotification.userInfo valueForKey:kYFBAutoNotificationTypeKeyName] isEqualToString:kYFBAutoNotificationContentKeyName]) {
+        [[YFBAutoReplyManager manager] getRandomReplyMessage];
+    }
+}
+
+- (void)setApplicationIconBadgeNumber:(UIApplication *)application {
+    application.applicationIconBadgeNumber = [[YFBContactManager manager] allUnReadMessageCount];
 }
 
 #pragma mark - WXApiDelegate

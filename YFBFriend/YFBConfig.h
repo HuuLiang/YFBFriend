@@ -50,6 +50,7 @@
 #define YFB_PAYCONFIG_URL               @"vdc.service"                          //支付配置
 #define YFB_REFERCONTACT_URL            @"viewContact.service"                  //查询用户联系方式
 #define YFB_GETMSGLIST_URL              @"msgListByRobotUserIdList.service"     //根据userId获取消息列表
+#define YFB_RANDOMMSG_URL               @"randomRmsgList.service"               //定时推送启动随机后台获取消息
 #define YFB_VISITEME_URL                @"visitMeUserList.service"              //访问我的人列表
 #define YFB_UPDATEORDER_URL             @"ovpd.service"                         //订单协议
 

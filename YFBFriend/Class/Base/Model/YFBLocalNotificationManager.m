@@ -34,7 +34,8 @@
         localNotification.soundName = UILocalNotificationDefaultSoundName;
         localNotification.alertBody = @"您有未阅读的消息";
         localNotification.alertAction = @"您有未阅读的消息";
-        localNotification.applicationIconBadgeNumber = 1;
+        localNotification.applicationIconBadgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
+        localNotification.userInfo = @{kYFBAutoNotificationTypeKeyName:kYFBAutoNotificationContentKeyName};
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     }
 }
@@ -94,14 +95,17 @@
 - (void)setAutoNotification {
     [self checkLocalNotificatin];
     
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [[NSDate date] dateByAddingMinutes:1];
-    localNotification.timeZone = [NSTimeZone systemTimeZone];
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    localNotification.alertBody = @"您有未阅读的消息";
-    localNotification.alertAction = @"您有未阅读的消息";
-    localNotification.applicationIconBadgeNumber = [[YFBContactManager manager] allUnReadMessageCount] + 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    NSInteger timeInterval = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendGetRobotMsgTimeIntervalKeyName] integerValue];
+    if (timeInterval <= 60 * 15) {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.fireDate = [[NSDate date] dateByAddingMinutes:1];
+        localNotification.timeZone = [NSTimeZone systemTimeZone];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        localNotification.alertBody = @"您有未阅读的消息";
+        localNotification.alertAction = @"您有未阅读的消息";
+        localNotification.applicationIconBadgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    }
 }
 
 @end

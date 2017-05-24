@@ -42,10 +42,14 @@
 @interface YFBAutoReplyResponse : QBURLResponse
 @property (nonatomic) NSArray <YFBRobotContactModel *> *userList;
 @property (nonatomic) NSInteger visitMeCount;
+
+@property (nonatomic) YFBRobotContactModel *userLoginInfo;
 @end
 
 
 @interface YFBAutoReplyManager : QBEncryptedURLRequest
+
+@property (nonatomic) BOOL canReplyNotificationMessage;
 
 + (instancetype)manager;
 
@@ -54,6 +58,8 @@
 - (void)getRobotReplyMessages;
 
 - (void)getAutoReplyMessageWithUserId:(NSString *)userId;
+
+- (void)getRandomReplyMessage;
 
 - (void)saveRobotMessagesWith:(NSArray <YFBRobotContactModel *>*)userList;
 

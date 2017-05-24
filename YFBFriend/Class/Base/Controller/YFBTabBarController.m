@@ -88,6 +88,7 @@
     [[YFBMessageRecordManager manager] deleteYesterdayRecordMessages];              //删除昨日消息记录
     [[YFBAutoReplyManager manager] deleteYesterdayMessages];                        //删除昨日推送记录
     [[YFBContactManager manager] deleteAllPreviouslyContactInfo];                   //删除昨日的消息列表消息里的消息内容
+    [YFBAutoReplyManager manager].canReplyNotificationMessage = YES;                //允许开始推动固定通知下发的消息
     [[YFBAutoReplyManager manager] getRobotReplyMessages];                          //获取批量的机器人消息留作推送
     [[YFBAutoReplyManager manager] startAutoRollingToReply];                        //开始推送机器人
     [[YFBAskGiftManager manager] startAutoBlagActionInViewController:self];         //开始索要礼物功能

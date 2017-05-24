@@ -105,7 +105,7 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
                     {
                         if (respStatus == QBURLResponseSuccess) {
                             
-                            [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:userIdString];
+//                            [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:userIdString];
                             
                             [availableUserList enumerateObjectsUsingBlock:^(YFBRobot *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                                 obj.greeted = YES;
@@ -136,7 +136,7 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
     [self concernOrCancleUserWithUserId:userId isConcern:YES CompletionHandler:^(BOOL success, id obj) {
         if (success) {
             
-            [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:robot.userId];
+//            [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:robot.userId];
             
             if (!robot) {
                 robot = [[YFBRobot alloc] init];
@@ -260,7 +260,7 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
          responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
      {
          if (respStatus == QBURLResponseSuccess) {
-             [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:userId];
+//             [[YFBAutoReplyManager manager] getAutoReplyMessageWithUserId:userId];
              [YFBUser currentUser].diamondCount += deductDiamonds;
              [[YFBUser currentUser] saveOrUpdate];
          }
@@ -269,7 +269,6 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
              handler(respStatus == QBURLResponseSuccess);
          }
      }];
-
 }
 
 //查询微信 手机 qq

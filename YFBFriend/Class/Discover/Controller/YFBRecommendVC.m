@@ -149,20 +149,17 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
         cell.greeting = ^(id sender) {
             @strongify(self);
             UIButton *thisButton = (UIButton *)sender;
-            if (!thisButton.isSelected) {
-                thisButton.selected = YES;
-                //打招呼                
-                [[YFBInteractionManager manager] greetWithUserInfoList:@[info] toAllUsers:NO handler:^(BOOL success) {
-                    if (success) {
-                        if (!self) {
-                            return ;
-                        }
-                        info.greeted = YES;
-                        [self.dataSource replaceObjectAtIndex:indexPath.row withObject:info];
-                        [self->_tableView reloadData];
+            //打招呼
+            [[YFBInteractionManager manager] greetWithUserInfoList:@[info] toAllUsers:NO handler:^(BOOL success) {
+                if (success) {
+                    if (!self) {
+                        return ;
                     }
-                }];
-            }
+                    info.greeted = YES;
+                    [self.dataSource replaceObjectAtIndex:indexPath.row withObject:info];
+                    [self->_tableView reloadData];
+                }
+            }];
         };
     }
     return cell;

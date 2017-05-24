@@ -201,7 +201,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 messageDiamondCount = -1;
             }
         } else if (recordType == YFBMessageRecordTypeBuyDiamond) {
-            [self showPayVipViewWithType:YFBMessagePopViewTypeDiamond];
+            [self showPayVipViewWithType:YFBMessagePopViewTypeBuyDiamond];
             QBLog(@"购买钻石");
             return;
         } else if (recordType == YFBMessageRecordTypeBuyVip) {

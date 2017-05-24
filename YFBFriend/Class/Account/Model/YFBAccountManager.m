@@ -190,7 +190,7 @@
         [YFBUser currentUser].liveCity = userInfoDic[@"city"];
         [YFBUser currentUser].nickName = userInfoDic[@"nickname"];
         [YFBUser currentUser].userImage = userInfoDic[@"headimgurl"];
-        [YFBUser currentUser].userSex = [userInfoDic[@"sex"] integerValue];
+//        [YFBUser currentUser].userSex = [userInfoDic[@"sex"] integerValue];
         [YFBUser currentUser].loginName = userInfoDic[@"openid"];
         BOOL success = [[YFBUser currentUser] saveOrUpdate];
 

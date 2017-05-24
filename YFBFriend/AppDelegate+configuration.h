@@ -12,7 +12,8 @@
 
 - (void)checkNetworkInfoState;
 - (void)setCommonStyle;
-
+- (void)setApplicationIconBadgeNumber:(UIApplication *)application;
+- (void)checkLocalNotificationWithLaunchOptionsOptions:(NSDictionary *)launchOptions;
 //test
 - (void)showHomeViewController;
 

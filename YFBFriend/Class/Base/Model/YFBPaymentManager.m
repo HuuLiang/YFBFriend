@@ -67,7 +67,7 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
             break;
     }
     
-    _payPrice = 1;
+//    _payPrice = 1;
     
     if (payType == YFBPayTypeAliPay) {
         [[AlipayManager shareInstance] startAlipay:_payOrderNo

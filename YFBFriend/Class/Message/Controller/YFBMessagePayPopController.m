@@ -286,24 +286,24 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
                 
                 YFBMessagePayTitleCell *cell = [self->_diamondTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:YFBPopViewSectionPayTitle]];
                 if ([obj integerValue] == 1) {
-                    cell.title = @"对应11000钻石";
+                    cell.title = @"对应1100钻石";
                     cell.subTitle = @"(赠送100元话费)";
                     
                     self.selectedCount = (long)[YFBPayConfigManager manager].diamondInfo.secondInfo.amount;
                     self.selectedPrice = (long)[YFBPayConfigManager manager].diamondInfo.secondInfo.price;
                     
                 } else if ([obj integerValue] == 2) {
-                    cell.title = @"对应5000钻石";
-                    cell.subTitle = @"(赠送50元话费)";
+                    cell.title = @"对应500钻石";
+                    cell.subTitle = @"";
                     
-                    self.selectedCount = (long)[YFBPayConfigManager manager].diamondInfo.secondInfo.amount;
+                    self.selectedCount = (long)[YFBPayConfigManager manager].diamondInfo.firstInfo.amount;
                     self.selectedPrice = (long)[YFBPayConfigManager manager].diamondInfo.firstInfo.price;
                 }
             };
             return cell;
         } else if (indexPath.section == YFBPopViewSectionPayTitle) {
             YFBMessagePayTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayTitleReusableIdentifier forIndexPath:indexPath];
-            cell.title = @"对应11000币";
+            cell.title = @"对应1100钻石";
             cell.subTitle = @"(赠送100元话费)";
             return cell;
         } else if (indexPath.section == YFBPopViewSectionPayType) {
@@ -338,6 +338,17 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
             cell.moreTitle = [NSString stringWithFormat:@"%@",[YFBPayConfigManager manager].vipInfo.secondInfo.detail];
             cell.lessPrice = [NSString stringWithFormat:@"¥%ld",(long)([YFBPayConfigManager manager].vipInfo.firstInfo.price)/100];;
             cell.lessTitle = [NSString stringWithFormat:@"%@",[YFBPayConfigManager manager].vipInfo.firstInfo.detail];
+            @weakify(self);
+            cell.payAction = ^(id obj) {
+                @strongify(self);
+                if ([obj integerValue] == 1) {
+                    self.selectedPrice = [YFBPayConfigManager manager].vipInfo.secondInfo.price;
+                    self.selectedCount = [YFBPayConfigManager manager].vipInfo.secondInfo.amount;
+                } else if ([obj integerValue] == 2) {
+                    self.selectedPrice = [YFBPayConfigManager manager].vipInfo.firstInfo.price;
+                    self.selectedCount = [YFBPayConfigManager manager].vipInfo.firstInfo.amount;
+                }
+            };
             return cell;
         } else if (indexPath.section == YFBMessageBuyDiamondSectionPayType) {
             YFBMessagePayTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBFriendMessagePopViewPayTypeReusableIdentifier forIndexPath:indexPath];
@@ -367,7 +378,6 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
             return cell;
         }
     }
-    
     return nil;
 }
 

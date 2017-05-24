@@ -31,10 +31,17 @@ static const NSUInteger kRollingTimeInterval = 5;
 - (Class)userListElementClass {
     return [YFBRobotContactModel class];
 }
+
+- (Class)userLoginInfoClass {
+    return [YFBRobotContactModel class];
+}
+
 @end
 
 @interface YFBAutoReplyManager ()
 @property (nonatomic,retain) dispatch_queue_t replyQueue;
+@property (nonatomic,strong) dispatch_source_t timer;
+@property (nonatomic) __block NSUInteger timeInterval;
 @end
 
 @implementation YFBAutoReplyManager
@@ -70,37 +77,65 @@ static const NSUInteger kRollingTimeInterval = 5;
 }
 
 - (void)getRobotReplyMessages {
-    if (![YFBUtil isVip] && [YFBUser currentUser].diamondCount == 0) {
-        if (![YFBUtil isToday]) {
-            [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:kYFBFriendGetRobotReplyMessageKeyName];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+    //需要将dispatch_source_t timer设置为成员变量，不然会立即释放@property (nonatomic, strong) dispatch_source_t timer;
+    //定时器开始执行的延时时间NSTimeInterval delayTime = 3.0f;
+    //定时器间隔时间NSTimeInterval timeInterval = 3.0f;
+    //创建子线程队列dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    //使用之前创建的队列来创建计时器_timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    //设置延时执行时间，delayTime为要延时的秒数dispatch_time_t startDelayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayTime * NSEC_PER_SEC));
+    //设置计时器dispatch_source_set_timer(_timer, startDelayTime, timeInterval * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
+    // 启动计时器dispatch_resume(_timer);
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC));
+    dispatch_source_set_timer(_timer, delayTime, 1*NSEC_PER_SEC, 0);
+    dispatch_source_set_event_handler(_timer, ^{
+        //执行事件
+        QBLog(@"注意当前的计时器时间 %ld",_timeInterval);
+        if (_timeInterval == 0 || _timeInterval == 60 * 5 || _timeInterval == 60 * 10) {
+            
+            NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+                                     @"userId":[YFBUser currentUser].userId,
+                                     @"token":[YFBUser currentUser].token};
+            
+            [self requestURLPath:YFB_MSGLIST_URL
+                  standbyURLPath:nil
+                      withParams:params
+                 responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+             {
+                 YFBAutoReplyResponse *resp = nil;
+                 if (respStatus == QBURLResponseSuccess) {
+                     resp = self.response;
+                     [self saveRobotMessagesWith:resp.userList];
+                     [self performSelector:@selector(getRobotReplyMessages) withObject:nil afterDelay:60*10];
+                 }
+             }];
         }
-        NSInteger getReplyMsgCount = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendGetRobotReplyMessageKeyName] integerValue];
-        if (getReplyMsgCount < 3) {
-            getReplyMsgCount++;
-            [[NSUserDefaults standardUserDefaults] setObject:@(getReplyMsgCount) forKey:kYFBFriendGetRobotReplyMessageKeyName];
+        _timeInterval++;
+        [[NSUserDefaults standardUserDefaults] setObject:@(_timeInterval) forKey:kYFBFriendGetRobotMsgTimeIntervalKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    });
+    
+     _timeInterval = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendGetRobotMsgTimeIntervalKeyName] integerValue];
+    
+    if (![YFBUtil isVip] || [YFBUser currentUser].diamondCount == 0) {
+        if (![YFBUtil isToday]) {
+            //判断不是今天 刷新在线市场计时器
+            _timeInterval = 0;
+            [[NSUserDefaults standardUserDefaults] setObject:@(_timeInterval) forKey:kYFBFriendGetRobotMsgTimeIntervalKeyName];
             [[NSUserDefaults standardUserDefaults] synchronize];
         } else {
-            return;
+            //是今天 沿用保存的时间继续开始计时器
+            if (_timeInterval > 60 * 15) {
+                //如果在线时间超过规定的时间 则不做处理
+                return;
+            } else {
+                //如果不超出规定时间 则继续计时
+                dispatch_resume(_timer);
+            }
         }
     }
-    
-    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
-                             @"userId":[YFBUser currentUser].userId,
-                             @"token":[YFBUser currentUser].token};
-    
-    [self requestURLPath:YFB_MSGLIST_URL
-          standbyURLPath:nil
-              withParams:params
-         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
-     {
-         YFBAutoReplyResponse *resp = nil;
-         if (respStatus == QBURLResponseSuccess) {
-             resp = self.response;
-             [self saveRobotMessagesWith:resp.userList];
-             [self performSelector:@selector(getRobotReplyMessages) withObject:nil afterDelay:60*10];
-         }
-     }];
 }
 
 - (void)getAutoReplyMessageWithUserId:(NSString *)userId {
@@ -119,6 +154,60 @@ static const NSUInteger kRollingTimeInterval = 5;
             [self saveRobotMessagesWith:resp.userList];
         }
     }];
+}
+
+- (void)getRandomReplyMessage {
+    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+                             @"userId":[YFBUser currentUser].userId,
+                             @"token":[YFBUser currentUser].token};
+    [self requestURLPath:YFB_RANDOMMSG_URL
+          standbyURLPath:nil
+              withParams:params
+         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+    {
+        YFBAutoReplyResponse *resp = nil;
+        if (respStatus == QBURLResponseSuccess) {
+            resp = self.response;
+            
+            YFBRobotMsgModel *robotMsgModel = [resp.userLoginInfo.robotMsgList firstObject];
+            if (!robotMsgModel) {
+                [self getRandomReplyMessage];
+                return ;
+            }
+            
+            YFBAutoReplyMessage *autoReplyMessage = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where msgId=%ld",(long)robotMsgModel.msgId]];
+            if (autoReplyMessage) {
+                [self getRandomReplyMessage];
+                return;
+            }
+            
+            if (!autoReplyMessage) {
+                YFBAutoReplyMessage *autoReplyMessage = [[YFBAutoReplyMessage alloc] init];
+                autoReplyMessage.userId = resp.userLoginInfo.userId;
+                autoReplyMessage.nickName = resp.userLoginInfo.nickName;
+                autoReplyMessage.portraitUrl = resp.userLoginInfo.portraitUrl;
+                autoReplyMessage.content = robotMsgModel.content;
+                autoReplyMessage.msgId = robotMsgModel.msgId;
+                autoReplyMessage.msgType = robotMsgModel.msgType;
+                autoReplyMessage.age = resp.userLoginInfo.age;
+                autoReplyMessage.height = resp.userLoginInfo.height;
+                autoReplyMessage.gender = resp.userLoginInfo.gender;
+                autoReplyMessage.replyTime = [[NSDate date] timeIntervalSince1970] + 1;
+                autoReplyMessage.replyed = NO;
+                [autoReplyMessage saveOrUpdate];
+                
+                if (self.canReplyNotificationMessage) {
+                    [self sendReplyMessage:autoReplyMessage];
+                } else {
+                    [self performSelector:@selector(sendReplyMessage:) withObject:autoReplyMessage afterDelay:1];
+                }
+            }
+        }
+    }];
+}
+
+- (void)sendReplyMessage:(YFBAutoReplyMessage *)replyMessage {
+    [self insertReplyMessageInfo:replyMessage];
 }
 
 - (void)saveRobotMessagesWith:(NSArray <YFBRobotContactModel *>*)userList {
@@ -180,50 +269,11 @@ static const NSUInteger kRollingTimeInterval = 5;
             __block uint nextRollingReplyTime = kRollingTimeInterval;
             
             NSArray *array = [self findAllAutoReplyMessages];
-            if (array.count == 0) {
-                
-            }
             
             [array enumerateObjectsUsingBlock:^(YFBAutoReplyMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSTimeInterval currentTimeInterval = [[NSDate date] timeIntervalSince1970];
                 if (obj.replyTime <= currentTimeInterval) {
-                    //向聊天详情中插入一条记录
-                    YFBMessageModel *msgModel = [[YFBMessageModel alloc] init];
-                    msgModel.sendUserId = obj.userId;
-                    msgModel.receiveUserId = [YFBUser currentUser].userId;
-                    msgModel.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:obj.replyTime] WithDateFormat:KDateFormatLong];
-                    msgModel.messageType = [obj.msgType integerValue];
-                    msgModel.content = obj.content;
-                    msgModel.nickName = obj.nickName;
-                    [msgModel saveOrUpdate];
-                    
-                    //向消息记录中插入一条最近消息
-                    YFBContactModel *contact =  [YFBContactModel findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=\'%@\'",obj.userId]];
-                    if (!contact) {
-                        contact = [[YFBContactModel alloc] init];
-                        contact.userId = obj.userId;
-                        contact.portraitUrl = obj.portraitUrl;
-                        contact.nickName = obj.nickName;
-                        contact.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:obj.replyTime] WithDateFormat:KDateFormatLong];
-                        contact.messageType = [obj.msgType integerValue];
-                        contact.unreadMsgCount = 0;
-                    }
-                    if ([obj.msgType integerValue] == YFBMessageTypePhoto) {
-                        contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一张图片",obj.nickName];
-                    } else {
-                        contact.messageContent = obj.content;
-                    }
-                    contact.unreadMsgCount += 1;
-                    [contact saveOrUpdate];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendShowMessageNotification object:obj];
-                    
-                    //标记已经回复过的缓存
-                    obj.replyed = YES;
-                    [obj saveOrUpdate];
-                    
-                    //向消息界面发出通知更改角标数字
-                    [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:contact];
+                    [self insertReplyMessageInfo:obj];
                 } else {
                     NSTimeInterval nextTime = obj.replyTime - [[NSDate date] timeIntervalSince1970];
                     if (nextTime < nextRollingReplyTime) {
@@ -246,6 +296,46 @@ static const NSUInteger kRollingTimeInterval = 5;
             [self rollingReplayMessages];
         });
     }
+}
+
+- (void)insertReplyMessageInfo:(YFBAutoReplyMessage *)replyMessage {
+    //向聊天详情中插入一条记录
+    YFBMessageModel *msgModel = [[YFBMessageModel alloc] init];
+    msgModel.sendUserId = replyMessage.userId;
+    msgModel.receiveUserId = [YFBUser currentUser].userId;
+    msgModel.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:replyMessage.replyTime] WithDateFormat:KDateFormatLong];
+    msgModel.messageType = [replyMessage.msgType integerValue];
+    msgModel.content = replyMessage.content;
+    msgModel.nickName = replyMessage.nickName;
+    [msgModel saveOrUpdate];
+    
+    //向消息记录中插入一条最近消息
+    YFBContactModel *contact =  [YFBContactModel findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=\'%@\'",replyMessage.userId]];
+    if (!contact) {
+        contact = [[YFBContactModel alloc] init];
+        contact.userId = replyMessage.userId;
+        contact.portraitUrl = replyMessage.portraitUrl;
+        contact.nickName = replyMessage.nickName;
+        contact.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:replyMessage.replyTime] WithDateFormat:KDateFormatLong];
+        contact.messageType = [replyMessage.msgType integerValue];
+        contact.unreadMsgCount = 0;
+    }
+    if ([replyMessage.msgType integerValue] == YFBMessageTypePhoto) {
+        contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一张图片",replyMessage.nickName];
+    } else {
+        contact.messageContent = replyMessage.content;
+    }
+    contact.unreadMsgCount += 1;
+    [contact saveOrUpdate];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendShowMessageNotification object:replyMessage];
+    
+    //标记已经回复过的缓存
+    replyMessage.replyed = YES;
+    [replyMessage saveOrUpdate];
+    
+    //向消息界面发出通知更改角标数字
+    [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:contact];
 }
 
 @end

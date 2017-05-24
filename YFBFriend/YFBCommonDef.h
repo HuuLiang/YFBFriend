@@ -81,8 +81,13 @@ static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurren
 #define kYFBUpdateMessageDiamondCountNotification       @"kYFBUpdateMessageDiamondCountNotification"
 #define kYFBUpdateGiftDiamondCountNotification          @"kYFBUpdateGiftDiamondCountNotification"
 
+#define kYFBFriendGetRobotMsgTimeIntervalKeyName        @"kYFBFriendGetRobotMsgTimeIntervalKeyName"
+
 #define kYFBFriendAliPaySchemeUrl                       @"comyuefenbaappalipayschemeurl"
 #define kYFBFriendWXPaySchemeUrl                        @"wx2b2846687e296e95"
+
+#define kYFBAutoNotificationTypeKeyName                 @"type"
+#define kYFBAutoNotificationContentKeyName              @"AutoNotification"
 
 #define KDateFormatShortest               @"yyyyMMdd"
 #define kDateFormatShort                  @"yyyy-MM-dd"
