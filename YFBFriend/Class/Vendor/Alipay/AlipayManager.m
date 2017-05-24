@@ -59,7 +59,7 @@ static AlipayManager *alipayManager;
     order.seller        = @"wuyp@iqu8.cn";
     
     order.tradeNO       = _orderId;         //订单ID（由商家自行制定）
-    order.productName   = @"商品标题"; //商品标题
+    order.productName   = @"同城速配增值服务"; //商品标题
     order.productDescription = YFB_PAYMENT_RESERVE_DATA; //商品描述
     order.amount        = [NSString stringWithFormat:@"%.2f", _price/100.];           //商品价格
     order.notifyURL     =  @"http://phas.ayyygs.com/pd-has/notifyByAlipay.json"; //回调URL
