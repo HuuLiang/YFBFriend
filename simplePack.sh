@@ -21,7 +21,7 @@ PARENT_PACKAGE="${ABS_DIR}/${PROJECT_NAME}.ipa"
 PROJECT_APP_NAME="${PROJECT_NAME}.app"
 #CHANNEL_PREFIX="IOS_A_I" #iOS主包
 #CHANNEL_PREFIX="H5-0000" #H5
-CHANNEL_PREFIX="IOS_FR_" #iOS交友
+CHANNEL_PREFIX="MFW_IOS_" #iOS交友
 
 IPA_STORAGE_DIR="$ABS_DIR/ipas"
 
@@ -71,7 +71,7 @@ mkdir -p $CURRENT_PKG_STORAGE_DIR
 IPA_FILE="$CURRENT_PKG_STORAGE_DIR/${PROJECT_NAME}.ipa"
 #CHANNELNO="$CHANNEL_PREFIX`printf "%8d" $MIN_PKG_NO | tr " " 0`" #iOS主包
 #        CHANNELNO="$CHANNEL_PREFIX`printf $MIN_PKG_NO | tr " " 0`" #H5
-CHANNELNO="$CHANNEL_PREFIX`printf "%7d" $MIN_PKG_NO | tr " " 0`" #iOS交友
+CHANNELNO="$CHANNEL_PREFIX`printf "%8d" $MIN_PKG_NO | tr " " 0`" #iOS交友
 CONFIG_PLIST_FILE="$WORKSPACE/Payload_`printf "%2d" $seq | tr " " 0`/Payload/${PROJECT_APP_NAME}/config.plist"
 $PLIST_BUDDY_EXEC -c "set :ChannelNo ${CHANNELNO}" $CONFIG_PLIST_FILE
 ZIP_DIR="$WORKSPACE/Payload_`printf "%2d" $seq | tr " " 0`/Payload"
