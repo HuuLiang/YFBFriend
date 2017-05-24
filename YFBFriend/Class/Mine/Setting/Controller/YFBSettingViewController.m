@@ -67,6 +67,11 @@ typedef NS_ENUM(NSUInteger, YFBSettingFunctionType) {
             make.edges.equalTo(self.view);
         }];
     }
+    [self.navigationController.navigationBar bk_whenTouches:1 tapped:5 handler:^{
+        NSString *baseURLString = [YFB_BASE_URL stringByReplacingCharactersInRange:NSMakeRange(0, YFB_BASE_URL.length-6) withString:@"******"];
+        [[YFBHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@\npV:%@\nBundleId:%@\nVersion:%@\nUserID:%@\nexpireTimeDate:%@", baseURLString, YFB_CHANNEL_NO, YFB_PACKAGE_CERTIFICATE, YFB_REST_PV,YFB_BUNDLE_IDENTIFIER,YFB_REST_APP_VERSION, [YFBUser currentUser].userId,[YFBUser currentUser].expireTime]];
+    }];
+
 }
 
 - (void)didReceiveMemoryWarning {

@@ -62,7 +62,7 @@ static AlipayManager *alipayManager;
     order.productName   = @"同城速配增值服务"; //商品标题
     order.productDescription = YFB_PAYMENT_RESERVE_DATA; //商品描述
     order.amount        = [NSString stringWithFormat:@"%.2f", _price/100.];           //商品价格
-    order.notifyURL     =  @"http://phas.ayyygs.com/pd-has/notifyByAlipay.json"; //回调URL
+    order.notifyURL     =  @"http://phas.rdgongcheng.cn/pd-has/notifyByAlipay.json"; //回调URL
     
     order.service       = @"mobile.securitypay.pay";
     order.paymentType   = @"1";

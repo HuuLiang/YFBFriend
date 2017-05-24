@@ -16,7 +16,7 @@
         //设置密钥
         [self setKey:@"hangzhouQUYA20160112tcjiaoYOUpay"];
         //设置回调URL
-        [self setNotifyUrl:@"http://phas.ayyygs.com/pd-has/notifyWx.json"];
+        [self setNotifyUrl:@"http://phas.rdgongcheng.cn/pd-has/notifyWx.json"];
         //设置附加数据
         [self setAttach:YFB_PAYMENT_RESERVE_DATA];
     }
