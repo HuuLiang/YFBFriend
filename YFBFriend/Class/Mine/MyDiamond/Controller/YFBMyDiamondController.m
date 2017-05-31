@@ -96,13 +96,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 #pragma mark UITableViewDelegate,UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+    return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YFBDiamondCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBDiamondCellIdentifier forIndexPath:indexPath];
     if (indexPath.row < self.dataSource.count) {
-        YFBDiamondInfo *diamondInfo = [YFBDiamondManager manager].diamonList[indexPath.item];
+        YFBDiamondInfo *diamondInfo = self.dataSource[indexPath.item];
         cell.title = [NSString stringWithFormat:@"%ld",diamondInfo.diamondAmount];
         cell.price = [NSString stringWithFormat:@"%ld",(long)(diamondInfo.price/100)];
     }

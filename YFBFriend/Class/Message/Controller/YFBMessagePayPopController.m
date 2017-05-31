@@ -493,7 +493,7 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == YFBPopViewDiamondSectionCategory) {
-        return 6;
+        return [YFBDiamondManager manager].diamonList.count;
     } else if (section == YFBPopViewDiamondSectionType) {
         return 2;
     } else if (section == YFBPopViewDiamondSectionPay) {
