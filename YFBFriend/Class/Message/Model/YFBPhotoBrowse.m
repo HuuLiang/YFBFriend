@@ -7,10 +7,10 @@
 //
 
 #import "YFBPhotoBrowse.h"
+#import "SDCycleScrollView.h"
 
-
-@interface YFBPhotoBrowse ()
-@property (nonatomic) UIImageView *imageView;
+@interface YFBPhotoBrowse () <SDCycleScrollViewDelegate>
+@property (nonatomic,strong) SDCycleScrollView *photoScrollView;
 @end
 
 @implementation YFBPhotoBrowse
@@ -24,33 +24,26 @@
     return _browse;
 }
 
-- (void)showPhotoBrowseWithImageUrl:(NSString *)imageUrl onSuperView:(UIView *)superView {
+- (void)showPhotoBrowseWithImageUrl:(NSArray *)imageUrls onSuperView:(UIView *)superView {
     self.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
     self.backgroundColor = [UIColor colorWithHexString:@"#000000"];
     [superView.window addSubview:self];
     
+    self.photoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:self.bounds imageURLStringsGroup:imageUrls];
+    _photoScrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
+    _photoScrollView.backgroundColor = [UIColor blackColor];
+    _photoScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
+    _photoScrollView.autoScrollTimeInterval = 5;
+    _photoScrollView.autoScroll = NO;
+    _photoScrollView.infiniteLoop = NO;
+    _photoScrollView.pageDotColor = [UIColor colorWithHexString:@"#D8D8D8"];
+    _photoScrollView.currentPageDotColor = [UIColor colorWithHexString:@"#FF206F"];
+    _photoScrollView.delegate = self;
+    [self addSubview:_photoScrollView];
+    
     [UIView animateWithDuration:0.5 animations:^{
         self.alpha = 1;
-    }];
-    
-    self.imageView = [[UIImageView alloc] initWithFrame:superView.window.frame];
-    _imageView.userInteractionEnabled = YES;
-    _imageView.contentMode = UIViewContentModeCenter;
-    [self addSubview:_imageView];
-    
-    [_imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
-    
-    @weakify(self);
-    [self bk_whenTapped:^{
-        @strongify(self);
-        [self closeBrowse];
-    }];
-    
-    [_imageView bk_whenTapped:^{
-        @strongify(self);
-        [self closeBrowse];
-    }];
-
+    }];    
 }
 
 - (void)closeBrowse {
@@ -60,10 +53,15 @@
     [UIView animateWithDuration:0.5 animations:^{
         self.alpha = 0;
     } completion:^(BOOL finished) {
-        [_imageView removeFromSuperview];
-        _imageView = nil;
+        [_photoScrollView removeFromSuperview];
+        _photoScrollView = nil;
     }];
+}
 
+#pragma mark - SDCycleScrollViewDelegate
+
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
+    [self closeBrowse];
 }
 
 @end

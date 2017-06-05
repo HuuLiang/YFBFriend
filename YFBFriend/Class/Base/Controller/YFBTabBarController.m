@@ -7,8 +7,9 @@
 //
 
 #import "YFBTabBarController.h"
-//#import "UINavigationController.h"
+
 #import "YFBDiscoverViewController.h"
+#import "YFBSocialViewController.h"
 #import "YFBContactViewController.h"
 #import "YFBMineViewController.h"
 
@@ -105,6 +106,12 @@
                                                           image:[[UIImage imageNamed:@"discover_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
                                                   selectedImage:[[UIImage imageNamed:@"discover_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
+    YFBSocialViewController *socialVC = [[YFBSocialViewController alloc] initWithTitle:@"同城"];
+    UINavigationController *socialNav = [[UINavigationController alloc] initWithRootViewController:socialVC];
+    socialNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:discoverVC.title
+                                                         image:[[UIImage imageNamed:@"discover_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
+                                                 selectedImage:[[UIImage imageNamed:@"discover_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    
     YFBContactViewController *contactVC = [[YFBContactViewController alloc] initWithTitle:@"消息"];
     UINavigationController *contactNav = [[UINavigationController alloc] initWithRootViewController:contactVC];
     contactNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:contactVC.title
@@ -120,7 +127,7 @@
     
     self.tabBar.translucent = NO;
     self.delegate = self;
-    self.viewControllers = @[discoverNav,contactNav,mineNav];
+    self.viewControllers = @[discoverNav,socialNav,contactNav,mineNav];
 }
 
 

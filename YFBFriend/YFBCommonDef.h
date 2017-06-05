@@ -41,6 +41,13 @@ typedef NS_ENUM(NSInteger,YFBGiftPopViewType) {
     YFBGiftPopViewTypeList      //赠送礼物
 };
 
+typedef NS_ENUM(NSInteger,YFBSocialType) {
+    YFBSocialTypeAll = 0,
+    YFBSocialTypeChat,
+    YFBSocialTypeGame,
+    YFBSocialTypeGF
+};
+
 typedef NS_ENUM(NSInteger, YFBMessagePopViewType) {
     YFBMessagePopViewTypeVip, // 开通vip界面
     YFBMessagePopViewTypeDiamond, //充值钻石列表界面

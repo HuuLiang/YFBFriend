@@ -21,12 +21,31 @@ NSString *const kYFBPaymentStatusFailedKeyName              = @"FR_PAY_FAIL";
 NSString *const kYFBPaymentMethodAliKeyName                 = @"FR_ALIPAY";
 NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
 
+@implementation YFBPaymentInfo
+
++ (YFBPaymentInfo *)createPaymentInfoWithOrderId:(NSString *)orderId
+                                       payAction:(NSString *)payAction
+                                         payType:(YFBPayType)payType
+                                        payPrice:(NSUInteger)payPrice
+                                        payCount:(NSUInteger)payCount
+                                       payMethod:(NSString *)payMethod {
+    YFBPaymentInfo *paymentInfo = [[YFBPaymentInfo alloc] init];
+    paymentInfo.payOrderId = orderId;
+    paymentInfo.payAction = payAction;
+    paymentInfo.payType = payType;
+    paymentInfo.payPrice = payPrice;
+    paymentInfo.payCount = payCount;
+    paymentInfo.payMethod = payMethod;
+    paymentInfo.payResult = YFBPayResultUnknow;
+    [paymentInfo saveOrUpdate];
+    return paymentInfo;
+}
+
+@end
+
+
 @interface YFBPaymentManager()
-@property (nonatomic) NSString *payOrderNo;
-@property (nonatomic) NSString *payAction;
-@property (nonatomic) NSInteger payPrice;
-@property (nonatomic) NSInteger payCount;
-@property (nonatomic) NSString *payMethod;
+@property (nonatomic) YFBPaymentInfo *paymentInfo;
 @end
 
 @implementation YFBPaymentManager
@@ -49,29 +68,34 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
 }
 
 - (void)payForAction:(NSString *)action WithPayType:(YFBPayType)payType price:(NSInteger)price count:(NSInteger)count handler:(void(^)(BOOL success))handler {
-    self.payAction = action;
-    self.payOrderNo = YFB_PAYMENT_ORDERID;
-    self.payPrice = price;
-    self.payCount = count;
     
+    NSString *payMethod = nil;
     switch (payType) {
         case YFBPayTypeAliPay:
-            self.payMethod = kYFBPaymentMethodAliKeyName;
+            payMethod = kYFBPaymentMethodAliKeyName;
             break;
             
         case YFBPayTypeWeiXin:
-            self.payMethod = kYFBPaymentMethodWXKeyName;
+            payMethod = kYFBPaymentMethodWXKeyName;
             break;
             
         default:
             break;
     }
     
-//    _payPrice = 1;
+    self.paymentInfo = [YFBPaymentInfo createPaymentInfoWithOrderId:YFB_PAYMENT_ORDERID
+                                                                     payAction:action
+                                                                       payType:payType
+                                                                      payPrice:price
+                                                                      payCount:count
+                                                                     payMethod:payMethod];
+#ifdef DEBUG
+    _paymentInfo.payPrice = 1;
+#endif
     
     if (payType == YFBPayTypeAliPay) {
-        [[AlipayManager shareInstance] startAlipay:_payOrderNo
-                                             price:_payPrice
+        [[AlipayManager shareInstance] startAlipay:_paymentInfo.payOrderId
+                                             price:_paymentInfo.payPrice
                                         withResult:^(YFBPayResult result, Order *order)
         {
             if (handler) {
@@ -80,8 +104,8 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
             [self commitOrderInfoandnotiPayResult:result];
         }];
     } else if (payType == YFBPayTypeWeiXin) {
-        [[WeChatPayManager sharedInstance] startWeChatPayWithOrderNo:_payOrderNo
-                                                               price:_payPrice
+        [[WeChatPayManager sharedInstance] startWeChatPayWithOrderNo:_paymentInfo.payOrderId
+                                                               price:_paymentInfo.payPrice
                                                    completionHandler:^(YFBPayResult result)
         {
             if (handler) {
@@ -93,6 +117,10 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
 }
 
 - (void)commitOrderInfoandnotiPayResult:(YFBPayResult)result {
+    _paymentInfo.payResult = result;
+    
+    [_paymentInfo saveOrUpdate];
+    
     NSString *payStatus;
     switch (result) {
         case YFBPayResultSuccess:
@@ -107,7 +135,7 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
             break;
             
         case YFBPayResultCancle:
-            payStatus = kYFBPaymentStatusFailedKeyName;
+            payStatus = kYFBPaymentStatusCancleKeyName;
             [[YFBHudManager manager] showHudWithText:@"支付取消"];
             break;
             
@@ -117,21 +145,21 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
     
     NSString *payCountKeyName;
     
-    if ([_payAction isEqualToString:kYFBPaymentActionOpenVipKeyName]) {
+    if ([_paymentInfo.payAction isEqualToString:kYFBPaymentActionOpenVipKeyName]) {
         payCountKeyName = @"days";
-    } else if ([_payAction isEqualToString:kYFBPaymentActionPURCHASEDIAMONDKeyName]) {
+    } else if ([_paymentInfo.payAction isEqualToString:kYFBPaymentActionPURCHASEDIAMONDKeyName]) {
         payCountKeyName = @"amount";
     }
     
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                              @"userId":[YFBUser currentUser].userId,
                              @"token":[YFBUser currentUser].token,
-                             @"orderNo":_payOrderNo,
-                             @"payAction":_payAction,
+                             @"orderNo":_paymentInfo.payOrderId,
+                             @"payAction":_paymentInfo.payAction,
                              @"payStatus":payStatus,
-                             @"payMethod":_payMethod,
-                             @"price":@(_payPrice),
-                             payCountKeyName:@(_payCount)};
+                             @"payMethod":_paymentInfo.payMethod,
+                             @"price":@(_paymentInfo.payPrice),
+                             payCountKeyName:@(_paymentInfo.payCount)};
     
     [self requestURLPath:YFB_UPDATEORDER_URL
           standbyURLPath:nil

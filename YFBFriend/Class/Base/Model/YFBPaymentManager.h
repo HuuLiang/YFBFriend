@@ -8,6 +8,16 @@
 
 #import <QBEncryptedURLRequest.h>
 
+@interface YFBPaymentInfo : JKDBModel
+@property (nonatomic) NSString *payOrderId;
+@property (nonatomic) YFBPayType payType;
+@property (nonatomic) NSString *payAction;
+@property (nonatomic) NSUInteger payPrice;
+@property (nonatomic) NSUInteger payCount;
+@property (nonatomic) NSString *payMethod;
+@property (nonatomic) YFBPayResult payResult;
+@end
+
 @interface YFBPaymentManager : QBEncryptedURLRequest
 
 + (instancetype)manager;

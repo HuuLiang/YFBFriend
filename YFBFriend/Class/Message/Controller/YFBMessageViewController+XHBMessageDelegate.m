@@ -60,7 +60,7 @@
 - (void)multiMediaMessageDidSelectedOnMessage:(id <XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath onMessageTableViewCell:(XHMessageTableViewCell *)messageTableViewCell {
     if (message.messageMediaType == XHBubbleMessageMediaTypePhoto && message.thumbnailUrl) {
         //图片浏览
-        [[YFBPhotoBrowse browse] showPhotoBrowseWithImageUrl:message.thumbnailUrl onSuperView:self.view];
+        [[YFBPhotoBrowse browse] showPhotoBrowseWithImageUrl:@[message.thumbnailUrl] onSuperView:self.view];
     }
 }
 
