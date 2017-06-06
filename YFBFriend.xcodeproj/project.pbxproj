@@ -10,6 +10,11 @@
 		2655A8AAADBA5FD994FA27D4 /* libPods-YFBFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */; };
 		B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */; };
 		EC1E1A7D1EC45CA0002D94AF /* detail_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */; };
+		EC4A737D1EE6A4E100198FD9 /* YFBSocialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A737C1EE6A4E100198FD9 /* YFBSocialModel.m */; };
+		EC4A73801EE6BD4600198FD9 /* YFBSocialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A737F1EE6BD4600198FD9 /* YFBSocialCell.m */; };
+		EC4A73831EE6BDC200198FD9 /* YFBCommentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73821EE6BDC200198FD9 /* YFBCommentsVC.m */; };
+		EC4A73861EE6BE4100198FD9 /* YFBCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73851EE6BE4100198FD9 /* YFBCommentCell.m */; };
+		EC4A73891EE6BE8200198FD9 /* YFBBuyServerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73881EE6BE8200198FD9 /* YFBBuyServerVC.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
 		EC7F0FA01E6FE2D700F39FD9 /* homeBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */; };
 		EC9A67771E6D3E4A0018C5FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67761E6D3E4A0018C5FB /* main.m */; };
@@ -316,6 +321,16 @@
 		B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = phone_verify.jpg; sourceTree = "<group>"; };
 		BD481930EA9E3A5945F3FA6C /* Pods-YFBFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = detail_bg.jpg; sourceTree = "<group>"; };
+		EC4A737B1EE6A4E100198FD9 /* YFBSocialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSocialModel.h; sourceTree = "<group>"; };
+		EC4A737C1EE6A4E100198FD9 /* YFBSocialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSocialModel.m; sourceTree = "<group>"; };
+		EC4A737E1EE6BD4600198FD9 /* YFBSocialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSocialCell.h; sourceTree = "<group>"; };
+		EC4A737F1EE6BD4600198FD9 /* YFBSocialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSocialCell.m; sourceTree = "<group>"; };
+		EC4A73811EE6BDC200198FD9 /* YFBCommentsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBCommentsVC.h; sourceTree = "<group>"; };
+		EC4A73821EE6BDC200198FD9 /* YFBCommentsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBCommentsVC.m; sourceTree = "<group>"; };
+		EC4A73841EE6BE4100198FD9 /* YFBCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBCommentCell.h; sourceTree = "<group>"; };
+		EC4A73851EE6BE4100198FD9 /* YFBCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBCommentCell.m; sourceTree = "<group>"; };
+		EC4A73871EE6BE8200198FD9 /* YFBBuyServerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBBuyServerVC.h; sourceTree = "<group>"; };
+		EC4A73881EE6BE8200198FD9 /* YFBBuyServerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBBuyServerVC.m; sourceTree = "<group>"; };
 		EC7307031E83727D00D7BF70 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = homeBackground.jpg; sourceTree = "<group>"; };
 		EC9A67721E6D3E4A0018C5FB /* YFBFriend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YFBFriend.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -979,15 +994,15 @@
 		ECDBA8721EE5598B00BEFF98 /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				ECDBA8731EE5598B00BEFF98 /* Account */,
+				ECDBA9B61EE5598B00BEFF98 /* Vendor */,
+				ECDBA98A1EE5598B00BEFF98 /* Utils */,
 				ECDBA88D1EE5598B00BEFF98 /* Base */,
-				ECDBA8B31EE5598B00BEFF98 /* Detail */,
+				ECDBA8731EE5598B00BEFF98 /* Account */,
 				ECDBA8C11EE5598B00BEFF98 /* Discover */,
 				ECDBAC1D1EE55B1700BEFF98 /* Social */,
+				ECDBA8B31EE5598B00BEFF98 /* Detail */,
 				ECDBA8DF1EE5598B00BEFF98 /* Message */,
 				ECDBA9131EE5598B00BEFF98 /* Mine */,
-				ECDBA98A1EE5598B00BEFF98 /* Utils */,
-				ECDBA9B61EE5598B00BEFF98 /* Vendor */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -2369,6 +2384,10 @@
 			children = (
 				ECDBAC211EE55BCA00BEFF98 /* YFBSocialViewController.h */,
 				ECDBAC221EE55BCA00BEFF98 /* YFBSocialViewController.m */,
+				EC4A73811EE6BDC200198FD9 /* YFBCommentsVC.h */,
+				EC4A73821EE6BDC200198FD9 /* YFBCommentsVC.m */,
+				EC4A73871EE6BE8200198FD9 /* YFBBuyServerVC.h */,
+				EC4A73881EE6BE8200198FD9 /* YFBBuyServerVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2376,6 +2395,8 @@
 		ECDBAC1F1EE55B1700BEFF98 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC4A737B1EE6A4E100198FD9 /* YFBSocialModel.h */,
+				EC4A737C1EE6A4E100198FD9 /* YFBSocialModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2383,6 +2404,10 @@
 		ECDBAC201EE55B1700BEFF98 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC4A737E1EE6BD4600198FD9 /* YFBSocialCell.h */,
+				EC4A737F1EE6BD4600198FD9 /* YFBSocialCell.m */,
+				EC4A73841EE6BE4100198FD9 /* YFBCommentCell.h */,
+				EC4A73851EE6BE4100198FD9 /* YFBCommentCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2590,6 +2615,8 @@
 				ECDBAC161EE5598C00BEFF98 /* TADotView.m in Sources */,
 				ECDBAB221EE5598B00BEFF98 /* YFBGreetingVC.m in Sources */,
 				ECDBAB331EE5598B00BEFF98 /* YFBContactManager.m in Sources */,
+				EC4A73891EE6BE8200198FD9 /* YFBBuyServerVC.m in Sources */,
+				EC4A73861EE6BE4100198FD9 /* YFBCommentCell.m in Sources */,
 				ECDBAB371EE5598B00BEFF98 /* YFBVisiteModel.m in Sources */,
 				ECDBAB511EE5598B00BEFF98 /* YFBDiamondLabel.m in Sources */,
 				ECDBAB451EE5598B00BEFF98 /* YFBAttentionDetailController.m in Sources */,
@@ -2690,6 +2717,7 @@
 				ECDBAB0B1EE5598B00BEFF98 /* YFBTabBarController.m in Sources */,
 				ECDBAB8D1EE5598B00BEFF98 /* base64.m in Sources */,
 				ECDBAC041EE5598C00BEFF98 /* ALAssetsLibrary+POS.m in Sources */,
+				EC4A737D1EE6A4E100198FD9 /* YFBSocialModel.m in Sources */,
 				ECDBAC0C1EE5598C00BEFF98 /* QiniuFile.m in Sources */,
 				ECDBAB2B1EE5598B00BEFF98 /* YFBRobot.m in Sources */,
 				ECDBAB001EE5598B00BEFF98 /* YFBRegisterFirstVC.m in Sources */,
@@ -2745,6 +2773,7 @@
 				ECDBAB2C1EE5598B00BEFF98 /* YFBContactViewController.m in Sources */,
 				ECDBAB5C1EE5598B00BEFF98 /* YFBMineDataInfoViewController.m in Sources */,
 				ECDBAB291EE5598B00BEFF98 /* YFBGreetingInfoModel.m in Sources */,
+				EC4A73831EE6BDC200198FD9 /* YFBCommentsVC.m in Sources */,
 				ECDBAC231EE55BCA00BEFF98 /* YFBSocialViewController.m in Sources */,
 				ECDBAB911EE5598B00BEFF98 /* NSDataEx.m in Sources */,
 				ECDBABB31EE5598C00BEFF98 /* XHMessageVideoConverPhotoFactory.m in Sources */,
@@ -2803,6 +2832,7 @@
 				ECDBAB051EE5598B00BEFF98 /* JYNextButton.m in Sources */,
 				ECDBABB21EE5598C00BEFF98 /* XHMessageBubbleFactory.m in Sources */,
 				ECDBAB5B1EE5598B00BEFF98 /* YFBMyPhotoCell.m in Sources */,
+				EC4A73801EE6BD4600198FD9 /* YFBSocialCell.m in Sources */,
 				ECDBAB551EE5598B00BEFF98 /* YFBMyGiftModel.m in Sources */,
 				ECDBAB1F1EE5598B00BEFF98 /* YFBDiscoverViewController.m in Sources */,
 			);
