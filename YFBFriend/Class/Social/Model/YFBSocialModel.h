@@ -8,8 +8,15 @@
 
 #import <QBEncryptedURLRequest.h>
 
-@interface YFBSocialResponse : QBURLResponse
+@interface YFBCommentModel : NSObject
+@property (nonatomic) NSString *nickName;
+@property (nonatomic) NSString *time;
+@property (nonatomic) NSString *option;
+@property (nonatomic) NSString *content;
+@end
 
+
+@interface YFBSocialResponse : QBURLResponse
 
 @end
 

@@ -9,6 +9,9 @@
 #import "YFBSocialViewController.h"
 #import "YFBSliderView.h"
 #import "YFBSocialModel.h"
+#import "YFBSocialCell.h"
+
+static NSString *const kYFBSocialCellReusableIdentifier = @"kYFBSocialCellReusableIdentifier";
 
 @interface YFBSocialViewController ()
 @property (nonatomic) YFBSliderView *sliderView;
@@ -22,7 +25,7 @@
     self.title = @"我的礼物";
     self.view.backgroundColor = [UIColor whiteColor];
     self.sliderView = [[YFBSliderView alloc] init];
-    NSArray *titles = @[@"全部",@"聊天服务",@"线上游戏",@"虚拟女朋友"];
+    NSArray *titles = @[@"全部服务",@"暖心陪聊",@"线上游戏",@"虚拟女朋友"];
     _sliderView.titlesArr = titles;
     
     YFBSocialContentViewController *allVC = [[YFBSocialContentViewController alloc] initWithSocialType:YFBSocialTypeAll];
@@ -42,7 +45,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
@@ -53,12 +55,14 @@
 @property (nonatomic) YFBSocialType socialType;
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSMutableArray *dataSource;
+@property (nonatomic) NSMutableArray *heights;
 @property (nonatomic) YFBSocialModel *socialModel;
 @end
 
 @implementation YFBSocialContentViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 QBDefineLazyPropertyInitialization(YFBSocialModel, socialModel)
+QBDefineLazyPropertyInitialization(NSMutableArray, heights)
 
 - (instancetype)initWithSocialType:(YFBSocialType)socialType {
     self = [super init];
@@ -71,12 +75,13 @@ QBDefineLazyPropertyInitialization(YFBSocialModel, socialModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = kColor(@"#efefef");
+    self.view.backgroundColor = kColor(@"#ffffff");
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _tableView.backgroundColor = kColor(@"#efefef");
+    _tableView.backgroundColor = kColor(@"#ffffff");
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    [_tableView registerClass:[YFBSocialCell class] forCellReuseIdentifier:kYFBSocialCellReusableIdentifier];
     [self.view addSubview:_tableView];
     
     {
@@ -84,6 +89,20 @@ QBDefineLazyPropertyInitialization(YFBSocialModel, socialModel)
             make.edges.equalTo(self.view);
         }];
     }
+    
+    @weakify(self);
+    [_tableView YFB_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self getSocialContent];
+    }];
+    
+    [_tableView YFB_addPagingRefreshWithNotice:@"—————— 我是有底线的 ——————" Handler:^{
+        @strongify(self);
+        [self.tableView YFB_endPullToRefresh];
+    }];
+    
+    [_tableView YFB_triggerPullToRefresh];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -98,6 +117,10 @@ QBDefineLazyPropertyInitialization(YFBSocialModel, socialModel)
     }];
 }
 
+- (void)calculateContentHeight {
+    
+}
+
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -105,11 +128,25 @@ QBDefineLazyPropertyInitialization(YFBSocialModel, socialModel)
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    YFBSocialCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBSocialCellReusableIdentifier forIndexPath:indexPath];
+    if (indexPath.row < self.dataSource.count) {
+        
+    }
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return section == 0 ? 0.01f : kWidth(20);
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *sectionHeaderView = [[UIView alloc] init];
+    sectionHeaderView.backgroundColor = kColor(@"#efefef");
+    return sectionHeaderView;
 }
 
 @end

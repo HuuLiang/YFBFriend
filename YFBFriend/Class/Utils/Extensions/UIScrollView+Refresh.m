@@ -39,19 +39,10 @@ NSString *const kYFBRecommendRefreshKeyName = @"kYFBRecommendRefreshKeyName";
     }
 }
 
-- (void)YFB_addPagingRefreshWithKeyName:(NSString *)keyName Handler:(void (^)(void))handler {
+- (void)YFB_addPagingRefreshWithNotice:(NSString *)notiStr Handler:(void (^)(void))handler {
     if (!self.footer) {
-        NSString *vipNotice = nil;
-        
-        BOOL loadOver = [[[NSUserDefaults standardUserDefaults] objectForKey:keyName] boolValue];
-        if (loadOver) {
-            vipNotice = @"—————— 我是有底线的 ——————";
-        } else {
-            vipNotice = @"上拉加载更多";
-        }
-        
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:handler];
-        [refreshFooter setTitle:vipNotice forState:MJRefreshStateIdle];
+        [refreshFooter setTitle:notiStr forState:MJRefreshStateIdle];
         self.footer = refreshFooter;
     }
 }

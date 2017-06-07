@@ -10,4 +10,9 @@
 
 @interface YFBCommentCell : UITableViewCell
 
+@property (nonatomic) NSString *nickName;
+@property (nonatomic) NSString *timeStr;
+@property (nonatomic) NSString *serverOption;
+@property (nonatomic) NSString *commentStr;
+
 @end

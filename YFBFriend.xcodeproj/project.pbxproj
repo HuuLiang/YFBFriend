@@ -15,6 +15,11 @@
 		EC4A73831EE6BDC200198FD9 /* YFBCommentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73821EE6BDC200198FD9 /* YFBCommentsVC.m */; };
 		EC4A73861EE6BE4100198FD9 /* YFBCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73851EE6BE4100198FD9 /* YFBCommentCell.m */; };
 		EC4A73891EE6BE8200198FD9 /* YFBBuyServerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73881EE6BE8200198FD9 /* YFBBuyServerVC.m */; };
+		EC4A738C1EE7894200198FD9 /* YFBShowWXView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A738B1EE7894200198FD9 /* YFBShowWXView.m */; };
+		EC4A738F1EE79CA300198FD9 /* YFBStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A738E1EE79CA300198FD9 /* YFBStarView.m */; };
+		EC4A73961EE7FF7B00198FD9 /* YFBGreetingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73911EE7FF7B00198FD9 /* YFBGreetingHeaderView.m */; };
+		EC4A73971EE7FF7B00198FD9 /* YFBRankDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73931EE7FF7B00198FD9 /* YFBRankDetailCell.m */; };
+		EC4A73981EE7FF7B00198FD9 /* YFBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73951EE7FF7B00198FD9 /* YFBRecommendCell.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
 		EC7F0FA01E6FE2D700F39FD9 /* homeBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */; };
 		EC9A67771E6D3E4A0018C5FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67761E6D3E4A0018C5FB /* main.m */; };
@@ -59,12 +64,9 @@
 		ECDBAB1D1EE5598B00BEFF98 /* YFBDetailFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8BE1EE5598B00BEFF98 /* YFBDetailFooterView.m */; };
 		ECDBAB1E1EE5598B00BEFF98 /* YFBDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8C01EE5598B00BEFF98 /* YFBDetailHeaderView.m */; };
 		ECDBAB1F1EE5598B00BEFF98 /* YFBDiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8C41EE5598B00BEFF98 /* YFBDiscoverViewController.m */; };
-		ECDBAB211EE5598B00BEFF98 /* YFBGreetingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8C81EE5598B00BEFF98 /* YFBGreetingHeaderView.m */; };
 		ECDBAB221EE5598B00BEFF98 /* YFBGreetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8CA1EE5598B00BEFF98 /* YFBGreetingVC.m */; };
 		ECDBAB231EE5598B00BEFF98 /* YFBNearVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8CC1EE5598B00BEFF98 /* YFBNearVC.m */; };
-		ECDBAB241EE5598B00BEFF98 /* YFBRankDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8CE1EE5598B00BEFF98 /* YFBRankDetailCell.m */; };
 		ECDBAB251EE5598B00BEFF98 /* YFBRankVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8D01EE5598B00BEFF98 /* YFBRankVC.m */; };
-		ECDBAB261EE5598B00BEFF98 /* YFBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8D21EE5598B00BEFF98 /* YFBRecommendCell.m */; };
 		ECDBAB271EE5598B00BEFF98 /* YFBRecommendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8D41EE5598B00BEFF98 /* YFBRecommendVC.m */; };
 		ECDBAB281EE5598B00BEFF98 /* YFBDiscoverModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8D71EE5598B00BEFF98 /* YFBDiscoverModel.m */; };
 		ECDBAB291EE5598B00BEFF98 /* YFBGreetingInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8D91EE5598B00BEFF98 /* YFBGreetingInfoModel.m */; };
@@ -331,6 +333,16 @@
 		EC4A73851EE6BE4100198FD9 /* YFBCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBCommentCell.m; sourceTree = "<group>"; };
 		EC4A73871EE6BE8200198FD9 /* YFBBuyServerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBBuyServerVC.h; sourceTree = "<group>"; };
 		EC4A73881EE6BE8200198FD9 /* YFBBuyServerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBBuyServerVC.m; sourceTree = "<group>"; };
+		EC4A738A1EE7894200198FD9 /* YFBShowWXView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBShowWXView.h; sourceTree = "<group>"; };
+		EC4A738B1EE7894200198FD9 /* YFBShowWXView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBShowWXView.m; sourceTree = "<group>"; };
+		EC4A738D1EE79CA300198FD9 /* YFBStarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBStarView.h; sourceTree = "<group>"; };
+		EC4A738E1EE79CA300198FD9 /* YFBStarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBStarView.m; sourceTree = "<group>"; };
+		EC4A73901EE7FF7B00198FD9 /* YFBGreetingHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBGreetingHeaderView.h; sourceTree = "<group>"; };
+		EC4A73911EE7FF7B00198FD9 /* YFBGreetingHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBGreetingHeaderView.m; sourceTree = "<group>"; };
+		EC4A73921EE7FF7B00198FD9 /* YFBRankDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRankDetailCell.h; sourceTree = "<group>"; };
+		EC4A73931EE7FF7B00198FD9 /* YFBRankDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRankDetailCell.m; sourceTree = "<group>"; };
+		EC4A73941EE7FF7B00198FD9 /* YFBRecommendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRecommendCell.h; sourceTree = "<group>"; };
+		EC4A73951EE7FF7B00198FD9 /* YFBRecommendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRecommendCell.m; sourceTree = "<group>"; };
 		EC7307031E83727D00D7BF70 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = homeBackground.jpg; sourceTree = "<group>"; };
 		EC9A67721E6D3E4A0018C5FB /* YFBFriend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YFBFriend.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -416,18 +428,12 @@
 		ECDBA8C01EE5598B00BEFF98 /* YFBDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDetailHeaderView.m; sourceTree = "<group>"; };
 		ECDBA8C31EE5598B00BEFF98 /* YFBDiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiscoverViewController.h; sourceTree = "<group>"; };
 		ECDBA8C41EE5598B00BEFF98 /* YFBDiscoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiscoverViewController.m; sourceTree = "<group>"; };
-		ECDBA8C71EE5598B00BEFF98 /* YFBGreetingHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBGreetingHeaderView.h; sourceTree = "<group>"; };
-		ECDBA8C81EE5598B00BEFF98 /* YFBGreetingHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBGreetingHeaderView.m; sourceTree = "<group>"; };
 		ECDBA8C91EE5598B00BEFF98 /* YFBGreetingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBGreetingVC.h; sourceTree = "<group>"; };
 		ECDBA8CA1EE5598B00BEFF98 /* YFBGreetingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBGreetingVC.m; sourceTree = "<group>"; };
 		ECDBA8CB1EE5598B00BEFF98 /* YFBNearVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBNearVC.h; sourceTree = "<group>"; };
 		ECDBA8CC1EE5598B00BEFF98 /* YFBNearVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBNearVC.m; sourceTree = "<group>"; };
-		ECDBA8CD1EE5598B00BEFF98 /* YFBRankDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRankDetailCell.h; sourceTree = "<group>"; };
-		ECDBA8CE1EE5598B00BEFF98 /* YFBRankDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRankDetailCell.m; sourceTree = "<group>"; };
 		ECDBA8CF1EE5598B00BEFF98 /* YFBRankVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRankVC.h; sourceTree = "<group>"; };
 		ECDBA8D01EE5598B00BEFF98 /* YFBRankVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRankVC.m; sourceTree = "<group>"; };
-		ECDBA8D11EE5598B00BEFF98 /* YFBRecommendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRecommendCell.h; sourceTree = "<group>"; };
-		ECDBA8D21EE5598B00BEFF98 /* YFBRecommendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRecommendCell.m; sourceTree = "<group>"; };
 		ECDBA8D31EE5598B00BEFF98 /* YFBRecommendVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRecommendVC.h; sourceTree = "<group>"; };
 		ECDBA8D41EE5598B00BEFF98 /* YFBRecommendVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRecommendVC.m; sourceTree = "<group>"; };
 		ECDBA8D61EE5598B00BEFF98 /* YFBDiscoverModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiscoverModel.h; sourceTree = "<group>"; };
@@ -1181,18 +1187,12 @@
 			children = (
 				ECDBA8C31EE5598B00BEFF98 /* YFBDiscoverViewController.h */,
 				ECDBA8C41EE5598B00BEFF98 /* YFBDiscoverViewController.m */,
-				ECDBA8C71EE5598B00BEFF98 /* YFBGreetingHeaderView.h */,
-				ECDBA8C81EE5598B00BEFF98 /* YFBGreetingHeaderView.m */,
 				ECDBA8C91EE5598B00BEFF98 /* YFBGreetingVC.h */,
 				ECDBA8CA1EE5598B00BEFF98 /* YFBGreetingVC.m */,
 				ECDBA8CB1EE5598B00BEFF98 /* YFBNearVC.h */,
 				ECDBA8CC1EE5598B00BEFF98 /* YFBNearVC.m */,
-				ECDBA8CD1EE5598B00BEFF98 /* YFBRankDetailCell.h */,
-				ECDBA8CE1EE5598B00BEFF98 /* YFBRankDetailCell.m */,
 				ECDBA8CF1EE5598B00BEFF98 /* YFBRankVC.h */,
 				ECDBA8D01EE5598B00BEFF98 /* YFBRankVC.m */,
-				ECDBA8D11EE5598B00BEFF98 /* YFBRecommendCell.h */,
-				ECDBA8D21EE5598B00BEFF98 /* YFBRecommendCell.m */,
 				ECDBA8D31EE5598B00BEFF98 /* YFBRecommendVC.h */,
 				ECDBA8D41EE5598B00BEFF98 /* YFBRecommendVC.m */,
 			);
@@ -1217,6 +1217,12 @@
 		ECDBA8DE1EE5598B00BEFF98 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC4A73901EE7FF7B00198FD9 /* YFBGreetingHeaderView.h */,
+				EC4A73911EE7FF7B00198FD9 /* YFBGreetingHeaderView.m */,
+				EC4A73921EE7FF7B00198FD9 /* YFBRankDetailCell.h */,
+				EC4A73931EE7FF7B00198FD9 /* YFBRankDetailCell.m */,
+				EC4A73941EE7FF7B00198FD9 /* YFBRecommendCell.h */,
+				EC4A73951EE7FF7B00198FD9 /* YFBRecommendCell.m */,
 				ECDBAC241EE55E8900BEFF98 /* YFBGreetingCell.h */,
 				ECDBAC251EE55E8900BEFF98 /* YFBGreetingCell.m */,
 			);
@@ -2408,6 +2414,10 @@
 				EC4A737F1EE6BD4600198FD9 /* YFBSocialCell.m */,
 				EC4A73841EE6BE4100198FD9 /* YFBCommentCell.h */,
 				EC4A73851EE6BE4100198FD9 /* YFBCommentCell.m */,
+				EC4A738A1EE7894200198FD9 /* YFBShowWXView.h */,
+				EC4A738B1EE7894200198FD9 /* YFBShowWXView.m */,
+				EC4A738D1EE79CA300198FD9 /* YFBStarView.h */,
+				EC4A738E1EE79CA300198FD9 /* YFBStarView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2609,6 +2619,8 @@
 				ECDBABBD1EE5598C00BEFF98 /* LKBadgeView.m in Sources */,
 				ECDBAC151EE5598C00BEFF98 /* TAAnimatedDotView.m in Sources */,
 				ECDBABC21EE5598C00BEFF98 /* SESelectionGrabber.m in Sources */,
+				EC4A73981EE7FF7B00198FD9 /* YFBRecommendCell.m in Sources */,
+				EC4A73961EE7FF7B00198FD9 /* YFBGreetingHeaderView.m in Sources */,
 				ECDBAB441EE5598B00BEFF98 /* YFBAttentionController.m in Sources */,
 				ECDBAB501EE5598B00BEFF98 /* YFBDiamondCell.m in Sources */,
 				ECDBABCB1EE5598C00BEFF98 /* SETextSelectionView.m in Sources */,
@@ -2649,7 +2661,6 @@
 				ECDBAB231EE5598B00BEFF98 /* YFBNearVC.m in Sources */,
 				ECDBAB391EE5598B00BEFF98 /* YFBContactCell.m in Sources */,
 				ECDBAC111EE5598C00BEFF98 /* QUMBase64.m in Sources */,
-				ECDBAB241EE5598B00BEFF98 /* YFBRankDetailCell.m in Sources */,
 				EC9A67771E6D3E4A0018C5FB /* main.m in Sources */,
 				ECDBAB351EE5598B00BEFF98 /* YFBMessageRecordManager.m in Sources */,
 				ECDBAB3E1EE5598B00BEFF98 /* YFBMessageDiamondToPayCell.m in Sources */,
@@ -2735,6 +2746,7 @@
 				ECDBAB301EE5598B00BEFF98 /* YFBMessageViewController.m in Sources */,
 				ECDBAC071EE5598C00BEFF98 /* POSAdjustedAssetReaderIOS8.m in Sources */,
 				ECDBAC101EE5598C00BEFF98 /* QiniuUploader.m in Sources */,
+				EC4A738F1EE79CA300198FD9 /* YFBStarView.m in Sources */,
 				ECDBAB1D1EE5598B00BEFF98 /* YFBDetailFooterView.m in Sources */,
 				ECDBAB0D1EE5598B00BEFF98 /* YFBDiamondManager.m in Sources */,
 				ECDBABA81EE5598C00BEFF98 /* XHDisplayEmotionViewController.m in Sources */,
@@ -2743,6 +2755,7 @@
 				ECDBAB5E1EE5598B00BEFF98 /* YFBUserInfoEditView.m in Sources */,
 				ECDBABAB1EE5598C00BEFF98 /* XHDisplayTextViewController.m in Sources */,
 				ECDBAB4B1EE5598B00BEFF98 /* YFBMineCell.m in Sources */,
+				EC4A738C1EE7894200198FD9 /* YFBShowWXView.m in Sources */,
 				ECDBABD91EE5598C00BEFF98 /* XHShareMenuView.m in Sources */,
 				ECDBAB421EE5598B00BEFF98 /* YFBMessagePayTypeCell.m in Sources */,
 				ECDBAB641EE5598B00BEFF98 /* YFBPasswordView.m in Sources */,
@@ -2796,7 +2809,6 @@
 				ECDBAB621EE5598B00BEFF98 /* YFBPasswordVC.m in Sources */,
 				ECDBABA41EE5598C00BEFF98 /* XHMessageBubbleHelper.m in Sources */,
 				ECDBABB91EE5598C00BEFF98 /* XHMessage.m in Sources */,
-				ECDBAB261EE5598B00BEFF98 /* YFBRecommendCell.m in Sources */,
 				ECDBAC181EE5598C00BEFF98 /* SDCollectionViewCell.m in Sources */,
 				ECDBABCF1EE5598C00BEFF98 /* XHMessageBubbleView.m in Sources */,
 				ECDBAB121EE5598B00BEFF98 /* YFBPayConfigManager.m in Sources */,
@@ -2806,11 +2818,11 @@
 				ECDBAB881EE5598B00BEFF98 /* SWActionSheet.m in Sources */,
 				ECDBAB791EE5598B00BEFF98 /* ApiXml.mm in Sources */,
 				ECDBAB8C1EE5598B00BEFF98 /* Order.m in Sources */,
-				ECDBAB211EE5598B00BEFF98 /* YFBGreetingHeaderView.m in Sources */,
 				ECDBAC0F1EE5598C00BEFF98 /* QiniuToken.m in Sources */,
 				ECDBAB461EE5598B00BEFF98 /* YFBAttentionListModel.m in Sources */,
 				ECDBAB711EE5598B00BEFF98 /* UIImage+Resource.m in Sources */,
 				ECDBAB8F1EE5598B00BEFF98 /* DataVerifier.m in Sources */,
+				EC4A73971EE7FF7B00198FD9 /* YFBRankDetailCell.m in Sources */,
 				ECDBABD41EE5598C00BEFF98 /* XHVoiceRecordHUD.m in Sources */,
 				ECDBAAFE1EE5598B00BEFF98 /* YFBLaunchViewController.m in Sources */,
 				ECDBAB4A1EE5598B00BEFF98 /* YFBMineViewController.m in Sources */,

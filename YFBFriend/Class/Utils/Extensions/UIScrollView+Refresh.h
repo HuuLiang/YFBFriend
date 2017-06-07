@@ -16,7 +16,7 @@
 
 - (void)YFB_addPagingRefreshWithHandler:(void (^)(void))handler;
 
-- (void)YFB_addPagingRefreshWithKeyName:(NSString *)keyName Handler:(void (^)(void))handler;
+- (void)YFB_addPagingRefreshWithNotice:(NSString *)notiStr Handler:(void (^)(void))handler;
 
 - (void)YFB_pagingRefreshNoMoreData;
 
