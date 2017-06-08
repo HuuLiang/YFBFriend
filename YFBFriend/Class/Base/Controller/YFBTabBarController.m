@@ -56,7 +56,7 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSInteger unreadMessages = [[YFBContactManager manager] allUnReadMessageCount];
-        UITabBarItem *contactItem = self.tabBar.items[1];
+        UITabBarItem *contactItem = self.tabBar.items[2];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (unreadMessages > 0) {

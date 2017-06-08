@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class YFBCommentModel;
 
 @interface YFBSocialCell : UITableViewCell
 @property (nonatomic) YFBAction detailAction;
@@ -23,5 +24,7 @@
 @property (nonatomic) NSString *imgUrlA;
 @property (nonatomic) NSString *imgUrlB;
 @property (nonatomic) NSString *imgUrlC;
-
+@property (nonatomic) YFBCommentModel *firstCommentModel;
+@property (nonatomic) YFBCommentModel *secondCommentModel;
+@property (nonatomic) BOOL needShowButton;
 @end

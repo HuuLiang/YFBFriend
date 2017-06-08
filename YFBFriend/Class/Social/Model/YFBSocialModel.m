@@ -8,8 +8,28 @@
 
 #import "YFBSocialModel.h"
 
-@implementation YFBSocialResponse
+@implementation YFBCommentModel
+@end
 
+
+@implementation YFBSocialServiceModel
+@end
+
+
+@implementation YFBSocialInfo
+- (Class)commentsElementClass {
+    return [YFBCommentModel class];
+}
+- (Class)serviceListsElementClass {
+    return [YFBSocialServiceModel class];
+}
+@end
+
+
+@implementation YFBSocialResponse
+- (Class)cityServicesElementClass {
+    return [YFBSocialInfo class];
+}
 @end
 
 
@@ -28,8 +48,12 @@
 }
 
 - (BOOL)fetchSocialContentWithType:(YFBSocialType)socialType CompletionHandler:(QBCompletionHandler)handler {
-    NSDictionary *params = @{};
-    BOOL success = [self requestURLPath:nil
+    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+                             @"userId":[YFBUser currentUser].userId,
+                             @"token":[YFBUser currentUser].token,
+                             @"type":@(socialType)
+                             };
+    BOOL success = [self requestURLPath:YFB_CITYSERVICE_URL
                          standbyURLPath:nil
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
@@ -40,7 +64,7 @@
         }
         
         if (handler) {
-            handler(respStatus == QBURLResponseSuccess,nil);
+            handler(respStatus == QBURLResponseSuccess,resp.cityServices);
         }
     }];
     return success;

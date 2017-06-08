@@ -123,7 +123,7 @@ static CGFloat const MaxScale = 1.14;/** 选中文字放大  */
     
     
     CGFloat h = titleH;
-    self.imageBackView  = [[UIImageView alloc] initWithFrame:CGRectMake(0, titleH-2, (kScreenWidth)/2., 2)];
+    self.imageBackView  = [[UIImageView alloc] initWithFrame:CGRectMake(0, titleH-2, (kScreenWidth)/_titlesArr.count, 2)];
     _imageBackView.backgroundColor = kColor(@"#8458d0");
     _imageBackView.layer.cornerRadius = 5;
     _imageBackView.layer.masksToBounds = YES;

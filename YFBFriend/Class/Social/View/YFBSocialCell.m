@@ -9,6 +9,7 @@
 #import "YFBSocialCell.h"
 #import "YFBStarView.h"
 #import "YFBCommentCell.h"
+#import "YFBSocialModel.h"
 
 @interface YFBSocialCell ()
 @property (nonatomic) UIImageView *userImgV;
@@ -204,7 +205,7 @@
                 make.left.equalTo(_userImgV.mas_right).offset(kWidth(20));
                 make.top.equalTo(_userImgV.mas_bottom).offset(kWidth(10));
                 make.right.equalTo(self.contentView.mas_right).offset(-kWidth(60));
-                make.height.mas_equalTo(kWidth(110));
+                make.height.mas_equalTo(_descLabel.font.lineHeight * 3);
             }];
             
             [_allDescButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -289,6 +290,10 @@
 
 - (void)setDescStr:(NSString *)descStr {
     _descLabel.text = descStr;
+    CGFloat height = [descStr sizeWithFont:kFont(14) maxWidth:kWidth(560)].height;
+    [_descLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(height);
+    }];
 }
 
 - (void)setImgUrlA:(NSString *)imgUrlA {
@@ -308,6 +313,41 @@
     _starView.rate = serverRate;
     _hotImgV.hidden = serverRate != 5;
 
+}
+
+- (void)setFirstCommentModel:(YFBCommentModel *)firstCommentModel {
+    _firstComment.nickName = firstCommentModel.nickName;
+    _firstComment.timeStr = firstCommentModel.time;
+    _firstComment.serverOption = firstCommentModel.serv;
+    _firstComment.commentStr = firstCommentModel.content;
+    
+    CGFloat commentContentHeight = [firstCommentModel.content sizeWithFont:kFont(12) maxWidth:kWidth(560)].height;
+    CGFloat commentHeight = kWidth(24) + kWidth(34) + kWidth(4) + kWidth(22) + kWidth(20) + commentContentHeight + kWidth(20);
+    
+}
+
+- (void)setSecondCommentModel:(YFBCommentModel *)secondCommentModel {
+    _secondComment.nickName = secondCommentModel.nickName;
+    _secondComment.timeStr = secondCommentModel.time;
+    _secondComment.serverOption = secondCommentModel.serv;
+    _secondComment.commentStr = secondCommentModel.content;
+    
+    CGFloat commentContentHeight = [secondCommentModel.content sizeWithFont:kFont(12) maxWidth:kWidth(560)].height;
+    CGFloat commentHeight = kWidth(24) + kWidth(34) + kWidth(4) + kWidth(22) + kWidth(20) + commentContentHeight + kWidth(20);
+    
+}
+
+- (void)setNeedShowButton:(BOOL)needShowButton {
+    if (needShowButton) {
+        [_descLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kFont(14).lineHeight *3);
+        }];
+    }
+    
+    _allDescButton.hidden = !needShowButton;
+    [_imgVA mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_descLabel.mas_bottom).offset(needShowButton ? kWidth(64) : kWidth(26));
+    }];
 }
 
 - (void)drawRect:(CGRect)rect {
