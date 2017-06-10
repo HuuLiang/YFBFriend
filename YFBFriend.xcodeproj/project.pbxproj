@@ -22,12 +22,16 @@
 		EC4A73981EE7FF7B00198FD9 /* YFBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73951EE7FF7B00198FD9 /* YFBRecommendCell.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
 		EC7F0FA01E6FE2D700F39FD9 /* homeBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */; };
+		EC94F7111EEB8CD100BB9CCA /* YFBShowPaySuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC94F7101EEB8CD100BB9CCA /* YFBShowPaySuccessView.m */; };
+		EC94F7131EEBCB8600BB9CCA /* ReplyMessage.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC94F7121EEBCB8600BB9CCA /* ReplyMessage.plist */; };
 		EC9A67771E6D3E4A0018C5FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67761E6D3E4A0018C5FB /* main.m */; };
 		EC9A677A1E6D3E4A0018C5FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A67791E6D3E4A0018C5FB /* AppDelegate.m */; };
 		EC9A67821E6D3E4A0018C5FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC9A67811E6D3E4A0018C5FB /* Assets.xcassets */; };
 		EC9A67851E6D3E4A0018C5FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC9A67831E6D3E4A0018C5FB /* LaunchScreen.storyboard */; };
 		EC9A6ABF1E6D3F9F0018C5FB /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC9A69911E6D3F9E0018C5FB /* config.plist */; };
 		EC9A6B041E6D50670018C5FB /* AppDelegate+configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A6B031E6D50670018C5FB /* AppDelegate+configuration.m */; };
+		ECAAA2801EEA9DBD00852315 /* YFBDealFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECAAA27F1EEA9DBD00852315 /* YFBDealFeedbackView.m */; };
+		ECAAA2831EEAAF8A00852315 /* YFBBuyServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECAAA2821EEAAF8A00852315 /* YFBBuyServerCell.m */; };
 		ECBF24601EBC5D8B003BB041 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECBF245F1EBC5D8B003BB041 /* CoreMotion.framework */; };
 		ECC049221EADEA75009E594F /* vipheader.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC049211EADEA75009E594F /* vipheader.jpg */; };
 		ECDBAAFE1EE5598B00BEFF98 /* YFBLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDBA8761EE5598B00BEFF98 /* YFBLaunchViewController.m */; };
@@ -345,6 +349,9 @@
 		EC4A73951EE7FF7B00198FD9 /* YFBRecommendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRecommendCell.m; sourceTree = "<group>"; };
 		EC7307031E83727D00D7BF70 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = homeBackground.jpg; sourceTree = "<group>"; };
+		EC94F70F1EEB8CD100BB9CCA /* YFBShowPaySuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBShowPaySuccessView.h; sourceTree = "<group>"; };
+		EC94F7101EEB8CD100BB9CCA /* YFBShowPaySuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBShowPaySuccessView.m; sourceTree = "<group>"; };
+		EC94F7121EEBCB8600BB9CCA /* ReplyMessage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ReplyMessage.plist; sourceTree = "<group>"; };
 		EC9A67721E6D3E4A0018C5FB /* YFBFriend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YFBFriend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC9A67761E6D3E4A0018C5FB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EC9A67781E6D3E4A0018C5FB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -358,6 +365,10 @@
 		EC9A6B011E6D452A0018C5FB /* YFBConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBConfig.h; sourceTree = "<group>"; };
 		EC9A6B021E6D50670018C5FB /* AppDelegate+configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+configuration.h"; sourceTree = "<group>"; };
 		EC9A6B031E6D50670018C5FB /* AppDelegate+configuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+configuration.m"; sourceTree = "<group>"; };
+		ECAAA27E1EEA9DBD00852315 /* YFBDealFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDealFeedbackView.h; sourceTree = "<group>"; };
+		ECAAA27F1EEA9DBD00852315 /* YFBDealFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDealFeedbackView.m; sourceTree = "<group>"; };
+		ECAAA2811EEAAF8A00852315 /* YFBBuyServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBBuyServerCell.h; sourceTree = "<group>"; };
+		ECAAA2821EEAAF8A00852315 /* YFBBuyServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBBuyServerCell.m; sourceTree = "<group>"; };
 		ECBF245F1EBC5D8B003BB041 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		ECC049211EADEA75009E594F /* vipheader.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vipheader.jpg; sourceTree = "<group>"; };
 		ECDBA8751EE5598B00BEFF98 /* YFBLaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBLaunchViewController.h; sourceTree = "<group>"; };
@@ -989,6 +1000,7 @@
 			isa = PBXGroup;
 			children = (
 				EC7307031E83727D00D7BF70 /* provinces.plist */,
+				EC94F7121EEBCB8600BB9CCA /* ReplyMessage.plist */,
 				EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */,
 				B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */,
 				ECC049211EADEA75009E594F /* vipheader.jpg */,
@@ -2412,12 +2424,18 @@
 			children = (
 				EC4A737E1EE6BD4600198FD9 /* YFBSocialCell.h */,
 				EC4A737F1EE6BD4600198FD9 /* YFBSocialCell.m */,
+				EC4A738D1EE79CA300198FD9 /* YFBStarView.h */,
+				EC4A738E1EE79CA300198FD9 /* YFBStarView.m */,
 				EC4A73841EE6BE4100198FD9 /* YFBCommentCell.h */,
 				EC4A73851EE6BE4100198FD9 /* YFBCommentCell.m */,
 				EC4A738A1EE7894200198FD9 /* YFBShowWXView.h */,
 				EC4A738B1EE7894200198FD9 /* YFBShowWXView.m */,
-				EC4A738D1EE79CA300198FD9 /* YFBStarView.h */,
-				EC4A738E1EE79CA300198FD9 /* YFBStarView.m */,
+				ECAAA27E1EEA9DBD00852315 /* YFBDealFeedbackView.h */,
+				ECAAA27F1EEA9DBD00852315 /* YFBDealFeedbackView.m */,
+				ECAAA2811EEAAF8A00852315 /* YFBBuyServerCell.h */,
+				ECAAA2821EEAAF8A00852315 /* YFBBuyServerCell.m */,
+				EC94F70F1EEB8CD100BB9CCA /* YFBShowPaySuccessView.h */,
+				EC94F7101EEB8CD100BB9CCA /* YFBShowPaySuccessView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2533,6 +2551,7 @@
 				ECDBABE51EE5598C00BEFF98 /* msg_chat_voice_unread@2x.png in Resources */,
 				ECDBABEC1EE5598C00BEFF98 /* ReceiverVoiceNodePlaying003@2x.png in Resources */,
 				EC1E1A7D1EC45CA0002D94AF /* detail_bg.jpg in Resources */,
+				EC94F7131EEBCB8600BB9CCA /* ReplyMessage.plist in Resources */,
 				ECDBABDF1EE5598C00BEFF98 /* input-bar-flat.png in Resources */,
 				ECDBABEF1EE5598C00BEFF98 /* RecordingBkg@2x.png in Resources */,
 				ECDBABEB1EE5598C00BEFF98 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
@@ -2630,6 +2649,7 @@
 				EC4A73891EE6BE8200198FD9 /* YFBBuyServerVC.m in Sources */,
 				EC4A73861EE6BE4100198FD9 /* YFBCommentCell.m in Sources */,
 				ECDBAB371EE5598B00BEFF98 /* YFBVisiteModel.m in Sources */,
+				ECAAA2831EEAAF8A00852315 /* YFBBuyServerCell.m in Sources */,
 				ECDBAB511EE5598B00BEFF98 /* YFBDiamondLabel.m in Sources */,
 				ECDBAB451EE5598B00BEFF98 /* YFBAttentionDetailController.m in Sources */,
 				ECDBAB9D1EE5598B00BEFF98 /* UIImage+XHRounded.m in Sources */,
@@ -2805,6 +2825,7 @@
 				ECDBABB41EE5598C00BEFF98 /* XHMessageVoiceFactory.m in Sources */,
 				ECDBAB3F1EE5598B00BEFF98 /* YFBMessageFunctionView.m in Sources */,
 				ECDBABA31EE5598C00BEFF98 /* XHLocationHelper.m in Sources */,
+				EC94F7111EEB8CD100BB9CCA /* YFBShowPaySuccessView.m in Sources */,
 				ECDBABC71EE5598C00BEFF98 /* SETextLayout.m in Sources */,
 				ECDBAB621EE5598B00BEFF98 /* YFBPasswordVC.m in Sources */,
 				ECDBABA41EE5598C00BEFF98 /* XHMessageBubbleHelper.m in Sources */,
@@ -2837,6 +2858,7 @@
 				ECDBAB6B1EE5598B00BEFF98 /* YFBDredgeVipPrivilegeCell.m in Sources */,
 				ECDBAB7B1EE5598B00BEFF98 /* WeChatPayManager.m in Sources */,
 				ECDBAB611EE5598B00BEFF98 /* YFBAdviseVC.m in Sources */,
+				ECAAA2801EEA9DBD00852315 /* YFBDealFeedbackView.m in Sources */,
 				ECDBAB871EE5598B00BEFF98 /* DistancePickerView.m in Sources */,
 				ECDBAB4E1EE5598B00BEFF98 /* YFBDiamondVoucherController.m in Sources */,
 				ECDBABB71EE5598C00BEFF98 /* XHEmotion.m in Sources */,

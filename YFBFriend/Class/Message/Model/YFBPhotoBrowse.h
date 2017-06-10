@@ -13,6 +13,7 @@
 + (instancetype)browse;
 
 - (void)showPhotoBrowseWithImageUrl:(NSArray *)imageUrls onSuperView:(UIView *)superView;
+- (void)showPhotoBrowseWithImageUrl:(NSArray *)imageUrls atIndex:(NSInteger)currentIndex onSuperView:(UIView *)superView;
 
 @property (nonatomic) QBAction closeAction;
 

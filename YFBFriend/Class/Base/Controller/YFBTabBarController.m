@@ -106,11 +106,11 @@
                                                           image:[[UIImage imageNamed:@"discover_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
                                                   selectedImage:[[UIImage imageNamed:@"discover_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
-    YFBSocialViewController *socialVC = [[YFBSocialViewController alloc] initWithTitle:@"同城"];
+    YFBSocialViewController *socialVC = [[YFBSocialViewController alloc] initWithTitle:@"同城服务"];
     UINavigationController *socialNav = [[UINavigationController alloc] initWithRootViewController:socialVC];
-    socialNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:discoverVC.title
-                                                         image:[[UIImage imageNamed:@"discover_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
-                                                 selectedImage:[[UIImage imageNamed:@"discover_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    socialNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:socialVC.title
+                                                         image:[[UIImage imageNamed:@"social_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
+                                                 selectedImage:[[UIImage imageNamed:@"social_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     YFBContactViewController *contactVC = [[YFBContactViewController alloc] initWithTitle:@"消息"];
     UINavigationController *contactNav = [[UINavigationController alloc] initWithRootViewController:contactVC];

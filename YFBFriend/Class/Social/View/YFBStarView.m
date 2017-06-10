@@ -78,6 +78,14 @@
 }
 
 - (void)setRate:(NSInteger)rate {
+    
+    [self.subviews enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[UIImageView class]]) {
+            UIImageView *starImgV = (UIImageView *)obj;
+            starImgV.image = [UIImage imageNamed:@"star_normal"];
+        }
+    }];
+    
     if (rate >= 1) {
         _star1.image = [UIImage imageNamed:@"star_selected"];
     }

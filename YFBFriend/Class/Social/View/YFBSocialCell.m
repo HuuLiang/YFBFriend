@@ -22,11 +22,12 @@
 @property (nonatomic) UIImageView *imgVA;
 @property (nonatomic) UIImageView *imgVB;
 @property (nonatomic) UIImageView *imgVC;
+@property (nonatomic) UIImageView *lineImgV;
 @property (nonatomic) UILabel *serverTitleLabel;
 @property (nonatomic) UIButton *wxButton;
 @property (nonatomic) UIButton *checkButton;
-@property (nonatomic) YFBCommentCell *firstComment;
-@property (nonatomic) YFBCommentCell *secondComment;
+@property (nonatomic) YFBCommentView *firstComment;
+@property (nonatomic) YFBCommentView *secondComment;
 @property (nonatomic) UIButton *allCommentsButton;
 @end
 
@@ -38,9 +39,10 @@
     if (self) {
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundColor = kColor(@"#ffffff");
+        self.contentView.backgroundColor = kColor(@"#ffffff");
         
-        
-        self.userImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+        self.userImgV = [[UIImageView alloc] init];
         _userImgV.layer.cornerRadius = kWidth(40);
         _userImgV.layer.masksToBounds = YES;
         _userImgV.userInteractionEnabled = YES;
@@ -84,7 +86,7 @@
         self.allDescButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_allDescButton setTitle:@"查看全文" forState:UIControlStateNormal];
         [_allDescButton setTitleColor:kColor(@"#8458D0") forState:UIControlStateNormal];
-        [_allDescButton setImage:[UIImage imageNamed:@"check_desc"] forState:UIControlStateNormal];
+        [_allDescButton setImage:[UIImage imageNamed:@"show_all"] forState:UIControlStateNormal];
         _allDescButton.titleLabel.font = kFont(14);
         [self.contentView addSubview:_allDescButton];
         
@@ -97,16 +99,44 @@
         
         
         self.imgVA = [[UIImageView alloc] init];
+        _imgVA.userInteractionEnabled = YES;
         [self.contentView addSubview:_imgVA];
+        
+        [_imgVA bk_whenTapped:^{
+            @strongify(self);
+            if (self.clickImgAction) {
+                self.clickImgAction(@(0));
+            }
+        }];
         
         
         self.imgVB = [[UIImageView alloc] init];
+        _imgVB.userInteractionEnabled = YES;
         [self.contentView addSubview:_imgVB];
         
+        [_imgVB bk_whenTapped:^{
+            @strongify(self);
+            if (self.clickImgAction) {
+                self.clickImgAction(@(1));
+            }
+        }];
+
         
         self.imgVC = [[UIImageView alloc] init];
+        _imgVC.userInteractionEnabled = YES;
         [self.contentView addSubview:_imgVC];
         
+        [_imgVC bk_whenTapped:^{
+            @strongify(self);
+            if (self.clickImgAction) {
+                self.clickImgAction(@(2));
+            }
+        }];
+
+        
+        self.lineImgV = [[UIImageView alloc] init];
+        _lineImgV.backgroundColor = kColor(@"#efefef");
+        [self.contentView addSubview:_lineImgV];
         
         self.serverTitleLabel = [[UILabel alloc] init];
         _serverTitleLabel.textColor = kColor(@"#333333");
@@ -148,16 +178,16 @@
         } forControlEvents:UIControlEventTouchUpInside];
         
         
-        self.firstComment = [[YFBCommentCell alloc] init];
+        self.firstComment = [[YFBCommentView alloc] init];
         [self.contentView addSubview:_firstComment];
         
         
-        self.secondComment = [[YFBCommentCell alloc] init];
+        self.secondComment = [[YFBCommentView alloc] init];
         [self.contentView addSubview:_secondComment];
-        
+
         
         self.allCommentsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_allCommentsButton setTitle:@"查看全文" forState:UIControlStateNormal];
+        [_allCommentsButton setTitle:@"查看" forState:UIControlStateNormal];
         [_allCommentsButton setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
         [_allCommentsButton setImage:[UIImage imageNamed:@"check_comment"] forState:UIControlStateNormal];
         _allCommentsButton.titleLabel.font = kFont(12);
@@ -211,7 +241,7 @@
             [_allDescButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_descLabel);
                 make.top.equalTo(_descLabel.mas_bottom).offset(kWidth(10));
-                make.size.mas_equalTo(CGSizeMake(kWidth(82), kWidth(28)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(30)));
             }];
             
             CGFloat imgVWidth = (kScreenWidth - kWidth(210))/3;
@@ -233,11 +263,17 @@
                 make.left.equalTo(_imgVB.mas_right).offset(kWidth(10));
                 make.size.mas_equalTo(CGSizeMake(imgVWidth, imgVWidth));
             }];
-            
+
             [_serverTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_nickLabel);
                 make.top.equalTo(_imgVA.mas_bottom).offset(kWidth(56));
                 make.height.mas_equalTo(_serverTitleLabel.font.lineHeight);
+            }];
+            
+            [_lineImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_nickLabel);
+                make.bottom.equalTo(_serverTitleLabel.mas_top).offset(-kWidth(26));
+                make.size.mas_equalTo(CGSizeMake(kWidth(560), 1));
             }];
             
             [_checkButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -251,27 +287,38 @@
                 make.right.equalTo(_checkButton.mas_left).offset(-kWidth(16));
                 make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(48)));
             }];
-            
+
             [_firstComment mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_nickLabel);
                 make.top.equalTo(_serverTitleLabel.mas_bottom).offset(kWidth(24));
                 make.right.equalTo(self.contentView.mas_right).offset(-kWidth(30));
-                make.height.mas_equalTo(kWidth(100));
+                make.height.mas_equalTo(kWidth(300));
             }];
             
             [_secondComment mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_nickLabel);
                 make.top.equalTo(_firstComment.mas_bottom).offset(1);
                 make.right.equalTo(_firstComment);
-                make.height.mas_equalTo(kWidth(100));
+                make.height.mas_equalTo(kWidth(200));
             }];
-            
+
             [_allCommentsButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self.contentView);
-                make.top.equalTo(_secondComment.mas_bottom).offset(kWidth(18));
+                make.top.equalTo(_secondComment.mas_bottom).offset(kWidth(20));
                 make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(34)));
             }];
         }
+        
+        UIEdgeInsets descImgInset = _allDescButton.imageEdgeInsets;
+        UIEdgeInsets descTitleInset = _allDescButton.titleEdgeInsets;
+        _allDescButton.titleEdgeInsets = UIEdgeInsetsMake(descTitleInset.top, descTitleInset.left - _allDescButton.imageView.width, descTitleInset.bottom, descTitleInset.right + _allDescButton.imageView.width);
+        _allDescButton.imageEdgeInsets = UIEdgeInsetsMake(descImgInset.top, descImgInset.left + _allDescButton.titleLabel.width + 1.5, descImgInset.bottom, descImgInset.right - _allDescButton.titleLabel.width - 1.5);
+        
+        UIEdgeInsets comImgInset = _allCommentsButton.imageEdgeInsets;
+        UIEdgeInsets comTitleInset = _allCommentsButton.titleEdgeInsets;
+        _allCommentsButton.titleEdgeInsets = UIEdgeInsetsMake(comTitleInset.top, comTitleInset.left - _allCommentsButton.imageView.width, comTitleInset.bottom, comTitleInset.right + _allCommentsButton.imageView.width);
+        _allCommentsButton.imageEdgeInsets = UIEdgeInsetsMake(comImgInset.top, comImgInset.left + _allCommentsButton.titleLabel.width + 3, comImgInset.bottom, comImgInset.right - _allCommentsButton.titleLabel.width - 3);
+
     }
     return self;
 }
@@ -291,8 +338,18 @@
 - (void)setDescStr:(NSString *)descStr {
     _descLabel.text = descStr;
     CGFloat height = [descStr sizeWithFont:kFont(14) maxWidth:kWidth(560)].height;
+    if (_showAllDesc) {
+        height = height;
+    } else {
+        if (height > kFont(14).lineHeight * 3) {
+            height = kFont(14).lineHeight *3;
+        } else {
+            height = height;
+        }
+    }
+    
     [_descLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(height);
+        make.height.mas_equalTo(ceil(height));
     }];
 }
 
@@ -312,7 +369,19 @@
 - (void)setServerRate:(NSInteger)serverRate {
     _starView.rate = serverRate;
     _hotImgV.hidden = serverRate != 5;
+}
 
+- (void)setNeedShowButton:(BOOL)needShowButton {
+//    if (needShowButton) {
+//        [_descLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.height.mas_equalTo(kFont(14).lineHeight *3);
+//        }];
+//    }
+    
+    _allDescButton.hidden = !needShowButton;
+    [_imgVA mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_descLabel.mas_bottom).offset(needShowButton ? kWidth(64) : kWidth(26));
+    }];
 }
 
 - (void)setFirstCommentModel:(YFBCommentModel *)firstCommentModel {
@@ -322,8 +391,10 @@
     _firstComment.commentStr = firstCommentModel.content;
     
     CGFloat commentContentHeight = [firstCommentModel.content sizeWithFont:kFont(12) maxWidth:kWidth(560)].height;
-    CGFloat commentHeight = kWidth(24) + kWidth(34) + kWidth(4) + kWidth(22) + kWidth(20) + commentContentHeight + kWidth(20);
-    
+    CGFloat commentHeight = kWidth(24) + kFont(12).lineHeight + kWidth(4) + kFont(11).lineHeight + kWidth(20) + commentContentHeight + kWidth(40);
+    [_firstComment mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(commentHeight);
+    }];
 }
 
 - (void)setSecondCommentModel:(YFBCommentModel *)secondCommentModel {
@@ -333,58 +404,38 @@
     _secondComment.commentStr = secondCommentModel.content;
     
     CGFloat commentContentHeight = [secondCommentModel.content sizeWithFont:kFont(12) maxWidth:kWidth(560)].height;
-    CGFloat commentHeight = kWidth(24) + kWidth(34) + kWidth(4) + kWidth(22) + kWidth(20) + commentContentHeight + kWidth(20);
-    
-}
-
-- (void)setNeedShowButton:(BOOL)needShowButton {
-    if (needShowButton) {
-        [_descLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(kFont(14).lineHeight *3);
-        }];
-    }
-    
-    _allDescButton.hidden = !needShowButton;
-    [_imgVA mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_descLabel.mas_bottom).offset(needShowButton ? kWidth(64) : kWidth(26));
+    CGFloat commentHeight = kWidth(24) + kFont(12).lineHeight + kWidth(4) + kFont(11).lineHeight + kWidth(20) + commentContentHeight + kWidth(40);
+    [_secondComment mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(commentHeight);
     }];
 }
 
-- (void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
+- (void)setShowAllDesc:(BOOL)showAllDesc {
+    _showAllDesc = showAllDesc;
+    if (showAllDesc) {
+        [_allDescButton setTitle:@"收起" forState:UIControlStateNormal];
+        [_allDescButton setImage:[UIImage imageNamed:@"hide_all"] forState:UIControlStateNormal];
+        [_allDescButton mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(kWidth(82), kWidth(30)));
+        }];
+    } else {
+        [_allDescButton setTitle:@"查看全文" forState:UIControlStateNormal];
+        [_allDescButton setImage:[UIImage imageNamed:@"show_all"] forState:UIControlStateNormal];
+        [_allDescButton mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(kWidth(142), kWidth(30)));
+        }];
+    }
+    _allDescButton.imageEdgeInsets = UIEdgeInsetsZero;
+    _allDescButton.titleEdgeInsets = UIEdgeInsetsZero;
     
-    CAShapeLayer *lineA = [CAShapeLayer layer];
-    CGMutablePathRef linePathA = CGPathCreateMutable();
-    [lineA setFillColor:[[UIColor clearColor] CGColor]];
-    [lineA setStrokeColor:[[[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:1.0f] CGColor]];
-    lineA.lineWidth = 1.0f;
-    CGPathMoveToPoint(linePathA, NULL, _imgVA.frame.origin.x , _imgVA.frame.origin.y+_imgVA.size.height+kWidth(20));
-    CGPathAddLineToPoint(linePathA, NULL, _imgVC.origin.x+_imgVC.size.width , _imgVC.origin.y+_imgVC.size.height+kWidth(20));
-    [lineA setPath:linePathA];
-    CGPathRelease(linePathA);
-    [self.layer addSublayer:lineA];
-    
-    CAShapeLayer *lineB = [CAShapeLayer layer];
-    CGMutablePathRef linePathB = CGPathCreateMutable();
-    [lineB setFillColor:[[UIColor clearColor] CGColor]];
-    [lineB setStrokeColor:[[[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:1.0f] CGColor]];
-    lineB.lineWidth = 1.0f;
-    CGPathMoveToPoint(linePathB, NULL, _firstComment.frame.origin.x , _firstComment.frame.origin.y+_firstComment.size.height+kWidth(20));
-    CGPathAddLineToPoint(linePathB, NULL, _firstComment.origin.x+_firstComment.size.width , _firstComment.origin.y+_firstComment.size.height+kWidth(20));
-    [lineB setPath:linePathB];
-    CGPathRelease(linePathB);
-    [self.layer addSublayer:lineB];
-    
-    CAShapeLayer *lineC = [CAShapeLayer layer];
-    CGMutablePathRef linePathC = CGPathCreateMutable();
-    [lineC setFillColor:[[UIColor clearColor] CGColor]];
-    [lineC setStrokeColor:[[[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:1.0f] CGColor]];
-    lineC.lineWidth = 1.0f;
-    CGPathMoveToPoint(linePathC, NULL, _secondComment.frame.origin.x , _secondComment.frame.origin.y+_secondComment.size.height+kWidth(20));
-    CGPathAddLineToPoint(linePathC, NULL, _secondComment.origin.x+_secondComment.size.width , _secondComment.origin.y+_secondComment.size.height+kWidth(20));
-    [lineC setPath:linePathC];
-    CGPathRelease(linePathC);
-    [self.layer addSublayer:lineC];
+    UIEdgeInsets descImgInset = _allDescButton.imageEdgeInsets;
+    UIEdgeInsets descTitleInset = _allDescButton.titleEdgeInsets;
+    _allDescButton.titleEdgeInsets = UIEdgeInsetsMake(descTitleInset.top, descTitleInset.left - _allDescButton.imageView.width, descTitleInset.bottom, descTitleInset.right + _allDescButton.imageView.width);
+    _allDescButton.imageEdgeInsets = UIEdgeInsetsMake(descImgInset.top, descTitleInset.left + _allDescButton.titleLabel.width + 1.5, descImgInset.bottom, descImgInset.right - _allDescButton.titleLabel.width - 1.5);
+}
+
+- (void)setAlreadyPay:(BOOL)alreadyPay {
+    _wxButton.hidden = !alreadyPay;
 }
 
 @end

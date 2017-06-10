@@ -10,4 +10,6 @@
 
 @interface YFBCommentsVC : YFBBaseViewController
 
+- (instancetype)initWithComments:(NSArray *)comments;
+
 @end

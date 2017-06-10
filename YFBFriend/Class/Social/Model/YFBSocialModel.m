@@ -23,6 +23,11 @@
 - (Class)serviceListsElementClass {
     return [YFBSocialServiceModel class];
 }
+
++ (NSArray *)transients {
+    return @[@"nickName",@"portraitUrl",@"servNum",@"star",@"describe",@"imgUrl1",@"imgUrl2",@"imgUrl3",@"weixin",@"serviceLists",@"comments",@"needShowButton",@"showAllDesc"];
+}
+
 @end
 
 

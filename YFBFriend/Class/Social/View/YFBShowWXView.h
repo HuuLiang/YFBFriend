@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface YFBShowWXView : UIView
-
 @property (nonatomic) NSString *userImgUrl;
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) NSString *weixin;
-
+@property (nonatomic) YFBAction hideAction;
 @end

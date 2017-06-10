@@ -16,14 +16,15 @@
 @end
 
 @interface YFBSocialServiceModel : NSObject
+@property (nonatomic) NSInteger servId;
 @property (nonatomic) NSString * servName;
 @property (nonatomic) NSString * iconUrl;
-@property (nonatomic) NSString * time;
-@property (nonatomic) NSString * price;
-@property (nonatomic) NSString * orig;
+@property (nonatomic) NSString * servDesc;
+@property (nonatomic) NSInteger  price;
+@property (nonatomic) NSInteger  orig;
 @end
 
-@interface YFBSocialInfo : NSObject
+@interface YFBSocialInfo : JKDBModel
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) NSString *portraitUrl;
@@ -37,6 +38,8 @@
 @property (nonatomic) NSArray <YFBSocialServiceModel *>*serviceLists;
 @property (nonatomic) NSArray <YFBCommentModel *>*comments;
 @property (nonatomic) BOOL needShowButton;
+@property (nonatomic) BOOL showAllDesc;
+@property (nonatomic) BOOL alreadyPay;
 @end
 
 

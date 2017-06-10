@@ -28,6 +28,7 @@
         UIView *backView = [[UIView alloc] init];
         backView.layer.cornerRadius = 10;
         backView.layer.masksToBounds = YES;
+        backView.backgroundColor = kColor(@"#ffffff");
         [self addSubview:backView];
         
         self.userImgV = [[UIImageView alloc] init];
@@ -62,6 +63,14 @@
         _confirmButton.titleLabel.font = kFont(14);
         _confirmButton.backgroundColor = kColor(@"#8458D0");
         [backView addSubview:_confirmButton];
+        
+        @weakify(self);
+        [_confirmButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            if (self.hideAction) {
+                self.hideAction();
+            }
+        } forControlEvents:UIControlEventTouchUpInside];
         
         {
             [backView mas_makeConstraints:^(MASConstraintMaker *make) {

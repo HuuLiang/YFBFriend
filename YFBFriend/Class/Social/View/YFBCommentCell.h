@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YFBCommentCell : UITableViewCell
-
+@interface YFBCommentView : UIView
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) NSString *timeStr;
 @property (nonatomic) NSString *serverOption;
 @property (nonatomic) NSString *commentStr;
+@end
 
+@interface YFBCommentCell : UITableViewCell
+@property (nonatomic) NSString *nickName;
+@property (nonatomic) NSString *timeStr;
+@property (nonatomic) NSString *serverOption;
+@property (nonatomic) NSString *commentStr;
 @end

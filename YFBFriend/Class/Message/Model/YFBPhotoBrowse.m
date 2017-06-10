@@ -25,6 +25,10 @@
 }
 
 - (void)showPhotoBrowseWithImageUrl:(NSArray *)imageUrls onSuperView:(UIView *)superView {
+    [self showPhotoBrowseWithImageUrl:imageUrls atIndex:0 onSuperView:superView];
+}
+
+- (void)showPhotoBrowseWithImageUrl:(NSArray *)imageUrls atIndex:(NSInteger)currentIndex onSuperView:(UIView *)superView {
     self.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
     self.backgroundColor = [UIColor colorWithHexString:@"#000000"];
     [superView.window addSubview:self];
@@ -39,11 +43,16 @@
     _photoScrollView.pageDotColor = [UIColor colorWithHexString:@"#D8D8D8"];
     _photoScrollView.currentPageDotColor = [UIColor colorWithHexString:@"#FF206F"];
     _photoScrollView.delegate = self;
+    
+    if (imageUrls[currentIndex]) {
+        _photoScrollView.currentPage = currentIndex;
+    }
+    
     [self addSubview:_photoScrollView];
     
     [UIView animateWithDuration:0.5 animations:^{
         self.alpha = 1;
-    }];    
+    }];
 }
 
 - (void)closeBrowse {

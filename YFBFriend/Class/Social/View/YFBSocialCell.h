@@ -27,4 +27,7 @@
 @property (nonatomic) YFBCommentModel *firstCommentModel;
 @property (nonatomic) YFBCommentModel *secondCommentModel;
 @property (nonatomic) BOOL needShowButton;
+@property (nonatomic) BOOL showAllDesc;
+@property (nonatomic) BOOL alreadyPay;
+@property (nonatomic) QBAction clickImgAction;
 @end

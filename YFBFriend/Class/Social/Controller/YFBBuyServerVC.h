@@ -10,4 +10,8 @@
 
 @interface YFBBuyServerVC : YFBBaseViewController
 
++ (void)showSocialPaymentViewControllerWithInfo:(NSArray *)paymentInfo userId:(NSString *)userId InCurrentVC:(UIViewController *)currentViewController;
+
+
+
 @end
