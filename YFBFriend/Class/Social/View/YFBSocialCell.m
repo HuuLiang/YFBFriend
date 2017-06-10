@@ -386,7 +386,7 @@
 
 - (void)setFirstCommentModel:(YFBCommentModel *)firstCommentModel {
     _firstComment.nickName = firstCommentModel.nickName;
-    _firstComment.timeStr = firstCommentModel.time;
+    _firstComment.timeStr = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:firstCommentModel.timeinterval] WithDateFormat:kDateFormatShort];
     _firstComment.serverOption = firstCommentModel.serv;
     _firstComment.commentStr = firstCommentModel.content;
     
@@ -399,7 +399,7 @@
 
 - (void)setSecondCommentModel:(YFBCommentModel *)secondCommentModel {
     _secondComment.nickName = secondCommentModel.nickName;
-    _secondComment.timeStr = secondCommentModel.time;
+    _secondComment.timeStr = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:secondCommentModel.timeinterval] WithDateFormat:kDateFormatShort];;
     _secondComment.serverOption = secondCommentModel.serv;
     _secondComment.commentStr = secondCommentModel.content;
     

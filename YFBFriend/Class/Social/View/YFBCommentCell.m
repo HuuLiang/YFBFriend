@@ -195,7 +195,7 @@
 }
 
 - (void)setNickName:(NSString *)nickName {
-    _nickLabel.text = [nickName stringByReplacingCharactersInRange:NSMakeRange(1, nickName.length-1) withString:@"***"];
+    _nickLabel.text = [nickName stringByReplacingCharactersInRange:NSMakeRange(1, nickName.length-2) withString:@"***"];
 }
 
 - (void)setTimeStr:(NSString *)timeStr {

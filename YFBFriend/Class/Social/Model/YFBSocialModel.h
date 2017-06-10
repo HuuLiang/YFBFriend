@@ -10,7 +10,7 @@
 
 @interface YFBCommentModel : NSObject
 @property (nonatomic) NSString *nickName;
-@property (nonatomic) NSString *time;
+@property (nonatomic) NSTimeInterval timeinterval;
 @property (nonatomic) NSString *serv;
 @property (nonatomic) NSString *content;
 @end

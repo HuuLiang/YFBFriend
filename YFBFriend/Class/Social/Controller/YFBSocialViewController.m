@@ -181,7 +181,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, heights)
             } else {
                 commentTimeInterval = commentTimeInterval -  60 * 60 * (arc4random() % 3 + 0.5);
             }
-            commentModel.time = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:commentTimeInterval] WithDateFormat:kDateFormatShort];
+            commentModel.timeinterval = commentTimeInterval;
             [commentsArr addObject:commentModel];
         }
         socialInfo.comments = commentsArr;
@@ -344,7 +344,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, heights)
         };
         socialCell.commentAction = ^{
             @strongify(self);
-            YFBCommentsVC *commentsVC = [[YFBCommentsVC alloc] initWithComments:socialInfo.comments];
+            YFBCommentsVC *commentsVC = [[YFBCommentsVC alloc] initWithComments:socialInfo.comments allServNum:socialInfo.servNum];
             [self.navigationController pushViewController:commentsVC animated:YES];
         };
 
