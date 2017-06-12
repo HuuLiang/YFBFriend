@@ -41,7 +41,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     self.tableView = [[UITableView alloc] init];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.backgroundColor = kColor(@"#ffffff");
+    _tableView.backgroundColor = [UIColor clearColor];
     [_tableView registerClass:[YFBBuyServerCell class] forCellReuseIdentifier:kYFBSocialBuyServerCellReusableIdentifier];
     [_tableView setSeparatorColor:kColor(@"#F0F0F0")];
     [_tableView setSeparatorInset:UIEdgeInsetsMake(0, kWidth(44), 0, kWidth(36))];
@@ -89,7 +89,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.text = @"猜你喜欢";
+    titleLabel.text = @"服务选项";
     titleLabel.textColor = kColor(@"#ffffff");
     titleLabel.font = kFont(20);
     [headerView addSubview:titleLabel];
@@ -110,6 +110,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (UIView *)tableFooterView {
     UIView *footerView = [[UIView alloc] init];
+    footerView.backgroundColor = kColor(@"#ffffff");
     footerView.size = CGSizeMake(kWidth(590), kWidth(234));
     
     UIButton *wxButton = [UIButton buttonWithType:UIButtonTypeCustom];

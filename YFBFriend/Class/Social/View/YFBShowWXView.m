@@ -86,13 +86,13 @@
             [_nickLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(backView);
                 make.top.equalTo(_userImgV.mas_bottom).offset(kWidth(8));
-                make.height.mas_equalTo(kWidth(28));
+                make.height.mas_equalTo(_nickLabel.font.lineHeight);
             }];
             
             [_wxLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(backView);
                 make.top.equalTo(_nickLabel.mas_bottom).offset(kWidth(8));
-                make.height.mas_equalTo(kWidth(28));
+                make.height.mas_equalTo(_wxLabel.font.lineHeight);
             }];
             
             [_confirmButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -103,7 +103,7 @@
             [_descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(backView);
                 make.bottom.equalTo(_confirmButton.mas_top).offset(-kWidth(12));
-                make.height.mas_equalTo(kWidth(24));
+                make.height.mas_equalTo(_descLabel.font.lineHeight);
             }];
         }
     }

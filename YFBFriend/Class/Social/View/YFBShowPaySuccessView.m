@@ -78,10 +78,6 @@
         [self addSubview:_descLabel];
 
         {
-//            [backView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.edges.equalTo(self);
-//            }];
-            
             [_imgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
                 make.centerY.equalTo(self.mas_top);
@@ -97,7 +93,8 @@
             [_notiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
                 make.top.equalTo(_titleLabel.mas_bottom).offset(kWidth(30));
-                make.height.mas_equalTo(_notiLabel.font.lineHeight * 2);
+                make.width.mas_equalTo(kWidth(450));
+                make.height.mas_equalTo(_notiLabel.font.lineHeight * 2 + 2);
             }];
             
             [_button mas_makeConstraints:^(MASConstraintMaker *make) {

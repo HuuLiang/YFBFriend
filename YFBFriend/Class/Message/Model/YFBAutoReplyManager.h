@@ -59,6 +59,8 @@
 
 - (void)getAutoReplyMessageWithUserId:(NSString *)userId;
 
+- (void)insertAutoReplyMessageWithUserIs:(NSString *)userId MessageContent:(NSString *)messageContent;
+
 - (void)getRandomReplyMessage;
 
 - (void)saveRobotMessagesWith:(NSArray <YFBRobotContactModel *>*)userList;

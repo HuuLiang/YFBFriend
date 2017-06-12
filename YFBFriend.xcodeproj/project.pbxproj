@@ -30,6 +30,7 @@
 		EC9A67851E6D3E4A0018C5FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC9A67831E6D3E4A0018C5FB /* LaunchScreen.storyboard */; };
 		EC9A6ABF1E6D3F9F0018C5FB /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC9A69911E6D3F9E0018C5FB /* config.plist */; };
 		EC9A6B041E6D50670018C5FB /* AppDelegate+configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9A6B031E6D50670018C5FB /* AppDelegate+configuration.m */; };
+		ECAA6B961EEE248200AD90B2 /* YFBWordsObserve.m in Sources */ = {isa = PBXBuildFile; fileRef = ECAA6B951EEE248200AD90B2 /* YFBWordsObserve.m */; };
 		ECAAA2801EEA9DBD00852315 /* YFBDealFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECAAA27F1EEA9DBD00852315 /* YFBDealFeedbackView.m */; };
 		ECAAA2831EEAAF8A00852315 /* YFBBuyServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECAAA2821EEAAF8A00852315 /* YFBBuyServerCell.m */; };
 		ECBF24601EBC5D8B003BB041 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECBF245F1EBC5D8B003BB041 /* CoreMotion.framework */; };
@@ -365,6 +366,8 @@
 		EC9A6B011E6D452A0018C5FB /* YFBConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBConfig.h; sourceTree = "<group>"; };
 		EC9A6B021E6D50670018C5FB /* AppDelegate+configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+configuration.h"; sourceTree = "<group>"; };
 		EC9A6B031E6D50670018C5FB /* AppDelegate+configuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+configuration.m"; sourceTree = "<group>"; };
+		ECAA6B941EEE248200AD90B2 /* YFBWordsObserve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBWordsObserve.h; sourceTree = "<group>"; };
+		ECAA6B951EEE248200AD90B2 /* YFBWordsObserve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBWordsObserve.m; sourceTree = "<group>"; };
 		ECAAA27E1EEA9DBD00852315 /* YFBDealFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDealFeedbackView.h; sourceTree = "<group>"; };
 		ECAAA27F1EEA9DBD00852315 /* YFBDealFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDealFeedbackView.m; sourceTree = "<group>"; };
 		ECAAA2811EEAAF8A00852315 /* YFBBuyServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBBuyServerCell.h; sourceTree = "<group>"; };
@@ -1285,6 +1288,8 @@
 				ECDBA8F71EE5598B00BEFF98 /* YFBPhotoBrowse.m */,
 				ECDBA8F81EE5598B00BEFF98 /* YFBVisiteModel.h */,
 				ECDBA8F91EE5598B00BEFF98 /* YFBVisiteModel.m */,
+				ECAA6B941EEE248200AD90B2 /* YFBWordsObserve.h */,
+				ECAA6B951EEE248200AD90B2 /* YFBWordsObserve.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2728,6 +2733,7 @@
 				ECDBAB921EE5598B00BEFF98 /* openssl_wrapper.m in Sources */,
 				ECDBABD81EE5598C00BEFF98 /* XHEmotionSectionBar.m in Sources */,
 				ECDBAB271EE5598B00BEFF98 /* YFBRecommendVC.m in Sources */,
+				ECAA6B961EEE248200AD90B2 /* YFBWordsObserve.m in Sources */,
 				ECDBAB961EE5598B00BEFF98 /* JKDBModel.m in Sources */,
 				ECDBAB5D1EE5598B00BEFF98 /* YFBUserDataInfoCell.m in Sources */,
 				ECDBABD01EE5598C00BEFF98 /* XHMessageTableView.m in Sources */,

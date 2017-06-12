@@ -20,7 +20,7 @@
 #define YFB_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", YFB_REST_APPID, YFB_CHANNEL_NO]
 #define YFB_PAYMENT_ORDERID          [NSString stringWithFormat:@"%@_%@", [YFB_CHANNEL_NO substringFromIndex:YFB_CHANNEL_NO.length-14], [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)]]
 
-#define YFB_BASE_URL                    @"http://120.24.252.114/friend"//@"http://fr.shinehoo.com.cn/friend"//@"http://mcps.dswtg.com"
+#define YFB_BASE_URL                    @"http://fr.shinehoo.com.cn/friend"//@"http://120.24.252.114/friend"//@"http://mcps.dswtg.com"
 #define YFB_STANDBY_BASE_URL            @"http://sfs.dswtg.com"
 
 //#define YFB_ACTIVATION_URL              @"/mfwcps/jihuo.htm"                     //激活
@@ -33,7 +33,7 @@
 #define YFB_GREET_URL                   @"oneKeyGreet.service"                  //一键打招呼
 #define YFB_RMDNEARBY_URL               @"rmdNearby.service"                    //推荐和附近的人
 #define YFB_RANK_URL                    @"fengyun.service"                      //风云榜
-#define YFB_CITYSERVICE_URL             @"http://120.24.252.114/flbc/cityService.htm"                      //同城服务
+#define YFB_CITYSERVICE_URL             @"http://fr.shinehoo.com.cn/flbc/cityService.htm"  //同城服务
 #define YFB_DETAIL_URL                  @"personDtl.service"                    //详情页
 #define YFB_MSGLIST_URL                 @"msgList.service"                      //消息列表
 #define YFB_SENDMSG_URL                 @"saveMsg.service"                      //发送消息

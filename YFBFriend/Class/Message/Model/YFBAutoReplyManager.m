@@ -39,12 +39,14 @@ static const NSUInteger kRollingTimeInterval = 5;
 @end
 
 @interface YFBAutoReplyManager ()
+@property (nonatomic) NSMutableArray <YFBAutoReplyMessage *> *allReplyMsgs;
 @property (nonatomic,retain) dispatch_queue_t replyQueue;
 @property (nonatomic,strong) dispatch_source_t timer;
 @property (nonatomic) __block NSUInteger timeInterval;
 @end
 
 @implementation YFBAutoReplyManager
+QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
 
 - (QBURLRequestMethod)requestMethod {
     return QBURLPostRequest;
@@ -156,6 +158,62 @@ static const NSUInteger kRollingTimeInterval = 5;
     }];
 }
 
+- (void)getRobotInfoWith:(NSString *)userId handler:(void (^)(YFBRobotContactModel *))handler {
+    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+                             @"userId":[YFBUser currentUser].userId,
+                             @"token":[YFBUser currentUser].token,
+                             @"userIdStr":userId};
+    [self requestURLPath:YFB_GETMSGLIST_URL
+          standbyURLPath:nil
+              withParams:params
+         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+     {
+         YFBAutoReplyResponse *resp = nil;
+         if (respStatus == QBURLResponseSuccess) {
+             resp = self.response;
+         }
+         if (handler && [resp.userList firstObject]) {
+             handler([resp.userList firstObject]);
+         }
+     }];
+}
+
+- (void)insertAutoReplyMessageWithUserIs:(NSString *)userId MessageContent:(NSString *)messageContent {
+    __block YFBAutoReplyMessage *replyMsgCache = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",userId]];
+    if (!replyMsgCache) {
+        replyMsgCache = [[YFBAutoReplyMessage alloc] init];
+        [self getRobotInfoWith:userId handler:^(YFBRobotContactModel * robotContactModel) {
+            replyMsgCache.userId = robotContactModel.userId;
+            replyMsgCache.nickName = robotContactModel.nickName;
+            replyMsgCache.portraitUrl = robotContactModel.portraitUrl;
+            replyMsgCache.age = robotContactModel.age;
+            replyMsgCache.height = robotContactModel.height;
+            replyMsgCache.gender = robotContactModel.gender;
+            replyMsgCache.content = messageContent;
+            replyMsgCache.msgType = @"1";//YFBMessageTypeText
+//            replyMsgCache.msgId = 1;
+            replyMsgCache.replyTime = [[NSDate date] timeIntervalSince1970] + arc4random() % 121 + 60;
+            replyMsgCache.replyed = NO;
+            [replyMsgCache saveOrUpdate];
+            [self.allReplyMsgs addObject:replyMsgCache];
+        }];
+    } else {
+        replyMsgCache.userId = replyMsgCache.userId;
+        replyMsgCache.nickName = replyMsgCache.nickName;
+        replyMsgCache.portraitUrl = replyMsgCache.portraitUrl;
+        replyMsgCache.age = replyMsgCache.age;
+        replyMsgCache.height = replyMsgCache.height;
+        replyMsgCache.gender = replyMsgCache.gender;
+        replyMsgCache.content = messageContent;
+        replyMsgCache.msgType = @"1";//YFBMessageTypeText
+        //            replyMsgCache.msgId = 1;
+        replyMsgCache.replyTime = [[NSDate date] timeIntervalSince1970] + arc4random() % 121 + 60;
+        replyMsgCache.replyed = NO;
+        [replyMsgCache saveOrUpdate];
+        [self.allReplyMsgs addObject:replyMsgCache];
+    }
+}
+
 - (void)getRandomReplyMessage {
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                              @"userId":[YFBUser currentUser].userId,
@@ -245,12 +303,10 @@ static const NSUInteger kRollingTimeInterval = 5;
 }
 
 //获取所有的自动回复信息
-- (NSArray <YFBAutoReplyMessage *>*)findAllAutoReplyMessages {
+- (void)findAllAutoReplyMessages {
+    [self.allReplyMsgs removeAllObjects];
     NSArray *array = [YFBAutoReplyMessage findByCriteria:[NSString stringWithFormat:@"where replyed=0 order by replyTime asc"]];
-    if (array.count > 0) {
-        return array;
-    }
-    return nil;
+    [self.allReplyMsgs addObjectsFromArray:array];
 }
 
 
@@ -268,22 +324,24 @@ static const NSUInteger kRollingTimeInterval = 5;
             
             __block uint nextRollingReplyTime = kRollingTimeInterval;
             
-            NSArray *array = [self findAllAutoReplyMessages];
-            
-            [array enumerateObjectsUsingBlock:^(YFBAutoReplyMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                NSTimeInterval currentTimeInterval = [[NSDate date] timeIntervalSince1970];
-                if (obj.replyTime <= currentTimeInterval) {
-                    [self insertReplyMessageInfo:obj];
-                } else {
-                    NSTimeInterval nextTime = obj.replyTime - [[NSDate date] timeIntervalSince1970];
-                    if (nextTime < nextRollingReplyTime) {
-                        nextRollingReplyTime = nextTime;
+            if (self.allReplyMsgs.count > 0) {
+                [self.allReplyMsgs enumerateObjectsUsingBlock:^(YFBAutoReplyMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    NSTimeInterval currentTimeInterval = [[NSDate date] timeIntervalSince1970];
+                    if (obj.replyTime <= currentTimeInterval) {
+                        [self insertReplyMessageInfo:obj];
+                    } else {
+                        NSTimeInterval nextTime = obj.replyTime - [[NSDate date] timeIntervalSince1970];
+                        if (nextTime < nextRollingReplyTime) {
+                            nextRollingReplyTime = nextTime;
+                        }
+                        QBLog(@"下次循环推送时间 %d",nextRollingReplyTime);
                     }
-                    QBLog(@"下次循环推送时间 %d",nextRollingReplyTime);
-                }
-            }];
+                }];
+            } else {
+                [self findAllAutoReplyMessages];
+            }
             
-            QBLog(@"回复池数量%ld 下次循环推送时间 %d",array.count,nextRollingReplyTime);
+            QBLog(@"回复池数量%ld 下次循环推送时间 %d",self.allReplyMsgs.count,nextRollingReplyTime);
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                 sleep(nextRollingReplyTime);
@@ -333,6 +391,9 @@ static const NSUInteger kRollingTimeInterval = 5;
     //标记已经回复过的缓存
     replyMessage.replyed = YES;
     [replyMessage saveOrUpdate];
+    
+    //删除内存中已经回复的消息
+    [self.allReplyMsgs removeObject:replyMessage];
     
     //向消息界面发出通知更改角标数字
     [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:contact];

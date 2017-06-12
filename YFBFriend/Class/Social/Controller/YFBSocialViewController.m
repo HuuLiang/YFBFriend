@@ -144,7 +144,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, heights)
         CGFloat cellHeight = 0;
         cellHeight = cellHeight + kWidth(34) + kWidth(80); // 头像高度
         //文字动态高度
-        socialInfo.describe = @"我不是本人。我是他女朋友。今天我上了一下他的号，警告一下群里的某些朋友。别跟他聊一些乱七八糟的话题。撩别人的男朋友真的没意思。如果你们看不惯我。可以来找我，虽然我最近忙着拍戏，但我迪丽热巴奉陪到底！";
         CGFloat descHeight = [socialInfo.describe sizeWithFont:kFont(14) maxWidth:kWidth(560)].height;
         if (descHeight / kFont(14).lineHeight > 3) {
             socialInfo.needShowButton = YES;
@@ -225,10 +224,15 @@ QBDefineLazyPropertyInitialization(NSMutableArray, heights)
     };
     
     {
-        [self.paySuccessView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self.view);
-            make.size.mas_equalTo(CGSizeMake(kWidth(530), kWidth(424)));
-        }];
+        if ([YFBUtil deviceType] > YFBDeviceType_iPhone5) {
+            [self.paySuccessView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.equalTo(self.view);
+                make.size.mas_equalTo(CGSizeMake(kWidth(530), kWidth(424)));
+            }];
+        } else {
+            _paySuccessView.frame = CGRectMake(kScreenWidth/2-kWidth(530)/2, kScreenHeight/2-kWidth(424)/2-kWidth(150), kWidth(530), kWidth(424));
+        }
+        
     }
     
 }
@@ -255,8 +259,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, heights)
         cell.imgUrlA = socialInfo.imgUrl1;
         cell.imgUrlB = socialInfo.imgUrl2;
         cell.imgUrlC = socialInfo.imgUrl3;
-        cell.firstCommentModel = socialInfo.comments[0];
-        cell.secondCommentModel = socialInfo.comments[1];
+        if (socialInfo.comments.count > 0) {
+            cell.firstCommentModel = socialInfo.comments[0];
+        }
+        if (socialInfo.comments.count > 1) {
+            cell.secondCommentModel = socialInfo.comments[1];
+        }
     }
     return cell;
 }
@@ -321,10 +329,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, heights)
             self.wxView.alpha = 0;
             [self.view addSubview:self.wxView];
             
-            [self.wxView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self.view);
-                make.size.mas_equalTo(CGSizeMake(kWidth(484), kWidth(286)));
-            }];
+            if ([YFBUtil deviceType] > YFBDeviceType_iPhone5) {
+                [self.wxView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.center.equalTo(self.view);
+                    make.size.mas_equalTo(CGSizeMake(kWidth(484), kWidth(286)));
+                }];
+            } else {
+                _wxView.frame = CGRectMake((kScreenWidth - kWidth(484))/2, (kScreenHeight - kWidth(286))/2- kWidth(150), kWidth(484), kWidth(286));
+            }
             
             [self.wxView showWithPopAnimation];
             

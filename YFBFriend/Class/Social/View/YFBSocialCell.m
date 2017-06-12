@@ -304,7 +304,7 @@
 
             [_allCommentsButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self.contentView);
-                make.top.equalTo(_secondComment.mas_bottom).offset(kWidth(20));
+                make.bottom.equalTo(self.contentView.mas_bottom).offset(-kWidth(20));
                 make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(34)));
             }];
         }
@@ -385,6 +385,8 @@
 }
 
 - (void)setFirstCommentModel:(YFBCommentModel *)firstCommentModel {
+    _secondComment.hidden = YES;
+    
     _firstComment.nickName = firstCommentModel.nickName;
     _firstComment.timeStr = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:firstCommentModel.timeinterval] WithDateFormat:kDateFormatShort];
     _firstComment.serverOption = firstCommentModel.serv;
@@ -398,6 +400,8 @@
 }
 
 - (void)setSecondCommentModel:(YFBCommentModel *)secondCommentModel {
+    _secondComment.hidden = NO;
+    
     _secondComment.nickName = secondCommentModel.nickName;
     _secondComment.timeStr = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:secondCommentModel.timeinterval] WithDateFormat:kDateFormatShort];;
     _secondComment.serverOption = secondCommentModel.serv;
@@ -416,7 +420,7 @@
         [_allDescButton setTitle:@"收起" forState:UIControlStateNormal];
         [_allDescButton setImage:[UIImage imageNamed:@"hide_all"] forState:UIControlStateNormal];
         [_allDescButton mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.size.mas_equalTo(CGSizeMake(kWidth(82), kWidth(30)));
+            make.size.mas_equalTo(CGSizeMake(kWidth(90), kWidth(30)));
         }];
     } else {
         [_allDescButton setTitle:@"查看全文" forState:UIControlStateNormal];

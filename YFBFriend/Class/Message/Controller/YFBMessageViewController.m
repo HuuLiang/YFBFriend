@@ -19,6 +19,7 @@
 #import "YFBExampleManager.h"
 #import "YFBNavigationController.h"
 #import "YFBContactManager.h"
+#import "YFBWordsObserve.h"
 
 @interface YFBMessageViewController ()
 {
@@ -227,6 +228,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 
                 //保存已发送消息到消息记录管理里面
                 [self saveMessageInfo:chatMessage WithRecordType:recordType];
+                
+                //检测发送消息关键词
+                [[YFBWordsObserve observe] checkMessageContent:chatMessage];
                 
                 XHMessage *xhMsg;
                 NSDate *date = [YFBUtil dateFromString:chatMessage.messageTime WithDateFormat:KDateFormatLong];
