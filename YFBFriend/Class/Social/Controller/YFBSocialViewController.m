@@ -23,6 +23,7 @@ static NSString *const kYFBSocialCellReusableIdentifier = @"kYFBSocialCellReusab
 
 @interface YFBSocialViewController ()
 @property (nonatomic) YFBSliderView *sliderView;
+@property (nonatomic) YFBShowPaySuccessView *paySuccessView;
 @end
 
 @implementation YFBSocialViewController
@@ -54,6 +55,56 @@ static NSString *const kYFBSocialCellReusableIdentifier = @"kYFBSocialCellReusab
     [super didReceiveMemoryWarning];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccess:) name:kYFBSocialPaySuccessNotification object:nil];
+}
+
+- (void)paySuccess:(NSNotification *)notification {
+    NSString *userId = (NSString *)[notification object];
+    YFBSocialInfo *socialInfo = [YFBSocialInfo findFirstByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",userId]];
+    if (socialInfo) {
+        socialInfo.alreadyPay = YES;
+    } else {
+        socialInfo = [[YFBSocialInfo alloc] init];
+        socialInfo.userId = userId;
+        socialInfo.alreadyPay = YES;
+        [socialInfo saveOrUpdate];
+    }
+    
+    [self.view beginLoading];
+    
+    self.paySuccessView = [[YFBShowPaySuccessView alloc] init];
+    _paySuccessView.alpha = 0;
+    [self.view addSubview:_paySuccessView];
+    
+    [_paySuccessView showWithPopAnimation];
+    
+    @weakify(self);
+    _paySuccessView.confirmAction = ^{
+        @strongify(self);
+        [self.view endLoading];
+        [self.paySuccessView hiddenWithPopAnimation];
+        [self.paySuccessView removeFromSuperview];
+        self.paySuccessView = nil;
+    };
+    
+    {
+        if ([YFBUtil deviceType] > YFBDeviceType_iPhone5) {
+            [self.paySuccessView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.equalTo(self.view);
+                make.size.mas_equalTo(CGSizeMake(kWidth(530), kWidth(424)));
+            }];
+        } else {
+            _paySuccessView.frame = CGRectMake(kScreenWidth/2-kWidth(530)/2, kScreenHeight/2-kWidth(424)/2-kWidth(150), kWidth(530), kWidth(424));
+        }
+        
+    }
+    
+}
+
+
 @end
 
 
@@ -65,7 +116,6 @@ static NSString *const kYFBSocialCellReusableIdentifier = @"kYFBSocialCellReusab
 @property (nonatomic) NSMutableArray *heights;
 @property (nonatomic) YFBSocialModel *socialModel;
 @property (nonatomic) YFBShowWXView *wxView;
-@property (nonatomic) YFBShowPaySuccessView *paySuccessView;
 @end
 
 @implementation YFBSocialContentViewController
@@ -115,11 +165,21 @@ QBDefineLazyPropertyInitialization(NSMutableArray, heights)
     
     [_tableView YFB_triggerPullToRefresh];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccess:) name:kYFBSocialPaySuccessNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccess:) name:kYFBSocialPaySuccessNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)getSocialContent {
@@ -193,48 +253,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, heights)
 }
 
 - (void)paySuccess:(NSNotification *)notification {
-    NSString *userId = (NSString *)[notification object];
-    YFBSocialInfo *socialInfo = [YFBSocialInfo findFirstByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",userId]];
-    if (socialInfo) {
-        socialInfo.alreadyPay = YES;
-    } else {
-        socialInfo = [[YFBSocialInfo alloc] init];
-        socialInfo.userId = userId;
-        socialInfo.alreadyPay = YES;
-        [socialInfo saveOrUpdate];
-    }
-    
     [self.tableView reloadData];
-    
-    [self.view beginLoading];
-    
-    self.paySuccessView = [[YFBShowPaySuccessView alloc] init];
-    _paySuccessView.alpha = 0;
-    [self.view addSubview:_paySuccessView];
-    
-    [_paySuccessView showWithPopAnimation];
-    
-    @weakify(self);
-    _paySuccessView.confirmAction = ^{
-        @strongify(self);
-        [self.view endLoading];
-        [self.paySuccessView hiddenWithPopAnimation];
-        [self.paySuccessView removeFromSuperview];
-        self.paySuccessView = nil;
-    };
-    
-    {
-        if ([YFBUtil deviceType] > YFBDeviceType_iPhone5) {
-            [self.paySuccessView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self.view);
-                make.size.mas_equalTo(CGSizeMake(kWidth(530), kWidth(424)));
-            }];
-        } else {
-            _paySuccessView.frame = CGRectMake(kScreenWidth/2-kWidth(530)/2, kScreenHeight/2-kWidth(424)/2-kWidth(150), kWidth(530), kWidth(424));
-        }
-        
-    }
-    
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource

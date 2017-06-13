@@ -95,7 +95,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     dispatch_source_set_event_handler(_timer, ^{
         //执行事件
         QBLog(@"注意当前的计时器时间 %ld",_timeInterval);
-        if (_timeInterval == 0 || _timeInterval == 60 * 5 || _timeInterval == 60 * 10) {
+        if (_timeInterval == 0 || _timeInterval == 60 * 15 || _timeInterval == 60 * 30) {
             
             NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                                      @"userId":[YFBUser currentUser].userId,
@@ -110,7 +110,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
                  if (respStatus == QBURLResponseSuccess) {
                      resp = self.response;
                      [self saveRobotMessagesWith:resp.userList];
-                     [self performSelector:@selector(getRobotReplyMessages) withObject:nil afterDelay:60*10];
+                     [self performSelector:@selector(getRobotReplyMessages) withObject:nil afterDelay:60*15];
                  }
              }];
         }
@@ -281,7 +281,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
          [contactRobot.robotMsgList enumerateObjectsWithOptions:NSEnumerationConcurrent
                                                      usingBlock:^(YFBRobotMsgModel * _Nonnull robotMsg, NSUInteger idx, BOOL * _Nonnull stop)
           {
-              timeInterval += arc4random() % 4 + 4;
+              timeInterval += arc4random() % 6 + 12;
               YFBAutoReplyMessage *autoReplyMessage = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where msgId=%ld",(long)robotMsg.msgId]];
               if (!autoReplyMessage) {
                   YFBAutoReplyMessage *autoReplyMessage = [[YFBAutoReplyMessage alloc] init];

@@ -187,7 +187,9 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
                                                                                      @"payStatus":payStatus,
                                                                                      @"payMethod":_paymentInfo.payMethod,
                                                                                      @"price":@(_paymentInfo.payPrice)}];
-    [params setDictionary:param];
+    
+    
+    [params setValuesForKeysWithDictionary:param];
     
     [self requestURLPath:YFB_UPDATEORDER_URL
           standbyURLPath:nil
