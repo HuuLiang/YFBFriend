@@ -41,7 +41,6 @@ static const NSUInteger kRollingTimeInterval = 5;
 @end
 
 @interface YFBAutoReplyManager ()
-@property (nonatomic) NSMutableArray <YFBAutoReplyMessage *> *allReplyMsgs;
 @property (nonatomic,retain) dispatch_queue_t replyQueue;
 @property (nonatomic,strong) dispatch_source_t timer;
 @property (nonatomic) __block NSUInteger timeInterval;
@@ -97,7 +96,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     dispatch_source_set_event_handler(_timer, ^{
         //执行事件
         QBLog(@"注意当前的计时器时间 %ld",_timeInterval);
-        if (_timeInterval == 0 || _timeInterval == 60 * 15 || _timeInterval == 60 * 30) {
+        if (_timeInterval == 0 || _timeInterval == 60 * 10 || _timeInterval == 60 * 20) {
             
             __block NSNumber * reqNum = [[NSUserDefaults standardUserDefaults] objectForKey:KYFBFriendGetRobotTimesKeyName];
             if (!reqNum) {
@@ -144,7 +143,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
             [[NSUserDefaults standardUserDefaults] synchronize];
         } else {
             //是今天 沿用保存的时间继续开始计时器
-            if (_timeInterval > 60 * 30) {
+            if (_timeInterval > 60 * 20) {
                 //如果在线时间超过规定的时间 则不做处理
                 return;
             } else {
@@ -296,7 +295,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
          
          [contactRobot.robotMsgList enumerateObjectsUsingBlock:^(YFBRobotMsgModel * _Nonnull robotMsg, NSUInteger idx, BOOL * _Nonnull stop)
           {
-              timeInterval += arc4random() % 6 + 12;
+              timeInterval += arc4random() % 5 + 8;
               YFBAutoReplyMessage *autoReplyMessage = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where msgId=%ld",(long)robotMsg.msgId]];
               if (!autoReplyMessage) {
                   YFBAutoReplyMessage *autoReplyMessage = [[YFBAutoReplyMessage alloc] init];

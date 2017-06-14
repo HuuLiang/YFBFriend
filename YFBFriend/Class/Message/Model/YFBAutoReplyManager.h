@@ -48,7 +48,7 @@
 
 
 @interface YFBAutoReplyManager : QBEncryptedURLRequest
-
+@property (nonatomic) NSMutableArray <YFBAutoReplyMessage *> *allReplyMsgs;
 @property (nonatomic) BOOL canReplyNotificationMessage;
 
 + (instancetype)manager;

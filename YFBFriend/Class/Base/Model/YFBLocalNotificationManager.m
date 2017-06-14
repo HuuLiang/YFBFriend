@@ -7,7 +7,7 @@
 //
 
 #import "YFBLocalNotificationManager.h"
-#import "YFBContactManager.h"
+#import "YFBAutoReplyManager.h"
 
 @implementation YFBLocalNotificationManager
 
@@ -101,7 +101,7 @@
     [self checkLocalNotificatin];
     
     NSInteger timeInterval = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendGetRobotMsgTimeIntervalKeyName] integerValue];
-    if (timeInterval <= 60 * 30) {
+    if (timeInterval <= 60 * 10 && [YFBAutoReplyManager manager].allReplyMsgs.count > 0) {
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         localNotification.fireDate = [[NSDate date] dateByAddingMinutes:1];
         localNotification.timeZone = [NSTimeZone systemTimeZone];
