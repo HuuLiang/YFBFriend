@@ -154,19 +154,19 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     return YES;
 }
 
-//- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-//    if ([[notification.userInfo valueForKey:kYFBAutoNotificationTypeKeyName] isEqualToString:kYFBAutoNotificationContentKeyName]) {
-//        [[YFBAutoReplyManager manager] getRandomReplyMessage];
-//    }
-//    [application setApplicationIconBadgeNumber:[[YFBContactManager manager] allUnReadMessageCount]];
-//}
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    if ([[notification.userInfo.allKeys firstObject] isEqualToString:kYFBAutoNotificationTypeKeyName]) {
+        [[YFBAutoReplyManager manager] getRandomReplyMessage];
+    }
+    [application setApplicationIconBadgeNumber:[[YFBContactManager manager] allUnReadMessageCount]];
+}
 
 - (void)checkLocalNotificationWithLaunchOptionsOptions:(NSDictionary *)launchOptions {
     UILocalNotification *localNotification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
     if (!localNotification) {
         return;
     }
-    if ([[localNotification.userInfo valueForKey:kYFBAutoNotificationTypeKeyName] isEqualToString:kYFBAutoNotificationContentKeyName]) {
+    if ([[localNotification.userInfo.allKeys firstObject] isEqualToString:kYFBAutoNotificationTypeKeyName]) {
         [[YFBAutoReplyManager manager] getRandomReplyMessage];
     }
 }

@@ -35,7 +35,7 @@
         localNotification.alertBody = @"您有未阅读的消息";
         localNotification.alertAction = @"您有未阅读的消息";
         localNotification.applicationIconBadgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
-        localNotification.userInfo = @{kYFBAutoNotificationTypeKeyName:kYFBAutoNotificationContentKeyName};
+        localNotification.userInfo = @{kYFBAutoNotificationTypeKeyName:notiDate};
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     }
 }
@@ -70,7 +70,12 @@
             }
         }
     }
-    return dateArr;
+    
+    NSArray * arr =  [dateArr bk_select:^BOOL(NSDate * obj) {
+        return [obj isInFuture];
+    }];
+    
+    return arr;
 }
 
 - (void)checkLocalNotificatin {
