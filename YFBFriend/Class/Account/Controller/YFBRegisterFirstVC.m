@@ -8,7 +8,9 @@
 
 #import "YFBRegisterFirstVC.h"
 #import "YFBTextField.h"
-#import "YFBRegisterSecondVC.h"
+//#import "YFBRegisterSecondVC.h"
+#import "YFBAccountManager.h"
+#import "AppDelegate.h"
 
 @interface YFBRegisterFirstVC () <UITextFieldDelegate>
 @property (nonatomic,strong) YFBTextField   *accountField;
@@ -76,7 +78,7 @@
 
 - (void)configNextButton {
     self.nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_nextButton setTitle:@"下一步" forState:UIControlStateNormal];
+    [_nextButton setTitle:@"完成" forState:UIControlStateNormal];
     [_nextButton setTitleColor:kColor(@"#ffffff") forState:UIControlStateNormal];
     _nextButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
     _nextButton.backgroundColor = kColor(@"#8558D0");
@@ -86,8 +88,20 @@
     [_nextButton bk_addEventHandler:^(id sender) {
         @strongify(self);
         if ([self checkUserInfo]) {
-            YFBRegisterSecondVC *regiterVC = [[YFBRegisterSecondVC alloc] initWithTitle:@"完善个人资料"];
-            [self.navigationController pushViewController:regiterVC animated:YES];
+//            YFBRegisterSecondVC *regiterVC = [[YFBRegisterSecondVC alloc] initWithTitle:@"完善个人资料"];
+//            [self.navigationController pushViewController:regiterVC animated:YES];
+            [[YFBAccountManager manager] registerUserWithUserInfo:[YFBUser currentUser] handler:^(BOOL success) {
+                @strongify(self);
+                if (success) {
+                    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                    [self presentViewController:appDelegate.contentViewController animated:YES completion:^ {
+                        [UIApplication sharedApplication].keyWindow.rootViewController = appDelegate.contentViewController;
+                        [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
+                    }];
+                } else {
+                    [[YFBHudManager manager] showHudWithText:@"注册失败"];
+                }
+            }];
         }
     } forControlEvents:UIControlEventTouchUpInside];
     

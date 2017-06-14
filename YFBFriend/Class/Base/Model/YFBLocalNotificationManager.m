@@ -96,7 +96,7 @@
     [self checkLocalNotificatin];
     
     NSInteger timeInterval = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendGetRobotMsgTimeIntervalKeyName] integerValue];
-    if (timeInterval <= 60 * 15) {
+    if (timeInterval <= 60 * 30) {
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         localNotification.fireDate = [[NSDate date] dateByAddingMinutes:1];
         localNotification.timeZone = [NSTimeZone systemTimeZone];
@@ -104,6 +104,7 @@
         localNotification.alertBody = @"您有未阅读的消息";
         localNotification.alertAction = @"您有未阅读的消息";
         localNotification.applicationIconBadgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
+        localNotification.userInfo = @{@"oneMin":@"oneMin"};
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     }
 }

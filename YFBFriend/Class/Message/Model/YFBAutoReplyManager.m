@@ -13,6 +13,8 @@
 
 static NSString *const kYFBFriendGetRobotReplyMessageKeyName = @"kYFBFriendGetRobotReplyMessageKeyName";
 
+static NSString *const KYFBFriendGetRobotTimesKeyName = @"KYFBFriendGetRobotTimesKeyName";
+
 static const NSUInteger kRollingTimeInterval = 5;
 
 @implementation YFBAutoReplyMessage
@@ -97,9 +99,17 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
         QBLog(@"注意当前的计时器时间 %ld",_timeInterval);
         if (_timeInterval == 0 || _timeInterval == 60 * 15 || _timeInterval == 60 * 30) {
             
+            __block NSNumber * reqNum = [[NSUserDefaults standardUserDefaults] objectForKey:KYFBFriendGetRobotTimesKeyName];
+            if (!reqNum) {
+                reqNum = @(1);
+                [[NSUserDefaults standardUserDefaults] setObject:reqNum forKey:KYFBFriendGetRobotTimesKeyName];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            
             NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                                      @"userId":[YFBUser currentUser].userId,
-                                     @"token":[YFBUser currentUser].token};
+                                     @"token":[YFBUser currentUser].token,
+                                     @"pageNum":reqNum};
             
             [self requestURLPath:YFB_MSGLIST_URL
                   standbyURLPath:nil
@@ -109,8 +119,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
                  YFBAutoReplyResponse *resp = nil;
                  if (respStatus == QBURLResponseSuccess) {
                      resp = self.response;
+                     if (resp.userList.count > 0) {
+                         reqNum = @([reqNum integerValue] + 1);
+                         [[NSUserDefaults standardUserDefaults] setObject:reqNum forKey:KYFBFriendGetRobotTimesKeyName];
+                         [[NSUserDefaults standardUserDefaults] synchronize];
+                     }
                      [self saveRobotMessagesWith:resp.userList];
-                     [self performSelector:@selector(getRobotReplyMessages) withObject:nil afterDelay:60*15];
+//                     [self performSelector:@selector(getRobotReplyMessages) withObject:nil afterDelay:60*15];
                  }
              }];
         }
@@ -129,7 +144,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
             [[NSUserDefaults standardUserDefaults] synchronize];
         } else {
             //是今天 沿用保存的时间继续开始计时器
-            if (_timeInterval > 60 * 15) {
+            if (_timeInterval > 60 * 30) {
                 //如果在线时间超过规定的时间 则不做处理
                 return;
             } else {
@@ -212,6 +227,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
         [replyMsgCache saveOrUpdate];
         [self.allReplyMsgs addObject:replyMsgCache];
     }
+    
+    
 }
 
 - (void)getRandomReplyMessage {
@@ -254,32 +271,30 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
                 autoReplyMessage.replyed = NO;
                 [autoReplyMessage saveOrUpdate];
                 
-                if (self.canReplyNotificationMessage) {
-                    [self sendReplyMessage:autoReplyMessage];
-                } else {
-                    [self performSelector:@selector(sendReplyMessage:) withObject:autoReplyMessage afterDelay:1];
-                }
+                [self sendReplyMessage:autoReplyMessage];
             }
         }
     }];
 }
 
 - (void)sendReplyMessage:(YFBAutoReplyMessage *)replyMessage {
-    [self insertReplyMessageInfo:replyMessage];
+    if (self.canReplyNotificationMessage) {
+        [self insertReplyMessageInfo:replyMessage];
+    } else {
+        [self performSelector:@selector(sendReplyMessage:) withObject:replyMessage afterDelay:1];
+    }
 }
 
 - (void)saveRobotMessagesWith:(NSArray <YFBRobotContactModel *>*)userList {
     __block NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
 
-    [userList enumerateObjectsWithOptions:NSEnumerationConcurrent
-                                    usingBlock:^(YFBRobotContactModel * _Nonnull contactRobot, NSUInteger idx, BOOL * _Nonnull stop)
+    [userList enumerateObjectsUsingBlock:^(YFBRobotContactModel * _Nonnull contactRobot, NSUInteger idx, BOOL * _Nonnull stop)
      {
          if (idx == 0) {
              timeInterval = 30 + timeInterval;//30秒以后开始回复 初始化回复时间
          }
          
-         [contactRobot.robotMsgList enumerateObjectsWithOptions:NSEnumerationConcurrent
-                                                     usingBlock:^(YFBRobotMsgModel * _Nonnull robotMsg, NSUInteger idx, BOOL * _Nonnull stop)
+         [contactRobot.robotMsgList enumerateObjectsUsingBlock:^(YFBRobotMsgModel * _Nonnull robotMsg, NSUInteger idx, BOOL * _Nonnull stop)
           {
               timeInterval += arc4random() % 6 + 12;
               YFBAutoReplyMessage *autoReplyMessage = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where msgId=%ld",(long)robotMsg.msgId]];
@@ -300,6 +315,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
               }
           }];
      }];
+    
+    //每次保存完新的自动回复消息之后都刷新内存中的回复池数据
+    [self findAllAutoReplyMessages];
 }
 
 //获取所有的自动回复信息
@@ -337,8 +355,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
                         QBLog(@"下次循环推送时间 %d",nextRollingReplyTime);
                     }
                 }];
-            } else {
-                [self findAllAutoReplyMessages];
             }
             
             QBLog(@"回复池数量%ld 下次循环推送时间 %d",self.allReplyMsgs.count,nextRollingReplyTime);
