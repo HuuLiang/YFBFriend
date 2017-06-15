@@ -96,7 +96,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     dispatch_source_set_event_handler(_timer, ^{
         //执行事件
         QBLog(@"注意当前的计时器时间 %ld",_timeInterval);
-        if (_timeInterval == 0 || _timeInterval == 60 * 10 || _timeInterval == 60 * 20) {
+        if (_timeInterval == 0 || _timeInterval == 60 * 5 || _timeInterval == 60 * 10) {
             
             __block NSNumber * reqNum = [[NSUserDefaults standardUserDefaults] objectForKey:KYFBFriendGetRobotTimesKeyName];
             if (!reqNum) {
@@ -226,8 +226,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
         [replyMsgCache saveOrUpdate];
         [self.allReplyMsgs addObject:replyMsgCache];
     }
-    
-    
 }
 
 - (void)getRandomReplyMessage {
@@ -286,16 +284,21 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
 
 - (void)saveRobotMessagesWith:(NSArray <YFBRobotContactModel *>*)userList {
     __block NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
-
+    
     [userList enumerateObjectsUsingBlock:^(YFBRobotContactModel * _Nonnull contactRobot, NSUInteger idx, BOOL * _Nonnull stop)
      {
+         
          if (idx == 0) {
              timeInterval = 30 + timeInterval;//30秒以后开始回复 初始化回复时间
+         } else {
+             timeInterval = timeInterval + arc4random() % 30 + 15;
          }
+         
+         __block NSTimeInterval userMsgTime = timeInterval;
          
          [contactRobot.robotMsgList enumerateObjectsUsingBlock:^(YFBRobotMsgModel * _Nonnull robotMsg, NSUInteger idx, BOOL * _Nonnull stop)
           {
-              timeInterval += arc4random() % 5 + 8;
+              userMsgTime += arc4random() % 7 + 14;
               YFBAutoReplyMessage *autoReplyMessage = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where msgId=%ld",(long)robotMsg.msgId]];
               if (!autoReplyMessage) {
                   YFBAutoReplyMessage *autoReplyMessage = [[YFBAutoReplyMessage alloc] init];
@@ -308,7 +311,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
                   autoReplyMessage.age = contactRobot.age;
                   autoReplyMessage.height = contactRobot.height;
                   autoReplyMessage.gender = contactRobot.gender;
-                  autoReplyMessage.replyTime = timeInterval;
+                  autoReplyMessage.replyTime = userMsgTime;
                   autoReplyMessage.replyed = NO;
                   [autoReplyMessage saveOrUpdate];
               }
@@ -381,6 +384,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     msgModel.content = replyMessage.content;
     msgModel.nickName = replyMessage.nickName;
     [msgModel saveOrUpdate];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageViewControllerNotification object:msgModel];
     
     //向消息记录中插入一条最近消息
     YFBContactModel *contact =  [YFBContactModel findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=\'%@\'",replyMessage.userId]];

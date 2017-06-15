@@ -16,11 +16,12 @@
 @end
 
 @interface YFBDiscoverResponse : QBURLResponse
+@property (nonatomic) NSArray <YFBRobot * >*realEvalUserList;
 @property (nonatomic) YFBRmdNearByDtoModel *rmdNearbyDto;
 @end
 
 @interface YFBDiscoverModel : QBEncryptedURLRequest
-- (BOOL)fetchUserInfoWithType:(NSString *)type pageNum:(NSInteger)pageNum CompletionHandler:(QBCompletionHandler)handler;
+- (BOOL)fetchUserInfoWithType:(NSString *)type pageNum:(NSInteger)pageNum CompletionHandler:(void(^)(BOOL success , NSArray <YFBRobot *> *realEvalUserList, YFBRmdNearByDtoModel *rmdNearbyDto))handler;
 @end
 
 

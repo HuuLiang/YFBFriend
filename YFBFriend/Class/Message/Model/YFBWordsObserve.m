@@ -48,15 +48,17 @@ QBDefineLazyPropertyInitialization(NSMutableArray, replyWords)
     NSString *filePath = [self documentFilePath];
     NSFileManager *filemanage = [NSFileManager defaultManager];
     BOOL exit =[filemanage fileExistsAtPath:filePath];
+    NSDictionary *fileData = nil;
     if (exit) {
-        NSDictionary *fileData = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-        [self.keyWords removeAllObjects];
-        [self.keyWords addObjectsFromArray:fileData[@"keywords"]];
-        [self.replyWords removeAllObjects];
-        [self.replyWords addObjectsFromArray:fileData[@"replyMsg"]];
+        fileData = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     } else {
-        [[self bundleFileData] writeToFile:filePath atomically:YES];
+        fileData = [self bundleFileData];
+        [fileData writeToFile:filePath atomically:YES];
     }
+    [self.keyWords removeAllObjects];
+    [self.keyWords addObjectsFromArray:fileData[@"keywords"]];
+    [self.replyWords removeAllObjects];
+    [self.replyWords addObjectsFromArray:fileData[@"replyMsg"]];
 }
 
 - (void)checkMessageContent:(YFBMessageModel *)messageModel {
@@ -77,7 +79,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, replyWords)
         NSDictionary *newData = @{@"keywords":self.keyWords,
                                   @"replyMsg":self.replyWords};
         [newData writeToFile:[self documentFilePath] atomically:YES];
-    }
+	    }
 }
 
 @end

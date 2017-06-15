@@ -60,9 +60,11 @@ typedef NS_ENUM(NSInteger, YFBUserInfoOpenType) {
 };
 
 typedef NS_ENUM(NSUInteger, YFBMessageType) {
-    YFBMessageTypeText = 1,      //文字消息
-    YFBMessageTypePhoto = 2,     //图片消息
-    YFBMessageTypeGift = 3,     //礼物
+    YFBMessageTypeText = 1,         //文字消息
+    YFBMessageTypePhoto = 2,        //图片消息
+    YFBMessageTypeGift = 3,         //礼物
+    YFBMessageTypeVoice = 4,        //声音
+    YFBMessageTypeVideo = 5,        //视频
     YFBMessageTypeCount
 };
 
@@ -87,7 +89,7 @@ static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurren
 #define kYFBFriendShowMessageNotification               @"kYFBFriendShowMessageNotification"
 #define kYFBUpdateMessageDiamondCountNotification       @"kYFBUpdateMessageDiamondCountNotification"
 #define kYFBUpdateGiftDiamondCountNotification          @"kYFBUpdateGiftDiamondCountNotification"
-
+#define kYFBUpdateMessageViewControllerNotification     @"kYFBUpdateMessageViewControllerNotification"
 #define kYFBFriendGetRobotMsgTimeIntervalKeyName        @"kYFBFriendGetRobotMsgTimeIntervalKeyName"
 #define kYFBSocialPaySuccessNotification                @"kYFBSocialPaySuccessNotification"
 

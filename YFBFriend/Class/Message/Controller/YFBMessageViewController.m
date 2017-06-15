@@ -96,6 +96,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [super viewWillAppear:animated];
     [self reloadChatMessages];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDiamondCount) name:kYFBUpdateMessageDiamondCountNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addChatMessageInCurrentVC:) name:kYFBUpdateMessageViewControllerNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -184,6 +185,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     chatMessage.content = message;
     
     [self addChatMessage:chatMessage];
+}
+
+- (void)addChatMessageInCurrentVC:(NSNotification *)notification {
+    YFBMessageModel *chatMessage = (YFBMessageModel *)[notification object];
+    if (self.isViewLoaded && [chatMessage.sendUserId isEqualToString:self.userId]) {
+        [self addChatMessage:chatMessage];
+    }
 }
 
 - (void)addChatMessage:(YFBMessageModel *)chatMessage {

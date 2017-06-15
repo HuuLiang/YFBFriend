@@ -108,18 +108,18 @@ QBDefineLazyPropertyInitialization(YFBRmdNearByDtoModel, response)
 
 - (void)loadDataWithPageCount:(NSInteger)pageNum refresh:(BOOL)isRefresh {
     @weakify(self);
-    [self.discoverModel fetchUserInfoWithType:kYFBFriendDiscoverRecommendKeyName pageNum:pageNum CompletionHandler:^(BOOL success, YFBRmdNearByDtoModel * obj) {
+    [self.discoverModel fetchUserInfoWithType:kYFBFriendDiscoverRecommendKeyName pageNum:pageNum CompletionHandler:^(BOOL success, NSArray<YFBRobot *> *realEvalUserList, YFBRmdNearByDtoModel *rmdNearbyDto) {
         @strongify(self);
         [self->_tableView YFB_endPullToRefresh];
         if (success) {
             if (!self) {
                 return ;
             }
-            self.response = obj;
+            self.response = rmdNearbyDto;
             if (isRefresh) {
                 [self.dataSource removeAllObjects];
             }
-            [obj.userList enumerateObjectsUsingBlock:^(YFBRobot * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [rmdNearbyDto.userList enumerateObjectsUsingBlock:^(YFBRobot * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 obj.greeted = [YFBRobot checkUserIsGreetedWithUserId:obj.userId];
                 [self.dataSource addObject:obj];
             }];
