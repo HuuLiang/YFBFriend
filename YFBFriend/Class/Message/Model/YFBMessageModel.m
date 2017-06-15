@@ -16,7 +16,7 @@
 
 + (void)deleteAllPreviouslyMessages {
     [[YFBMessageModel findAll] enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBMessageModel *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (![[YFBUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong] isToday]) {
+        if (![[NSDate dateWithTimeIntervalSince1970:obj.messageTime] isToday]) {
             [obj deleteObject];
         }
     }];

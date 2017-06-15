@@ -10,6 +10,7 @@
 #import <SFHFKeychainUtils.h>
 #import <sys/sysctl.h>
 #import "YFBUser.h"
+#import <AVFoundation/AVFoundation.h>
 
 static NSString *const kRegisterKeyName           = @"YFB_register_keyname";
 static NSString *const kUserRegisterKeyName       = @"YFB_userRegister_keyname";
@@ -224,6 +225,14 @@ static NSString *const kYFBMessageReplayTodayKeyName = @"kYFBMessageReplayTodayK
         [[NSUserDefaults standardUserDefaults] synchronize];
         return NO;
     }
+}
+
+#pragma mark 获取视频的播放时长
++ (float)getVideoLengthWithVideoUrl:(NSURL *)videoUrl {
+    AVURLAsset* audioAsset =[AVURLAsset URLAssetWithURL:videoUrl options:nil];
+    CMTime audioDuration = audioAsset.duration;
+    float audioDurationSeconds = CMTimeGetSeconds(audioDuration);
+    return audioDurationSeconds;
 }
 
 @end

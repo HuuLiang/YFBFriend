@@ -24,6 +24,7 @@
 
 #import "YFBAutoReplyManager.h"
 #import "YFBContactView.h"
+#import "YFBFaceTimeView.h"
 #import "YFBMessageViewController.h"
 
 #define WakeGiftManagerTimeInterval (60 * 5)
@@ -133,19 +134,11 @@
 
 - (void)showContactViewWithContactInfo:(NSNotification *)notification {
     YFBAutoReplyMessage *messageInfo = (YFBAutoReplyMessage *)[notification object];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        @weakify(self);
-        YFBContactView *contactView = [[YFBContactView alloc] initWithContactInfo:messageInfo replyHandler:^(NSString *userId, NSString *nickName, NSString *portraitUrl) {
-            @strongify(self);
-            [YFBMessageViewController presentMessageWithUserId:userId nickName:nickName avatarUrl:portraitUrl inViewController:self];
-        }];
-        contactView.frame = CGRectMake(0, -kWidth(160), kScreenWidth, kWidth(160));
-        [self.view addSubview:contactView];
-        
-        [contactView downAnimation];
-        [contactView performSelector:@selector(upAnimation) withObject:nil afterDelay:4];
-        [contactView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:6];
-    });
+    if (messageInfo.msgType == YFBMessageTypeFaceTime) {
+        [YFBFaceTimeView showFaceTimeViewWith:messageInfo InCurrentViewController:self];
+    } else {
+        [YFBContactView showInCurrentViewController:self MessageInfo:messageInfo];
+    }
 }
 
 @end

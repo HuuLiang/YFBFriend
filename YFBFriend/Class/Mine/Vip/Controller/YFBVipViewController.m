@@ -31,6 +31,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (_needReturn) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:^(id sender) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"充值";
     _sliderView = [[YFBSliderView alloc] init];

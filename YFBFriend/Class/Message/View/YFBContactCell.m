@@ -108,13 +108,12 @@
     _nickNameLabel.text = nickName;
 }
 
-- (void)setRecentTime:(NSString *)recentTime {
-    if (recentTime.length == 0) {
+- (void)setRecentTime:(NSInteger)recentTime {
+    if (recentTime == 0) {
         _timeLabel.text = @"";
         return;
     }
-    NSDate *date = [YFBUtil dateFromString:recentTime WithDateFormat:KDateFormatLong];
-    _timeLabel.text = [YFBUtil compareCurrentTime:[date timeIntervalSince1970]];
+    _timeLabel.text = [YFBUtil compareCurrentTime:recentTime];
 }
 
 - (void)setContent:(NSString *)content {

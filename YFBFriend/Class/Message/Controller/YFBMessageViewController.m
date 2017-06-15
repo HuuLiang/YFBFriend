@@ -42,7 +42,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     YFBMessageViewController *messageVC = [[self alloc] initWithUserId:userId nickName:nickName avatarUrl:avatarUrl];
     messageVC.allowsSendFace = NO;
     messageVC.allowsSendMultiMedia = NO;
-    messageVC.allowsSendVoice = NO;
+//    messageVC.allowsSendVoice = NO;
     [viewController.navigationController pushViewController:messageVC animated:YES];
     return messageVC;
 
@@ -56,7 +56,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     messageVC.needReturn = YES;
     messageVC.allowsSendFace = NO;
     messageVC.allowsSendMultiMedia = NO;
-    messageVC.allowsSendVoice = NO;
+//    messageVC.allowsSendVoice = NO;
     YFBNavigationController *messageNav = [[YFBNavigationController alloc] initWithRootViewController:messageVC];
     [viewController presentViewController:messageNav animated:YES completion:nil];
     return messageVC;
@@ -126,6 +126,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
             contactModel.messageContent = lastMessage.content;
         } else if (lastMessage.messageType == YFBMessageTypePhoto) {
             contactModel.messageContent = @"[图片]";
+        } else if (lastMessage.messageType == YFBMessageTypeGift) {
+            contactModel.messageContent = @"[礼物]";
+        } else if (lastMessage.messageType == YFBMessageTypeVoice) {
+            contactModel.messageContent = @"[语音]";
+        } else if (lastMessage.messageType == YFBMessageTypeVideo) {
+            contactModel.messageContent = @"[视频]";
+        } else if (lastMessage.messageType == YFBMessageTypeFaceTime) {
+            contactModel.messageContent = @"视频聊天";
         }
 
     }
@@ -141,8 +149,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         self.chatMessages = [YFBMessageModel allMessagesWithUserId:self.userId].mutableCopy;
         [self.messages removeAllObjects];
         [self.chatMessages enumerateObjectsUsingBlock:^(YFBMessageModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            XHMessage *message;
-            NSDate *date = [YFBUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong];
+            __block XHMessage *message;
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:obj.messageTime];
             if (obj.messageType == YFBMessageTypeText) {
                 message = [[XHMessage alloc] initWithText:obj.content
                                                    sender:obj.sendUserId
@@ -154,6 +162,26 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                                             originPhotoUrl:nil
                                                     sender:obj.sendUserId
                                                  timestamp:date];
+            } else if (obj.messageType == YFBMessageTypeGift) {
+    
+            } else if (obj.messageType == YFBMessageTypeVoice) {
+                message = [[XHMessage alloc] initWithVoicePath:nil
+                                                    voiceUrl:obj.content
+                                               voiceDuration:@"11"//[NSString stringWithFormat:@"%lf",[YFBUtil getVideoLengthWithVideoUrl:[NSURL URLWithString:obj.content]]]
+                                                      sender:obj.sendUserId
+                                                   timestamp:date];
+            } else if (obj.messageType == YFBMessageTypeVideo) {
+//                [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:obj.content] options:SDWebImageDownloaderHighPriority progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                    message = [[XHMessage alloc] initWithVideoConverPhoto:nil
+                                                                videoPath:nil
+                                                                 videoUrl:obj.content
+                                                                   sender:obj.sendUserId
+                                                                timestamp:date];
+//                }];
+            } else if (obj.messageType == YFBMessageTypeFaceTime) {
+                message = [[XHMessage alloc] initWithText:[NSString stringWithFormat:@"%@邀请你进行视频聊天",self.nickName]
+                                                 sender:obj.sendUserId
+                                              timestamp:date];
             }
             
             if ([obj.sendUserId isEqualToString:[YFBUser currentUser].userId]) {
@@ -176,7 +204,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 - (void)addTextMessage:(NSString *)message
             withSender:(NSString *)sender
               receiver:(NSString *)receiver
-              dateTime:(NSString *)dateTime {
+              dateTime:(NSInteger)dateTime {
     YFBMessageModel *chatMessage = [[YFBMessageModel alloc] init];
     chatMessage.sendUserId = sender;
     chatMessage.receiveUserId = receiver;
@@ -186,6 +214,21 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     [self addChatMessage:chatMessage];
 }
+
+- (void)addVoiceMessage:(NSString *)voicePath
+          voiceDuration:(NSString *)voiceDuration
+             withSender:(NSString *)sender
+               receiver:(NSString *)receiver
+               dateTime:(NSInteger)dateTime {
+    YFBMessageModel *chatMessage = [[YFBMessageModel alloc] init];
+    chatMessage.sendUserId = sender;
+    chatMessage.receiveUserId = receiver;
+    chatMessage.messageTime = dateTime;
+    chatMessage.content = @"音频信息";
+    chatMessage.messageType = YFBMessageTypeVoice;
+    [self addChatMessage:chatMessage];
+}
+
 
 - (void)addChatMessageInCurrentVC:(NSNotification *)notification {
     YFBMessageModel *chatMessage = (YFBMessageModel *)[notification object];
@@ -241,7 +284,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 [[YFBWordsObserve observe] checkMessageContent:chatMessage];
                 
                 XHMessage *xhMsg;
-                NSDate *date = [YFBUtil dateFromString:chatMessage.messageTime WithDateFormat:KDateFormatLong];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:chatMessage.messageTime];
                 if (chatMessage.messageType == YFBMessageTypeText) {
                     xhMsg = [[XHMessage alloc] initWithText:chatMessage.content
                                                      sender:chatMessage.sendUserId
@@ -252,6 +295,24 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                                               originPhotoUrl:nil
                                                       sender:chatMessage.sendUserId
                                                    timestamp:date];
+                } else if (chatMessage.messageType == YFBMessageTypeGift) {
+                    
+                } else if (chatMessage.messageType == YFBMessageTypeVoice) {
+                    xhMsg = [[XHMessage alloc] initWithVoicePath:nil
+                                                        voiceUrl:chatMessage.content
+                                                   voiceDuration:@""
+                                                          sender:chatMessage.sendUserId
+                                                       timestamp:date];
+                } else if (chatMessage.messageType == YFBMessageTypeVideo) {
+                    xhMsg = [[XHMessage alloc] initWithVideoConverPhoto:nil
+                                                              videoPath:nil
+                                                               videoUrl:chatMessage.fileUrl
+                                                                 sender:chatMessage.sendUserId
+                                                              timestamp:date];
+                } else if (chatMessage.messageType == YFBMessageTypeFaceTime) {
+                    xhMsg = [[XHMessage alloc] initWithText:[NSString stringWithFormat:@"%@邀请你进行视频聊天",self.nickName]
+                                                     sender:chatMessage.sendUserId
+                                                  timestamp:date];
                 }
                 
                 if ([chatMessage.sendUserId isEqualToString:[YFBUser currentUser].userId]) {
@@ -270,7 +331,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (void)saveMessageInfo:(YFBMessageModel *)messageModel WithRecordType:(YFBMessageRecordType)type {
     YFBMessageRecordModel *recordModel = [[YFBMessageRecordModel alloc] init];
-    recordModel.messageTime = [YFBUtil timeStringFromDate:[YFBUtil dateFromString:messageModel.messageTime WithDateFormat:KDateFormatLong] WithDateFormat:KDateFormatShortest];
+    recordModel.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:messageModel.messageTime] WithDateFormat:KDateFormatShortest];
     recordModel.userId = messageModel.receiveUserId;
     recordModel.type = type;
     [recordModel saveOrUpdate];
@@ -297,12 +358,30 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         } else if (type == YFBMessageFunciontTypeWX) {
             content = [NSString stringWithFormat:@"我的微信号是%@",contact];
         }
-        [self addTextMessage:content withSender:self.userId receiver:[YFBUser currentUser].userId dateTime:[YFBUtil timeStringFromDate:[NSDate date] WithDateFormat:KDateFormatLong]];
+        [self addTextMessage:content withSender:self.userId receiver:[YFBUser currentUser].userId dateTime:[[NSDate date] timeIntervalSince1970]];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
         [self scrollToBottomAnimated:YES];
     }];
 }
 
+//刷新上部功能菜单里的钻石数量
+- (void)updateDiamondCount {
+    if (self.functionView) {
+        _functionView.diamondCount = [YFBUser currentUser].diamondCount;
+    }
+    if (self.messageInputView.hidden) {
+        self.messageInputView.hidden = NO;
+        if ([self.view.subviews containsObject:_payView]) {
+            [_payView removeFromSuperview];
+        }
+        
+        if (_payView) {
+            _payView = nil;
+        }
+    }
+}
+
+//设置顶部功能菜单
 - (void)configFunctionUI {
     self.messagAdView = [[YFBMessageAdView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(48))];
     _messagAdView.recordsArr = [YFBExampleManager manager].giftExampleSource;
@@ -334,7 +413,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 }
                 
                 break;
-            
+                
             case YFBMessageFunciontTypeWX:
                 if ([YFBUtil isVip]) {
                     [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypeWX];
@@ -352,22 +431,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [self.view addSubview:_functionView];
 }
 
-//刷新上部功能菜单里的钻石数量
-- (void)updateDiamondCount {
-    if (self.functionView) {
-        _functionView.diamondCount = [YFBUser currentUser].diamondCount;
-    }
-    if (self.messageInputView.hidden) {
-        self.messageInputView.hidden = NO;
-        if ([self.view.subviews containsObject:_payView]) {
-            [_payView removeFromSuperview];
-        }
-        
-        if (_payView) {
-            _payView = nil;
-        }
-    }
-}
 
 - (void)popGiftView {
     if (self.messageInputView.inputTextView.isFirstResponder) {

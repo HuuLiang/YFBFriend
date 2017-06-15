@@ -65,6 +65,7 @@ typedef NS_ENUM(NSUInteger, YFBMessageType) {
     YFBMessageTypeGift = 3,         //礼物
     YFBMessageTypeVoice = 4,        //声音
     YFBMessageTypeVideo = 5,        //视频
+    YFBMessageTypeFaceTime = 6,     //视频聊天邀请
     YFBMessageTypeCount
 };
 

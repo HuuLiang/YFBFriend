@@ -46,7 +46,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
     [_tableView registerClass:[YFBContactCell class] forCellReuseIdentifier:kYFBContactCellReusableIdentifier];
     [self.view addSubview:_tableView];
     _tableView.tableFooterView = [[UIView alloc] init];
-
+    
     {
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
@@ -77,7 +77,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
                     }
                     [self.selectedIndexPathes removeAllObjects];
                     [self.selectedIndexPathes addObjectsFromArray:indexPathes];
-
+                    
                 } else if ([self.navigationItem.leftBarButtonItem.title isEqualToString:@"全不选"]) {
                     for (NSIndexPath * indexPath in self.selectedIndexPathes) {
                         //使用代码方式取消选中一行
@@ -164,23 +164,36 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
             }
             if (contactModel) {
                 __block BOOL alreadyRobot = NO;
-                __block NSUInteger index;
+                __block BOOL needSort = NO;
                 [self.dataSource enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     if ([obj.userId isEqualToString:contactModel.userId]) {
+                        QBLog(@"obj.messageTime = %ld contactModel.messageTime =  %ld",obj.messageTime,contactModel.messageTime);
+                        if (obj.messageTime != contactModel.messageTime) {
+                            needSort = YES;
+                        }
                         obj.messageTime = contactModel.messageTime;
                         obj.messageContent = contactModel.messageContent;
                         obj.messageType = contactModel.messageType;
                         obj.unreadMsgCount = contactModel.unreadMsgCount;
-                        index = idx;
                         alreadyRobot = YES;
                         * stop = YES;
                     }
                 }];
                 
                 if (!alreadyRobot) {
-                    [self.dataSource insertObject:contactModel atIndex:0];
-                } else {
-                    [self.dataSource exchangeObjectAtIndex:index withObjectAtIndex:0];
+                    [self.dataSource addObject:contactModel];
+                }
+                
+                if (needSort) {
+                    [self.dataSource sortUsingComparator:^NSComparisonResult(YFBContactModel * _Nonnull obj1, YFBContactModel *  _Nonnull obj2) {
+                        if (obj1.messageTime > obj2.messageTime) {
+                            return NSOrderedAscending;
+                        }
+                        if (obj1.messageTime < obj2.messageTime) {
+                            return NSOrderedDescending;
+                        }
+                        return NSOrderedSame;
+                    }];
                 }
             }
             
@@ -267,7 +280,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
     UIEdgeInsets titleEdge = titleButton.titleEdgeInsets;
     titleButton.imageEdgeInsets = UIEdgeInsetsMake(imageEdge.top, imageEdge.left - 2.5, imageEdge.bottom, imageEdge.right + 2.5);
     titleButton.titleEdgeInsets = UIEdgeInsetsMake(titleEdge.top, titleEdge.left + 2.5, titleEdge.bottom, titleEdge.right - 2.5);
-
+    
     
     _notiLabel = [[UILabel alloc] init];
     _notiLabel.text = [NSString stringWithFormat:@"今天共有%ld位女性访问你",self->visitemeCount];

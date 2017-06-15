@@ -20,7 +20,10 @@
 		EC4A73961EE7FF7B00198FD9 /* YFBGreetingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73911EE7FF7B00198FD9 /* YFBGreetingHeaderView.m */; };
 		EC4A73971EE7FF7B00198FD9 /* YFBRankDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73931EE7FF7B00198FD9 /* YFBRankDetailCell.m */; };
 		EC4A73981EE7FF7B00198FD9 /* YFBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73951EE7FF7B00198FD9 /* YFBRecommendCell.m */; };
+		EC6E5EFA1EF2851700BA6290 /* YFBFaceTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6E5EF91EF2851700BA6290 /* YFBFaceTimeView.m */; };
+		EC6E5EFD1EF2880800BA6290 /* YFBActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6E5EFC1EF2880800BA6290 /* YFBActivateModel.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
+		EC7C98381EF2BA50005B6B29 /* LSJVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C98371EF2BA50005B6B29 /* LSJVideoPlayer.m */; };
 		EC7F0FA01E6FE2D700F39FD9 /* homeBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */; };
 		EC94F7111EEB8CD100BB9CCA /* YFBShowPaySuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC94F7101EEB8CD100BB9CCA /* YFBShowPaySuccessView.m */; };
 		EC94F7131EEBCB8600BB9CCA /* ReplyMessage.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC94F7121EEBCB8600BB9CCA /* ReplyMessage.plist */; };
@@ -348,7 +351,13 @@
 		EC4A73931EE7FF7B00198FD9 /* YFBRankDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRankDetailCell.m; sourceTree = "<group>"; };
 		EC4A73941EE7FF7B00198FD9 /* YFBRecommendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRecommendCell.h; sourceTree = "<group>"; };
 		EC4A73951EE7FF7B00198FD9 /* YFBRecommendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRecommendCell.m; sourceTree = "<group>"; };
+		EC6E5EF81EF2851700BA6290 /* YFBFaceTimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBFaceTimeView.h; sourceTree = "<group>"; };
+		EC6E5EF91EF2851700BA6290 /* YFBFaceTimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBFaceTimeView.m; sourceTree = "<group>"; };
+		EC6E5EFB1EF2880800BA6290 /* YFBActivateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBActivateModel.h; sourceTree = "<group>"; };
+		EC6E5EFC1EF2880800BA6290 /* YFBActivateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBActivateModel.m; sourceTree = "<group>"; };
 		EC7307031E83727D00D7BF70 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
+		EC7C98361EF2BA50005B6B29 /* LSJVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSJVideoPlayer.h; sourceTree = "<group>"; };
+		EC7C98371EF2BA50005B6B29 /* LSJVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSJVideoPlayer.m; sourceTree = "<group>"; };
 		EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = homeBackground.jpg; sourceTree = "<group>"; };
 		EC94F70F1EEB8CD100BB9CCA /* YFBShowPaySuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBShowPaySuccessView.h; sourceTree = "<group>"; };
 		EC94F7101EEB8CD100BB9CCA /* YFBShowPaySuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBShowPaySuccessView.m; sourceTree = "<group>"; };
@@ -1297,12 +1306,16 @@
 		ECDBA8FA1EE5598B00BEFF98 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				ECDBA8FB1EE5598B00BEFF98 /* YFBBlagGiftView.h */,
-				ECDBA8FC1EE5598B00BEFF98 /* YFBBlagGiftView.m */,
+				EC7C98361EF2BA50005B6B29 /* LSJVideoPlayer.h */,
+				EC7C98371EF2BA50005B6B29 /* LSJVideoPlayer.m */,
 				ECDBA8FD1EE5598B00BEFF98 /* YFBContactCell.h */,
 				ECDBA8FE1EE5598B00BEFF98 /* YFBContactCell.m */,
+				ECDBA8FB1EE5598B00BEFF98 /* YFBBlagGiftView.h */,
+				ECDBA8FC1EE5598B00BEFF98 /* YFBBlagGiftView.m */,
 				ECDBA8FF1EE5598B00BEFF98 /* YFBContactView.h */,
 				ECDBA9001EE5598B00BEFF98 /* YFBContactView.m */,
+				EC6E5EF81EF2851700BA6290 /* YFBFaceTimeView.h */,
+				EC6E5EF91EF2851700BA6290 /* YFBFaceTimeView.m */,
 				ECDBA9011EE5598B00BEFF98 /* YFBMessageAdView.h */,
 				ECDBA9021EE5598B00BEFF98 /* YFBMessageAdView.m */,
 				ECDBA9031EE5598B00BEFF98 /* YFBMessageDiamondCategoryCell.h */,
@@ -1706,8 +1719,6 @@
 			isa = PBXGroup;
 			children = (
 				ECDBA98B1EE5598B00BEFF98 /* Extensions */,
-				ECDBA9A11EE5598B00BEFF98 /* JYRegexUtil.h */,
-				ECDBA9A21EE5598B00BEFF98 /* JYRegexUtil.m */,
 				ECDBA9A31EE5598B00BEFF98 /* Log */,
 				ECDBA9A61EE5598B00BEFF98 /* System */,
 				ECDBA9A71EE5598B00BEFF98 /* WeChatPay */,
@@ -1715,6 +1726,8 @@
 				ECDBA9B11EE5598B00BEFF98 /* YFBConfiguration.m */,
 				ECDBA9B21EE5598B00BEFF98 /* YFBHudManager.h */,
 				ECDBA9B31EE5598B00BEFF98 /* YFBHudManager.m */,
+				ECDBA9A11EE5598B00BEFF98 /* JYRegexUtil.h */,
+				ECDBA9A21EE5598B00BEFF98 /* JYRegexUtil.m */,
 				ECDBA9B41EE5598B00BEFF98 /* YFBUtil.h */,
 				ECDBA9B51EE5598B00BEFF98 /* YFBUtil.m */,
 			);
@@ -1761,6 +1774,8 @@
 		ECDBA9A61EE5598B00BEFF98 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				EC6E5EFB1EF2880800BA6290 /* YFBActivateModel.h */,
+				EC6E5EFC1EF2880800BA6290 /* YFBActivateModel.m */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -2622,6 +2637,7 @@
 				ECDBAB4F1EE5598B00BEFF98 /* YFBMyDiamondController.m in Sources */,
 				ECDBAB7A1EE5598B00BEFF98 /* payRequsestHandler.mm in Sources */,
 				ECDBAC131EE5598C00BEFF98 /* YFBImageUploadManager.m in Sources */,
+				EC6E5EFA1EF2851700BA6290 /* YFBFaceTimeView.m in Sources */,
 				ECDBAB561EE5598B00BEFF98 /* YFBMineBtn.m in Sources */,
 				ECDBABA61EE5598C00BEFF98 /* XHVoiceCommonHelper.m in Sources */,
 				ECDBAB531EE5598B00BEFF98 /* YFBMyGiftController.m in Sources */,
@@ -2766,6 +2782,7 @@
 				ECDBAB031EE5598B00BEFF98 /* YFBAccountManager.m in Sources */,
 				ECDBABD11EE5598C00BEFF98 /* XHMessageTableViewCell.m in Sources */,
 				ECDBAB3C1EE5598B00BEFF98 /* YFBMessageDiamondCategoryCell.m in Sources */,
+				EC7C98381EF2BA50005B6B29 /* LSJVideoPlayer.m in Sources */,
 				ECDBAB2A1EE5598B00BEFF98 /* YFBRankModel.m in Sources */,
 				ECDBABC61EE5598C00BEFF98 /* SETextInput.m in Sources */,
 				ECDBABAC1EE5598C00BEFF98 /* XHMessageTableViewController.m in Sources */,
@@ -2850,6 +2867,7 @@
 				ECDBAB711EE5598B00BEFF98 /* UIImage+Resource.m in Sources */,
 				ECDBAB8F1EE5598B00BEFF98 /* DataVerifier.m in Sources */,
 				EC4A73971EE7FF7B00198FD9 /* YFBRankDetailCell.m in Sources */,
+				EC6E5EFD1EF2880800BA6290 /* YFBActivateModel.m in Sources */,
 				ECDBABD41EE5598C00BEFF98 /* XHVoiceRecordHUD.m in Sources */,
 				ECDBAAFE1EE5598B00BEFF98 /* YFBLaunchViewController.m in Sources */,
 				ECDBAB4A1EE5598B00BEFF98 /* YFBMineViewController.m in Sources */,

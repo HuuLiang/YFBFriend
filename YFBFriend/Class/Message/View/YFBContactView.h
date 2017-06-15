@@ -14,6 +14,8 @@ typedef void(^ReplyAction)(NSString *userId,NSString *nickName,NSString *portrai
 
 @interface YFBContactView : UIView
 
++ (void)showInCurrentViewController:(UIViewController *)viewController MessageInfo:(YFBAutoReplyMessage *)messageInfo;
+
 - (instancetype)initWithContactInfo:(YFBAutoReplyMessage *)contactModel replyHandler:(ReplyAction)handler;
 
 

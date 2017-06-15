@@ -9,7 +9,9 @@
 #import "YFBMessageViewController+XHBMessageDelegate.h"
 #import "YFBDetailViewController.h"
 #import "YFBPhotoBrowse.h"
-
+#import "XHAudioPlayerHelper.h"
+#import <AVFoundation/AVFoundation.h>
+#import "LSJVideoPlayer.h"
 
 @implementation YFBMessageViewController (XHBMessageDelegate)
 
@@ -18,8 +20,15 @@
 
 //发送文本
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
-    [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YFBUtil timeStringFromDate:date WithDateFormat:KDateFormatLong]];
+    [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[[NSDate date] timeIntervalSinceDate:date]];
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
+    [self scrollToBottomAnimated:YES];
+}
+
+//发送语音
+- (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
+    [self addVoiceMessage:voicePath voiceDuration:voiceDuration withSender:sender receiver:self.userId dateTime:[[NSDate date] timeIntervalSinceDate:date]];
+    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeVoice];
     [self scrollToBottomAnimated:YES];
 }
 
@@ -61,7 +70,58 @@
     if (message.messageMediaType == XHBubbleMessageMediaTypePhoto && message.thumbnailUrl) {
         //图片浏览
         [[YFBPhotoBrowse browse] showPhotoBrowseWithImageUrl:@[message.thumbnailUrl] onSuperView:self.view];
+    } else if (message.messageMediaType == XHBubbleMessageMediaTypeVoice) {
+        message.isRead = YES;
+        messageTableViewCell.messageBubbleView.voiceUnreadDotImageView.hidden = YES;
+        
+        [[XHAudioPlayerHelper shareInstance] setDelegate:(id<NSFileManagerDelegate>)self];
+        if (self.currentSelectedCell) {
+            [self.currentSelectedCell.messageBubbleView.animationVoiceImageView stopAnimating];
+        }
+        if (self.currentSelectedCell == messageTableViewCell) {
+            [messageTableViewCell.messageBubbleView.animationVoiceImageView stopAnimating];
+            [[XHAudioPlayerHelper shareInstance] stopAudio];
+            self.currentSelectedCell = nil;
+        } else {
+            self.currentSelectedCell = messageTableViewCell;
+            [messageTableViewCell.messageBubbleView.animationVoiceImageView startAnimating];
+            if ([message.sender isEqualToString:self.userId]) {
+                NSURL * url  = [NSURL URLWithString:message.voiceUrl];
+                AVPlayerItem * songItem = [[AVPlayerItem alloc]initWithURL:url];
+                self.player = [[AVPlayer alloc] initWithPlayerItem:songItem];
+                [self.player play];
+            } else {
+                [[XHAudioPlayerHelper shareInstance] managerAudioWithFileName:message.voicePath toPlay:YES];
+            }
+        }
+    } else if (message.messageMediaType == XHBubbleMessageMediaTypeVideo) {
+       LSJVideoPlayer * _videoPlayer = [[LSJVideoPlayer alloc] initWithVideoURL:[NSURL URLWithString:message.videoUrl]];
+        [self.view addSubview:_videoPlayer];
+        {
+            [_videoPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(self.view);
+            }];
+        }
+        [_videoPlayer startToPlay];
+        
+        @weakify(_videoPlayer);
+        _videoPlayer.endPlayAction = ^(id obj) {
+            @strongify(_videoPlayer);
+            [_videoPlayer pause];
+            [_videoPlayer removeFromSuperview];
+            _videoPlayer = nil;
+        };
+        
     }
+}
+#pragma mark - XHAudioPlayerHelper Delegate
+
+- (void)didAudioPlayerStopPlay:(AVAudioPlayer *)audioPlayer {
+    if (self.currentSelectedCell) {
+        return;
+    }
+    [self.currentSelectedCell.messageBubbleView.animationVoiceImageView stopAnimating];
+    self.currentSelectedCell = nil;
 }
 
 /**

@@ -16,6 +16,7 @@
 #import <UMMobClick/MobClick.h>
 #import "YFBAutoReplyManager.h"
 #import "YFBContactManager.h"
+#import "YFBActivateModel.h"
 
 
 static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
@@ -42,7 +43,13 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^ (BOOL reachable) {
-        [self showHomeViewController];
+        
+        if (reachable && [YFBUtil isRegisteredUUID]) {
+            [self showHomeViewController];
+        } else {
+            [self registerUUID];
+        }
+        
         //网络错误提示
         if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![YFBUtil isRegisteredUUID])) {
             if ([YFBUtil isIpad]) {
@@ -59,6 +66,15 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
             }
         }
     };
+}
+
+- (void)registerUUID {
+    [[YFBActivateModel manager] activateWithCompletionHandler:^(BOOL success, NSString * uuid) {
+        if (success) {
+            [YFBUtil setRegisteredWithUUID:uuid];
+            [self showHomeViewController];
+        }
+    }];
 }
 
 - (void)setupMobStatistics {

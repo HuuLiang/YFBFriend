@@ -12,4 +12,6 @@
 
 - (instancetype)initWithIsDredgeVipVC:(BOOL)isDredgeVipVC;
 
+@property (nonatomic) BOOL needReturn;
+
 @end

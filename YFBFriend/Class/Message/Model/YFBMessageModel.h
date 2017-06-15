@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface YFBMessageModel : JKDBModel
+@property (nonatomic) NSString *fileUrl;
 @property (nonatomic) NSString *content;
 @property (nonatomic) NSString *sendUserId;
 @property (nonatomic) NSString *receiveUserId;
-@property (nonatomic) NSString *messageTime;
+@property (nonatomic) NSInteger messageTime;
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) YFBMessageType messageType;
 

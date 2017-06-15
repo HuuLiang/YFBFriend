@@ -8,6 +8,7 @@
 
 #import "YFBContactView.h"
 #import "YFBAutoReplyManager.h"
+#import "YFBMessageViewController.h"
 
 @interface YFBContactView ()
 @property (nonatomic) UIImageView *userImageV;
@@ -19,6 +20,18 @@
 @end
 
 @implementation YFBContactView
+
++ (void)showInCurrentViewController:(UIViewController *)viewController MessageInfo:(YFBAutoReplyMessage *)messageInfo {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        @weakify(viewController);
+        YFBContactView *contactView = [[YFBContactView alloc] initWithContactInfo:messageInfo replyHandler:^(NSString *userId, NSString *nickName, NSString *portraitUrl) {
+            @strongify(viewController);
+            [YFBMessageViewController presentMessageWithUserId:userId nickName:nickName avatarUrl:portraitUrl inViewController:viewController];
+        }];
+        contactView.frame = CGRectMake(0, -kWidth(160), kScreenWidth, kWidth(160));
+        [viewController.view addSubview:contactView];
+    });
+}
 
 - (instancetype)initWithContactInfo:(YFBAutoReplyMessage *)contactModel replyHandler:(ReplyAction)handler{
     self = [super init];
@@ -61,9 +74,9 @@
         _contentLabel.textColor = kColor(@"#ffffff");
         _contentLabel.font = kFont(13);
         _contentLabel.numberOfLines = 0;
-        if ([contactModel.msgType integerValue] == YFBMessageTypeText) {
+        if (contactModel.msgType == YFBMessageTypeText) {
             _contentLabel.text = contactModel.content;
-        } else if ([contactModel.msgType integerValue] == YFBMessageTypePhoto) {
+        } else if (contactModel.msgType == YFBMessageTypePhoto) {
             _contentLabel.text = @"收到一条图片消息";
         }
         [self addSubview:_contentLabel];
@@ -122,8 +135,37 @@
             }];
 
         }
+        
+        
+        UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(moveUpAnimation)];
+        [recognizer setDirection:(UISwipeGestureRecognizerDirectionUp)];
+        [self addGestureRecognizer:recognizer];
+        
+        
+        [self downAnimation];
+        
+        [self performSelector:@selector(moveUpAnimation) withObject:nil afterDelay:4];
+
     }
     return self;
+}
+
+- (void)moveUpAnimation {
+    if (self.superview) {
+        [self upAnimation];
+        
+        [self performSelector:@selector(removeContactView) withObject:nil afterDelay:2];
+    }
+}
+
+- (void)removeContactView {
+    if (self.superview) {
+        [self removeFromSuperview];
+    }
+}
+
+- (void)dealloc {
+    
 }
 
 @end

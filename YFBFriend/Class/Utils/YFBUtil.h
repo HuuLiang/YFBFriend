@@ -40,5 +40,5 @@
 + (BOOL)isToday;
 
 
-
++ (float)getVideoLengthWithVideoUrl:(NSURL *)videoUrl;
 @end

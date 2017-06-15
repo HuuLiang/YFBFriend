@@ -204,7 +204,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
             replyMsgCache.height = robotContactModel.height;
             replyMsgCache.gender = robotContactModel.gender;
             replyMsgCache.content = messageContent;
-            replyMsgCache.msgType = @"1";//YFBMessageTypeText
+            replyMsgCache.msgType = YFBMessageTypeText;//YFBMessageTypeText
 //            replyMsgCache.msgId = 1;
             replyMsgCache.replyTime = [[NSDate date] timeIntervalSince1970] + arc4random() % 121 + 60;
             replyMsgCache.replyed = NO;
@@ -219,7 +219,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
         replyMsgCache.height = replyMsgCache.height;
         replyMsgCache.gender = replyMsgCache.gender;
         replyMsgCache.content = messageContent;
-        replyMsgCache.msgType = @"1";//YFBMessageTypeText
+        replyMsgCache.msgType = YFBMessageTypeText;//YFBMessageTypeText
         //            replyMsgCache.msgId = 1;
         replyMsgCache.replyTime = [[NSDate date] timeIntervalSince1970] + arc4random() % 121 + 60;
         replyMsgCache.replyed = NO;
@@ -298,7 +298,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
          
          [contactRobot.robotMsgList enumerateObjectsUsingBlock:^(YFBRobotMsgModel * _Nonnull robotMsg, NSUInteger idx, BOOL * _Nonnull stop)
           {
+#ifdef DEBUG
+              userMsgTime += 2;
+#else
               userMsgTime += arc4random() % 7 + 14;
+#endif
               YFBAutoReplyMessage *autoReplyMessage = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where msgId=%ld",(long)robotMsg.msgId]];
               if (!autoReplyMessage) {
                   YFBAutoReplyMessage *autoReplyMessage = [[YFBAutoReplyMessage alloc] init];
@@ -308,6 +312,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
                   autoReplyMessage.content = robotMsg.content;
                   autoReplyMessage.msgId = robotMsg.msgId;
                   autoReplyMessage.msgType = robotMsg.msgType;
+                  autoReplyMessage.imgUrl = robotMsg.imgUrl;
                   autoReplyMessage.age = contactRobot.age;
                   autoReplyMessage.height = contactRobot.height;
                   autoReplyMessage.gender = contactRobot.gender;
@@ -335,6 +340,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
         return;
     }
     self.replyQueue = dispatch_queue_create("YFBFriend.AutoReply.Queue", nil);
+    [self findAllAutoReplyMessages];
     [self rollingReplayMessages];
 }
 
@@ -375,38 +381,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
 }
 
 - (void)insertReplyMessageInfo:(YFBAutoReplyMessage *)replyMessage {
-    //向聊天详情中插入一条记录
-    YFBMessageModel *msgModel = [[YFBMessageModel alloc] init];
-    msgModel.sendUserId = replyMessage.userId;
-    msgModel.receiveUserId = [YFBUser currentUser].userId;
-    msgModel.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:replyMessage.replyTime] WithDateFormat:KDateFormatLong];
-    msgModel.messageType = [replyMessage.msgType integerValue];
-    msgModel.content = replyMessage.content;
-    msgModel.nickName = replyMessage.nickName;
-    [msgModel saveOrUpdate];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageViewControllerNotification object:msgModel];
+    [self insertReplyMessageIntoMessageModelWithInfo:replyMessage];
     
-    //向消息记录中插入一条最近消息
-    YFBContactModel *contact =  [YFBContactModel findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=\'%@\'",replyMessage.userId]];
-    if (!contact) {
-        contact = [[YFBContactModel alloc] init];
-        contact.userId = replyMessage.userId;
-        contact.portraitUrl = replyMessage.portraitUrl;
-        contact.nickName = replyMessage.nickName;
-        contact.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:replyMessage.replyTime] WithDateFormat:KDateFormatLong];
-        contact.messageType = [replyMessage.msgType integerValue];
-        contact.unreadMsgCount = 0;
-    }
-    if ([replyMessage.msgType integerValue] == YFBMessageTypePhoto) {
-        contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一张图片",replyMessage.nickName];
-    } else {
-        contact.messageContent = replyMessage.content;
-    }
-    contact.unreadMsgCount += 1;
-    [contact saveOrUpdate];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendShowMessageNotification object:replyMessage];
+    [self insertReplyMessageIntoContactModelWithInfo:replyMessage];
     
     //标记已经回复过的缓存
     replyMessage.replyed = YES;
@@ -414,9 +392,76 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     
     //删除内存中已经回复的消息
     [self.allReplyMsgs removeObject:replyMessage];
+}
+
+//向聊天详情中插入一条记录
+- (void)insertReplyMessageIntoMessageModelWithInfo:(YFBAutoReplyMessage *)replyMessage {
+    YFBMessageModel *msgModel = [[YFBMessageModel alloc] init];
+    msgModel.sendUserId = replyMessage.userId;
+    msgModel.receiveUserId = [YFBUser currentUser].userId;
+    msgModel.messageTime = replyMessage.replyTime;
+    msgModel.messageType = replyMessage.msgType;
+    msgModel.content = replyMessage.content;
+    msgModel.fileUrl = replyMessage.imgUrl;
+//    if (replyMessage.msgType == YFBMessageTypeText) {
+//        msgModel.content = replyMessage.content;
+//    } else if (replyMessage.msgType == YFBMessageTypePhoto) {
+//        msgModel.content = replyMessage.content;
+//    } else if (replyMessage.msgType == YFBMessageTypeVoice) {
+//        msgModel.content = replyMessage.content;
+//        msgModel.fileUrl = replyMessage.imgUrl;
+//    } else if (replyMessage.msgType == YFBMessageTypeVideo) {
+//        msgModel.content = replyMessage.content;
+//        msgModel.fileUrl = replyMessage.imgUrl;
+//    } else if (replyMessage.msgType == YFBMessageTypeGift) {
+//        msgModel.content = replyMessage.content;
+//        msgModel.fileUrl = replyMessage.imgUrl;
+//    } else if (replyMessage.msgType == YFBMessageTypeFaceTime) {
+//        msgModel.content = replyMessage.content;
+//        msgModel.fileUrl = replyMessage.imgUrl;
+//    }
+    
+    msgModel.nickName = replyMessage.nickName;
+    [msgModel saveOrUpdate];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageViewControllerNotification object:msgModel];
+}
+
+//向消息记录中插入一条最近消息
+- (void)insertReplyMessageIntoContactModelWithInfo:(YFBAutoReplyMessage *)replyMessage {
+    YFBContactModel *contact =  [YFBContactModel findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=\'%@\'",replyMessage.userId]];
+    if (!contact) {
+        contact = [[YFBContactModel alloc] init];
+        contact.unreadMsgCount = 0;
+    }
+    contact.userId = replyMessage.userId;
+    contact.portraitUrl = replyMessage.portraitUrl;
+    contact.nickName = replyMessage.nickName;
+    contact.messageTime = replyMessage.replyTime;
+    contact.messageType = replyMessage.msgType;
+    
+    if (replyMessage.msgType == YFBMessageTypeText) {
+        contact.messageContent = replyMessage.content;
+    } else if (replyMessage.msgType == YFBMessageTypePhoto) {
+        contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一张图片",replyMessage.nickName];
+    } else if (replyMessage.msgType == YFBMessageTypeVoice) {
+        contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一段语音",replyMessage.nickName];
+    } else if (replyMessage.msgType == YFBMessageTypeVideo) {
+        contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一段视频",replyMessage.nickName];
+    } else if (replyMessage.msgType == YFBMessageTypeGift) {
+        contact.messageContent = [NSString stringWithFormat:@"%@向您赠送了一个礼物",replyMessage.nickName];
+    } else if (replyMessage.msgType == YFBMessageTypeFaceTime) {
+        contact.messageContent = [NSString stringWithFormat:@"%@邀请您进行视频聊天",replyMessage.nickName];
+    }
+    
+    contact.unreadMsgCount += 1;
+    [contact saveOrUpdate];
+    
+    //显示悬浮消息提醒
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendShowMessageNotification object:replyMessage];
     
     //向消息界面发出通知更改角标数字
     [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:contact];
-}
 
+}
 @end
