@@ -77,7 +77,8 @@
     NSString *todayStr = [YFBUtil timeStringFromDate:[NSDate date] WithDateFormat:@"yyyyMMdd"];
     
     //检测今天是否还能够对这个机器人发送免费或者钻石消息
-    NSArray *todayMessages = [YFBMessageRecordModel findByCriteria:[NSString stringWithFormat:@"where messageTime=\'%@\' and userId=\'%@\'",todayStr,messageModel.receiveUserId]];
+    NSArray *todayMessages = [YFBMessageRecordModel findByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",messageModel.receiveUserId]];
+    
     
     if (todayMessages.count == 0) {
         //未发送过消息 检测是否能够发送免费消息

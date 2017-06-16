@@ -403,23 +403,19 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     msgModel.messageType = replyMessage.msgType;
     msgModel.content = replyMessage.content;
     msgModel.fileUrl = replyMessage.imgUrl;
-//    if (replyMessage.msgType == YFBMessageTypeText) {
-//        msgModel.content = replyMessage.content;
-//    } else if (replyMessage.msgType == YFBMessageTypePhoto) {
-//        msgModel.content = replyMessage.content;
-//    } else if (replyMessage.msgType == YFBMessageTypeVoice) {
-//        msgModel.content = replyMessage.content;
-//        msgModel.fileUrl = replyMessage.imgUrl;
-//    } else if (replyMessage.msgType == YFBMessageTypeVideo) {
-//        msgModel.content = replyMessage.content;
-//        msgModel.fileUrl = replyMessage.imgUrl;
-//    } else if (replyMessage.msgType == YFBMessageTypeGift) {
-//        msgModel.content = replyMessage.content;
-//        msgModel.fileUrl = replyMessage.imgUrl;
-//    } else if (replyMessage.msgType == YFBMessageTypeFaceTime) {
-//        msgModel.content = replyMessage.content;
-//        msgModel.fileUrl = replyMessage.imgUrl;
-//    }
+    if (replyMessage.msgType == YFBMessageTypeText) {
+        
+    } else if (replyMessage.msgType == YFBMessageTypePhoto) {
+        
+    } else if (replyMessage.msgType == YFBMessageTypeVoice) {
+        msgModel.fileUrl = [NSString stringWithFormat:@"%ld",(long)ceilf([YFBUtil getVideoLengthWithVideoUrl:[NSURL URLWithString:replyMessage.content]])];
+    } else if (replyMessage.msgType == YFBMessageTypeVideo) {
+
+    } else if (replyMessage.msgType == YFBMessageTypeGift) {
+
+    } else if (replyMessage.msgType == YFBMessageTypeFaceTime) {
+
+    }
     
     msgModel.nickName = replyMessage.nickName;
     [msgModel saveOrUpdate];

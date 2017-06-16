@@ -121,6 +121,7 @@
         
         [_answerImgV bk_whenTapped:^{
             @strongify(self);
+            AudioServicesRemoveSystemSoundCompletion(kSystemSoundID_Vibrate);//挂断
             if (self.answerAction) {
                 self.answerAction();
             }
@@ -135,6 +136,7 @@
         
         [_answerLabel bk_whenTapped:^{
             @strongify(self);
+            AudioServicesRemoveSystemSoundCompletion(kSystemSoundID_Vibrate);//挂断
             if (self.answerAction) {
                 self.answerAction();
             }
@@ -206,7 +208,6 @@
 void systemAudioCallback()//连续震动
 {
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    
 }
 
 

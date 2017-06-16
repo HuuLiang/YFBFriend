@@ -162,26 +162,29 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                                             originPhotoUrl:nil
                                                     sender:obj.sendUserId
                                                  timestamp:date];
+                message.messageMediaType = XHBubbleMessageMediaTypePhoto;
             } else if (obj.messageType == YFBMessageTypeGift) {
     
             } else if (obj.messageType == YFBMessageTypeVoice) {
-                message = [[XHMessage alloc] initWithVoicePath:nil
-                                                    voiceUrl:obj.content
-                                               voiceDuration:@"11"//[NSString stringWithFormat:@"%lf",[YFBUtil getVideoLengthWithVideoUrl:[NSURL URLWithString:obj.content]]]
+                message = [[XHMessage alloc] initWithVoicePath:[obj.sendUserId isEqualToString:self.userId] ? nil : obj.content
+                                                      voiceUrl:[obj.sendUserId isEqualToString:self.userId] ? obj.content : nil
+                                               voiceDuration:obj.fileUrl
                                                       sender:obj.sendUserId
                                                    timestamp:date];
+                message.messageMediaType = XHBubbleMessageMediaTypeVoice;
             } else if (obj.messageType == YFBMessageTypeVideo) {
-//                [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:obj.content] options:SDWebImageDownloaderHighPriority progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                    message = [[XHMessage alloc] initWithVideoConverPhoto:nil
-                                                                videoPath:nil
-                                                                 videoUrl:obj.content
-                                                                   sender:obj.sendUserId
-                                                                timestamp:date];
-//                }];
+                message = [[XHMessage alloc] initWithVideoConverPhoto:nil
+                                                            videoPath:nil
+                                                             videoUrl:obj.content
+                                                               sender:obj.sendUserId
+                                                            timestamp:date];
+                message.messageMediaType = XHBubbleMessageMediaTypeVideo;
+                message.thumbnailUrl = obj.fileUrl;
             } else if (obj.messageType == YFBMessageTypeFaceTime) {
                 message = [[XHMessage alloc] initWithText:[NSString stringWithFormat:@"%@邀请你进行视频聊天",self.nickName]
                                                  sender:obj.sendUserId
                                               timestamp:date];
+                message.messageMediaType = XHBubbleMessageMediaTypeText;
             }
             
             if ([obj.sendUserId isEqualToString:[YFBUser currentUser].userId]) {
@@ -224,7 +227,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     chatMessage.sendUserId = sender;
     chatMessage.receiveUserId = receiver;
     chatMessage.messageTime = dateTime;
-    chatMessage.content = @"音频信息";
+    chatMessage.content = voicePath;
+    chatMessage.fileUrl = voiceDuration;
     chatMessage.messageType = YFBMessageTypeVoice;
     [self addChatMessage:chatMessage];
 }
@@ -289,30 +293,35 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                     xhMsg = [[XHMessage alloc] initWithText:chatMessage.content
                                                      sender:chatMessage.sendUserId
                                                   timestamp:date];
+                    xhMsg.messageMediaType = XHBubbleMessageMediaTypeText;
                 } else if (chatMessage.messageType == YFBMessageTypePhoto) {
                     xhMsg = [[XHMessage alloc] initWithPhoto:nil
                                                 thumbnailUrl:chatMessage.content
                                               originPhotoUrl:nil
                                                       sender:chatMessage.sendUserId
                                                    timestamp:date];
+                    xhMsg.messageMediaType = XHBubbleMessageMediaTypePhoto;
                 } else if (chatMessage.messageType == YFBMessageTypeGift) {
                     
                 } else if (chatMessage.messageType == YFBMessageTypeVoice) {
-                    xhMsg = [[XHMessage alloc] initWithVoicePath:nil
-                                                        voiceUrl:chatMessage.content
-                                                   voiceDuration:@""
+                    xhMsg = [[XHMessage alloc] initWithVoicePath:[chatMessage.sendUserId isEqualToString:self.userId] ? nil : chatMessage.content
+                                                        voiceUrl:[chatMessage.sendUserId isEqualToString:self.userId] ? chatMessage.content : nil
+                                                   voiceDuration:chatMessage.fileUrl
                                                           sender:chatMessage.sendUserId
                                                        timestamp:date];
+                    xhMsg.messageMediaType = XHBubbleMessageMediaTypeVoice;
                 } else if (chatMessage.messageType == YFBMessageTypeVideo) {
                     xhMsg = [[XHMessage alloc] initWithVideoConverPhoto:nil
                                                               videoPath:nil
                                                                videoUrl:chatMessage.fileUrl
                                                                  sender:chatMessage.sendUserId
                                                               timestamp:date];
+                    xhMsg.messageMediaType = XHBubbleMessageMediaTypeVideo;
                 } else if (chatMessage.messageType == YFBMessageTypeFaceTime) {
                     xhMsg = [[XHMessage alloc] initWithText:[NSString stringWithFormat:@"%@邀请你进行视频聊天",self.nickName]
                                                      sender:chatMessage.sendUserId
                                                   timestamp:date];
+                    xhMsg.messageMediaType = XHBubbleMessageMediaTypeText;
                 }
                 
                 if ([chatMessage.sendUserId isEqualToString:[YFBUser currentUser].userId]) {

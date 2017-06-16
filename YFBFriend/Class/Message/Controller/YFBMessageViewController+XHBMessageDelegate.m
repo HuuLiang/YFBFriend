@@ -20,14 +20,14 @@
 
 //发送文本
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
-    [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[[NSDate date] timeIntervalSinceDate:date]];
+    [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[date timeIntervalSince1970]];
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     [self scrollToBottomAnimated:YES];
 }
 
 //发送语音
 - (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
-    [self addVoiceMessage:voicePath voiceDuration:voiceDuration withSender:sender receiver:self.userId dateTime:[[NSDate date] timeIntervalSinceDate:date]];
+    [self addVoiceMessage:voicePath voiceDuration:voiceDuration withSender:sender receiver:self.userId dateTime:[date timeIntervalSince1970]];
     [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeVoice];
     [self scrollToBottomAnimated:YES];
 }
