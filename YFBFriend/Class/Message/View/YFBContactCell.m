@@ -105,6 +105,7 @@
 }
 
 - (void)setNickName:(NSString *)nickName {
+    _nickName = nickName;
     _nickNameLabel.text = nickName;
 }
 
@@ -121,11 +122,20 @@
 }
 
 - (void)setMsgType:(NSInteger)msgType {
-    if (msgType == 1) {
+    if (msgType == YFBMessageTypeText || msgType == YFBMessageTypeFaceTime) {
         _messageLabel.text = _content;
-    } else if (msgType == 2) {
-        _messageLabel.text = @"[图片]";
+    } else if (msgType == YFBMessageTypePhoto) {
+        _messageLabel.text = [NSString stringWithFormat:@"%@向您发送了一张图片",_nickName];;
+    } else if (msgType == YFBMessageTypeGift) {
+        _messageLabel.text = [NSString stringWithFormat:@"%@向您发送了一份礼物",_nickName];;
+    } else if (msgType == YFBMessageTypeVoice) {
+        _messageLabel.text = [NSString stringWithFormat:@"%@向您发送了一段语音",_nickName];;
+    } else if (msgType == YFBMessageTypeVideo) {
+        _messageLabel.text = [NSString stringWithFormat:@"%@向您发送了一段视频",_nickName];;
     }
+//    else if (msgType == YFBMessageTypeFaceTime) {
+//        _messageLabel.text = [NSString stringWithFormat:@"%@向发送视频邀请",_nickName];;
+//    }
 }
 
 - (void)setUnreadMsg:(NSInteger)unreadMsg {

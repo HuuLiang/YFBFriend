@@ -11,6 +11,8 @@
 #import "YFBVipViewController.h"
 #import "YFBNavigationController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "YFBContactManager.h"
+#import "YFBMessageModel.h"
 
 @interface YFBFaceTimeView ()
 
@@ -37,23 +39,84 @@
         @weakify(faceTimeView);
         faceTimeView.refuseAction = ^{
             @strongify(faceTimeView);
+            [faceTimeView refreshAutoReplyMessage:messageModel];
+            [[NSNotificationCenter defaultCenter] removeObserver:faceTimeView];
             [faceTimeView removeFromSuperview];
         };
         
         faceTimeView.answerAction = ^{
             @strongify(faceTimeView);
+            [faceTimeView refreshAutoReplyMessage:messageModel];
+            [[NSNotificationCenter defaultCenter] removeObserver:faceTimeView];
             [faceTimeView removeFromSuperview];
             
-            viewController.modalPresentationStyle = UIModalPresentationFormSheet;
-            viewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-            YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:YES];
-            vipVC.needReturn = YES;
-            YFBNavigationController *vipNav = [[YFBNavigationController alloc] initWithRootViewController:vipVC];
-            if (viewController.presentedViewController == nil) {
-                [viewController presentViewController:vipNav animated:YES completion:nil];
+            if (![YFBUtil isVip]) {
+                viewController.modalPresentationStyle = UIModalPresentationFormSheet;
+                viewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+                YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:YES];
+                vipVC.needReturn = YES;
+                YFBNavigationController *vipNav = [[YFBNavigationController alloc] initWithRootViewController:vipVC];
+                if (viewController.presentedViewController == nil) {
+                    [viewController presentViewController:vipNav animated:YES completion:nil];
+                }
             }
         };
     });
+}
+
+- (void)dealloc {
+    
+}
+
+- (void)refreshAutoReplyMessage:(YFBAutoReplyMessage *)replyMessage {
+    replyMessage.content = @"视频已取消";
+    
+    
+    YFBMessageModel *msgModel = [YFBMessageModel findFirstByCriteria:[NSString stringWithFormat:@"where sendUserId=\'%@\' and content=\'%@\'",replyMessage.userId,[NSString stringWithFormat:@"%@邀请您视频聊天",replyMessage.nickName]]];
+    if (!msgModel) {
+        msgModel = [[YFBMessageModel alloc] init];
+    }
+    msgModel.sendUserId = replyMessage.userId;
+    msgModel.receiveUserId = [YFBUser currentUser].userId;
+    msgModel.messageTime = replyMessage.replyTime;
+    msgModel.messageType = replyMessage.msgType;
+    msgModel.content = replyMessage.content;
+    msgModel.fileUrl = replyMessage.imgUrl;
+    msgModel.nickName = replyMessage.nickName;
+    
+    if (replyMessage.msgType == YFBMessageTypeFaceTime) {
+        msgModel.content = replyMessage.content;
+    }
+    
+    [msgModel saveOrUpdate];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageViewControllerNotification object:msgModel];
+
+    
+    
+    
+    YFBContactModel *contact =  [YFBContactModel findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=\'%@\'",replyMessage.userId]];
+    if (!contact) {
+        contact = [[YFBContactModel alloc] init];
+        contact.unreadMsgCount = 0;
+    }
+    contact.userId = replyMessage.userId;
+    contact.portraitUrl = replyMessage.portraitUrl;
+    contact.nickName = replyMessage.nickName;
+    contact.messageTime = replyMessage.replyTime;
+    contact.messageType = replyMessage.msgType;
+    contact.messageContent = replyMessage.content;
+    
+    if (replyMessage.msgType == YFBMessageTypeFaceTime) {
+        contact.messageContent = replyMessage.content;
+    }
+    
+    contact.unreadMsgCount += 1;
+    [contact saveOrUpdate];
+    
+    //向消息界面发出通知更改角标数字
+    [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:contact];
+
 }
 
 - (instancetype)initWithInfo:(YFBAutoReplyMessage *)messageModel

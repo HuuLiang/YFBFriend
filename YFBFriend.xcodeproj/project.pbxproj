@@ -1268,14 +1268,14 @@
 			children = (
 				ECDBA8E11EE5598B00BEFF98 /* YFBContactViewController.h */,
 				ECDBA8E21EE5598B00BEFF98 /* YFBContactViewController.m */,
+				ECDBA8E91EE5598B00BEFF98 /* YFBMessageViewController.h */,
+				ECDBA8EA1EE5598B00BEFF98 /* YFBMessageViewController.m */,
+				ECDBA8E71EE5598B00BEFF98 /* YFBMessageViewController+XHBMessageDelegate.h */,
+				ECDBA8E81EE5598B00BEFF98 /* YFBMessageViewController+XHBMessageDelegate.m */,
 				ECDBA8E31EE5598B00BEFF98 /* YFBGiftPopViewController.h */,
 				ECDBA8E41EE5598B00BEFF98 /* YFBGiftPopViewController.m */,
 				ECDBA8E51EE5598B00BEFF98 /* YFBMessagePayPopController.h */,
 				ECDBA8E61EE5598B00BEFF98 /* YFBMessagePayPopController.m */,
-				ECDBA8E71EE5598B00BEFF98 /* YFBMessageViewController+XHBMessageDelegate.h */,
-				ECDBA8E81EE5598B00BEFF98 /* YFBMessageViewController+XHBMessageDelegate.m */,
-				ECDBA8E91EE5598B00BEFF98 /* YFBMessageViewController.h */,
-				ECDBA8EA1EE5598B00BEFF98 /* YFBMessageViewController.m */,
 				ECDBA8EB1EE5598B00BEFF98 /* YFBVisitemeViewController.h */,
 				ECDBA8EC1EE5598B00BEFF98 /* YFBVisitemeViewController.m */,
 			);

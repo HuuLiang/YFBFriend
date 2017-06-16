@@ -78,7 +78,14 @@
             _contentLabel.text = contactModel.content;
         } else if (contactModel.msgType == YFBMessageTypePhoto) {
             _contentLabel.text = @"收到一条图片消息";
+        } else if (contactModel.msgType == YFBMessageTypeGift) {
+            _contentLabel.text = @"送您一个礼物";
+        } else if (contactModel.msgType == YFBMessageTypeVoice) {
+            _contentLabel.text = @"发来一段语音";
+        } else if (contactModel.msgType == YFBMessageTypeVideo) {
+            _contentLabel.text = @"发来一段视频";
         }
+        
         [self addSubview:_contentLabel];
         
         self.replyButton = [UIButton buttonWithType:UIButtonTypeCustom];

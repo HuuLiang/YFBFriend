@@ -403,21 +403,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     msgModel.messageType = replyMessage.msgType;
     msgModel.content = replyMessage.content;
     msgModel.fileUrl = replyMessage.imgUrl;
-    if (replyMessage.msgType == YFBMessageTypeText) {
-        
-    } else if (replyMessage.msgType == YFBMessageTypePhoto) {
-        
-    } else if (replyMessage.msgType == YFBMessageTypeVoice) {
+    msgModel.nickName = replyMessage.nickName;
+
+    if (replyMessage.msgType == YFBMessageTypeVoice) {
         msgModel.fileUrl = [NSString stringWithFormat:@"%ld",(long)ceilf([YFBUtil getVideoLengthWithVideoUrl:[NSURL URLWithString:replyMessage.content]])];
-    } else if (replyMessage.msgType == YFBMessageTypeVideo) {
-
-    } else if (replyMessage.msgType == YFBMessageTypeGift) {
-
-    } else if (replyMessage.msgType == YFBMessageTypeFaceTime) {
-
+    }  else if (replyMessage.msgType == YFBMessageTypeFaceTime) {
+        msgModel.content = [NSString stringWithFormat:@"%@邀请您视频聊天",replyMessage.nickName];
     }
     
-    msgModel.nickName = replyMessage.nickName;
     [msgModel saveOrUpdate];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageViewControllerNotification object:msgModel];
@@ -435,19 +428,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     contact.nickName = replyMessage.nickName;
     contact.messageTime = replyMessage.replyTime;
     contact.messageType = replyMessage.msgType;
-    
-    if (replyMessage.msgType == YFBMessageTypeText) {
-        contact.messageContent = replyMessage.content;
-    } else if (replyMessage.msgType == YFBMessageTypePhoto) {
-        contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一张图片",replyMessage.nickName];
-    } else if (replyMessage.msgType == YFBMessageTypeVoice) {
-        contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一段语音",replyMessage.nickName];
-    } else if (replyMessage.msgType == YFBMessageTypeVideo) {
-        contact.messageContent = [NSString stringWithFormat:@"%@向您发送了一段视频",replyMessage.nickName];
-    } else if (replyMessage.msgType == YFBMessageTypeGift) {
-        contact.messageContent = [NSString stringWithFormat:@"%@向您赠送了一个礼物",replyMessage.nickName];
-    } else if (replyMessage.msgType == YFBMessageTypeFaceTime) {
-        contact.messageContent = [NSString stringWithFormat:@"%@邀请您进行视频聊天",replyMessage.nickName];
+    contact.messageContent = replyMessage.content;
+
+    if (replyMessage.msgType == YFBMessageTypeFaceTime) {
+        contact.messageContent = [NSString stringWithFormat:@"%@向您发送视频邀请",replyMessage.nickName];
     }
     
     contact.unreadMsgCount += 1;

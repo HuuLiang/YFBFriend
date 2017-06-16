@@ -181,7 +181,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 message.messageMediaType = XHBubbleMessageMediaTypeVideo;
                 message.thumbnailUrl = obj.fileUrl;
             } else if (obj.messageType == YFBMessageTypeFaceTime) {
-                message = [[XHMessage alloc] initWithText:[NSString stringWithFormat:@"%@邀请你进行视频聊天",self.nickName]
+                message = [[XHMessage alloc] initWithText:obj.content
                                                  sender:obj.sendUserId
                                               timestamp:date];
                 message.messageMediaType = XHBubbleMessageMediaTypeText;
@@ -237,7 +237,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 - (void)addChatMessageInCurrentVC:(NSNotification *)notification {
     YFBMessageModel *chatMessage = (YFBMessageModel *)[notification object];
     if (self.isViewLoaded && [chatMessage.sendUserId isEqualToString:self.userId]) {
-        [self addChatMessage:chatMessage];
+        if (chatMessage.messageType == YFBMessageTypeFaceTime) {
+            [self reloadChatMessages];
+        } else {
+            [self addChatMessage:chatMessage];
+        }
     }
 }
 
@@ -318,7 +322,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                                                               timestamp:date];
                     xhMsg.messageMediaType = XHBubbleMessageMediaTypeVideo;
                 } else if (chatMessage.messageType == YFBMessageTypeFaceTime) {
-                    xhMsg = [[XHMessage alloc] initWithText:[NSString stringWithFormat:@"%@邀请你进行视频聊天",self.nickName]
+                    xhMsg = [[XHMessage alloc] initWithText:chatMessage.content
                                                      sender:chatMessage.sendUserId
                                                   timestamp:date];
                     xhMsg.messageMediaType = XHBubbleMessageMediaTypeText;
