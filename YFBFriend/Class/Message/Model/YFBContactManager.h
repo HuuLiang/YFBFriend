@@ -16,6 +16,7 @@
 @property (nonatomic) NSString *messageContent;
 @property (nonatomic) NSInteger unreadMsgCount;
 @property (nonatomic) YFBMessageType messageType;
+@property (nonatomic) BOOL isOneline;
 @end
 
 @interface YFBContactManager : NSObject

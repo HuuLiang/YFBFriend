@@ -16,6 +16,7 @@
 @property (nonatomic) NSInteger messageTime;
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) YFBMessageType messageType;
+@property (nonatomic) BOOL readDone;
 
 + (NSArray <YFBMessageModel *>*)allMessagesWithUserId:(NSString *)userId;
 + (void)deleteAllPreviouslyMessages;

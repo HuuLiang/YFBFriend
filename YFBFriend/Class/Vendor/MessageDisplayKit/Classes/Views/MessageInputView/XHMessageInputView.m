@@ -304,7 +304,7 @@
         buttonFrame.origin = CGPointMake(horizontalPadding, verticalPadding);
         button.frame = buttonFrame;
         [self addSubview:button];
-        allButtonWidth += CGRectGetMaxX(buttonFrame);
+        allButtonWidth += CGRectGetMaxX(buttonFrame) + ((!self.allowsSendFace && !self.allowsSendMultiMedia) ? horizontalPadding * 2.5 : 0);
         textViewLeftMargin += CGRectGetMaxX(buttonFrame);
         
         self.voiceChangeButton = button;
@@ -432,6 +432,7 @@
             
             _inputTextView.frame = CGRectMake(textViewLeftMargin, 4.5f, width, height);
             _inputTextView.backgroundColor = [UIColor whiteColor];
+//            _inputTextView.backgroundColor = [UIColor redColor];
             _inputTextView.layer.borderColor = borderColor.CGColor;
             _inputTextView.layer.borderWidth = borderWidth;
             _inputTextView.layer.cornerRadius = cornerRadius;

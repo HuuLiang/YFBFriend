@@ -104,6 +104,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     _messagAdView.scrollStart = YES;
 }
 
+
+/**
+ 离开当前视图控制器 把最后一条的消息保存到消息界面(YFBContactViewController)
+
+ @param animated <#animated description#>
+ */
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
@@ -144,6 +150,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:contactModel];
 }
 
+
+/**
+ 重新刷新界面的消息
+ */
 - (void)reloadChatMessages {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         self.chatMessages = [YFBMessageModel allMessagesWithUserId:self.userId].mutableCopy;
@@ -155,6 +165,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 message = [[XHMessage alloc] initWithText:obj.content
                                                    sender:obj.sendUserId
                                                 timestamp:date];
+                message.readDone = obj.readDone;
                 message.messageMediaType = XHBubbleMessageMediaTypeText;
             } else if (obj.messageType == YFBMessageTypePhoto) {
                 message = [[XHMessage alloc] initWithPhoto:nil
@@ -204,6 +215,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 }
 
 
+/**
+ 加入一条文本消息
+
+ @param message 消息内容
+ @param sender 发送者
+ @param receiver 接受者
+ @param dateTime 发送日期
+ */
 - (void)addTextMessage:(NSString *)message
             withSender:(NSString *)sender
               receiver:(NSString *)receiver
@@ -218,6 +237,16 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [self addChatMessage:chatMessage];
 }
 
+
+/**
+ 加入一条语音消息
+
+ @param voicePath 语音文件路径
+ @param voiceDuration 时长
+ @param sender 发送者
+ @param receiver 接受者
+ @param dateTime 发送日期
+ */
 - (void)addVoiceMessage:(NSString *)voicePath
           voiceDuration:(NSString *)voiceDuration
              withSender:(NSString *)sender
@@ -234,6 +263,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 }
 
 
+/**
+ 接受通知：加入一条消息当前视图  如果是视频通话的消息类型 需要新界面聊天数据（视频消息的content被改变）
+
+ @param notification <#notification description#>
+ */
 - (void)addChatMessageInCurrentVC:(NSNotification *)notification {
     YFBMessageModel *chatMessage = (YFBMessageModel *)[notification object];
     if (self.isViewLoaded && [chatMessage.sendUserId isEqualToString:self.userId]) {
@@ -245,6 +279,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }
 }
 
+
+/**
+ 加入一条聊天
+ 
+ @param chatMessage 聊天消息类
+ */
 - (void)addChatMessage:(YFBMessageModel *)chatMessage {
     //判断是否需要进行VIP状态检测
     //如果信息接受者是机器人则需要
@@ -342,6 +382,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }
 }
 
+
+/**
+ 保存用户的聊天记录到聊天记录管理控制用户的发送消息付费点
+
+ @param messageModel 聊天消息类
+ @param type 消息发送付费等级的类型
+ */
 - (void)saveMessageInfo:(YFBMessageModel *)messageModel WithRecordType:(YFBMessageRecordType)type {
     YFBMessageRecordModel *recordModel = [[YFBMessageRecordModel alloc] init];
     recordModel.messageTime = [YFBUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:messageModel.messageTime] WithDateFormat:KDateFormatShortest];
@@ -350,6 +397,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [recordModel saveOrUpdate];
 }
 
+
+/**
+ 用户成为vip后点击查看目标联系方式 如果有 以聊天的形式发送给用户
+
+ @param type 用户点击的功能菜单类型
+ */
 - (void)addPhoneOrWxWithMessageType:(YFBMessageFunciontType)type {
     NSString *contactType = nil;
     if (type == YFBMessageFunciontTypePhone) {
@@ -377,7 +430,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }];
 }
 
-//刷新上部功能菜单里的钻石数量
+
+/**
+ 刷新上部功能菜单里的钻石数量
+ */
 - (void)updateDiamondCount {
     if (self.functionView) {
         _functionView.diamondCount = [YFBUser currentUser].diamondCount;
@@ -394,7 +450,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }
 }
 
-//设置顶部功能菜单
+/**
+ 设置顶部功能菜单
+ */
 - (void)configFunctionUI {
     self.messagAdView = [[YFBMessageAdView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(48))];
     _messagAdView.recordsArr = [YFBExampleManager manager].giftExampleSource;
@@ -419,21 +477,23 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 break;
                 
             case YFBMessageFunciontTypePhone:
-                if ([YFBUtil isVip]) {
-                    [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypePhone];
-                } else {
-                    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
-                }
-                
+//                if ([YFBUtil isVip]) {
+//                    [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypePhone];
+//                } else {
+//                    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
+//                }
+                [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
+
                 break;
                 
             case YFBMessageFunciontTypeWX:
-                if ([YFBUtil isVip]) {
-                    [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypeWX];
-                } else {
-                    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
-                }
-                
+//                if ([YFBUtil isVip]) {
+//                    [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypeWX];
+//                } else {
+//                    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
+//                }
+                [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeBuyDiamond onCurrentVC:self];
+
                 
                 break;
                 
@@ -445,6 +505,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 }
 
 
+/**
+ 赠送礼物
+ */
 - (void)popGiftView {
     if (self.messageInputView.inputTextView.isFirstResponder) {
         [self.messageInputView.inputTextView resignFirstResponder];
@@ -474,6 +537,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     };
 }
 
+
+/**
+ 隐藏聊天输入框并提示点击付费
+
+ @param type 点击付费出现的制服弹窗的类型
+ */
 - (void)showPayVipViewWithType:(YFBMessagePopViewType)type {
     if (self.messageInputView.inputTextView.isFirstResponder) {
         [self.messageInputView.inputTextView resignFirstResponder];

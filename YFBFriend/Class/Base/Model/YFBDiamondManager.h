@@ -12,6 +12,7 @@
 @property (nonatomic) NSInteger diamondAmount;
 @property (nonatomic) NSInteger dpcId;
 @property (nonatomic) NSInteger price;
+@property (nonatomic) NSString *giveDesc;
 @end
 
 @interface YFBDiamondResponse : QBURLResponse

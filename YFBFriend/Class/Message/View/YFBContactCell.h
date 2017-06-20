@@ -15,4 +15,5 @@
 @property (nonatomic) NSInteger msgType;
 @property (nonatomic) NSString *content;
 @property (nonatomic) NSInteger unreadMsg;
+@property (nonatomic) BOOL isOneline;
 @end

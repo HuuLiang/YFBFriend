@@ -49,6 +49,8 @@
 
 @property (nonatomic, strong, readwrite) id <XHMessageModel> message;
 
+@property (nonatomic, weak, readwrite) UILabel *readDoneLabel;
+
 @end
 
 @implementation XHMessageBubbleView
@@ -362,7 +364,7 @@
             [self addSubview:bubbleImageView];
             _bubbleImageView = bubbleImageView;
         }
-        
+    
         // 2、初始化显示文本消息的TextView
         if (!_displayTextView) {
             SETextView *displayTextView = [[SETextView alloc] initWithFrame:CGRectZero];
@@ -375,6 +377,17 @@
             displayTextView.highlighted = NO;
             [self addSubview:displayTextView];
             _displayTextView = displayTextView;
+            
+            // 5.配置消息已读标示
+            if (!_readDoneLabel) {
+                UILabel *readDoneLabel = [[UILabel alloc] init];
+                readDoneLabel.text = message.readDone ? @"已读" : @"未读";
+                readDoneLabel.textColor = kColor(@"#666666");
+                readDoneLabel.textAlignment = NSTextAlignmentRight;
+                readDoneLabel.font = [UIFont systemFontOfSize:8];
+                [self addSubview:readDoneLabel];
+                _readDoneLabel = readDoneLabel;
+            }
         }
         
         // 3、初始化显示图片的控件
@@ -485,6 +498,14 @@
                 displayTextViewFrame.size.height = CGRectGetHeight(bubbleFrame) - kXHHaveBubbleMargin * 3;
                 self.displayTextView.frame = displayTextViewFrame;
                 self.displayTextView.center = CGPointMake(self.bubbleImageView.center.x + textX, self.bubbleImageView.center.y);
+                
+                if (self.message.bubbleMessageType == XHBubbleMessageTypeSending) {
+                    self.readDoneLabel.hidden = NO;
+                    self.readDoneLabel.frame = CGRectMake(0, 0, 20, 10);
+                    self.readDoneLabel.center = CGPointMake(bubbleFrame.origin.x - 10, self.bubbleImageView.centerY);
+                } else {
+                    self.readDoneLabel.hidden = YES;
+                }
             }
             
             if (currentType == XHBubbleMessageMediaTypeVoice) {

@@ -429,6 +429,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     contact.messageTime = replyMessage.replyTime;
     contact.messageType = replyMessage.msgType;
     contact.messageContent = replyMessage.content;
+    contact.isOneline = YES;
 
     if (replyMessage.msgType == YFBMessageTypeFaceTime) {
         contact.messageContent = [NSString stringWithFormat:@"%@向您发送视频邀请",replyMessage.nickName];

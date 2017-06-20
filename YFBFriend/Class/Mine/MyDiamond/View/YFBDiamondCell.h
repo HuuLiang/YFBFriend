@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface YFBDiamondCell : UITableViewCell
-
-@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *desc;
 @property (nonatomic) NSString *price;
-
+@property (nonatomic) NSString *amount;
+@property (nonatomic) YFBAction payAction;
 @end

@@ -10,8 +10,8 @@
 #import "YFBPayButton.h"
 
 @interface YFBMessagePayTypeCell ()
-@property (nonatomic,strong) YFBPayButton *wxPayButton;
-@property (nonatomic,strong) YFBPayButton *aliPayButton;
+@property (nonatomic,strong) UIButton *wxPayButton;
+@property (nonatomic,strong) UIButton *aliPayButton;
 @end
 
 
@@ -22,56 +22,60 @@
     if (self) {
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.backgroundColor = [UIColor clearColor];
-        self.contentView.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
+        self.contentView.backgroundColor = [UIColor whiteColor];
         
-        self.wxPayButton = [[YFBPayButton alloc] init];
-        _wxPayButton.title = @"微信支付";
-        _wxPayButton.selected = YES;
+        self.wxPayButton = [YFBPayButton buttonWithType:UIButtonTypeCustom];
+        [_wxPayButton setTitle:@"微信" forState:UIControlStateNormal];
+        [_wxPayButton setTitleColor:kColor(@"") forState:UIControlStateNormal];
+        _wxPayButton.backgroundColor = kColor(@"#00AC0A");
+        _wxPayButton.layer.cornerRadius = 3;
+        [_wxPayButton setImage:[UIImage imageNamed:@"message_wx"] forState:UIControlStateNormal];
         @weakify(self);
         [_wxPayButton bk_addEventHandler:^(id sender) {
             @strongify(self);
-            if (!self.wxPayButton.selected) {
-                self.wxPayButton.selected = !self.wxPayButton.selected;
-                self.aliPayButton.selected = !self.aliPayButton.selected;
                 if (self.payTypeAction) {
                     self.payTypeAction(@(YFBPayTypeWeiXin));
                 }
-            }
         } forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_wxPayButton];
         
-        self.aliPayButton = [[YFBPayButton alloc] init];
-        _aliPayButton.title = @"支付宝";
-        _aliPayButton.selected = NO;
+        self.aliPayButton = [YFBPayButton buttonWithType:UIButtonTypeCustom];
+        [_aliPayButton setTitle:@"支付宝" forState:UIControlStateNormal];
+        [_aliPayButton setTitleColor:kColor(@"") forState:UIControlStateNormal];
+        _aliPayButton.backgroundColor = kColor(@"#49ABF5");
+        _aliPayButton.layer.cornerRadius = 3;
+        [_aliPayButton setImage:[UIImage imageNamed:@"message_ali"] forState:UIControlStateNormal];
         [_aliPayButton bk_addEventHandler:^(id sender) {
             @strongify(self);
-            if (!self.aliPayButton.selected) {
-                self.wxPayButton.selected = !self.wxPayButton.selected;
-                self.aliPayButton.selected = !self.aliPayButton.selected;
-                if (self.payTypeAction) {
-                    self.payTypeAction(@(YFBPayTypeAliPay));
-                }
+            if (self.payTypeAction) {
+                self.payTypeAction(@(YFBPayTypeAliPay));
             }
         } forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_aliPayButton];
         
         {
             [_wxPayButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.contentView).offset(kWidth(40));
-                make.bottom.equalTo(self.contentView);
-                make.size.mas_equalTo(CGSizeMake(kWidth(248), kWidth(80)));
+                make.centerX.equalTo(self.contentView);
+                make.top.equalTo(self.contentView.mas_top).offset(kWidth(8));
+                make.size.mas_equalTo(CGSizeMake(kWidth(450), kWidth(70)));
             }];
             
             
             [_aliPayButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(self.contentView.mas_right).offset(kWidth(-40));
-                make.bottom.equalTo(self.contentView);
-                make.size.mas_equalTo(CGSizeMake(kWidth(248), kWidth(80)));
+                make.centerX.equalTo(self.contentView);
+                make.bottom.equalTo(self.contentView.mas_bottom).offset(-kWidth(30));
+                make.size.mas_equalTo(CGSizeMake(kWidth(450), kWidth(70)));
             }];
         }
         
-        
+        [self.contentView.subviews enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[UIButton class]]) {
+                UIButton *thisButton = (UIButton *)obj;
+                thisButton.imageEdgeInsets = UIEdgeInsetsMake(thisButton.imageEdgeInsets.top, thisButton.imageEdgeInsets.left - 3, thisButton.imageEdgeInsets.bottom, thisButton.imageEdgeInsets.right + 3);
+                thisButton.titleEdgeInsets = UIEdgeInsetsMake(thisButton.titleEdgeInsets.top, thisButton.titleEdgeInsets.left + 3, thisButton.titleEdgeInsets.bottom, thisButton.titleEdgeInsets.right - 3);
+            }
+        }];
     }
     return self;
 }

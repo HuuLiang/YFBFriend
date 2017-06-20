@@ -9,68 +9,100 @@
 #import "YFBDiamondCell.h"
 
 @interface YFBDiamondCell ()
-{
-    UIImageView *_imageView;
-    UILabel *_titleLabel;
-    UIButton *_detailBtn;
-}
-
+@property (nonatomic) UIImageView *imageV;
+@property (nonatomic) UILabel *amountLabel;
+@property (nonatomic) UILabel *priceLabel;
+@property (nonatomic) UILabel *descLabel;
+@property (nonatomic) UIButton *payButton;
 @end
 
 @implementation YFBDiamondCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        _imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_diamond_icon"]];
-        [self addSubview:_imageView];
+
+        self.imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_diamond_icon"]];
+        [self.contentView addSubview:_imageV];
+        
+        self.amountLabel = [[UILabel alloc] init];
+        _amountLabel.font = kFont(15);
+        _amountLabel.textColor = kColor(@"#333333");
+        [self.contentView addSubview:_amountLabel];
+        
+        self.priceLabel = [[UILabel alloc] init];
+        _priceLabel.font = kFont(15);
+        _priceLabel.textColor = kColor(@"#333333");
+        [self.contentView addSubview:_priceLabel];
+        
+        self.descLabel = [[UILabel alloc] init];
+        _descLabel.font = kFont(12);
+        _descLabel.textColor = kColor(@"#EB6894");
+        [self.contentView addSubview:_descLabel];
+        
+        self.payButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_payButton setTitle:@"立即购买" forState:UIControlStateNormal];
+        [_payButton setTitleColor:kColor(@"#ffffff") forState:UIControlStateNormal];
+        _payButton.titleLabel.font = kFont(14);
+        _payButton.layer.cornerRadius = 3;
+        _payButton.backgroundColor = kColor(@"#EB6894");
+        [self.contentView addSubview:_payButton];
+        
+        @weakify(self);
+        [_payButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            if (self.payAction) {
+                self.payAction();
+            }
+        } forControlEvents:UIControlEventTouchUpInside];
+        
         {
-        [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).mas_offset(kWidth(40));
-            make.centerY.mas_equalTo(self);
-            make.size.mas_equalTo(CGSizeMake(kWidth(48), kWidth(40)));
-        }];
+            [_imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView);
+                make.left.equalTo(self.contentView).offset(kWidth(20));
+                make.size.mas_equalTo(CGSizeMake(kWidth(48), kWidth(40)));
+            }];
+            
+            [_amountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView);
+                make.left.equalTo(_imageV.mas_right).offset(kWidth(12));
+                make.height.mas_equalTo(_amountLabel.font.lineHeight);
+            }];
+            
+            [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(self.contentView.mas_centerY).offset(-kWidth(8));
+                make.left.equalTo(self.contentView).offset(kWidth(288));
+                make.height.mas_equalTo(_priceLabel.font.lineHeight);
+            }];
+            
+            [_descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.contentView.mas_centerY).offset(kWidth(8));
+                make.left.equalTo(_priceLabel);
+                make.height.mas_equalTo(_descLabel.font.lineHeight);
+            }];
+            
+            [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView);
+                make.right.equalTo(self.contentView.mas_right).offset(-kWidth(44));
+                make.size.mas_equalTo(CGSizeMake(kWidth(160), kWidth(64)));
+            }];
         }
         
-        _detailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _detailBtn.titleLabel.font = kFont(15);
-        [_detailBtn setTitleColor:kColor(@"#333333") forState:UIControlStateNormal];
-        _detailBtn.layer.borderColor = kColor(@"#e6e6e6").CGColor;
-        _detailBtn.layer.borderWidth = 1;
-        _detailBtn.userInteractionEnabled = NO;
-        [self addSubview:_detailBtn];
-        {
-        [_detailBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(self).mas_offset(kWidth(-40));
-            make.centerY.mas_equalTo(self);
-            make.size.mas_equalTo(CGSizeMake(kWidth(180), kWidth(64)));
-        }];
-        }
-        
-        _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = kFont(15);
-        _titleLabel.textColor = kColor(@"#333333");
-        [self addSubview:_titleLabel];
-        {
-        [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_imageView.mas_right).mas_offset(kWidth(12));
-            make.centerY.mas_equalTo(_imageView);
-            make.right.mas_equalTo(_detailBtn.mas_left).mas_offset(kWidth(-30));
-            make.height.mas_equalTo(kWidth(45));
-        }];
-        }
     }
     return self;
 }
 
-- (void)setTitle:(NSString *)title {
-    _title = title;
-    _titleLabel.text = title;
+- (void)setAmount:(NSString *)amount {
+    _amountLabel.text = amount;
 }
 
 - (void)setPrice:(NSString *)price {
-    _price = price;
-    [_detailBtn setTitle:[NSString stringWithFormat:@"¥  %@",price] forState:UIControlStateNormal];
+    _priceLabel.text = price;
+}
+
+- (void)setDesc:(NSString *)desc {
+    _descLabel.text = desc;
 }
 
 @end

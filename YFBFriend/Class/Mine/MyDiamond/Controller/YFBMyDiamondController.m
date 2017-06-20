@@ -12,13 +12,20 @@
 #import "YFBDiamondVoucherController.h"
 #import "YFBDiamondManager.h"
 #import "YFBPaymentManager.h"
+#import "YFBDiamondTitleCell.h"
 
 static NSString *const kYFBDiamondCellIdentifier = @"kyfb_diamond_cell_identifier";
+static NSString *const kYFBDiamondTitleCellIdentifier = @"kYFBDiamondTitleCellIdentifier";
+
+typedef NS_ENUM(NSInteger,YFBMyDiamondSectionType) {
+    YFBMyDiamondSectionTypeTitle = 0,
+    YFBMyDiamondSectionTypeCategory,
+    YFBMyDiamondSectionTypeCount
+};
 
 @interface YFBMyDiamondController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_layoutTableView;
-    UILabel *_headerLabel;
 }
 @property (nonatomic) NSMutableArray *dataSource;
 @end
@@ -28,7 +35,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"我的钻石";
+    self.title = @"聊天套餐";
     self.view.backgroundColor = [UIColor whiteColor];
     _layoutTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _layoutTableView.backgroundColor = self.view.backgroundColor;
@@ -37,7 +44,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _layoutTableView.tableFooterView = [UIView new];
     [_layoutTableView setSeparatorInset:UIEdgeInsetsZero];
     [_layoutTableView registerClass:[YFBDiamondCell class] forCellReuseIdentifier:kYFBDiamondCellIdentifier];
-    _layoutTableView.tableHeaderView = [self configTableHeaderView];
+    [_layoutTableView registerClass:[YFBDiamondTitleCell class] forCellReuseIdentifier:kYFBDiamondTitleCellIdentifier];
     [self.view addSubview:_layoutTableView];
     {
         [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -60,65 +67,87 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    _headerLabel.text = [NSString stringWithFormat:@"可用钻石：%ld",[YFBUser currentUser].diamondCount];
-}
-
-- (UIView *)configTableHeaderView {
-    UIView *headerView = [[UIView alloc] init];
-    headerView = [[UITableViewCell alloc] init];
-    headerView.backgroundColor = kColor(@"#f7f7f7");
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_diamond_icon"]];
-    [headerView addSubview:imageView];
-    {
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(headerView);
-            make.centerX.mas_equalTo(headerView).mas_offset(-kScreenWidth *0.135);
-            make.size.mas_equalTo(CGSizeMake(kWidth(48), kWidth(40)));
-        }];
-    }
-    _headerLabel = [[UILabel alloc] init];
-    _headerLabel.textColor = kColor(@"#999999");
-    _headerLabel.font = kFont(14);
-    [headerView addSubview:_headerLabel];
-    {
-        [_headerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(imageView.mas_right).mas_offset(kWidth(5));
-            make.centerY.mas_equalTo(imageView);
-            make.right.mas_equalTo(headerView).mas_offset(kWidth(-30));
-            make.height.mas_equalTo(kWidth(32));
-        }];
-    }
-    headerView.size = CGSizeMake(kScreenWidth, kWidth(100));
-    
-    return headerView;
 }
 
 #pragma mark UITableViewDelegate,UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return YFBMyDiamondSectionTypeCount;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    if (section == YFBMyDiamondSectionTypeTitle) {
+        return 1;
+    } else if (section == YFBMyDiamondSectionTypeCategory) {
+        return self.dataSource.count;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    YFBDiamondCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBDiamondCellIdentifier forIndexPath:indexPath];
-    if (indexPath.row < self.dataSource.count) {
-        YFBDiamondInfo *diamondInfo = self.dataSource[indexPath.item];
-        cell.title = [NSString stringWithFormat:@"%ld",diamondInfo.diamondAmount];
-        cell.price = [NSString stringWithFormat:@"%ld",(long)(diamondInfo.price/100)];
+    if (indexPath.section == YFBMyDiamondSectionTypeTitle) {
+        YFBDiamondTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBDiamondTitleCellIdentifier forIndexPath:indexPath];
+        
+        return cell;
+    } else if (indexPath.section == YFBMyDiamondSectionTypeCategory) {
+        YFBDiamondCell *cell = [tableView dequeueReusableCellWithIdentifier:kYFBDiamondCellIdentifier forIndexPath:indexPath];
+        if (indexPath.row < self.dataSource.count) {
+            YFBDiamondInfo *diamondInfo = self.dataSource[indexPath.item];
+            cell.amount = [NSString stringWithFormat:@"%ld",diamondInfo.diamondAmount];
+            cell.price = [NSString stringWithFormat:@"¥ %ld",(long)(diamondInfo.price/100)];
+            cell.desc = diamondInfo.giveDesc;
+            @weakify(self);
+            cell.payAction = ^{
+                @strongify(self);
+                YFBDiamondVoucherController *voucherVC = [[YFBDiamondVoucherController alloc] initWithPrice:diamondInfo.price diamond:diamondInfo.diamondAmount Action:kYFBPaymentActionPURCHASEDIAMONDKeyName];
+                [self.navigationController pushViewController:voucherVC animated:YES];
+            };
+        }
+        return cell;
     }
-    return cell;
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kWidth(140);
+    if (indexPath.section == YFBMyDiamondSectionTypeTitle) {
+        return kWidth(220);
+    } else if (indexPath.section == YFBMyDiamondSectionTypeCategory) {
+        return kWidth(140);
+    }
+    return 0;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < self.dataSource.count) {
-        YFBDiamondInfo *diamondInfo = self.dataSource[indexPath.row];
-        YFBDiamondVoucherController *voucherVC = [[YFBDiamondVoucherController alloc] initWithPrice:diamondInfo.price diamond:diamondInfo.diamondAmount Action:kYFBPaymentActionPURCHASEDIAMONDKeyName];
-        [self.navigationController pushViewController:voucherVC animated:YES];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = kColor(@"#f0f0f0");
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.textColor = kColor(@"#333333");
+    label.font = kFont(15);
+    [headerView addSubview:label];
+    
+    if (section == YFBMyDiamondSectionTypeTitle) {
+        label.text = @"  聊天套餐服务";
+    } else if (section == YFBMyDiamondSectionTypeCategory) {
+        label.text = @"  开通套餐";
     }
+    
+    {
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(headerView);
+        }];
+    }
+    
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == YFBMyDiamondSectionTypeTitle) {
+        return kWidth(90);
+    } else if (section == YFBMyDiamondSectionTypeCategory) {
+        return kWidth(90);
+    }
+    return 0;
 }
 
 

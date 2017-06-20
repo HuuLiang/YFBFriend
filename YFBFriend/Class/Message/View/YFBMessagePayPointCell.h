@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface YFBMessagePayPointCell : UITableViewCell
-@property (nonatomic,copy) NSString *morePrice;
-@property (nonatomic,copy) NSString *moreTitle;
-@property (nonatomic,copy) NSString *lessPrice;
-@property (nonatomic,copy) NSString *lessTitle;
-@property (nonatomic,copy) QBAction payAction;
+@property (nonatomic) NSString *price;
+@property (nonatomic) NSString *titleStr;
+@property (nonatomic) NSString *descStr;
 @end

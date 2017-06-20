@@ -175,6 +175,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
                         obj.messageContent = contactModel.messageContent;
                         obj.messageType = contactModel.messageType;
                         obj.unreadMsgCount = contactModel.unreadMsgCount;
+                        obj.isOneline = contactModel.isOneline;
                         alreadyRobot = YES;
                         * stop = YES;
                     }
@@ -342,6 +343,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
         cell.content = contactModel.messageContent;
         cell.msgType = contactModel.messageType;
         cell.unreadMsg = contactModel.unreadMsgCount;
+        cell.isOneline = contactModel.isOneline;
     }
     return cell;
 }
