@@ -48,7 +48,7 @@
 }
 
 - (void)pushIntoPayVC {
-    YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:YES];
+    YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithTitle:@"开通VIP"];
     [self.navigationController pushViewController:vipVC animated:YES];
 }
 

@@ -27,10 +27,12 @@
 #import "YFBFaceTimeView.h"
 #import "YFBMessageViewController.h"
 
+#import "YFBTelChargeVC.h"
+
 #define WakeGiftManagerTimeInterval (60 * 5)
 
 @interface YFBTabBarController () <UITabBarControllerDelegate>
-
+@property (nonatomic) UIImageView *activityView;
 @end
 
 @implementation YFBTabBarController
@@ -40,8 +42,11 @@
     
     self.tabBar.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1].CGColor;
     self.tabBar.layer.borderWidth = 0.5;
+    
     [self setChildViewControllers];
 
+    [self configActivityView];
+    
     [self loadDefaultConfig];
     
     [self performSelector:@selector(wakeAskGiftManager) withObject:nil afterDelay:WakeGiftManagerTimeInterval];
@@ -139,6 +144,34 @@
     } else {
         [YFBContactView showInCurrentViewController:self MessageInfo:messageInfo];
     }
+}
+
+- (void)configActivityView {
+    self.activityView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"activity_tel"]];
+    _activityView.userInteractionEnabled = YES;
+    [self.view addSubview:_activityView];
+    [self.view bringSubviewToFront:_activityView];
+    
+    @weakify(self);
+    [_activityView bk_whenTapped:^{
+        @strongify(self);
+        YFBTelChargeVC *telVC = [[YFBTelChargeVC alloc] init];
+        UINavigationController *activityNav = [[UINavigationController alloc] initWithRootViewController:telVC];
+        activityNav.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+        [self presentViewController:activityNav animated:YES completion:nil];
+    }];
+    
+    {
+        [_activityView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.view.mas_right);
+            make.top.equalTo(self.view.mas_top).offset(kWidth(108)+64);
+            make.size.mas_equalTo(CGSizeMake(kWidth(140), kWidth(80)));
+        }];
+    }
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    _activityView.hidden = tabBarController.selectedIndex == 3;
 }
 
 @end

@@ -9,7 +9,6 @@
 #import "YFBMessageViewController.h"
 #import "YFBMessageModel.h"
 #import "YFBMessageAdView.h"
-#import "YFBMessageFunctionView.h"
 #import "YFBGiftPopViewController.h"
 #import "YFBMessagePayPopController.h"
 #import "YFBInteractionManager.h"
@@ -21,6 +20,11 @@
 #import "YFBContactManager.h"
 #import "YFBWordsObserve.h"
 
+typedef NS_ENUM(NSInteger,YFBItemType) {
+    YFBItemTypePhone = 0,
+    YFBItemTypeWX
+};
+
 @interface YFBMessageViewController ()
 {
     YFBGiftPopViewController *_giftVC;
@@ -28,7 +32,6 @@
 }
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
 @property (nonatomic,retain) YFBMessageAdView *messagAdView;
-@property (nonatomic,retain) YFBMessageFunctionView *functionView;
 @property (nonatomic) BOOL needReturn;
 @end
 
@@ -86,6 +89,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
     }
+    
+    [self customBarButtonItem];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,8 +113,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 /**
  离开当前视图控制器 把最后一条的消息保存到消息界面(YFBContactViewController)
-
- @param animated <#animated description#>
  */
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -403,11 +407,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
  @param type 用户点击的功能菜单类型
  */
-- (void)addPhoneOrWxWithMessageType:(YFBMessageFunciontType)type {
+- (void)addPhoneOrWxWithMessageType:(YFBItemType)type {
     NSString *contactType = nil;
-    if (type == YFBMessageFunciontTypePhone) {
+    if (type == YFBItemTypePhone) {
         contactType = kYFBFriendReferContactPhoneKeyName;
-    } else if (type == YFBMessageFunciontTypeWX) {
+    } else if (type == YFBItemTypeWX) {
         contactType = kYFBFriendReferContactWXKeyName;
     }
 
@@ -419,9 +423,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
             [[YFBHudManager manager] showHudWithText:@"用户尚未设置"];
             return ;
         }
-        if (type == YFBMessageFunciontTypePhone) {
+        if (type == YFBItemTypePhone) {
             content = [NSString stringWithFormat:@"我的手机号是%@",contact];
-        } else if (type == YFBMessageFunciontTypeWX) {
+        } else if (type == YFBItemTypeWX) {
             content = [NSString stringWithFormat:@"我的微信号是%@",contact];
         }
         [self addTextMessage:content withSender:self.userId receiver:[YFBUser currentUser].userId dateTime:[[NSDate date] timeIntervalSince1970]];
@@ -435,9 +439,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
  刷新上部功能菜单里的钻石数量
  */
 - (void)updateDiamondCount {
-    if (self.functionView) {
-        _functionView.diamondCount = [YFBUser currentUser].diamondCount;
-    }
     if (self.messageInputView.hidden) {
         self.messageInputView.hidden = NO;
         if ([self.view.subviews containsObject:_payView]) {
@@ -450,6 +451,37 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }
 }
 
+- (void)customBarButtonItem {
+    UIButton *wxButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kWidth(40), kWidth(38))];
+    [wxButton setImage:[UIImage imageNamed:@"item_wx"] forState:UIControlStateNormal];
+    @weakify(self);
+    [wxButton bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        if ([YFBUtil isVip]) {
+            [self addPhoneOrWxWithMessageType:YFBItemTypeWX];
+        } else {
+            [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
+        }
+    } forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *wxBarButton = [[UIBarButtonItem alloc] initWithCustomView:wxButton];
+    
+    UIButton *telButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kWidth(40), kWidth(38))];
+    [telButton setImage:[UIImage imageNamed:@"item_tel"] forState:UIControlStateNormal];
+    [telButton bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        if ([YFBUtil isVip]) {
+            [self addPhoneOrWxWithMessageType:YFBItemTypePhone];
+        } else {
+            [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
+        }
+    } forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *telBarButton = [[UIBarButtonItem alloc] initWithCustomView:telButton];
+    
+    self.navigationItem.rightBarButtonItems = @[wxBarButton,telBarButton];
+    
+}
+
+
 /**
  设置顶部功能菜单
  */
@@ -457,51 +489,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     self.messagAdView = [[YFBMessageAdView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(48))];
     _messagAdView.recordsArr = [YFBExampleManager manager].giftExampleSource;
     [self.view addSubview:_messagAdView];
-    
-    self.functionView = [[YFBMessageFunctionView alloc] initWithFrame:CGRectMake(0, kWidth(48), kScreenWidth, kWidth(72))];
-    _functionView.diamondCount = [YFBUser currentUser].diamondCount;
-    @weakify(self);
-    _functionView.functionType = ^(YFBMessageFunciontType type) {
-        @strongify(self);
-        switch (type) {
-            case YFBMessageFunciontTypeAttention:
-                [[YFBInteractionManager manager] concernUserWithUserId:self.userId handler:^(BOOL success) {
-                    if (success) {
-                        [[YFBHudManager manager] showHudWithText:@"关注成功"];
-                    }
-                }];
-                break;
-                
-            case YFBMessageFunciontTypeDiamon:
-                [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeDiamond onCurrentVC:self];
-                break;
-                
-            case YFBMessageFunciontTypePhone:
-//                if ([YFBUtil isVip]) {
-//                    [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypePhone];
-//                } else {
-//                    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
-//                }
-                [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
-
-                break;
-                
-            case YFBMessageFunciontTypeWX:
-//                if ([YFBUtil isVip]) {
-//                    [self addPhoneOrWxWithMessageType:YFBMessageFunciontTypeWX];
-//                } else {
-//                    [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeVip onCurrentVC:self];
-//                }
-                [YFBMessagePayPopController showMessageTopUpPopViewWithType:YFBMessagePopViewTypeBuyDiamond onCurrentVC:self];
-
-                
-                break;
-                
-            default:
-                break;
-        }
-    };
-    [self.view addSubview:_functionView];
 }
 
 

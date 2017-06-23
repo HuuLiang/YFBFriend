@@ -53,7 +53,7 @@
             if (![YFBUtil isVip]) {
                 viewController.modalPresentationStyle = UIModalPresentationFormSheet;
                 viewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-                YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:YES];
+                YFBVipViewController *vipVC = [[YFBVipViewController alloc] init];
                 vipVC.needReturn = YES;
                 YFBNavigationController *vipNav = [[YFBNavigationController alloc] initWithRootViewController:vipVC];
                 if (viewController.presentedViewController == nil) {

@@ -7,6 +7,7 @@
 //
 
 #import "YFBBuyVipCell.h"
+#import "YFBPayConfigManager.h"
 
 @interface YFBBuyVipCell ()
 @property (nonatomic) UIImageView *imgV;
@@ -21,6 +22,9 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.accessoryType = UITableViewCellAccessoryNone;
         
         self.imgV = [[UIImageView alloc] init];
         [self.contentView addSubview:_imgV];
@@ -56,21 +60,53 @@
             }
         } forControlEvents:UIControlEventTouchUpInside];
         
+        
+        {
+            [_imgV mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView);
+                make.left.equalTo(self.contentView).offset(kWidth(26));
+                make.size.mas_equalTo(CGSizeMake(kWidth(60), kWidth(52)));
+            }];
+            
+            [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.contentView).offset(kWidth(114));
+                make.top.equalTo(self.contentView).offset(kWidth(30));
+                make.height.mas_equalTo(_titleLabel.font.lineHeight);
+            }];
+            
+            [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_titleLabel);
+                make.top.equalTo(_titleLabel.mas_bottom).offset(kWidth(14));
+                make.height.mas_equalTo(_priceLabel.font.lineHeight);
+            }];
+            
+            [_descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_priceLabel);
+                make.top.equalTo(_priceLabel.mas_bottom).offset(kWidth(6));
+                make.height.mas_equalTo(_descLabel.font.lineHeight);
+            }];
+            
+            [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(self.contentView.mas_right).offset(-kWidth(20));
+                make.centerY.equalTo(self.contentView);
+                make.size.mas_equalTo(CGSizeMake(kWidth(160), kWidth(64)));
+            }];
+        }
     }
     return self;
 }
 
 - (void)setVipType:(YFBBuyVipType)vipType {
     if (vipType == YFBBuyVipTypeGold) {
-        _imgV.image = [UIImage imageNamed:@""];
-        _titleLabel.text = @"";
-        _priceLabel.text = [NSString stringWithFormat:@""];
-        _descLabel.text = [NSString stringWithFormat:@""];
+        _imgV.image = [UIImage imageNamed:@"vip_gold"];
+        _titleLabel.text = @"黄金";
+        _priceLabel.text = [NSString stringWithFormat:@"%ld天 ¥%ld",[YFBPayConfigManager manager].vipInfo.secondInfo.amount,(long)([YFBPayConfigManager manager].vipInfo.secondInfo.price/100)];
+        _descLabel.text = [NSString stringWithFormat:@"%@",[YFBPayConfigManager manager].vipInfo.secondInfo.detail];
     } else if (vipType == YFBBuyVipTypeSliver) {
-        _imgV.image = [UIImage imageNamed:@""];
-        _titleLabel.text = @"";
-        _priceLabel.text = [NSString stringWithFormat:@""];
-        _descLabel.text = [NSString stringWithFormat:@""];
+        _imgV.image = [UIImage imageNamed:@"vip_sliver"];
+        _titleLabel.text = @"白银";
+        _priceLabel.text = [NSString stringWithFormat:@"%ld天 ¥%ld",[YFBPayConfigManager manager].vipInfo.firstInfo.amount,(long)([YFBPayConfigManager manager].vipInfo.firstInfo.price/100)];
+        _descLabel.text = [NSString stringWithFormat:@"%@",[YFBPayConfigManager manager].vipInfo.firstInfo.detail];
     }
 }
 

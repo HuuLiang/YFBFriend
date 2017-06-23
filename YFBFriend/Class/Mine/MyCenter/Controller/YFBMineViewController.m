@@ -117,8 +117,7 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         @weakify(self);
         headerCell.ktVipAction = ^(id sender){
             @strongify(self);
-//            YFBDredgeVipController *vipVC = [[YFBDredgeVipController alloc] initWithTitle:@"充值"];
-            YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithIsDredgeVipVC:YES];
+            YFBVipViewController *vipVC = [[YFBVipViewController alloc] initWithTitle:@"开通VIP"];
             [self.navigationController pushViewController:vipVC animated:YES];
         };
         headerCell.attestationAction = ^(id sender){

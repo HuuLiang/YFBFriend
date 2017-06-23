@@ -18,4 +18,5 @@ typedef NS_ENUM(NSInteger,YFBBuyVipType) {
 @property (nonatomic) YFBBuyVipType vipType;
 @property (nonatomic) YFBAction payAction;
 
+
 @end
