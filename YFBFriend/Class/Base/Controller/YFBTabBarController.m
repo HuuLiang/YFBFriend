@@ -157,7 +157,7 @@
         @strongify(self);
         YFBTelChargeVC *telVC = [[YFBTelChargeVC alloc] init];
         UINavigationController *activityNav = [[UINavigationController alloc] initWithRootViewController:telVC];
-        activityNav.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+        activityNav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         [self presentViewController:activityNav animated:YES completion:nil];
     }];
     

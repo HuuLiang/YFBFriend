@@ -30,6 +30,7 @@
         }];
         contactView.frame = CGRectMake(0, -kWidth(160), kScreenWidth, kWidth(160));
         [viewController.view addSubview:contactView];
+        [viewController.view bringSubviewToFront:contactView];
     });
 }
 

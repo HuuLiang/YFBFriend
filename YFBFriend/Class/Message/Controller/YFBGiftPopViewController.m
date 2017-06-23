@@ -161,6 +161,7 @@
     self.view.frame = currentViewController.view.bounds;
     self.view.alpha = 0;
     [currentViewController.view addSubview:self.view];
+    [currentViewController.view bringSubviewToFront:self.view];
     [self didMoveToParentViewController:currentViewController];
     
     [UIView animateWithDuration:0.25 animations:^{

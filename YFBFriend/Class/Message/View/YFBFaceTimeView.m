@@ -35,6 +35,7 @@
         YFBFaceTimeView *faceTimeView = [[YFBFaceTimeView alloc] initWithInfo:messageModel];
         faceTimeView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
         [viewController.view addSubview:faceTimeView];
+        [viewController.view bringSubviewToFront:faceTimeView];
         
         @weakify(faceTimeView);
         faceTimeView.refuseAction = ^{
