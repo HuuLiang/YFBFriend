@@ -13,5 +13,53 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YFBFriend/Class/Base/Model/YFBLocationManager.m"
+            timestampString = "519990910.729148"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-getNearLocationName:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[YFBLocationManager getNearLocationName:]"
+                  moduleName = "YFBFriend"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/liang/Desktop/Liang/YFBFriend/YFBFriend/Class/Base/Model/YFBLocationManager.m"
+                  timestampString = "519991454.304531"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "500">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__42-[YFBLocationManager getNearLocationName:]_block_invoke"
+                  moduleName = "YFBFriend"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/liang/Desktop/Liang/YFBFriend/YFBFriend/Class/Base/Model/YFBLocationManager.m"
+                  timestampString = "519991454.306062"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

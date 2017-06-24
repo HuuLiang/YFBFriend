@@ -26,7 +26,9 @@
     self.title = @"领取话费";
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"navi_back"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kYFBShowChargeNotification object:nil];
+        }];
     }];
     
     [self configGetChargeView];
@@ -98,7 +100,7 @@
 }
 
 - (void)popVipNotice {
-    [UIAlertView bk_showAlertViewWithTitle:@"您非VIP用户，无法参与领话费活动。开通VIP，即可参与!"
+    [UIAlertView bk_showAlertViewWithTitle:@"您尚未购买任何反话费服务，无法参与领话费活动，开通vip，即可参与！"
                                    message:@""
                          cancelButtonTitle:@"再等等" otherButtonTitles:@[@"去开通"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                              if (buttonIndex == 1) {

@@ -10,9 +10,9 @@
 #import "YFBAutoReplyManager.h"
 #import "YFBVipViewController.h"
 #import "YFBNavigationController.h"
-#import <AVFoundation/AVFoundation.h>
 #import "YFBContactManager.h"
 #import "YFBMessageModel.h"
+#import "YFBVoiceManager.h"
 
 @interface YFBFaceTimeView ()
 
@@ -158,7 +158,7 @@
         @weakify(self);
         [_refuseImgV bk_whenTapped:^{
             @strongify(self);
-            AudioServicesRemoveSystemSoundCompletion(kSystemSoundID_Vibrate);//挂断
+            [self stopPlayVoice];
             if (self.refuseAction) {
                 self.refuseAction();
             }
@@ -173,7 +173,7 @@
         
         [_refuseLabel bk_whenTapped:^{
             @strongify(self);
-            AudioServicesRemoveSystemSoundCompletion(kSystemSoundID_Vibrate);//挂断
+            [self stopPlayVoice];
             if (self.refuseAction) {
                 self.refuseAction();
             }
@@ -185,7 +185,7 @@
         
         [_answerImgV bk_whenTapped:^{
             @strongify(self);
-            AudioServicesRemoveSystemSoundCompletion(kSystemSoundID_Vibrate);//挂断
+            [self stopPlayVoice];
             if (self.answerAction) {
                 self.answerAction();
             }
@@ -200,7 +200,7 @@
         
         [_answerLabel bk_whenTapped:^{
             @strongify(self);
-            AudioServicesRemoveSystemSoundCompletion(kSystemSoundID_Vibrate);//挂断
+            [self stopPlayVoice];
             if (self.answerAction) {
                 self.answerAction();
             }
@@ -257,22 +257,21 @@
                 make.size.mas_equalTo(CGSizeMake(kWidth(120), kWidth(120)));
             }];
             
-            [self performSelector:@selector(triggerShake) withObject:nil afterDelay:1.];//延时1秒后震动
+            [self performSelector:@selector(startPlayVoice) withObject:nil afterDelay:1.];//延时1秒后开启声音
 
         }
     }
     return self;
 }
 
-- (void)triggerShake {
-    AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, systemAudioCallback, NULL);
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+- (void)startPlayVoice {
+    [[YFBVoiceManager manager] playFaceTimeVoice];
 }
 
-void systemAudioCallback()//连续震动
-{
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+- (void)stopPlayVoice {
+    [[YFBVoiceManager manager] endFaceTimeVoice];
 }
+
 
 
 @end

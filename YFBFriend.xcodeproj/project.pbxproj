@@ -22,6 +22,9 @@
 		EC4A73961EE7FF7B00198FD9 /* YFBGreetingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73911EE7FF7B00198FD9 /* YFBGreetingHeaderView.m */; };
 		EC4A73971EE7FF7B00198FD9 /* YFBRankDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73931EE7FF7B00198FD9 /* YFBRankDetailCell.m */; };
 		EC4A73981EE7FF7B00198FD9 /* YFBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73951EE7FF7B00198FD9 /* YFBRecommendCell.m */; };
+		EC5414B71EFE42B3002A60F0 /* YFBVoiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5414B61EFE42B3002A60F0 /* YFBVoiceManager.m */; };
+		EC5414BA1EFE4D3D002A60F0 /* YFBLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5414B91EFE4D3D002A60F0 /* YFBLocationManager.m */; };
+		EC5414BC1EFE4E64002A60F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5414BB1EFE4E64002A60F0 /* CoreLocation.framework */; };
 		EC6E5EFA1EF2851700BA6290 /* YFBFaceTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6E5EF91EF2851700BA6290 /* YFBFaceTimeView.m */; };
 		EC6E5EFD1EF2880800BA6290 /* YFBActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6E5EFC1EF2880800BA6290 /* YFBActivateModel.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
@@ -349,6 +352,11 @@
 		EC4A73931EE7FF7B00198FD9 /* YFBRankDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRankDetailCell.m; sourceTree = "<group>"; };
 		EC4A73941EE7FF7B00198FD9 /* YFBRecommendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBRecommendCell.h; sourceTree = "<group>"; };
 		EC4A73951EE7FF7B00198FD9 /* YFBRecommendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBRecommendCell.m; sourceTree = "<group>"; };
+		EC5414B51EFE42B3002A60F0 /* YFBVoiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBVoiceManager.h; sourceTree = "<group>"; };
+		EC5414B61EFE42B3002A60F0 /* YFBVoiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBVoiceManager.m; sourceTree = "<group>"; };
+		EC5414B81EFE4D3D002A60F0 /* YFBLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBLocationManager.h; sourceTree = "<group>"; };
+		EC5414B91EFE4D3D002A60F0 /* YFBLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBLocationManager.m; sourceTree = "<group>"; };
+		EC5414BB1EFE4E64002A60F0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EC6E5EF81EF2851700BA6290 /* YFBFaceTimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBFaceTimeView.h; sourceTree = "<group>"; };
 		EC6E5EF91EF2851700BA6290 /* YFBFaceTimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBFaceTimeView.m; sourceTree = "<group>"; };
 		EC6E5EFB1EF2880800BA6290 /* YFBActivateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBActivateModel.h; sourceTree = "<group>"; };
@@ -916,6 +924,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC5414BC1EFE4E64002A60F0 /* CoreLocation.framework in Frameworks */,
 				ECBF24601EBC5D8B003BB041 /* CoreMotion.framework in Frameworks */,
 				2655A8AAADBA5FD994FA27D4 /* libPods-YFBFriend.a in Frameworks */,
 				ECDBAC1C1EE5598C00BEFF98 /* libWeChatSDK.a in Frameworks */,
@@ -929,6 +938,7 @@
 		066564F08EBCCBC8A60EB881 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EC5414BB1EFE4E64002A60F0 /* CoreLocation.framework */,
 				ECBF245F1EBC5D8B003BB041 /* CoreMotion.framework */,
 				7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */,
 			);
@@ -1125,6 +1135,10 @@
 				ECDBA8A51EE5598B00BEFF98 /* YFBPaymentManager.m */,
 				ECDBA8A61EE5598B00BEFF98 /* YFBPhotoListManager.h */,
 				ECDBA8A71EE5598B00BEFF98 /* YFBPhotoListManager.m */,
+				EC5414B51EFE42B3002A60F0 /* YFBVoiceManager.h */,
+				EC5414B61EFE42B3002A60F0 /* YFBVoiceManager.m */,
+				EC5414B81EFE4D3D002A60F0 /* YFBLocationManager.h */,
+				EC5414B91EFE4D3D002A60F0 /* YFBLocationManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2723,6 +2737,7 @@
 				ECDBAB681EE5598B00BEFF98 /* YFBVipViewController.m in Sources */,
 				ECDBABBF1EE5598C00BEFF98 /* SEConstants.m in Sources */,
 				ECDBAB921EE5598B00BEFF98 /* openssl_wrapper.m in Sources */,
+				EC5414B71EFE42B3002A60F0 /* YFBVoiceManager.m in Sources */,
 				ECDBABD81EE5598C00BEFF98 /* XHEmotionSectionBar.m in Sources */,
 				ECDBAB271EE5598B00BEFF98 /* YFBRecommendVC.m in Sources */,
 				ECAA6B961EEE248200AD90B2 /* YFBWordsObserve.m in Sources */,
@@ -2744,6 +2759,7 @@
 				EC9A6B041E6D50670018C5FB /* AppDelegate+configuration.m in Sources */,
 				ECDBAB0B1EE5598B00BEFF98 /* YFBTabBarController.m in Sources */,
 				ECDBAB8D1EE5598B00BEFF98 /* base64.m in Sources */,
+				EC5414BA1EFE4D3D002A60F0 /* YFBLocationManager.m in Sources */,
 				ECDBAC041EE5598C00BEFF98 /* ALAssetsLibrary+POS.m in Sources */,
 				EC00477A1EFCA30B00382668 /* YFBBuyVipDescCell.m in Sources */,
 				EC4A737D1EE6A4E100198FD9 /* YFBSocialModel.m in Sources */,

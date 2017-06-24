@@ -82,6 +82,18 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
 }
 
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBShowChargeNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBHideChargeNotification object:nil];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(selectedSegmentIndex))]) {
         NSNumber *oldValue = change[NSKeyValueChangeOldKey];

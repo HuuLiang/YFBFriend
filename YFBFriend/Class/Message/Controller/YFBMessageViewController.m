@@ -19,6 +19,8 @@
 #import "YFBNavigationController.h"
 #import "YFBContactManager.h"
 #import "YFBWordsObserve.h"
+#import "YFBVoiceManager.h"
+#import "YFBLocationManager.h"
 
 typedef NS_ENUM(NSInteger,YFBItemType) {
     YFBItemTypePhone = 0,
@@ -33,6 +35,8 @@ typedef NS_ENUM(NSInteger,YFBItemType) {
 @property (nonatomic,retain) NSMutableArray<YFBMessageModel *> *chatMessages;
 @property (nonatomic,retain) YFBMessageAdView *messagAdView;
 @property (nonatomic) BOOL needReturn;
+@property (nonatomic) BOOL showAllLocation;
+@property (nonatomic) UIButton *locationButton;
 @end
 
 @implementation YFBMessageViewController
@@ -82,16 +86,17 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     self.title = self.nickName;
     self.messageSender = [YFBUser currentUser].userId;
     
-    [self configFunctionUI];
-    
     if (_needReturn) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:^(id sender) {
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
     }
     
+    [self configFunctionUI];
+    
     [self customBarButtonItem];
-
+    
+    [self configLocationUI];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -374,8 +379,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 
                 if ([chatMessage.sendUserId isEqualToString:[YFBUser currentUser].userId]) {
                     xhMsg.bubbleMessageType = XHBubbleMessageTypeSending;
+                    [[YFBVoiceManager manager] playSendVoice];
                 } else {
                     xhMsg.bubbleMessageType = XHBubbleMessageTypeReceiving;
+                    [[YFBVoiceManager manager] playReceiveVoice];
                 }
                 
                 [self addMessage:xhMsg];
@@ -479,6 +486,66 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     self.navigationItem.rightBarButtonItems = @[wxBarButton,telBarButton];
     
+}
+
+
+
+/**
+ 布局定位UI
+ */
+- (void)configLocationUI {
+//    定位服务不可用 返回
+    if (![[YFBLocationManager manager] checkLocationIsEnable]) {
+        return;
+    }
+    
+    [[YFBLocationManager manager] getUserLacationNameWithUserId:self.userId locationName:^(BOOL success,NSString *locationName) {
+        if (!success || _locationButton) {
+            return ;
+        }
+        self.locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_locationButton setImage:[UIImage imageNamed:@"message_location"] forState:UIControlStateNormal];
+        [_locationButton setTitle:locationName forState:UIControlStateNormal];
+        [_locationButton setTitleColor:kColor(@"#ffffff") forState:UIControlStateNormal];
+        _locationButton.titleLabel.font = kFont(10);
+        _locationButton.backgroundColor = [kColor(@"#000000") colorWithAlphaComponent:0.5];
+        _locationButton.layer.cornerRadius = kWidth(20);
+        [self.view addSubview:_locationButton];
+        
+        _locationButton.imageEdgeInsets = UIEdgeInsetsMake(_locationButton.imageEdgeInsets.top, _locationButton.imageEdgeInsets.left - 3 , _locationButton.imageEdgeInsets.bottom, _locationButton.imageEdgeInsets.right + 3);
+        
+        @weakify(self);
+        [_locationButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            [self.locationButton removeFromSuperview];
+            [self.view addSubview:self.locationButton];
+            if (!self.showAllLocation) {
+                [self.locationButton setTitle:@"" forState:UIControlStateNormal];
+                [self.locationButton mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.right.equalTo(self.view.mas_right).offset(kWidth(25));
+                    make.top.equalTo(_messagAdView.mas_bottom).offset(kWidth(50));
+                    make.size.mas_equalTo(CGSizeMake(kWidth(70), kWidth(40)));
+                }];
+            } else {
+                [self.locationButton setTitle:locationName forState:UIControlStateNormal];
+                [self.locationButton mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.right.equalTo(self.view.mas_right).offset(kWidth(25));
+                    make.top.equalTo(_messagAdView.mas_bottom).offset(kWidth(50));
+                    make.size.mas_equalTo(CGSizeMake(kWidth(250), kWidth(40)));
+                }];
+            }
+            
+            self.showAllLocation = !self.showAllLocation;
+        } forControlEvents:UIControlEventTouchUpInside];
+        
+        {
+            [self.locationButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(self.view.mas_right).offset(kWidth(25));
+                make.top.equalTo(_messagAdView.mas_bottom).offset(kWidth(50));
+                make.size.mas_equalTo(CGSizeMake(kWidth(250), kWidth(40)));
+            }];
+        }
+    }];
 }
 
 

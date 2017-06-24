@@ -28,6 +28,7 @@
 #import "YFBMessageViewController.h"
 
 #import "YFBTelChargeVC.h"
+#import "YFBLocationManager.h"
 
 #define WakeGiftManagerTimeInterval (60 * 5)
 
@@ -78,6 +79,8 @@
     });
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showContactViewWithContactInfo:) name:kYFBFriendShowMessageNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showActivityView) name:kYFBShowChargeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideActivityView) name:kYFBHideChargeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -99,6 +102,7 @@
     [[YFBAutoReplyManager manager] getRobotReplyMessages];                          //获取批量的机器人消息留作推送
     [[YFBAutoReplyManager manager] startAutoRollingToReply];                        //开始推送机器人
     [[YFBAskGiftManager manager] startAutoBlagActionInViewController:self];         //开始索要礼物功能
+    [[YFBLocationManager manager] loadLocationManager];                             //申请定位权限
 }
 
 - (void)wakeAskGiftManager {
@@ -168,6 +172,14 @@
             make.size.mas_equalTo(CGSizeMake(kWidth(140), kWidth(80)));
         }];
     }
+}
+
+- (void)showActivityView {
+    _activityView.hidden = NO;
+}
+
+- (void)hideActivityView {
+    _activityView.hidden = YES;
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {

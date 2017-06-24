@@ -58,8 +58,16 @@ static NSString *const kYFBSocialCellReusableIdentifier = @"kYFBSocialCellReusab
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBShowChargeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccess:) name:kYFBSocialPaySuccessNotification object:nil];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBHideChargeNotification object:nil];
+}
+
 
 - (void)paySuccess:(NSNotification *)notification {
     NSString *userId = (NSString *)[notification object];

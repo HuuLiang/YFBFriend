@@ -111,8 +111,16 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self refreshBadege];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBShowChargeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeNumber:) name:KUpdateContactUnReadMessageNotification object:nil];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBHideChargeNotification object:nil];
+}
+
 
 - (void)refreshBadege {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
