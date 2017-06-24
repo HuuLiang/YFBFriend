@@ -503,6 +503,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         if (!success || _locationButton) {
             return ;
         }
+        CGFloat width = [locationName sizeWithFont:kFont(10) maxHeight:kFont(10).lineHeight].width;
+        
         self.locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_locationButton setImage:[UIImage imageNamed:@"message_location"] forState:UIControlStateNormal];
         [_locationButton setTitle:locationName forState:UIControlStateNormal];
@@ -522,16 +524,16 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
             if (!self.showAllLocation) {
                 [self.locationButton setTitle:@"" forState:UIControlStateNormal];
                 [self.locationButton mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.right.equalTo(self.view.mas_right).offset(kWidth(25));
+                    make.right.equalTo(self.view.mas_right).offset(kWidth(20));
                     make.top.equalTo(_messagAdView.mas_bottom).offset(kWidth(50));
                     make.size.mas_equalTo(CGSizeMake(kWidth(70), kWidth(40)));
                 }];
             } else {
                 [self.locationButton setTitle:locationName forState:UIControlStateNormal];
                 [self.locationButton mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.right.equalTo(self.view.mas_right).offset(kWidth(25));
+                    make.right.equalTo(self.view.mas_right).offset(kWidth(20));
                     make.top.equalTo(_messagAdView.mas_bottom).offset(kWidth(50));
-                    make.size.mas_equalTo(CGSizeMake(kWidth(250), kWidth(40)));
+                    make.size.mas_equalTo(CGSizeMake(width + kWidth(70), kWidth(40)));
                 }];
             }
             
@@ -540,9 +542,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         
         {
             [self.locationButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(self.view.mas_right).offset(kWidth(25));
+                make.right.equalTo(self.view.mas_right).offset(kWidth(20));
                 make.top.equalTo(_messagAdView.mas_bottom).offset(kWidth(50));
-                make.size.mas_equalTo(CGSizeMake(kWidth(250), kWidth(40)));
+                make.size.mas_equalTo(CGSizeMake(width + kWidth(70), kWidth(40)));
             }];
         }
     }];
