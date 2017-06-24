@@ -125,12 +125,8 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [_noticeView addSubview:titleLabel];
     
-    NSDate *today = [NSDate date];
-    NSCalendar *c = [NSCalendar currentCalendar];
-    NSRange days = [c rangeOfUnit:NSDayCalendarUnit inUnit:NSCalendarUnitMonth forDate:today];
-
     UILabel *subTitleLabel = [[UILabel alloc] init];
-    subTitleLabel.text = [NSString stringWithFormat:@"充值1天后可参加送话费抽奖活动，每个月有1次机会(距您抽奖还有%ld天)",days.length];
+    subTitleLabel.text = @"充值1天后可参加送话费抽奖活动，每个月有1次机会";
     subTitleLabel.textColor = kColor(@"#666666");
     subTitleLabel.font =kFont(13);
     subTitleLabel.textAlignment = NSTextAlignmentCenter;
