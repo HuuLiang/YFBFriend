@@ -9,7 +9,7 @@
 #import <QBEncryptedURLRequest.h>
 
 @interface YFBActivateResponse : QBURLResponse
-@property (nonatomic) NSString *UUID;
+@property (nonatomic) NSString *uuid;
 @end
 
 

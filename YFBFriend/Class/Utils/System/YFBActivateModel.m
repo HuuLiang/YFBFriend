@@ -50,7 +50,7 @@
             resp = self.response;
         }
         if (handler) {
-            handler(respStatus == QBURLResponseSuccess,resp.UUID);
+            handler(respStatus == QBURLResponseSuccess,resp.uuid);
         }
     }];
 }
