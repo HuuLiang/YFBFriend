@@ -29,10 +29,12 @@
     YFBContactModel *contactInfo;
     if (dataSource.count == 0) {
         [self performSelector:@selector(popAskGiftView:) withObject:viewController afterDelay:300];
+        return;
     } else {
         contactInfo = [dataSource firstObject];
         if (!contactInfo || contactInfo.userId.length == 0 || !contactInfo.userId) {
             [self performSelector:@selector(popAskGiftView:) withObject:viewController afterDelay:300];
+            return;
         }
     }
     
