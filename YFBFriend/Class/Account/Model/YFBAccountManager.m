@@ -51,6 +51,8 @@
         if (success) {
             [YFBUser currentUser].userId = resp.userId;
             [YFBUser currentUser].token = resp.token;
+            [YFBUser currentUser].expireTime = resp.vipExpireDate;
+            [YFBUser currentUser].diamondCount = resp.myDiamonds;
             [[YFBUser currentUser] saveOrUpdateUserInfo];
         }
         if (handler) {
