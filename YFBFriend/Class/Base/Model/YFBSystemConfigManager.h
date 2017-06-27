@@ -8,6 +8,11 @@
 
 #import <QBEncryptedURLRequest.h>
 
+
+@interface YFBSystemConfig : QBURLResponse
+
+@end
+
 @interface YFBSystemConfigManager : QBEncryptedURLRequest
 
 + (instancetype)manager;

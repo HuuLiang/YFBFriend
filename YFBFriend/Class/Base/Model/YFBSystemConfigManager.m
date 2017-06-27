@@ -8,7 +8,23 @@
 
 #import "YFBSystemConfigManager.h"
 
+@implementation YFBSystemConfig
+
+@end
+
 @implementation YFBSystemConfigManager
+
++ (Class)responseClass {
+    return [YFBSystemConfig class];
+}
+
+- (NSTimeInterval)requestTimeInterval {
+    return 10;
+}
+
+- (QBURLRequestMethod)requestMethod {
+    return QBURLPostRequest;
+}
 
 + (instancetype)manager {
     static YFBSystemConfigManager *_systemConfig;
@@ -20,14 +36,19 @@
 }
 
 - (void)getSystemConfigInfo {
-    NSDictionary *params = @{};
+    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
+                             @"userId":[YFBUser currentUser].userId,
+                             @"token":[YFBUser currentUser].token,
+                             @"type":@(2)};
+    
     [self requestURLPath:YFB_CONFIG_URL
           standbyURLPath:nil
               withParams:params
          responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
+        YFBSystemConfig *config = nil;
         if (respStatus == QBURLResponseSuccess) {
-            
+            config = self.response;
         }
     }];
 }

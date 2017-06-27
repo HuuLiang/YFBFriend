@@ -21,6 +21,7 @@
 #import "YFBAutoReplyManager.h"
 #import "YFBContactManager.h"
 #import "YFBAskGiftManager.h"
+#import "YFBSystemConfigManager.h"
 
 #import "YFBAutoReplyManager.h"
 #import "YFBContactView.h"
@@ -103,6 +104,7 @@
     [[YFBAutoReplyManager manager] startAutoRollingToReply];                        //开始推送机器人
     [[YFBAskGiftManager manager] startAutoBlagActionInViewController:self];         //开始索要礼物功能
     [[YFBLocationManager manager] loadLocationManager];                             //申请定位权限
+    [[YFBSystemConfigManager manager] getSystemConfigInfo];                         //获取系统配置信息
 }
 
 - (void)wakeAskGiftManager {

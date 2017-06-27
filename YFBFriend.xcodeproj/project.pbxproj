@@ -2493,8 +2493,8 @@
 				TargetAttributes = {
 					EC9A67711E6D3E4A0018C5FB = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = S954G7B2DA;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = BTTZYVST3G;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -3010,7 +3010,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = BTTZYVST3G;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3026,10 +3026,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YFBFriend/Class/Vendor/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuanfenba.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "d5c92bda-7d00-40e3-a8ea-ea93198aa3fc";
+				PROVISIONING_PROFILE_SPECIFIER = YPBAppStoreDevelopTest;
 			};
 			name = Debug;
 		};
@@ -3039,9 +3039,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = BTTZYVST3G;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3057,10 +3057,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YFBFriend/Class/Vendor/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuanfenba.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "432412c4-ebf3-4105-96b8-7e117c8e985e";
+				PROVISIONING_PROFILE_SPECIFIER = YuePaoBaAppStoreProvisioningProfile;
 			};
 			name = Release;
 		};
