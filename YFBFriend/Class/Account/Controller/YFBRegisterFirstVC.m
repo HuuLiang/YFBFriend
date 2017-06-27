@@ -94,10 +94,12 @@
                 @strongify(self);
                 if (success) {
                     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                    [self presentViewController:appDelegate.contentViewController animated:YES completion:^ {
-                        [UIApplication sharedApplication].keyWindow.rootViewController = appDelegate.contentViewController;
-                        [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
-                    }];
+                    if (self.presentedViewController == nil) {
+                        [self presentViewController:appDelegate.contentViewController animated:YES completion:^ {
+                            [UIApplication sharedApplication].keyWindow.rootViewController = appDelegate.contentViewController;
+                            [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
+                        }];
+                    }
                 } else {
                     [[YFBHudManager manager] showHudWithText:@"注册失败"];
                 }
