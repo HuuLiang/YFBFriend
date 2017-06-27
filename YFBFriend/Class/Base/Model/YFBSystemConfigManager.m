@@ -9,13 +9,23 @@
 #import "YFBSystemConfigManager.h"
 
 @implementation YFBSystemConfig
+- (Class)configClass {
+    return [YFBSystemConfig class];
+}
 
+@end
+
+
+@implementation YFBSystemConfigResponse
+- (Class)configClass {
+    return [YFBSystemConfig class];
+}
 @end
 
 @implementation YFBSystemConfigManager
 
 + (Class)responseClass {
-    return [YFBSystemConfig class];
+    return [YFBSystemConfigResponse class];
 }
 
 - (NSTimeInterval)requestTimeInterval {
@@ -46,9 +56,10 @@
               withParams:params
          responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
-        YFBSystemConfig *config = nil;
+        YFBSystemConfigResponse *resp = nil;
         if (respStatus == QBURLResponseSuccess) {
-            config = self.response;
+            resp = self.response;
+            self.SEX_SWITCH = resp.config.SEX_SWITCH;
         }
     }];
 }

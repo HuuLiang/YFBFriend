@@ -59,6 +59,7 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
         return @{@"data":encryptedKey};
 //        return [NSString stringWithFormat:@"data=%@",encryptedKey];
     }
+    return nil;
 }
 
 - (BOOL)requestURLPath:(NSString *)urlPath withParams:(NSDictionary *)params responseHandler:(QBURLResponseHandler)responseHandler {

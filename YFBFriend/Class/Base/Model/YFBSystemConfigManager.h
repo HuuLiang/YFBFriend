@@ -8,9 +8,13 @@
 
 #import <QBEncryptedURLRequest.h>
 
+@interface YFBSystemConfig : NSObject
+@property (nonatomic) NSString *SEX_SWITCH;
+@end
 
-@interface YFBSystemConfig : QBURLResponse
 
+@interface YFBSystemConfigResponse : QBURLResponse
+@property (nonatomic) YFBSystemConfig *config;
 @end
 
 @interface YFBSystemConfigManager : QBEncryptedURLRequest
@@ -18,5 +22,8 @@
 + (instancetype)manager;
 
 - (void)getSystemConfigInfo;
+
+@property (nonatomic) NSString *SEX_SWITCH;
+
 
 @end
