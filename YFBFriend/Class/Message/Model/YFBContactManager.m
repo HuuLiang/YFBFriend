@@ -25,7 +25,7 @@
 }
 
 - (NSArray <YFBContactModel *> *)loadAllContactInfo {
-    NSArray *allContacts = [YFBContactModel findByCriteria:[NSString stringWithFormat:@"userId!=\'%@\' order by messageTime desc",[YFBUser currentUser].userId]];
+    NSArray *allContacts = [YFBContactModel findByCriteria:[NSString stringWithFormat:@"where userId!=\'%@\' order by messageTime desc",[YFBUser currentUser].userId]];
     return allContacts;
 }
 

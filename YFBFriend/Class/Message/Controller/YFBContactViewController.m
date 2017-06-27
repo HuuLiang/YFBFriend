@@ -170,6 +170,9 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
             if (notification) {
                 contactModel = (YFBContactModel *)[notification object];
             }
+            if ([contactModel.userId isEqualToString:[YFBUser currentUser].userId]) {
+                return ;
+            }
             if (contactModel) {
                 __block BOOL alreadyRobot = NO;
                 __block BOOL needSort = NO;
