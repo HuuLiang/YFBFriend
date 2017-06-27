@@ -246,9 +246,11 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
                  deductDiamonds:(NSInteger)deductDiamonds
                         handler:(void (^)(BOOL))handler
 {
+    
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                              @"userId":[YFBUser currentUser].userId,
                              @"token":[YFBUser currentUser].token,
+                             @"versionCode":YFB_REST_APP_VERSION,
                              @"toUserId":userId,
                              @"content":content,
                              @"msgType":@(messageType),
