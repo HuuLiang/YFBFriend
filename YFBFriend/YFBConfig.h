@@ -26,6 +26,7 @@
 #define YFB_ACTIVATION_URL              @"/flbc/activat.htm"                            //激活
 //#define YFB_ACCESS_URL                  @"/mfwcps/userAccess.htm"                //登录次数
 //#define YFB_SYSTEM_CONFIG_URL           @"/mfwcps/systemConfig.htm"              //系统配置
+#define YFB_CONFIG_URL                  @"/flbc/config.htm"                             //系统配置
 #define YFB_USERCREATE_URL              @"/friend/reg.service"                          //注册
 #define YFB_LOGIN_URL                   @"/friend/login.service"                        //登录
 #define YFB_UPDATEUSERINFO_URL          @"/friend/updateUserInfo.service"               //更新用户资料
