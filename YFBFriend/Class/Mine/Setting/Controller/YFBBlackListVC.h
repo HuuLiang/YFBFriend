@@ -1,5 +1,5 @@
 //
-//  YFBInformViewController.h
+//  YFBBlackListVC.h
 //  YFBFriend
 //
 //  Created by Liang on 2017/6/28.
@@ -8,8 +8,6 @@
 
 #import "YFBBaseViewController.h"
 
-@interface YFBInformViewController : YFBBaseViewController
-
-@property (nonatomic) NSString *userId;
+@interface YFBBlackListVC : YFBBaseViewController
 
 @end

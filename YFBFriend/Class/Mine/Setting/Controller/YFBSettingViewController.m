@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, YFBSettingFunctionType) {
     YFBSettingFunctionTypeChange = 0,
     YFBSettingFunctionTypeAdvise,
     YFBSettingFunctionTypeActivity,
+    YFBSettingFunctionTypeBlack,
     YFBSettingFunctionTypeAbout,
     YFBSettingFunctionTypeCount
 };
@@ -179,6 +180,9 @@ typedef NS_ENUM(NSUInteger, YFBSettingFunctionType) {
             cell.settingType = YFBSettingCellTypeNone;
         } else if (indexPath.row == YFBSettingFunctionTypeActivity) {
             cell.title = @"活动相关";
+            cell.settingType = YFBSettingCellTypeNone;
+        } else if (indexPath.row == YFBSettingFunctionTypeBlack) {
+            cell.title = @"黑名单";
             cell.settingType = YFBSettingCellTypeNone;
         } else if (indexPath.row == YFBSettingFunctionTypeAbout) {
             cell.title = @"关于";

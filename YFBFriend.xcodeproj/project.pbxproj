@@ -14,6 +14,9 @@
 		EC1E1A7D1EC45CA0002D94AF /* detail_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */; };
 		EC3976A61F034DA800EF255E /* YFBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3976A51F034DA800EF255E /* YFBWebViewController.m */; };
 		EC3976A91F034EC700EF255E /* YFBInformViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3976A81F034EC700EF255E /* YFBInformViewController.m */; };
+		EC3976AC1F0388E800EF255E /* YFBInfomView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3976AB1F0388E800EF255E /* YFBInfomView.m */; };
+		EC3976AF1F039EC300EF255E /* YFBBlackListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3976AE1F039EC300EF255E /* YFBBlackListVC.m */; };
+		EC3976B21F03AB9900EF255E /* YFBBlackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3976B11F03AB9900EF255E /* YFBBlackCell.m */; };
 		EC4A737D1EE6A4E100198FD9 /* YFBSocialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A737C1EE6A4E100198FD9 /* YFBSocialModel.m */; };
 		EC4A73801EE6BD4600198FD9 /* YFBSocialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A737F1EE6BD4600198FD9 /* YFBSocialCell.m */; };
 		EC4A73831EE6BDC200198FD9 /* YFBCommentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73821EE6BDC200198FD9 /* YFBCommentsVC.m */; };
@@ -339,6 +342,12 @@
 		EC3976A51F034DA800EF255E /* YFBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBWebViewController.m; sourceTree = "<group>"; };
 		EC3976A71F034EC700EF255E /* YFBInformViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBInformViewController.h; sourceTree = "<group>"; };
 		EC3976A81F034EC700EF255E /* YFBInformViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBInformViewController.m; sourceTree = "<group>"; };
+		EC3976AA1F0388E800EF255E /* YFBInfomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBInfomView.h; sourceTree = "<group>"; };
+		EC3976AB1F0388E800EF255E /* YFBInfomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBInfomView.m; sourceTree = "<group>"; };
+		EC3976AD1F039EC300EF255E /* YFBBlackListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBBlackListVC.h; sourceTree = "<group>"; };
+		EC3976AE1F039EC300EF255E /* YFBBlackListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBBlackListVC.m; sourceTree = "<group>"; };
+		EC3976B01F03AB9900EF255E /* YFBBlackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBBlackCell.h; sourceTree = "<group>"; };
+		EC3976B11F03AB9900EF255E /* YFBBlackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBBlackCell.m; sourceTree = "<group>"; };
 		EC4A737B1EE6A4E100198FD9 /* YFBSocialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSocialModel.h; sourceTree = "<group>"; };
 		EC4A737C1EE6A4E100198FD9 /* YFBSocialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSocialModel.m; sourceTree = "<group>"; };
 		EC4A737E1EE6BD4600198FD9 /* YFBSocialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSocialCell.h; sourceTree = "<group>"; };
@@ -1212,6 +1221,8 @@
 				ECDBA8BE1EE5598B00BEFF98 /* YFBDetailFooterView.m */,
 				ECDBA8BF1EE5598B00BEFF98 /* YFBDetailHeaderView.h */,
 				ECDBA8C01EE5598B00BEFF98 /* YFBDetailHeaderView.m */,
+				EC3976AA1F0388E800EF255E /* YFBInfomView.h */,
+				EC3976AB1F0388E800EF255E /* YFBInfomView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1660,6 +1671,8 @@
 				ECDBA96B1EE5598B00BEFF98 /* YFBActivityVC.m */,
 				ECDBA96C1EE5598B00BEFF98 /* YFBAdviseVC.h */,
 				ECDBA96D1EE5598B00BEFF98 /* YFBAdviseVC.m */,
+				EC3976AD1F039EC300EF255E /* YFBBlackListVC.h */,
+				EC3976AE1F039EC300EF255E /* YFBBlackListVC.m */,
 				ECDBA96E1EE5598B00BEFF98 /* YFBPasswordVC.h */,
 				ECDBA96F1EE5598B00BEFF98 /* YFBPasswordVC.m */,
 				ECDBA9701EE5598B00BEFF98 /* YFBSettingViewController.h */,
@@ -1682,6 +1695,8 @@
 				ECDBA9751EE5598B00BEFF98 /* YFBPasswordView.m */,
 				ECDBA9761EE5598B00BEFF98 /* YFBSettingCell.h */,
 				ECDBA9771EE5598B00BEFF98 /* YFBSettingCell.m */,
+				EC3976B01F03AB9900EF255E /* YFBBlackCell.h */,
+				EC3976B11F03AB9900EF255E /* YFBBlackCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2685,6 +2700,7 @@
 				ECDBAB831EE5598B00BEFF98 /* ActionSheetDistancePicker.m in Sources */,
 				ECDBABB51EE5598C00BEFF98 /* XHVideoOutputSampleBufferFactory.m in Sources */,
 				ECDBABAE1EE5598C00BEFF98 /* XHFileAttribute.m in Sources */,
+				EC3976B21F03AB9900EF255E /* YFBBlackCell.m in Sources */,
 				ECDBAB851EE5598B00BEFF98 /* ActionSheetMultipleStringPicker.m in Sources */,
 				ECDBAC081EE5598C00BEFF98 /* POSBlobInputStream.m in Sources */,
 				ECDBABD61EE5598C00BEFF98 /* XHEmotionCollectionViewFlowLayout.m in Sources */,
@@ -2801,6 +2817,7 @@
 				ECDBAB1D1EE5598B00BEFF98 /* YFBDetailFooterView.m in Sources */,
 				ECDBAB0D1EE5598B00BEFF98 /* YFBDiamondManager.m in Sources */,
 				ECDBABA81EE5598C00BEFF98 /* XHDisplayEmotionViewController.m in Sources */,
+				EC3976AF1F039EC300EF255E /* YFBBlackListVC.m in Sources */,
 				ECDBAB601EE5598B00BEFF98 /* YFBActivityVC.m in Sources */,
 				ECDBAB6D1EE5598B00BEFF98 /* NSDate+timeStamp.m in Sources */,
 				ECDBAB5E1EE5598B00BEFF98 /* YFBUserInfoEditView.m in Sources */,
@@ -2840,6 +2857,7 @@
 				ECDBAB291EE5598B00BEFF98 /* YFBGreetingInfoModel.m in Sources */,
 				EC4A73831EE6BDC200198FD9 /* YFBCommentsVC.m in Sources */,
 				ECDBAC231EE55BCA00BEFF98 /* YFBSocialViewController.m in Sources */,
+				EC3976AC1F0388E800EF255E /* YFBInfomView.m in Sources */,
 				ECDBAB911EE5598B00BEFF98 /* NSDataEx.m in Sources */,
 				ECDBABB31EE5598C00BEFF98 /* XHMessageVideoConverPhotoFactory.m in Sources */,
 				ECDBAB781EE5598B00BEFF98 /* NSArray+Log.m in Sources */,

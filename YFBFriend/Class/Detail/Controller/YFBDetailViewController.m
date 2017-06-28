@@ -13,6 +13,8 @@
 #import "YFBDetailManager.h"
 #import "YFBInteractionManager.h"
 #import "YFBRobot.h"
+#import "YFBInfomView.h"
+#import "YFBInformViewController.h"
 
 typedef NS_ENUM(NSUInteger, YFBDetailSection) {
     YFBDetailSpace = 0, //个人空间
@@ -72,6 +74,7 @@ static NSString *const kYFBDetailCellReusableIdentifier = @"YFBDetailCellReusabl
 @property (nonatomic,strong) YFBDetailHeaderView *headerView;
 @property (nonatomic,strong) YFBDetailFooterView *footerView;
 @property (nonatomic,strong) YFBUserLoginModel *response;
+@property (nonatomic) YFBInfomView *informView;
 @end
 
 @implementation YFBDetailViewController
@@ -110,6 +113,7 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
     }];
     
     [_tableView YFB_triggerPullToRefresh];
+    [self configRightBarButton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -211,9 +215,55 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
     }];
 }
 
+- (YFBInfomView *)informView {
+    if (_informView) {
+        return _informView;
+    }
+    _informView = [[YFBInfomView alloc] init];
+    _informView.hidden = YES;
+    [self.view addSubview:_informView];
+    
+    @weakify(self);
+    _informView.blackAction = ^{
+        @strongify(self);
+        YFBRobot *robot = [YFBRobot findFirstByCriteria:[NSString stringWithFormat:@"where userId=\'%@\'",self->_userId]];
+        if (!robot) {
+            robot = [[YFBRobot alloc] init];
+            robot.userId = self->_userId;
+            robot.blackList = YES;
+            [robot saveOrUpdate];
+            [[YFBHudManager manager] showHudWithText:@"拉黑成功"];
+        } else {
+            if (robot.blackList) {
+                [[YFBHudManager manager] showHudWithText:@"您已拉黑该用户"];
+            } else {
+                robot.blackList = YES;
+                [robot saveOrUpdate];
+                [[YFBHudManager manager] showHudWithText:@"拉黑成功"];
+            }
+        }
+    };
+    
+    _informView.informAction = ^{
+        @strongify(self);
+        YFBInformViewController *informVC = [[YFBInformViewController alloc] initWithTitle:@"举报"];
+        informVC.userId = self->_userId;
+        [self.navigationController pushViewController:informVC animated:YES];
+    };
+    
+    {
+        [_informView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.view.mas_right).offset(-kWidth(26));
+            make.top.equalTo(self.view).offset(kWidth(10));
+            make.size.mas_equalTo(CGSizeMake(kWidth(200), kWidth(200)));
+        }];
+    }
+    return _informView;
+}
+
 - (void)configRightBarButton {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@""] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"detail_info"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        self.informView.hidden = !self.informView.isHidden;
     }];
 }
 

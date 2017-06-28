@@ -23,6 +23,7 @@
 @property (nonatomic) BOOL greeted; //打招呼
 @property (nonatomic) BOOL concernMe; //关注我
 @property (nonatomic) BOOL concerned; //是否关注
+@property (nonatomic) BOOL blackList;
 
 + (BOOL)checkUserIsGreetedWithUserId:(NSString *)userId;
 
