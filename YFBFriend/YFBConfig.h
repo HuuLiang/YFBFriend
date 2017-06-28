@@ -59,7 +59,7 @@
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"
 
-#define YFB_APPLICENSE_URL              @"/iosvideo/appSpreadList.htm"                  //app隐私协议
+#define YFB_APPLICENSE_URL              @"/flbc/license.html"                           //app隐私协议
 
 
 #define YFB_UMENG_APP_ID                @"5914208be88bad6c13000e6e"
