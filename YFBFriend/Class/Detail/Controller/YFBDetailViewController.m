@@ -211,6 +211,12 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
     }];
 }
 
+- (void)configRightBarButton {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@""] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        
+    }];
+}
+
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
