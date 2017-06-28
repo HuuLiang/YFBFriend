@@ -88,7 +88,7 @@ static NSString *const kYFBFriendCurrentUserKeyName         = @"kYFBFriendCurren
 #define KUserChangeInfoNotificationName                 @"YFBFriendUserChangeInfoNotificationName"
 #define KUpdateContactUnReadMessageNotification         @"YFBUpdateContactUnReadMessageNotification"
 #define kYFBFriendShowMessageNotification               @"kYFBFriendShowMessageNotification"
-#define kYFBUpdateMessageDiamondCountNotification       @"kYFBUpdateMessageDiamondCountNotification"
+//#define kYFBUpdateMessageDiamondCountNotification       @"kYFBUpdateMessageDiamondCountNotification"
 #define kYFBUpdateGiftDiamondCountNotification          @"kYFBUpdateGiftDiamondCountNotification"
 #define kYFBUpdateMessageViewControllerNotification     @"kYFBUpdateMessageViewControllerNotification"
 #define kYFBFriendGetRobotMsgTimeIntervalKeyName        @"kYFBFriendGetRobotMsgTimeIntervalKeyName"

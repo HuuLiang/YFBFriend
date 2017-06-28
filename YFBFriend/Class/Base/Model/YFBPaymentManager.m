@@ -205,7 +205,7 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
                          [YFBUser currentUser].expireTime = obj.userBaseInfo.vipExpireDate;
                          [[YFBUser currentUser] saveOrUpdateUserInfo];
                          
-                         [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+//                         [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
                          [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
                      }
                  }];

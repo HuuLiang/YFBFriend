@@ -349,7 +349,7 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
                     self.selectedPayType = YFBPayTypeAliPay;
                 }
                 [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:self.selectedPayType price:self.selectedPrice count:self.selectedCount handler:^(BOOL success) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
                     [self hide];
                 }];
@@ -382,7 +382,7 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
                 }
                 [[YFBPaymentManager manager] payForAction:kYFBPaymentActionOpenVipKeyName WithPayType:self.selectedPayType price:self.selectedPrice count:self.selectedCount handler:^(BOOL success) {
                     if (success) {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
                         [self hide];
                     }
@@ -533,7 +533,7 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
             //支付
             [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:self.payTypeIndexPath.item price:diamondInfo.price count:diamondInfo.diamondAmount handler:^(BOOL success) {
                 if (success) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
                     [self hide];
                 }
