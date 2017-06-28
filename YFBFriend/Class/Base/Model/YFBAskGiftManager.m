@@ -46,7 +46,7 @@
             [[YFBInteractionManager manager] sendMessageInfoToUserId:contactInfo.userId content:giftInfo.giftId type:YFBMessageTypeGift deductDiamonds:-giftInfo.diamondCount handler:^(BOOL success) {
                 if (success) {
                     //刷新上部功能菜单里的钻石数量 即礼物赠送界面的钻石数量
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
                     
                     [[YFBHudManager manager] showHudWithText:@"礼物赠送成功"];

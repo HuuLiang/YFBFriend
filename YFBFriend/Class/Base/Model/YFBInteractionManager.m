@@ -246,6 +246,13 @@ NSString *const kYFBFriendReferContactPhoneKeyName  = @"MOBILE_PHONE";
                  deductDiamonds:(NSInteger)deductDiamonds
                         handler:(void (^)(BOOL))handler
 {
+    if ([userId isEqualToString:[YFBUser currentUser].userId]) {
+        QBLog(@"出现问题啦");
+        if (handler) {
+            handler(true);
+            return;
+        }
+    }
     NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
                              @"userId":[YFBUser currentUser].userId,
                              @"token":[YFBUser currentUser].token,

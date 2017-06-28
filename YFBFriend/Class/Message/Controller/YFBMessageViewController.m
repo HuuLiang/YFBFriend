@@ -106,7 +106,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self reloadChatMessages];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDiamondCount) name:kYFBUpdateMessageDiamondCountNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDiamondCount) name:kYFBUpdateMessageDiamondCountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addChatMessageInCurrentVC:) name:kYFBUpdateMessageViewControllerNotification object:nil];
 }
 
@@ -331,14 +331,16 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         [[YFBInteractionManager manager] sendMessageInfoToUserId:chatMessage.receiveUserId content:chatMessage.content type:chatMessage.messageType deductDiamonds:messageDiamondCount handler:^(BOOL success) {
             @strongify(self);
             if (success) {
-                //刷新上部功能菜单里的钻石数量
-                [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+//                刷新上部功能菜单里的钻石数量
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
                 
-                //保存已发送消息到消息记录管理里面
-                [self saveMessageInfo:chatMessage WithRecordType:recordType];
-                
-                //检测发送消息关键词
-                [[YFBWordsObserve observe] checkMessageContent:chatMessage];
+                if (![chatMessage.receiveUserId isEqualToString:[YFBUser currentUser].userId]) {
+                    //保存已发送消息到消息记录管理里面
+                    [self saveMessageInfo:chatMessage WithRecordType:recordType];
+                    
+                    //检测发送消息关键词
+                    [[YFBWordsObserve observe] checkMessageContent:chatMessage];
+                }
                 
                 XHMessage *xhMsg;
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:chatMessage.messageTime];
@@ -583,7 +585,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 if (success) {
                     [[YFBHudManager manager] showHudWithText:@"礼物赠送成功"];
                     //刷新上部功能菜单里的钻石数量 即礼物赠送界面的钻石数量
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
                 }
             }];
