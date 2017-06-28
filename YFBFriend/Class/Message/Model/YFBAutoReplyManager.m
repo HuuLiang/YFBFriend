@@ -295,13 +295,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
          }
          
          __block NSTimeInterval userMsgTime = timeInterval;
-         
+         __block NSTimeInterval randomTime = 0;
          [contactRobot.robotMsgList enumerateObjectsUsingBlock:^(YFBRobotMsgModel * _Nonnull robotMsg, NSUInteger idx, BOOL * _Nonnull stop)
           {
 #ifdef DEBUG
               userMsgTime += 2;
 #else
-              userMsgTime += arc4random() % 7 + 14;
+              randomTime += arc4random() % 7 + 14;
+              userMsgTime += randomTime;
 #endif
               YFBAutoReplyMessage *autoReplyMessage = [YFBAutoReplyMessage findFirstByCriteria:[NSString stringWithFormat:@"where msgId=%ld",(long)robotMsg.msgId]];
               if (!autoReplyMessage) {
