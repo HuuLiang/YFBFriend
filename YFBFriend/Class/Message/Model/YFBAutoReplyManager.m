@@ -438,8 +438,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     contact.unreadMsgCount += 1;
     [contact saveOrUpdate];
     
-    //显示悬浮消息提醒
-    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendShowMessageNotification object:replyMessage];
+    //如果推送消息的时候是最近的10秒而不是历史消息 显示悬浮消息提醒
+    if ([[NSDate date] timeIntervalSince1970] - replyMessage.replyTime<= 10) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kYFBFriendShowMessageNotification object:replyMessage];
+    }
     
     //向消息界面发出通知更改角标数字
     [[NSNotificationCenter defaultCenter] postNotificationName:KUpdateContactUnReadMessageNotification object:contact];
