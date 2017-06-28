@@ -11,7 +11,7 @@
 
 #define VipDiamondCount         1       //vip用户发送消息消耗的钻石数量
 #define NormalDiamondCount      80      //非vip用户发送消息消耗的钻石数量
-#define FirstDayReplyCount      3       //首日回复人数数量
+#define FirstDayReplyCount      1       //首日回复人数数量
 #define OtherDayReplyCount      1       //非首日回复人数数量
 
 
