@@ -10,6 +10,7 @@
 #import "YFBAccountManager.h"
 #import "YFBUserLoginVC.h"
 #import "YFBRegisterFirstVC.h"
+#import "YFBWebViewController.h"
 
 @interface YFBLoginViewController ()
 //@property (nonatomic,strong) UIButton     *QQButton;
@@ -201,7 +202,8 @@
     [button bk_addEventHandler:^(id sender) {
         @strongify(self);
         //APP隐私协议
-        
+        YFBWebViewController *webVC = [[YFBWebViewController alloc] initWithURL:[NSURL URLWithString:YFB_APPLICENSE_URL] standbyURL:nil];
+        [self.navigationController pushViewController:webVC animated:YES];
     } forControlEvents:UIControlEventTouchUpInside];
     
     {

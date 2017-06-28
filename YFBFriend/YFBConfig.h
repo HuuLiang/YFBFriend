@@ -58,8 +58,9 @@
 #define YFB_UPDATEORDER_URL             @"/friend/ovpd.service"                         //订单协议
 
 #define YFB_ENCRYPT_PASSWORD            @"qb%Fr@2016_&"
-#define YFB_APP_URL                     @"/iosvideo/appSpreadList.htm"
-#define YFB_APP_SPREAD_BANNER_URL       @"/iosvideo/appSpreadBanner.htm"
+
+#define YFB_APPLICENSE_URL              @"/iosvideo/appSpreadList.htm"                  //app隐私协议
+
 
 #define YFB_UMENG_APP_ID                @"5914208be88bad6c13000e6e"
 #define YFB_QQ_APP_ID                   @""

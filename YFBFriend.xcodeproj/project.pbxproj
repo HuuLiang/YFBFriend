@@ -12,6 +12,8 @@
 		EC00477A1EFCA30B00382668 /* YFBBuyVipDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0047791EFCA30B00382668 /* YFBBuyVipDescCell.m */; };
 		EC00477E1EFCF40400382668 /* YFBTelChargeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC00477D1EFCF40400382668 /* YFBTelChargeVC.m */; };
 		EC1E1A7D1EC45CA0002D94AF /* detail_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */; };
+		EC3976A61F034DA800EF255E /* YFBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3976A51F034DA800EF255E /* YFBWebViewController.m */; };
+		EC3976A91F034EC700EF255E /* YFBInformViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3976A81F034EC700EF255E /* YFBInformViewController.m */; };
 		EC4A737D1EE6A4E100198FD9 /* YFBSocialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A737C1EE6A4E100198FD9 /* YFBSocialModel.m */; };
 		EC4A73801EE6BD4600198FD9 /* YFBSocialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A737F1EE6BD4600198FD9 /* YFBSocialCell.m */; };
 		EC4A73831EE6BDC200198FD9 /* YFBCommentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A73821EE6BDC200198FD9 /* YFBCommentsVC.m */; };
@@ -333,6 +335,10 @@
 		EC00477C1EFCF40400382668 /* YFBTelChargeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBTelChargeVC.h; sourceTree = "<group>"; };
 		EC00477D1EFCF40400382668 /* YFBTelChargeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBTelChargeVC.m; sourceTree = "<group>"; };
 		EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = detail_bg.jpg; sourceTree = "<group>"; };
+		EC3976A41F034DA700EF255E /* YFBWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBWebViewController.h; sourceTree = "<group>"; };
+		EC3976A51F034DA800EF255E /* YFBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBWebViewController.m; sourceTree = "<group>"; };
+		EC3976A71F034EC700EF255E /* YFBInformViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBInformViewController.h; sourceTree = "<group>"; };
+		EC3976A81F034EC700EF255E /* YFBInformViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBInformViewController.m; sourceTree = "<group>"; };
 		EC4A737B1EE6A4E100198FD9 /* YFBSocialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSocialModel.h; sourceTree = "<group>"; };
 		EC4A737C1EE6A4E100198FD9 /* YFBSocialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSocialModel.m; sourceTree = "<group>"; };
 		EC4A737E1EE6BD4600198FD9 /* YFBSocialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSocialCell.h; sourceTree = "<group>"; };
@@ -1113,6 +1119,8 @@
 				ECDBA8921EE5598B00BEFF98 /* YFBNavigationController.m */,
 				ECDBA8931EE5598B00BEFF98 /* YFBTabBarController.h */,
 				ECDBA8941EE5598B00BEFF98 /* YFBTabBarController.m */,
+				EC3976A41F034DA700EF255E /* YFBWebViewController.h */,
+				EC3976A51F034DA800EF255E /* YFBWebViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1180,6 +1188,8 @@
 			children = (
 				ECDBA8B51EE5598B00BEFF98 /* YFBDetailViewController.h */,
 				ECDBA8B61EE5598B00BEFF98 /* YFBDetailViewController.m */,
+				EC3976A71F034EC700EF255E /* YFBInformViewController.h */,
+				EC3976A81F034EC700EF255E /* YFBInformViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2700,6 +2710,7 @@
 				ECDBAB231EE5598B00BEFF98 /* YFBNearVC.m in Sources */,
 				ECDBAB391EE5598B00BEFF98 /* YFBContactCell.m in Sources */,
 				ECDBAC111EE5598C00BEFF98 /* QUMBase64.m in Sources */,
+				EC3976A91F034EC700EF255E /* YFBInformViewController.m in Sources */,
 				EC9A67771E6D3E4A0018C5FB /* main.m in Sources */,
 				ECDBAB351EE5598B00BEFF98 /* YFBMessageRecordManager.m in Sources */,
 				ECDBAB3E1EE5598B00BEFF98 /* YFBMessageDiamondToPayCell.m in Sources */,
@@ -2881,6 +2892,7 @@
 				ECAAA2801EEA9DBD00852315 /* YFBDealFeedbackView.m in Sources */,
 				ECDBAB871EE5598B00BEFF98 /* DistancePickerView.m in Sources */,
 				ECDBAB4E1EE5598B00BEFF98 /* YFBDiamondVoucherController.m in Sources */,
+				EC3976A61F034DA800EF255E /* YFBWebViewController.m in Sources */,
 				ECDBABB71EE5598C00BEFF98 /* XHEmotion.m in Sources */,
 				ECDBABA11EE5598C00BEFF98 /* XHCaptureHelper.m in Sources */,
 				ECDBAB051EE5598B00BEFF98 /* JYNextButton.m in Sources */,
