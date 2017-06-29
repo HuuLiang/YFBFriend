@@ -135,12 +135,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
     
      _timeInterval = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendGetRobotMsgTimeIntervalKeyName] integerValue];
     
-    if (![YFBUtil isVip] || [YFBUser currentUser].diamondCount == 0) {
+    if (![YFBUtil isVip] || [YFBUser currentUser].diamondCount < 100) {
         if (![YFBUtil isToday]) {
             //判断不是今天 刷新在线市场计时器
             _timeInterval = 0;
             [[NSUserDefaults standardUserDefaults] setObject:@(_timeInterval) forKey:kYFBFriendGetRobotMsgTimeIntervalKeyName];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            dispatch_resume(_timer);
         } else {
             //是今天 沿用保存的时间继续开始计时器
             if (_timeInterval > 60 * 20) {
