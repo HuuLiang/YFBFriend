@@ -202,7 +202,7 @@
     [button bk_addEventHandler:^(id sender) {
         @strongify(self);
         //APP隐私协议
-        YFBWebViewController *webVC = [[YFBWebViewController alloc] initWithURL:[NSURL URLWithString:YFB_APPLICENSE_URL] standbyURL:nil];
+        YFBWebViewController *webVC = [[YFBWebViewController alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",YFB_BASE_URL,YFB_APPLICENSE_URL]] standbyURL:nil];
         [self.navigationController pushViewController:webVC animated:YES];
     } forControlEvents:UIControlEventTouchUpInside];
     
