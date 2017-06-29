@@ -35,6 +35,7 @@
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
 		EC7C98381EF2BA50005B6B29 /* LSJVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C98371EF2BA50005B6B29 /* LSJVideoPlayer.m */; };
 		EC7CF0E51F04DA6B00CD0555 /* YFBUserControlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7CF0E41F04DA6B00CD0555 /* YFBUserControlManager.m */; };
+		EC7CF0E81F04F46500CD0555 /* YFBApplePayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7CF0E71F04F46500CD0555 /* YFBApplePayManager.m */; };
 		EC7F0FA01E6FE2D700F39FD9 /* homeBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */; };
 		EC88D69A1EF9342D00BB6785 /* YFBDiamondTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88D6991EF9342D00BB6785 /* YFBDiamondTitleCell.m */; };
 		EC88D69D1EF9523300BB6785 /* YFBBuyVipCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88D69C1EF9523300BB6785 /* YFBBuyVipCell.m */; };
@@ -383,6 +384,8 @@
 		EC7C98371EF2BA50005B6B29 /* LSJVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSJVideoPlayer.m; sourceTree = "<group>"; };
 		EC7CF0E31F04DA6B00CD0555 /* YFBUserControlManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBUserControlManager.h; sourceTree = "<group>"; };
 		EC7CF0E41F04DA6B00CD0555 /* YFBUserControlManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBUserControlManager.m; sourceTree = "<group>"; };
+		EC7CF0E61F04F46500CD0555 /* YFBApplePayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBApplePayManager.h; sourceTree = "<group>"; };
+		EC7CF0E71F04F46500CD0555 /* YFBApplePayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBApplePayManager.m; sourceTree = "<group>"; };
 		EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = homeBackground.jpg; sourceTree = "<group>"; };
 		EC88D6981EF9342D00BB6785 /* YFBDiamondTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondTitleCell.h; sourceTree = "<group>"; };
 		EC88D6991EF9342D00BB6785 /* YFBDiamondTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondTitleCell.m; sourceTree = "<group>"; };
@@ -1154,6 +1157,8 @@
 				ECDBA8A11EE5598B00BEFF98 /* YFBLocalNotificationManager.m */,
 				ECDBA8A21EE5598B00BEFF98 /* YFBPayConfigManager.h */,
 				ECDBA8A31EE5598B00BEFF98 /* YFBPayConfigManager.m */,
+				EC7CF0E61F04F46500CD0555 /* YFBApplePayManager.h */,
+				EC7CF0E71F04F46500CD0555 /* YFBApplePayManager.m */,
 				ECDBA8A41EE5598B00BEFF98 /* YFBPaymentManager.h */,
 				ECDBA8A51EE5598B00BEFF98 /* YFBPaymentManager.m */,
 				ECDBA8A61EE5598B00BEFF98 /* YFBPhotoListManager.h */,
@@ -2749,6 +2754,7 @@
 				ECDBAB3D1EE5598B00BEFF98 /* YFBMessageDiamondPayTypeCell.m in Sources */,
 				ECDBABA01EE5598B00BEFF98 /* XHAudioPlayerHelper.m in Sources */,
 				ECDBAC171EE5598C00BEFF98 /* TAPageControl.m in Sources */,
+				EC7CF0E81F04F46500CD0555 /* YFBApplePayManager.m in Sources */,
 				ECDBAC1B1EE5598C00BEFF98 /* VPImageCropperViewController.m in Sources */,
 				ECDBAB651EE5598B00BEFF98 /* YFBSettingCell.m in Sources */,
 				ECDBABCE1EE5598C00BEFF98 /* XHBubblePhotoImageView.m in Sources */,
