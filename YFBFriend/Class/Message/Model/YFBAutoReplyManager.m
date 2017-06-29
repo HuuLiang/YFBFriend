@@ -289,7 +289,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
      {
          
          if (idx == 0) {
-             timeInterval = 30 + timeInterval;//30秒以后开始回复 初始化回复时间
+             timeInterval = 10 + timeInterval;//10秒以后开始回复 初始化回复时间
          } else {
              timeInterval = timeInterval + arc4random() % 30 + 15;
          }
