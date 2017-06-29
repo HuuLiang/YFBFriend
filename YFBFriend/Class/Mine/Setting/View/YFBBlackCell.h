@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface YFBBlackCell : UICollectionViewCell
-
+@property (nonatomic) NSString *userImgStr;
+@property (nonatomic) BOOL selectedCell;
 @end

@@ -230,6 +230,7 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
         if (!robot) {
             robot = [[YFBRobot alloc] init];
             robot.userId = self->_userId;
+            robot.portraitUrl = self.response.portraitUrl;
             robot.blackList = YES;
             [robot saveOrUpdate];
             [[YFBHudManager manager] showHudWithText:@"拉黑成功"];
@@ -238,6 +239,7 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
                 [[YFBHudManager manager] showHudWithText:@"您已拉黑该用户"];
             } else {
                 robot.blackList = YES;
+                robot.portraitUrl = self.response.portraitUrl;
                 [robot saveOrUpdate];
                 [[YFBHudManager manager] showHudWithText:@"拉黑成功"];
             }

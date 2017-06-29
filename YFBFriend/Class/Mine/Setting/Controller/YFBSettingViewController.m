@@ -15,6 +15,7 @@
 #import "YFBNavigationController.h"
 #import "YFBLaunchViewController.h"
 #import "AppDelegate.h"
+#import "YFBBlackListVC.h"
 
 static NSString *const kYFBSettingCellReusableIdentifier = @"YFBSettingCellReusableIdentifier";
 
@@ -223,6 +224,9 @@ typedef NS_ENUM(NSUInteger, YFBSettingFunctionType) {
         } else if (indexPath.row == YFBSettingFunctionTypeActivity) {
             YFBActivityVC *activityVC = [[YFBActivityVC alloc] initWithTitle:@"活动相关"];
             [self.navigationController pushViewController:activityVC animated:YES];
+        } else if (indexPath.row == YFBSettingFunctionTypeBlack) {
+            YFBBlackListVC *blackVC = [[YFBBlackListVC alloc] initWithTitle:@"黑名单"];
+            [self.navigationController pushViewController:blackVC animated:YES];
         } else if (indexPath.row == YFBSettingFunctionTypeAbout) {
             YFBAboutVC *aboutVC = [[YFBAboutVC alloc] initWithTitle:@"关于"];
             [self.navigationController pushViewController:aboutVC animated:YES];

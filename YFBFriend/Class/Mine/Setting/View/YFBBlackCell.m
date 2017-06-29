@@ -45,4 +45,16 @@
     return self;
 }
 
+- (void)setUserImgStr:(NSString *)userImgStr {
+    [_imgV sd_setImageWithURL:[NSURL URLWithString:userImgStr] placeholderImage:[UIImage imageNamed:@"mine_default_avatar"]];
+}
+
+- (void)setSelectedCell:(BOOL)selectedCell {
+    if (selectedCell) {
+        [_selectedButton setImage:[UIImage imageNamed:@"black_selected"] forState:UIControlStateNormal];
+    } else {
+        [_selectedButton setImage:[UIImage imageNamed:@"black_normal"] forState:UIControlStateNormal];
+    }
+}
+
 @end
