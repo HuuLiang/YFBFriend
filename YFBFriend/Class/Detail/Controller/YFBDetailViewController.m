@@ -123,9 +123,9 @@ QBDefineLazyPropertyInitialization(YFBUserLoginModel, response)
 - (void)configTableHeaderView {
     self.headerView = [[YFBDetailHeaderView alloc] init];
     _headerView.size = CGSizeMake(kScreenWidth, kWidth(418));
+    _headerView.userId = self.response.userId;
     _headerView.userImageUrl = self.response.portraitUrl;
     _headerView.nickName = self.response.nickName;
-    _headerView.userId = self.response.userId;
     _headerView.userLocation = self.response.userBaseInfo.city;
     _headerView.distance = @"3km以内";//self.response.distance;
     _headerView.albumCount = arc4random() % 4 + 2;

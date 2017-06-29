@@ -7,6 +7,7 @@
 //
 
 #import "YFBDetailHeaderView.h"
+#import "YFBUserControlManager.h"
 
 @interface YFBDetailHeaderView ()
 @property (nonatomic,strong) UIImageView *backImageView;
@@ -166,20 +167,25 @@
     }];
 }
 
+- (void)setUserId:(NSString *)userId {
+    _userId = userId;
+    _userIdLabel.text = [NSString stringWithFormat:@"ID:%@",userId];
+}
+
 - (void)setBackImageUrl:(NSString *)backImageUrl {
     [_backImageView sd_setImageWithURL:[NSURL URLWithString:backImageUrl]];
 }
 
 - (void)setUserImageUrl:(NSString *)userImageUrl {
-    [_userImageView sd_setImageWithURL:[NSURL URLWithString:userImageUrl]];
+    if ([[YFBUserControlManager manager] shoulForbidUserWithUserId:_userId]) {
+        _userImageView.image = [UIImage imageNamed:@"mine_default_avatar"];
+    } else {
+        [_userImageView sd_setImageWithURL:[NSURL URLWithString:userImageUrl] placeholderImage:[UIImage imageNamed:@"mine_default_avatar"]];
+    }
 }
 
 - (void)setNickName:(NSString *)nickName {
-    _nickNameLabel.text = nickName;
-}
-
-- (void)setUserId:(NSString *)userId {
-    _userIdLabel.text = [NSString stringWithFormat:@"ID:%@",userId];
+    _nickNameLabel.text = [[YFBUserControlManager manager] shoulForbidUserWithUserId:_userId] ? @"该用户账号涉嫌违规" : nickName;
 }
 
 - (void)setUserLocation:(NSString *)userLocation {

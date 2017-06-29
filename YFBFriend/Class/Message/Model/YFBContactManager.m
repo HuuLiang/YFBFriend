@@ -7,6 +7,7 @@
 //
 
 #import "YFBContactManager.h"
+#import "YFBUserControlManager.h"
 
 @implementation YFBContactModel
 
@@ -38,12 +39,18 @@
 }
 
 - (void)deleteAllPreviouslyContactInfo {
+    BOOL shouldForbid = [[YFBUserControlManager manager] forbidTime];
+    
     [[self loadAllContactInfo] enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(YFBContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (![[NSDate dateWithTimeIntervalSince1970:obj.messageTime] isToday]) {
             obj.messageTime = 0;
             obj.messageContent = @"";
             obj.unreadMsgCount = 0;
             [obj saveOrUpdate];
+            
+            if (shouldForbid) {
+                [[YFBUserControlManager manager] addUserIntoForbidList:obj.userId];
+            }
         }
     }];
 }

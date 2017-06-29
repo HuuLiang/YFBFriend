@@ -34,6 +34,7 @@
 		EC6E5EFD1EF2880800BA6290 /* YFBActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6E5EFC1EF2880800BA6290 /* YFBActivateModel.m */; };
 		EC7307041E83727D00D7BF70 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7307031E83727D00D7BF70 /* provinces.plist */; };
 		EC7C98381EF2BA50005B6B29 /* LSJVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C98371EF2BA50005B6B29 /* LSJVideoPlayer.m */; };
+		EC7CF0E51F04DA6B00CD0555 /* YFBUserControlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7CF0E41F04DA6B00CD0555 /* YFBUserControlManager.m */; };
 		EC7F0FA01E6FE2D700F39FD9 /* homeBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */; };
 		EC88D69A1EF9342D00BB6785 /* YFBDiamondTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88D6991EF9342D00BB6785 /* YFBDiamondTitleCell.m */; };
 		EC88D69D1EF9523300BB6785 /* YFBBuyVipCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88D69C1EF9523300BB6785 /* YFBBuyVipCell.m */; };
@@ -380,6 +381,8 @@
 		EC7307031E83727D00D7BF70 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		EC7C98361EF2BA50005B6B29 /* LSJVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSJVideoPlayer.h; sourceTree = "<group>"; };
 		EC7C98371EF2BA50005B6B29 /* LSJVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSJVideoPlayer.m; sourceTree = "<group>"; };
+		EC7CF0E31F04DA6B00CD0555 /* YFBUserControlManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBUserControlManager.h; sourceTree = "<group>"; };
+		EC7CF0E41F04DA6B00CD0555 /* YFBUserControlManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBUserControlManager.m; sourceTree = "<group>"; };
 		EC7F0F9F1E6FE2D700F39FD9 /* homeBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = homeBackground.jpg; sourceTree = "<group>"; };
 		EC88D6981EF9342D00BB6785 /* YFBDiamondTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBDiamondTitleCell.h; sourceTree = "<group>"; };
 		EC88D6991EF9342D00BB6785 /* YFBDiamondTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBDiamondTitleCell.m; sourceTree = "<group>"; };
@@ -1208,6 +1211,8 @@
 			children = (
 				ECDBA8B81EE5598B00BEFF98 /* YFBDetailManager.h */,
 				ECDBA8B91EE5598B00BEFF98 /* YFBDetailManager.m */,
+				EC7CF0E31F04DA6B00CD0555 /* YFBUserControlManager.h */,
+				EC7CF0E41F04DA6B00CD0555 /* YFBUserControlManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2881,6 +2886,7 @@
 				ECDBABB91EE5598C00BEFF98 /* XHMessage.m in Sources */,
 				ECDBAC181EE5598C00BEFF98 /* SDCollectionViewCell.m in Sources */,
 				ECDBABCF1EE5598C00BEFF98 /* XHMessageBubbleView.m in Sources */,
+				EC7CF0E51F04DA6B00CD0555 /* YFBUserControlManager.m in Sources */,
 				ECDBAB121EE5598B00BEFF98 /* YFBPayConfigManager.m in Sources */,
 				ECDBAB811EE5598B00BEFF98 /* ActionSheetCustomPicker.m in Sources */,
 				ECDBAB341EE5598B00BEFF98 /* YFBMessageModel.m in Sources */,
