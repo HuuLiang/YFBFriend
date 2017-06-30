@@ -42,7 +42,8 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor colorWithHexString:@"#FFFFFF"];
-    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+//    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     [_tableView registerClass:[YFBContactCell class] forCellReuseIdentifier:kYFBContactCellReusableIdentifier];
     [self.view addSubview:_tableView];
     _tableView.tableFooterView = [[UIView alloc] init];

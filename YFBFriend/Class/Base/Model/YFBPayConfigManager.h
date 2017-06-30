@@ -24,7 +24,9 @@
 @interface YFBPayConfigDetailInfo : NSObject
 @property (nonatomic) NSInteger amount;
 @property (nonatomic) NSInteger price;
-@property (nonatomic) NSString *detail;
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *popDesc;
+@property (nonatomic) NSString *vipDesc;
 @end
 
 
