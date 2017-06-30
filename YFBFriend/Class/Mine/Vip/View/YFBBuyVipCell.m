@@ -100,13 +100,13 @@
     if (vipType == YFBBuyVipTypeGold) {
         _imgV.image = [UIImage imageNamed:@"vip_gold"];
         _titleLabel.text = @"黄金";
-        _priceLabel.text = [NSString stringWithFormat:@"%ld天 ¥%ld",[YFBPayConfigManager manager].vipInfo.secondInfo.amount,(long)([YFBPayConfigManager manager].vipInfo.secondInfo.price/100)];
-        _descLabel.text = [NSString stringWithFormat:@"%@",[YFBPayConfigManager manager].vipInfo.secondInfo.detail];
+        _priceLabel.text = [NSString stringWithFormat:@"%@ ¥%ld",[YFBPayConfigManager manager].vipInfo.secondInfo.vipDesc,(long)([YFBPayConfigManager manager].vipInfo.secondInfo.price/100)];
+        _descLabel.text = [YFBPayConfigManager manager].vipInfo.secondInfo.title;
     } else if (vipType == YFBBuyVipTypeSliver) {
         _imgV.image = [UIImage imageNamed:@"vip_sliver"];
         _titleLabel.text = @"白银";
-        _priceLabel.text = [NSString stringWithFormat:@"%ld天 ¥%ld",[YFBPayConfigManager manager].vipInfo.firstInfo.amount,(long)([YFBPayConfigManager manager].vipInfo.firstInfo.price/100)];
-        _descLabel.text = [NSString stringWithFormat:@"%@",[YFBPayConfigManager manager].vipInfo.firstInfo.detail];
+        _priceLabel.text = [NSString stringWithFormat:@"%@ ¥%ld",[YFBPayConfigManager manager].vipInfo.firstInfo.vipDesc,(long)([YFBPayConfigManager manager].vipInfo.firstInfo.price/100)];
+        _descLabel.text = [YFBPayConfigManager manager].vipInfo.firstInfo.title;
     }
 }
 
