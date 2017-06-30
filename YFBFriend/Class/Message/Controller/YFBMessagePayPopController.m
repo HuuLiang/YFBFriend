@@ -516,7 +516,7 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == YFBPopViewDiamondSectionCategory) {
-        return [YFBDiamondManager manager].diamonList.count;
+        return [YFBDiamondManager manager].diamondList.count;
     } else if (section == YFBPopViewDiamondSectionType) {
         return 2;
     } else if (section == YFBPopViewDiamondSectionPay) {
@@ -528,8 +528,8 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == YFBPopViewDiamondSectionCategory) {
         YFBMessageDiamondCategoryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kYFBFriendMessagePopViewDiamondCategoryReusableIdentifier forIndexPath:indexPath];
-        if (indexPath.item < [YFBDiamondManager manager].diamonList.count) {
-            YFBDiamondInfo *diamondInfo = [YFBDiamondManager manager].diamonList[indexPath.item];
+        if (indexPath.item < [YFBDiamondManager manager].diamondList.count) {
+            YFBDiamondInfo *diamondInfo = [YFBDiamondManager manager].diamondList[indexPath.item];
             cell.diamondCount = [NSString stringWithFormat:@"%ld",(long)diamondInfo.diamondAmount];
             cell.price = [NSString stringWithFormat:@"%ld",(long)(diamondInfo.price/100)];
         }
@@ -543,7 +543,7 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
         @weakify(self);
         cell.payAction = ^(id obj) {
             @strongify(self);
-            YFBDiamondInfo *diamondInfo = [YFBDiamondManager manager].diamonList[self.categoryIndexPath.item];
+            YFBDiamondInfo *diamondInfo = [YFBDiamondManager manager].diamondList[self.categoryIndexPath.item];
             //支付
             [[YFBPaymentManager manager] payForAction:kYFBPaymentActionPURCHASEDIAMONDKeyName WithPayType:self.payTypeIndexPath.item price:diamondInfo.price count:diamondInfo.diamondAmount handler:^(BOOL success) {
                 if (success) {

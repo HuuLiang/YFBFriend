@@ -9,19 +9,23 @@
 #import "YFBApplePayManager.h"
 #import <StoreKit/StoreKit.h>
 #import "YFBPayConfigManager.h"
+#import "YFBDiamondManager.h"
 
-static NSString *const kYFBOpenVipSliverKeyName         = @"VIP_90";
-static NSString *const kYFBOpenVipGlodkeyName           = @"VIP_90_90";
+NSString *const kYFBProductionTypeOpenVipKeyName = @"OPEN_VIP";
+NSString *const kYFBProductionTypePurchaseKeyName = @"PURCHASE_DIAMOND";
 
-static NSString *const kYFBPurchase100KeyName           = @"PURCHASE_DIAMOND_100";
-static NSString *const kYFBPurchase158KeyName           = @"PURCHASE_DIAMOND_158";
-static NSString *const kYFBPurchase300KeyName           = @"PURCHASE_DIAMOND_300";
-static NSString *const kYFBPurchase500KeyName           = @"PURCHASE_DIAMOND_500";
-static NSString *const kYFBPurchase1000KeyName          = @"PURCHASE_DIAMOND_1000";
+NSString *const kYFBOpenVipSliverKeyName         = @"VIP_90";
+NSString *const kYFBOpenVipGlodkeyName           = @"VIP_90_90";
+
+NSString *const kYFBPurchase100KeyName           = @"PURCHASE_DIAMOND_100";
+NSString *const kYFBPurchase158KeyName           = @"PURCHASE_DIAMOND_158";
+NSString *const kYFBPurchase300KeyName           = @"PURCHASE_DIAMOND_300";
+NSString *const kYFBPurchase500KeyName           = @"PURCHASE_DIAMOND_500";
+NSString *const kYFBPurchase1000KeyName          = @"PURCHASE_DIAMOND_1000";
 
 
 @interface YFBApplePayManager () <SKProductsRequestDelegate,SKPaymentTransactionObserver>
-
+@property (nonatomic) PayResultBlock payResultHandler;
 @end
 
 @implementation YFBApplePayManager
@@ -39,9 +43,9 @@ static NSString *const kYFBPurchase1000KeyName          = @"PURCHASE_DIAMOND_100
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     if ([SKPaymentQueue canMakePayments]) {
         NSSet * produtionInfos;
-        if ([type isEqualToString:kYFBPayConfigTypeVipKeyName]) {
+        if ([type isEqualToString:kYFBProductionTypeOpenVipKeyName]) {
             produtionInfos = [NSSet setWithArray:@[kYFBOpenVipSliverKeyName,kYFBOpenVipGlodkeyName]];
-        } else if ([type isEqualToString:kYFBPayConfigTypeDiamondKeyName]) {
+        } else if ([type isEqualToString:kYFBProductionTypePurchaseKeyName]) {
             produtionInfos = [NSSet setWithArray:@[kYFBPurchase100KeyName,kYFBPurchase158KeyName,kYFBPurchase300KeyName,kYFBPurchase500KeyName,kYFBPurchase1000KeyName]];
         }
         SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:produtionInfos];
@@ -50,6 +54,14 @@ static NSString *const kYFBPurchase1000KeyName          = @"PURCHASE_DIAMOND_100
     } else {
         [[YFBHudManager manager] showHudWithText:@"请设置允许应用内购买"];
     }
+}
+
+- (void)payWithProductionId:(NSString *)productionId handler:(PayResultBlock)handler {
+    self.payResultHandler = handler;
+    
+    SKMutablePayment *payment = [[SKMutablePayment alloc] init];
+    payment.productIdentifier = productionId;
+    [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
 #pragma mark - SKProductsRequestDelegate
@@ -70,20 +82,13 @@ static NSString *const kYFBPurchase1000KeyName          = @"PURCHASE_DIAMOND_100
         NSLog(@"价格: %@" , product.price);
         NSLog(@"Product id: %@" , product.productIdentifier);
         if ([product.productIdentifier isEqualToString:kYFBOpenVipSliverKeyName]) {
-            [YFBPayConfigManager manager].vipInfo.firstInfo.price = [product.price floatValue];
-//            [YFBPayConfigManager manager].vipInfo.firstInfo.amount = product
+            [YFBPayConfigManager manager].vipInfo.firstInfo.price = [product.price floatValue]*100;
+            [YFBPayConfigManager manager].vipInfo.firstInfo.serverKeyName = kYFBOpenVipSliverKeyName;
         } else if ([product.productIdentifier isEqualToString:kYFBOpenVipGlodkeyName]) {
-            
-        } else if ([product.productIdentifier isEqualToString:kYFBPurchase100KeyName]) {
-            
-        } else if ([product.productIdentifier isEqualToString:kYFBPurchase158KeyName]) {
-            
-        } else if ([product.productIdentifier isEqualToString:kYFBPurchase300KeyName]) {
-            
-        } else if ([product.productIdentifier isEqualToString:kYFBPurchase500KeyName]) {
-            
-        } else if ([product.productIdentifier isEqualToString:kYFBPurchase1000KeyName]) {
-            
+            [YFBPayConfigManager manager].vipInfo.secondInfo.price = [product.price floatValue]*100;
+            [YFBPayConfigManager manager].vipInfo.secondInfo.serverKeyName = kYFBOpenVipGlodkeyName;
+        } else {
+            [[YFBDiamondManager manager] changeDiamondPrice:[product.price floatValue]*100 WithDiamondKeyName:product.productIdentifier];
         }
     }
 }
@@ -92,6 +97,43 @@ static NSString *const kYFBPurchase1000KeyName          = @"PURCHASE_DIAMOND_100
 #pragma mark - SKPaymentTransactionObserver
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions {
+    for (SKPaymentTransaction *transaction in transactions) {
+        NSLog(@"pay out:%ld  id:%@",(long)transaction.transactionState,transaction.payment.productIdentifier);
+        
+        NSLog(@"%@",transaction.transactionIdentifier);
+        
+        switch (transaction.transactionState) {
+            case SKPaymentTransactionStatePurchasing:
+                NSLog(@"正在购买中");
+                
+            case SKPaymentTransactionStatePurchased:
+                NSLog(@"购买完成");
+                if (self.payResultHandler) {
+                    self.payResultHandler(YFBPayResultSuccess);
+                }
+                break;
+
+            case SKPaymentTransactionStateFailed:
+                NSLog(@"购买失败");
+                if (self.payResultHandler) {
+                    self.payResultHandler(YFBPayResultFailed);
+                }
+                [[SKPaymentQueue defaultQueue]finishTransaction:transaction];
+                break;
+
+            case SKPaymentTransactionStateDeferred:
+                NSLog(@"未知");
+                if (self.payResultHandler) {
+                    self.payResultHandler(YFBPayResultUnknow);
+                }
+                [[SKPaymentQueue defaultQueue]finishTransaction:transaction];
+                break;
+
+            default:
+                break;
+        }
+        
+    }
     
 }
 

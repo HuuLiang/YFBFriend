@@ -17,6 +17,7 @@
 @property (nonatomic) NSString *payMethod;
 @property (nonatomic) YFBPayResult payResult;
 @property (nonatomic) NSString *extraContent;
+@property (nonatomic) NSString *serverKeyName;
 @end
 
 @interface YFBPaymentManager : QBEncryptedURLRequest
@@ -26,6 +27,8 @@
 - (void)payForAction:(NSString *)action WithPayType:(YFBPayType)payType price:(NSInteger)price count:(NSInteger)count handler:(void(^)(BOOL success))handler;
 
 - (void)payForAction:(NSString *)action WithPayType:(YFBPayType)payType price:(NSInteger)price count:(NSInteger)count extraContent:(NSString *)extraContent handler:(void (^)(BOOL))handler;
+
+- (void)payForAction:(NSString *)action WithPayType:(YFBPayType)payType price:(NSInteger)price count:(NSInteger)count extraContent:(NSString *)extraContent serverKeyName:(NSString *)serverKeyName handler:(void (^)(BOOL))handler;
 
 @end
 
@@ -39,3 +42,4 @@ extern NSString *const kYFBPaymentStatusFailedKeyName;
 
 extern NSString *const kYFBPaymentMethodAliKeyName;
 extern NSString *const kYFBPaymentMethodWXKeyName;
+extern NSString *const kYFBPaymentMethodApplePayKeyName;

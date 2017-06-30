@@ -33,7 +33,8 @@ typedef NS_ENUM(NSInteger,YFBRankType) {
 
 typedef NS_ENUM(NSInteger,YFBPayType) {
     YFBPayTypeWeiXin = 0, //微信
-    YFBPayTypeAliPay //支付宝
+    YFBPayTypeAliPay, //支付宝
+    YFBPayTypeApplePay //苹果内购
 };
 
 typedef NS_ENUM(NSInteger,YFBGiftPopViewType) {

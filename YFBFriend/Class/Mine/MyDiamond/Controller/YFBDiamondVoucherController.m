@@ -40,9 +40,16 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
 + (void)showDiamondVoucherVCWithPrice:(CGFloat)price
                               diamond:(NSInteger)diamond
                                action:(NSString *)payAction
+                        serverKeyName:(NSString *)serverKeyName
                           InCurrentVC:(UIViewController *)currentViewController {
-    if ([YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {
-        
+    if ([YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {        
+        [[YFBPaymentManager manager] payForAction:payAction WithPayType:YFBPayTypeApplePay price:price count:diamond extraContent:nil serverKeyName:serverKeyName handler:^(BOOL success) {
+            if (success) {
+                if (!self) {
+                    return ;
+                }
+            }
+        }];
     } else {
         YFBDiamondVoucherController *diamondVouchVC = [[YFBDiamondVoucherController alloc] initWithPrice:price diamond:diamond Action:payAction];
         [currentViewController.navigationController pushViewController:diamondVouchVC animated:YES];

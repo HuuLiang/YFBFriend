@@ -9,6 +9,7 @@
 #import <QBEncryptedURLRequest.h>
 
 @interface YFBDiamondInfo : NSObject
+@property (nonatomic) NSString *serverKeyName;
 @property (nonatomic) NSInteger diamondAmount;
 @property (nonatomic) NSInteger dpcId;
 @property (nonatomic) NSInteger price;
@@ -23,10 +24,12 @@
 
 + (instancetype)manager;
 
-@property (nonatomic,readonly) NSArray <YFBDiamondInfo *> *diamonList;
+@property (nonatomic) NSMutableArray <YFBDiamondInfo *> *diamondList;
 
 - (void)getDiamondListCache;
 
 - (BOOL)fetchDiamondListWithCompletionHandler:(QBCompletionHandler)handler;
+
+- (void)changeDiamondPrice:(CGFloat)newPrice WithDiamondKeyName:(NSString *)diamondKeyName;
 
 @end

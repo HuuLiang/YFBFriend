@@ -117,21 +117,23 @@ static NSString *const kYFBBuyVipDescCellReusableIdentifier = @"kYFBBuyVipDescCe
             @strongify(self);
             CGFloat price = 0.0;
             NSInteger amount = 0;
+            NSString *keyName;
             switch (indexPath.section) {
                 case YFBBuyVipSectionGold:
                     price = [YFBPayConfigManager manager].vipInfo.secondInfo.price;
                     amount = [YFBPayConfigManager manager].vipInfo.secondInfo.amount;
+                    keyName = [YFBPayConfigManager manager].vipInfo.secondInfo.serverKeyName;
                     break;
                 case YFBBuyVipSectionSliver:
                     price = [YFBPayConfigManager manager].vipInfo.firstInfo.price;
                     amount = [YFBPayConfigManager manager].vipInfo.firstInfo.amount;
+                    keyName = [YFBPayConfigManager manager].vipInfo.firstInfo.serverKeyName;
                     break;
                 default:
                     break;
             }
             
-            YFBDiamondVoucherController *voucherVC = [[YFBDiamondVoucherController alloc] initWithPrice:price diamond:amount Action:kYFBPaymentActionOpenVipKeyName];
-            [self.navigationController pushViewController:voucherVC animated:YES];
+            [YFBDiamondVoucherController showDiamondVoucherVCWithPrice:price diamond:amount action:kYFBPaymentActionOpenVipKeyName serverKeyName:keyName InCurrentVC:self];
         };
         
         return cell;

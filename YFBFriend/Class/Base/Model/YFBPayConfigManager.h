@@ -22,6 +22,7 @@
 
 
 @interface YFBPayConfigDetailInfo : NSObject
+@property (nonatomic) NSString *serverKeyName;
 @property (nonatomic) NSInteger amount;
 @property (nonatomic) NSInteger price;
 @property (nonatomic) NSString *title;

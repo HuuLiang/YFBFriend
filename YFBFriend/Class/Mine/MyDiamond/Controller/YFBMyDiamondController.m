@@ -58,7 +58,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self.navigationController pushViewController:explainVC animated:YES];
     }];
     
-    [self.dataSource addObjectsFromArray:[YFBDiamondManager manager].diamonList];
+    [self.dataSource addObjectsFromArray:[YFBDiamondManager manager].diamondList];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,8 +99,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             @weakify(self);
             cell.payAction = ^{
                 @strongify(self);
-                YFBDiamondVoucherController *voucherVC = [[YFBDiamondVoucherController alloc] initWithPrice:diamondInfo.price diamond:diamondInfo.diamondAmount Action:kYFBPaymentActionPURCHASEDIAMONDKeyName];
-                [self.navigationController pushViewController:voucherVC animated:YES];
+                [YFBDiamondVoucherController showDiamondVoucherVCWithPrice:diamondInfo.price diamond:diamondInfo.diamondAmount action:kYFBPaymentActionPURCHASEDIAMONDKeyName serverKeyName:diamondInfo.serverKeyName InCurrentVC:self];
             };
         }
         return cell;

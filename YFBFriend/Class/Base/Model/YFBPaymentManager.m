@@ -10,6 +10,7 @@
 #import "AlipayManager.h"
 #import "WeChatPayManager.h"
 #import "YFBDetailManager.h"
+#import "YFBApplePayManager.h"
 
 NSString *const kYFBPaymentActionOpenVipKeyName             = @"OPEN_VIP";
 NSString *const kYFBPaymentActionPURCHASEDIAMONDKeyName     = @"PURCHASE_DIAMOND";
@@ -21,6 +22,7 @@ NSString *const kYFBPaymentStatusFailedKeyName              = @"FR_PAY_FAIL";
 
 NSString *const kYFBPaymentMethodAliKeyName                 = @"FR_ALIPAY";
 NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
+NSString *const kYFBPaymentMethodApplePayKeyName            = @"FR_APPLEPAY";
 
 @implementation YFBPaymentInfo
 
@@ -30,7 +32,8 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
                                         payPrice:(NSUInteger)payPrice
                                         payCount:(NSUInteger)payCount
                                        payMethod:(NSString *)payMethod
-                                    extraContent:(NSString *)extraContent {
+                                    extraContent:(NSString *)extraContent
+                                   serverKeyName:(NSString *)serverKeyName{
     YFBPaymentInfo *paymentInfo = [[YFBPaymentInfo alloc] init];
     paymentInfo.payOrderId = orderId;
     paymentInfo.payAction = payAction;
@@ -40,6 +43,7 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
     paymentInfo.payMethod = payMethod;
     paymentInfo.payResult = YFBPayResultUnknow;
     paymentInfo.extraContent = extraContent;
+    paymentInfo.serverKeyName = serverKeyName;
     [paymentInfo saveOrUpdate];
     return paymentInfo;
 }
@@ -83,14 +87,29 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
                handler:handler];
 }
 
-
 - (void)payForAction:(NSString *)action
          WithPayType:(YFBPayType)payType
                price:(NSInteger)price
                count:(NSInteger)count
         extraContent:(NSString *)extraContent
              handler:(void (^)(BOOL))handler {
-    
+    [self payForAction:action
+           WithPayType:payType
+                 price:price
+                 count:count
+          extraContent:extraContent
+         serverKeyName:nil
+               handler:handler];
+}
+
+
+- (void)payForAction:(NSString *)action
+         WithPayType:(YFBPayType)payType
+               price:(NSInteger)price
+               count:(NSInteger)count
+        extraContent:(NSString *)extraContent
+       serverKeyName:(NSString *)serverKeyName
+             handler:(void (^)(BOOL))handler {
     NSString *payMethod = nil;
     switch (payType) {
         case YFBPayTypeAliPay:
@@ -99,6 +118,10 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
             
         case YFBPayTypeWeiXin:
             payMethod = kYFBPaymentMethodWXKeyName;
+            break;
+            
+        case YFBPayTypeApplePay:
+            payMethod = kYFBPaymentMethodApplePayKeyName;
             break;
             
         default:
@@ -111,7 +134,8 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
                                                            payPrice:price
                                                            payCount:count
                                                           payMethod:payMethod
-                                                       extraContent:extraContent];
+                                                       extraContent:extraContent
+                                                      serverKeyName:serverKeyName];
 #ifdef DEBUG
     _paymentInfo.payPrice = 1;
 #endif
@@ -136,10 +160,15 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
              }
              [self commitOrderInfoandnotiPayResult:result];
          }];
+    } else if (payType == YFBPayTypeApplePay) {
+        [[YFBApplePayManager manager] payWithProductionId:serverKeyName handler:^(YFBPayResult payResult) {
+            if (handler) {
+                handler(payResult == YFBPayResultSuccess);
+            }
+            [self commitOrderInfoandnotiPayResult:payResult];
+        }];
     }
-
 }
-
 
 - (void)commitOrderInfoandnotiPayResult:(YFBPayResult)result {
     _paymentInfo.payResult = result;
@@ -162,6 +191,11 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
         case YFBPayResultCancle:
             payStatus = kYFBPaymentStatusCancleKeyName;
             [[YFBHudManager manager] showHudWithText:@"支付取消"];
+            break;
+            
+        case YFBPayResultUnknow:
+            payStatus = kYFBPaymentStatusFailedKeyName;
+            [[YFBHudManager manager] showHudWithText:@"状态未知 支付异常"];
             break;
             
         default:
@@ -204,8 +238,6 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
                          [YFBUser currentUser].diamondCount = obj.userBaseInfo.myDiamonds;
                          [YFBUser currentUser].expireTime = obj.userBaseInfo.vipExpireDate;
                          [[YFBUser currentUser] saveOrUpdateUserInfo];
-                         
-//                         [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateMessageDiamondCountNotification object:nil];
                          [[NSNotificationCenter defaultCenter] postNotificationName:kYFBUpdateGiftDiamondCountNotification object:nil];
                      }
                  }];

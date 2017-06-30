@@ -31,8 +31,6 @@
 #import "YFBTelChargeVC.h"
 #import "YFBLocationManager.h"
 
-#define WakeGiftManagerTimeInterval (60 * 5)
-
 @interface YFBTabBarController () <UITabBarControllerDelegate>
 @property (nonatomic) UIImageView *activityView;
 @end
@@ -45,13 +43,6 @@
     self.tabBar.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1].CGColor;
     self.tabBar.layer.borderWidth = 0.5;
     
-    [self setChildViewControllers];
-
-    [self configActivityView];
-    
-    [self loadDefaultConfig];
-    
-    [self performSelector:@selector(wakeAskGiftManager) withObject:nil afterDelay:WakeGiftManagerTimeInterval];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,6 +52,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self setChildViewControllers];
+    
+    [self configActivityView];
+    
+    [self loadDefaultConfig];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSInteger unreadMessages = [[YFBContactManager manager] allUnReadMessageCount];
@@ -105,10 +102,6 @@
     [[YFBAskGiftManager manager] startAutoBlagActionInViewController:self];         //开始索要礼物功能
     [[YFBLocationManager manager] loadLocationManager];                             //申请定位权限
     [[YFBSystemConfigManager manager] getSystemConfigInfo];                         //获取系统配置信息
-}
-
-- (void)wakeAskGiftManager {
-    
 }
 
 - (void)setChildViewControllers {

@@ -7,9 +7,10 @@
 //
 
 #import "YFBPayConfigManager.h"
+#import "YFBApplePayManager.h"
 
-static NSString *const kYFBPayConfigTypeVipKeyName          = @"OPEN_VIP_2";
-static NSString *const kYFBPayConfigTypeDiamondKeyName      = @"PURCHASE_DIAMOND_2";
+NSString *const kYFBPayConfigTypeVipKeyName          = @"OPEN_VIP_2";
+NSString *const kYFBPayConfigTypeDiamondKeyName      = @"PURCHASE_DIAMOND_2";
 
 @implementation YFBPayConfigInfo
 @end
@@ -95,6 +96,8 @@ static NSString *const kYFBPayConfigTypeDiamondKeyName      = @"PURCHASE_DIAMOND
         } else {
             [self performSelector:@selector(getPayConfig) withObject:nil afterDelay:60];
         }
+        
+        [[YFBApplePayManager manager] getProductionInfosWithType:kYFBProductionTypeOpenVipKeyName];
     }];
 }
 
