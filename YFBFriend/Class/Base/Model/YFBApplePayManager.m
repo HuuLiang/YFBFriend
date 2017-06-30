@@ -105,6 +105,7 @@ NSString *const kYFBPurchase1000KeyName          = @"PURCHASE_DIAMOND_1000";
         switch (transaction.transactionState) {
             case SKPaymentTransactionStatePurchasing:
                 NSLog(@"正在购买中");
+                break;
                 
             case SKPaymentTransactionStatePurchased:
                 NSLog(@"购买完成");
