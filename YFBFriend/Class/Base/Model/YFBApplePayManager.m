@@ -14,7 +14,7 @@
 NSString *const kYFBProductionTypeOpenVipKeyName = @"OPEN_VIP";
 NSString *const kYFBProductionTypePurchaseKeyName = @"PURCHASE_DIAMOND";
 
-NSString *const kYFBOpenVipSliverKeyName         = @"VIP_90";
+NSString *const kYFBOpenVipSliverKeyName         = @"VIP_90_0";
 NSString *const kYFBOpenVipGlodkeyName           = @"VIP_90_90";
 
 NSString *const kYFBPurchase100KeyName           = @"PURCHASE_DIAMOND_100";

@@ -101,38 +101,44 @@
     [[YFBAutoReplyManager manager] startAutoRollingToReply];                        //开始推送机器人
     [[YFBAskGiftManager manager] startAutoBlagActionInViewController:self];         //开始索要礼物功能
     [[YFBLocationManager manager] loadLocationManager];                             //申请定位权限
-    [[YFBSystemConfigManager manager] getSystemConfigInfo];                         //获取系统配置信息
 }
 
 - (void)setChildViewControllers {
+    NSMutableArray *subVCs = [[NSMutableArray alloc] init];
     YFBDiscoverViewController *discoverVC = [[YFBDiscoverViewController alloc] initWithTitle:@"发现"];
     UINavigationController *discoverNav = [[UINavigationController alloc] initWithRootViewController:discoverVC];
     discoverNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:discoverVC.title
                                                           image:[[UIImage imageNamed:@"discover_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
                                                   selectedImage:[[UIImage imageNamed:@"discover_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [subVCs addObject:discoverNav];
     
-    YFBSocialViewController *socialVC = [[YFBSocialViewController alloc] initWithTitle:@"同城服务"];
-    UINavigationController *socialNav = [[UINavigationController alloc] initWithRootViewController:socialVC];
-    socialNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:socialVC.title
-                                                         image:[[UIImage imageNamed:@"social_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
-                                                 selectedImage:[[UIImage imageNamed:@"social_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    
+    if (![YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {
+        YFBSocialViewController *socialVC = [[YFBSocialViewController alloc] initWithTitle:@"同城服务"];
+        UINavigationController *socialNav = [[UINavigationController alloc] initWithRootViewController:socialVC];
+        socialNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:socialVC.title
+                                                             image:[[UIImage imageNamed:@"social_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal ]
+                                                     selectedImage:[[UIImage imageNamed:@"social_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [subVCs addObject:socialNav];
+    }
+
     YFBContactViewController *contactVC = [[YFBContactViewController alloc] initWithTitle:@"消息"];
     UINavigationController *contactNav = [[UINavigationController alloc] initWithRootViewController:contactVC];
     contactNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:contactVC.title
                                                            image:[[UIImage imageNamed:@"contact_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                                    selectedImage:[[UIImage imageNamed:@"contact_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [subVCs addObject:contactNav];
 
     YFBMineViewController *mineVC = [[YFBMineViewController alloc] initWithTitle:@"我的"];
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
     mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:mineVC.title
                                                           image:[[UIImage imageNamed:@"mine_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                                   selectedImage:[[UIImage imageNamed:@"mine_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [subVCs addObject:mineNav];
 
     
     self.tabBar.translucent = NO;
     self.delegate = self;
-    self.viewControllers = @[discoverNav,socialNav,contactNav,mineNav];
+    self.viewControllers = subVCs;
 }
 
 

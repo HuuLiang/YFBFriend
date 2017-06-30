@@ -141,6 +141,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allReplyMsgs);
             _timeInterval = 0;
             [[NSUserDefaults standardUserDefaults] setObject:@(_timeInterval) forKey:kYFBFriendGetRobotMsgTimeIntervalKeyName];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            dispatch_resume(_timer);
         } else {
             //是今天 沿用保存的时间继续开始计时器
             if (_timeInterval > 60 * 20) {
