@@ -8,8 +8,8 @@
 
 #import "YFBPayConfigManager.h"
 
-static NSString *const kYFBPayConfigTypeVipKeyName          = @"OPEN_VIP";
-static NSString *const kYFBPayConfigTypeDiamondKeyName      = @"PURCHASE_DIAMOND";
+static NSString *const kYFBPayConfigTypeVipKeyName          = @"OPEN_VIP_2";
+static NSString *const kYFBPayConfigTypeDiamondKeyName      = @"PURCHASE_DIAMOND_2";
 
 @implementation YFBPayConfigInfo
 @end
@@ -106,7 +106,11 @@ static NSString *const kYFBPayConfigTypeDiamondKeyName      = @"PURCHASE_DIAMOND
         } else if (idx == 1) {
             info.price = [obj integerValue];
         } else if (idx == 2) {
-            info.detail = obj;
+            info.title = obj;
+        } else if (idx == 3) {
+            info.popDesc = obj;
+        } else if (idx == 4) {
+            info.vipDesc = obj;
         }
     }];
     return info;
