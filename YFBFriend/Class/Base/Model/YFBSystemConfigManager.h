@@ -19,11 +19,10 @@
 
 @interface YFBSystemConfigManager : QBEncryptedURLRequest
 
+@property (nonatomic) NSString *SEX_SWITCH;
+
 + (instancetype)manager;
 
 - (void)getSystemConfigInfo;
-
-@property (nonatomic) NSString *SEX_SWITCH;
-
 
 @end

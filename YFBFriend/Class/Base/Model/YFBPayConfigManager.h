@@ -45,6 +45,7 @@
 @property (nonatomic) YFBPayDiamondInfo *diamondInfo;
 + (instancetype)manager;
 - (void)getPayConfig;
-
-
 @end
+
+extern NSString *const kYFBPayConfigTypeVipKeyName;
+extern NSString *const kYFBPayConfigTypeDiamondKeyName;

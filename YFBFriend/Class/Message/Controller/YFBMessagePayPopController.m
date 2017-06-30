@@ -18,6 +18,10 @@
 #import "YFBDiamondManager.h"
 #import "YFBPayConfigManager.h"
 #import "YFBPaymentManager.h"
+#import "YFBSystemConfigManager.h"
+
+#import "YFBVipViewController.h"
+#import "YFBMyDiamondController.h"
 
 typedef NS_ENUM(NSUInteger, YFBPopViewSection) {
     YFBPopViewSectionPayPoint = 0,
@@ -241,8 +245,18 @@ QBDefineLazyPropertyInitialization(NSIndexPath, payTypeIndexPath)
 }
 
 + (void)showMessageTopUpPopViewWithType:(YFBMessagePopViewType)type onCurrentVC:(UIViewController *)currentVC {
-    YFBMessagePayPopController *payPopView = [[YFBMessagePayPopController alloc] init];
-    [payPopView showMessageTopUpPopViewWithType:type onCurrentVC:currentVC];
+    if ([YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {
+        if (type == YFBMessagePopViewTypeVip) {
+            YFBVipViewController *vipVC = [[YFBVipViewController alloc] init];
+            [currentVC.navigationController pushViewController:vipVC animated:YES];
+        } else {
+            YFBMyDiamondController *diamondVC = [[YFBMyDiamondController alloc] init];
+            [currentVC.navigationController pushViewController:diamondVC animated:YES];
+        }
+    } else {
+        YFBMessagePayPopController *payPopView = [[YFBMessagePayPopController alloc] init];
+        [payPopView showMessageTopUpPopViewWithType:type onCurrentVC:currentVC];
+    }
 }
 
 - (void)showMessageTopUpPopViewWithType:(YFBMessagePopViewType)type onCurrentVC:(UIViewController *)currentVC {

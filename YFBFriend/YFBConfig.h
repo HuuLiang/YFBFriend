@@ -20,7 +20,7 @@
 #define YFB_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", YFB_REST_APPID, YFB_CHANNEL_NO]
 #define YFB_PAYMENT_ORDERID          [NSString stringWithFormat:@"%@_%@", [YFB_CHANNEL_NO substringFromIndex:YFB_CHANNEL_NO.length-14], [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)]]
 
-#define YFB_BASE_URL                    @"http://fr.shinehoo.com.cn"//@"http://120.24.252.114/friend"//@"http://mcps.dswtg.com"
+#define YFB_BASE_URL                    @"https://frssl.shinehoo.com.cn"//@"http://120.24.252.114/friend"//@"http://mcps.dswtg.com"
 #define YFB_STANDBY_BASE_URL            @"http://sfs.dswtg.com"
 
 #define YFB_ACTIVATION_URL              @"/flbc/activat.htm"                            //激活

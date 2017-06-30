@@ -8,8 +8,8 @@
 
 #import "YFBPayConfigManager.h"
 
-static NSString *const kYFBPayConfigTypeVipKeyName          = @"OPEN_VIP";
-static NSString *const kYFBPayConfigTypeDiamondKeyName      = @"PURCHASE_DIAMOND";
+NSString *const kYFBPayConfigTypeVipKeyName          = @"OPEN_VIP";
+NSString *const kYFBPayConfigTypeDiamondKeyName      = @"PURCHASE_DIAMOND";
 
 @implementation YFBPayConfigInfo
 @end

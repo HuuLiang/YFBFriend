@@ -10,6 +10,8 @@
 
 @interface YFBDiamondVoucherController : YFBBaseViewController
 
++ (void)showDiamondVoucherVCWithPrice:(CGFloat)price diamond:(NSInteger)diamond action:(NSString *)payAction InCurrentVC:(UIViewController *)currentViewController;
+
 - (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond;
 
 - (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond Action:(NSString *)payAction;

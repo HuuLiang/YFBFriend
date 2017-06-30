@@ -10,7 +10,7 @@
 #import "YFBDiamondPayTypeCell.h"
 #import "YFBDiamondLabel.h"
 #import "YFBPaymentManager.h"
-
+#import "YFBSystemConfigManager.h"
 
 static NSString *const kYFBDiamondPayTypeCellIdentifier = @"kyfb_diamond_pay_type_cell_identifier";
 
@@ -37,8 +37,19 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
 
 @implementation YFBDiamondVoucherController
 
-- (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond
-{
++ (void)showDiamondVoucherVCWithPrice:(CGFloat)price
+                              diamond:(NSInteger)diamond
+                               action:(NSString *)payAction
+                          InCurrentVC:(UIViewController *)currentViewController {
+    if ([YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {
+        
+    } else {
+        YFBDiamondVoucherController *diamondVouchVC = [[YFBDiamondVoucherController alloc] initWithPrice:price diamond:diamond Action:payAction];
+        [currentViewController.navigationController pushViewController:diamondVouchVC animated:YES];
+    }
+}
+
+- (instancetype)initWithPrice:(CGFloat)price diamond:(NSInteger)diamond {
     return [self initWithPrice:price diamond:diamond Action:nil];
 }
 
