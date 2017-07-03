@@ -46,10 +46,8 @@
 }
 
 - (void)getSystemConfigInfo {
-    NSDictionary *params = @{@"channelNo":YFB_CHANNEL_NO,
-                             @"userId":[YFBUser currentUser].userId,
-                             @"token":[YFBUser currentUser].token,
-                             @"type":@(2)};
+
+    NSDictionary *params = @{@"type":@(2)};
     
     [self requestURLPath:YFB_CONFIG_URL
           standbyURLPath:nil
