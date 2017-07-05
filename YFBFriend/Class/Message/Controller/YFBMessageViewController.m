@@ -129,6 +129,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     YFBMessageModel *lastMessage = [self.chatMessages lastObject];
     YFBContactModel *contactModel = [[YFBContactManager manager] findContactInfoWithUserId:self.userId];
     
+    if (!contactModel) {
+        contactModel = [[YFBContactModel alloc] init];
+    }
+    
     contactModel.portraitUrl = self.avatarUrl;
     contactModel.nickName = self.nickName;
     contactModel.userId = self.userId;
@@ -150,6 +154,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         } else if (lastMessage.messageType == YFBMessageTypeFaceTime) {
             contactModel.messageContent = @"视频聊天";
         }
+        contactModel.messageType = lastMessage.messageType;
 
     }
     contactModel.unreadMsgCount = 0;
