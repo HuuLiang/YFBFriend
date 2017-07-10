@@ -7,6 +7,7 @@
 //
 
 #import "YFBDiamondCell.h"
+#import "YFBSystemConfigManager.h"
 
 @interface YFBDiamondCell ()
 @property (nonatomic) UIImageView *imageV;
@@ -102,7 +103,11 @@
 }
 
 - (void)setDesc:(NSString *)desc {
-    _descLabel.text = desc;
+    if (![YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {
+        _descLabel.text = desc;
+    } else {
+        _descLabel.text = @"超值优惠价!";
+    }
 }
 
 @end

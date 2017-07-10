@@ -8,6 +8,7 @@
 
 #import "YFBBuyVipCell.h"
 #import "YFBPayConfigManager.h"
+#import "YFBSystemConfigManager.h"
 
 @interface YFBBuyVipCell ()
 @property (nonatomic) UIImageView *imgV;
@@ -101,12 +102,20 @@
         _imgV.image = [UIImage imageNamed:@"vip_gold"];
         _titleLabel.text = @"黄金";
         _priceLabel.text = [NSString stringWithFormat:@"%@ ¥%ld",[YFBPayConfigManager manager].vipInfo.secondInfo.vipDesc,(long)([YFBPayConfigManager manager].vipInfo.secondInfo.price/100)];
-        _descLabel.text = [YFBPayConfigManager manager].vipInfo.secondInfo.title;
+        if (![YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {
+            _descLabel.text = [YFBPayConfigManager manager].vipInfo.secondInfo.title;
+        } else {
+            _descLabel.text = @"超值优惠价";
+        }
     } else if (vipType == YFBBuyVipTypeSliver) {
         _imgV.image = [UIImage imageNamed:@"vip_sliver"];
         _titleLabel.text = @"白银";
         _priceLabel.text = [NSString stringWithFormat:@"%@ ¥%ld",[YFBPayConfigManager manager].vipInfo.firstInfo.vipDesc,(long)([YFBPayConfigManager manager].vipInfo.firstInfo.price/100)];
-        _descLabel.text = [YFBPayConfigManager manager].vipInfo.firstInfo.title;
+        if (![YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {
+            _descLabel.text = [YFBPayConfigManager manager].vipInfo.firstInfo.title;
+        } else {
+            _descLabel.text = @"超值优惠价";
+        }
     }
 }
 

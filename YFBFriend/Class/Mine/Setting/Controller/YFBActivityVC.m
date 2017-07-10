@@ -7,6 +7,7 @@
 //
 
 #import "YFBActivityVC.h"
+#import "YFBSystemConfigManager.h"
 
 @interface YFBActivityVC ()
 @property (nonatomic,strong) UILabel *titleLabel;
@@ -51,7 +52,11 @@
     _descLabel.textColor = kColor(@"#666666");
     _descLabel.font = kFont(14);
     _descLabel.numberOfLines = 0;
-    _descLabel.text = @"1.购买活动套餐，即可获得1次抽取100元话费的机会，充值30天后方可抽奖，数量有限，送完即止。\n2.抽奖入口：充值30天后，前往页面“送话费处”进行抽奖。\n3.未抽到话费的用户，可免费获得相关特权，由系统自动帮您开通。\n4.本次活动最终解释权归本软件所有。";
+    if (![YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {
+        _descLabel.text = @"1.购买活动套餐，即可获得1次抽取100元话费的机会，充值30天后方可抽奖，数量有限，送完即止。\n2.抽奖入口：充值30天后，前往页面“送话费处”进行抽奖。\n3.未抽到话费的用户，可免费获得相关特权，由系统自动帮您开通。\n4.本次活动最终解释权归本软件所有。";
+    } else {
+        _descLabel.text = @"敬请期待";
+    }
     [self.view addSubview:_descLabel];
     
     {

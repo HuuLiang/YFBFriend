@@ -55,7 +55,9 @@
     
     [self setChildViewControllers];
     
-    [self configActivityView];
+    if (![YFBSystemConfigManager manager].SEX_SWITCH.boolValue) {
+        [self configActivityView];
+    }
     
     [self loadDefaultConfig];
     
