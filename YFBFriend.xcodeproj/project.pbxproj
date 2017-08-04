@@ -11,6 +11,7 @@
 		B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */; };
 		EC00477A1EFCA30B00382668 /* YFBBuyVipDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0047791EFCA30B00382668 /* YFBBuyVipDescCell.m */; };
 		EC00477E1EFCF40400382668 /* YFBTelChargeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC00477D1EFCF40400382668 /* YFBTelChargeVC.m */; };
+		EC0CAA8B1F345B6800B1C669 /* YFBSystemConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0CAA8A1F345B6800B1C669 /* YFBSystemConfigModel.m */; };
 		EC1E1A7D1EC45CA0002D94AF /* detail_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */; };
 		EC3976A61F034DA800EF255E /* YFBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3976A51F034DA800EF255E /* YFBWebViewController.m */; };
 		EC4A737D1EE6A4E100198FD9 /* YFBSocialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A737C1EE6A4E100198FD9 /* YFBSocialModel.m */; };
@@ -332,6 +333,8 @@
 		EC0047791EFCA30B00382668 /* YFBBuyVipDescCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBBuyVipDescCell.m; sourceTree = "<group>"; };
 		EC00477C1EFCF40400382668 /* YFBTelChargeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBTelChargeVC.h; sourceTree = "<group>"; };
 		EC00477D1EFCF40400382668 /* YFBTelChargeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBTelChargeVC.m; sourceTree = "<group>"; };
+		EC0CAA891F345B6800B1C669 /* YFBSystemConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBSystemConfigModel.h; sourceTree = "<group>"; };
+		EC0CAA8A1F345B6800B1C669 /* YFBSystemConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBSystemConfigModel.m; sourceTree = "<group>"; };
 		EC1E1A7C1EC45CA0002D94AF /* detail_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = detail_bg.jpg; sourceTree = "<group>"; };
 		EC3976A41F034DA700EF255E /* YFBWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBWebViewController.h; sourceTree = "<group>"; };
 		EC3976A51F034DA800EF255E /* YFBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFBWebViewController.m; sourceTree = "<group>"; };
@@ -1775,6 +1778,8 @@
 			children = (
 				EC6E5EFB1EF2880800BA6290 /* YFBActivateModel.h */,
 				EC6E5EFC1EF2880800BA6290 /* YFBActivateModel.m */,
+				EC0CAA891F345B6800B1C669 /* YFBSystemConfigModel.h */,
+				EC0CAA8A1F345B6800B1C669 /* YFBSystemConfigModel.m */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -2700,6 +2705,7 @@
 				ECDBAB231EE5598B00BEFF98 /* YFBNearVC.m in Sources */,
 				ECDBAB391EE5598B00BEFF98 /* YFBContactCell.m in Sources */,
 				ECDBAC111EE5598C00BEFF98 /* QUMBase64.m in Sources */,
+				EC0CAA8B1F345B6800B1C669 /* YFBSystemConfigModel.m in Sources */,
 				EC9A67771E6D3E4A0018C5FB /* main.m in Sources */,
 				ECDBAB351EE5598B00BEFF98 /* YFBMessageRecordManager.m in Sources */,
 				ECDBAB3E1EE5598B00BEFF98 /* YFBMessageDiamondToPayCell.m in Sources */,

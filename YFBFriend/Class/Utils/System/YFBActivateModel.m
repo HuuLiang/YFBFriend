@@ -27,7 +27,7 @@
 }
 
 + (instancetype)manager {
-    __block YFBActivateModel *_activateModel;
+    static YFBActivateModel *_activateModel;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _activateModel = [[YFBActivateModel alloc] init];

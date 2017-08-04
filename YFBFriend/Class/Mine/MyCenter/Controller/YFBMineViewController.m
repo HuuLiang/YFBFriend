@@ -17,6 +17,7 @@
 #import "YFBMineDataInfoViewController.h"
 #import "YFBSettingViewController.h"
 #import "YFBMinePhotosViewController.h"
+#import "YFBSystemConfigModel.h"
 
 static NSString *const YFBMineHeaderCellIdentifier = @"yfb_mine_header_cell_identifier";
 static NSString *const YFBMineCellIdentifier = @"yfb_mine_cell_identifier";
@@ -44,6 +45,7 @@ typedef NS_ENUM(NSUInteger, YFBWlletRowType) {
 typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
     YFBMineInfoTypeInfo,//个人资料
     YFBMineInfoTypePhoto,//我的相册
+    YFBMineInfoTypeQQ,
     YFBMineInfoTypeCount,
 };
 
@@ -100,7 +102,10 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
     }else if (section == YFBMineSectionTypeWallet){
         return YFBWlletRowTypeCount;
     }else if (section == YFBMineSectionTypeInfo){
-        return YFBMineInfoTypeCount;
+        if ([YFBUtil isVip] || [YFBUser currentUser].diamondCount > 0) {
+            return YFBMineInfoTypeCount;
+        }
+        return YFBMineInfoTypeQQ;
     }else if (section == YFBMineSectionTypeSetting){
         return 1;
     }
@@ -153,9 +158,12 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         if (indexPath.row == YFBMineInfoTypeInfo) {
             cell.title = @"个人资料";
             cell.iconImage = @"mine_my_info_icon";
-        }else if (indexPath.row == YFBMineInfoTypePhoto){
+        } else if (indexPath.row == YFBMineInfoTypePhoto){
             cell.title = @"我的相册";
             cell.iconImage = @"mine_my_photo_icon";
+        } else if (indexPath.row == YFBMineInfoTypeQQ) {
+            cell.title= @"QQ客服";
+            cell.iconImage = @"mine_my_qq_icon";
         }
         return cell;
     }else if (indexPath.section == YFBMineSectionTypeSetting){
@@ -215,11 +223,38 @@ typedef NS_ENUM(NSUInteger, YFBMineInfoType) {
         } else if (indexPath.row == YFBMineInfoTypePhoto){
             YFBMinePhotosViewController *photoVC = [[YFBMinePhotosViewController alloc] initWithTitle:@"我的照片"];
             [self.navigationController pushViewController:photoVC animated:YES];
+        } else if (indexPath.row == YFBMineInfoTypeQQ) {
+            [self contactCustomerService];
         }
     } else if (indexPath.section == YFBMineSectionTypeSetting){
         YFBSettingViewController *settingVC = [[YFBSettingViewController alloc] initWithTitle:@"设置"];
         [self.navigationController pushViewController:settingVC animated:YES];
     }
 }
+
+//qq客服
+- (void)contactCustomerService {
+    NSString *contactScheme = [YFBSystemConfigModel defaultConfig].config.CONTACT_SCHEME;
+    NSString *contactName = [YFBSystemConfigModel defaultConfig].config.CONTACT_NAME;
+    
+    if (contactScheme.length == 0) {
+        return ;
+    }
+    
+    [UIAlertView bk_showAlertViewWithTitle:nil
+                                   message:[NSString stringWithFormat:@"是否联系客服%@？", contactName ?: @""]
+                         cancelButtonTitle:@"取消"
+                         otherButtonTitles:@[@"确认"]
+                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+     {
+         if (buttonIndex == 1) {
+             if ([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:contactScheme]]) {
+                 
+                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:contactScheme]];
+             }
+         }
+     }];
+}
+
 
 @end
