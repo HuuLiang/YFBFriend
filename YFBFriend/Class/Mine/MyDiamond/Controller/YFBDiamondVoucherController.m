@@ -10,7 +10,7 @@
 #import "YFBDiamondPayTypeCell.h"
 #import "YFBDiamondLabel.h"
 #import "YFBPaymentManager.h"
-
+#import "YFBSystemConfigModel.h"
 
 static NSString *const kYFBDiamondPayTypeCellIdentifier = @"kyfb_diamond_pay_type_cell_identifier";
 
@@ -239,8 +239,8 @@ typedef NS_ENUM(NSUInteger, YFBDiamondPayType) {
 }
 //qq客服
 - (void)contactCustomerService {
-    NSString *contactScheme = @"mqq://im/chat?chat_type=wpa&uin=3057185386&version=1&src_type=web";
-    NSString *contactName = @"QQ:3057185386";
+    NSString *contactScheme = [YFBSystemConfigModel defaultConfig].config.CONTACT_SCHEME;
+    NSString *contactName = [YFBSystemConfigModel defaultConfig].config.CONTACT_NAME;
     
     if (contactScheme.length == 0) {
         return ;
