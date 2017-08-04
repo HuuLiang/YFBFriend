@@ -17,6 +17,7 @@
 #import "YFBAutoReplyManager.h"
 #import "YFBContactManager.h"
 #import "YFBActivateModel.h"
+#import "YFBSystemConfigModel.h"
 
 
 static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
@@ -95,6 +96,12 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
     [WXApi registerApp:YFB_WEXIN_APP_ID];
     [self setupMobStatistics];
     [YFBImageUploadManager registerWithSecretKey:YFB_UPLOAD_SECRET_KEY accessKey:YFB_UPLOAD_ACCESS_KEY scope:YFB_UPLOAD_SCOPE];
+    
+    [[YFBSystemConfigModel defaultConfig] fetchSystemConfigInfoWithCompletionHandler:^(BOOL success, YFBSystemConfigInfo * obj) {
+        if (success) {
+            [YFBSystemConfigModel defaultConfig].config = obj;
+        }
+    }];
     
     self.window.rootViewController = self.launchViewController;
     
