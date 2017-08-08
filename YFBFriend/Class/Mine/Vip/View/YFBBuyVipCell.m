@@ -89,7 +89,7 @@
             [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(self.contentView.mas_right).offset(-kWidth(20));
                 make.centerY.equalTo(self.contentView);
-                make.size.mas_equalTo(CGSizeMake(kWidth(160), kWidth(64)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(170), kWidth(64)));
             }];
         }
     }
@@ -98,11 +98,13 @@
 
 - (void)setVipType:(YFBBuyVipType)vipType {
     if (vipType == YFBBuyVipTypeGold) {
+        [_payButton setTitle:@"1.11元/天" forState:UIControlStateNormal];
         _imgV.image = [UIImage imageNamed:@"vip_gold"];
         _titleLabel.text = @"黄金";
         _priceLabel.text = [NSString stringWithFormat:@"%@ ¥%ld",[YFBPayConfigManager manager].vipInfo.secondInfo.vipDesc,(long)([YFBPayConfigManager manager].vipInfo.secondInfo.price/100)];
         _descLabel.text = [YFBPayConfigManager manager].vipInfo.secondInfo.title;
     } else if (vipType == YFBBuyVipTypeSliver) {
+        [_payButton setTitle:@"0.87元/天" forState:UIControlStateNormal];
         _imgV.image = [UIImage imageNamed:@"vip_sliver"];
         _titleLabel.text = @"白银";
         _priceLabel.text = [NSString stringWithFormat:@"%@ ¥%ld",[YFBPayConfigManager manager].vipInfo.firstInfo.vipDesc,(long)([YFBPayConfigManager manager].vipInfo.firstInfo.price/100)];
