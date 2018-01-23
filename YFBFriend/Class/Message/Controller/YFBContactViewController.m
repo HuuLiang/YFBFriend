@@ -114,6 +114,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
     [self refreshBadege];
     [[NSNotificationCenter defaultCenter] postNotificationName:kYFBShowChargeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeNumber:) name:KUpdateContactUnReadMessageNotification object:nil];
+    [_tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -264,6 +265,7 @@ QBDefineLazyPropertyInitialization(YFBVisiteModel, visiteModel)
                 obj.unreadMsgCount = 0;
                 [obj saveOrUpdate];
                 [self.dataSource replaceObjectAtIndex:idx withObject:obj];
+                [self.tableView reloadData];
             }];
             self.navigationController.tabBarItem.badgeValue = nil;
         } forControlEvents:UIControlEventTouchUpInside];

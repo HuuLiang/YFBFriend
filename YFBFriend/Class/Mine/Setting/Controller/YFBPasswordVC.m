@@ -62,6 +62,7 @@ static NSString *const kYFBUserInfoUpPasswordKeyName            = @"UP_PASSWORD"
             //更新密码
             [YFBUser currentUser].password = _createView.content;
             [[YFBUser currentUser] saveOrUpdateUserInfo];
+            [[YFBHudManager manager] showHudWithText:@"密码修改成功"];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }];

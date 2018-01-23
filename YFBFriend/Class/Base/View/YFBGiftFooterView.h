@@ -2,7 +2,7 @@
 //  YFBGiftReusableView.h
 //  YFBFriend
 //
-//  Created by ylz on 2017/4/17.
+//  Created by Liang on 2017/4/17.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

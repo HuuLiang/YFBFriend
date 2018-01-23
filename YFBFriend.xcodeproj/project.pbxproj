@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2655A8AAADBA5FD994FA27D4 /* libPods-YFBFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */; };
+		B38DFDE31F4BF5B1005BE68A /* UIImageView+YPBAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = B38DFDE21F4BF5B1005BE68A /* UIImageView+YPBAnimation.m */; };
 		B3C18CDE1E7803FC00C7733D /* phone_verify.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */; };
 		EC00477A1EFCA30B00382668 /* YFBBuyVipDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0047791EFCA30B00382668 /* YFBBuyVipDescCell.m */; };
 		EC00477E1EFCF40400382668 /* YFBTelChargeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EC00477D1EFCF40400382668 /* YFBTelChargeVC.m */; };
@@ -327,6 +328,8 @@
 /* Begin PBXFileReference section */
 		7988A7EEDEF24D24E1E4B14D /* libPods-YFBFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YFBFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97D15D3E72F1F4490DADAEF5 /* Pods-YFBFriend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.release.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.release.xcconfig"; sourceTree = "<group>"; };
+		B38DFDE11F4BF5B1005BE68A /* UIImageView+YPBAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+YPBAnimation.h"; sourceTree = "<group>"; };
+		B38DFDE21F4BF5B1005BE68A /* UIImageView+YPBAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+YPBAnimation.m"; sourceTree = "<group>"; };
 		B3C18CDD1E7803FC00C7733D /* phone_verify.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = phone_verify.jpg; sourceTree = "<group>"; };
 		BD481930EA9E3A5945F3FA6C /* Pods-YFBFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YFBFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YFBFriend/Pods-YFBFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		EC0047781EFCA30B00382668 /* YFBBuyVipDescCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFBBuyVipDescCell.h; sourceTree = "<group>"; };
@@ -1745,6 +1748,8 @@
 				ECDBA98F1EE5598B00BEFF98 /* NSObject+PropertyAccessInspecting.m */,
 				ECDBA9901EE5598B00BEFF98 /* NSString+Size.h */,
 				ECDBA9911EE5598B00BEFF98 /* NSString+Size.m */,
+				B38DFDE11F4BF5B1005BE68A /* UIImageView+YPBAnimation.h */,
+				B38DFDE21F4BF5B1005BE68A /* UIImageView+YPBAnimation.m */,
 				ECDBA9921EE5598B00BEFF98 /* UIImage+Blur.h */,
 				ECDBA9931EE5598B00BEFF98 /* UIImage+Blur.m */,
 				ECDBA9941EE5598B00BEFF98 /* UIImage+Resource.h */,
@@ -2498,7 +2503,7 @@
 				TargetAttributes = {
 					EC9A67711E6D3E4A0018C5FB = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = S954G7B2DA;
+						DevelopmentTeam = RL8264T4W8;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -2692,6 +2697,7 @@
 				ECDBABD21EE5598C00BEFF98 /* XHMessageInputView.m in Sources */,
 				ECDBAB8E1EE5598B00BEFF98 /* DataSigner.m in Sources */,
 				EC9A677A1E6D3E4A0018C5FB /* AppDelegate.m in Sources */,
+				B38DFDE31F4BF5B1005BE68A /* UIImageView+YPBAnimation.m in Sources */,
 				ECDBAB821EE5598B00BEFF98 /* ActionSheetDatePicker.m in Sources */,
 				ECDBAB721EE5598B00BEFF98 /* UIScrollView+Refresh.m in Sources */,
 				ECDBAC191EE5598C00BEFF98 /* SDCycleScrollView.m in Sources */,
@@ -3016,7 +3022,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RL8264T4W8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3032,7 +3038,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YFBFriend/Class/Vendor/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuanfenba.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuanfenba2.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3047,7 +3053,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RL8264T4W8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3063,7 +3069,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YFBFriend/Class/Vendor/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuanfenba.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuanfenba2.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

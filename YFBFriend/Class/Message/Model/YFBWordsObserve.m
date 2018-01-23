@@ -2,7 +2,7 @@
 //  YFBWordsObserve.m
 //  YFBFriend
 //
-//  Created by Liang on 2017/6/12.
+//  Created by Liang on 2017/5/12.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

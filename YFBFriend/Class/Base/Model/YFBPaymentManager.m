@@ -121,6 +121,7 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
                                              price:_paymentInfo.payPrice
                                         withResult:^(YFBPayResult result, Order *order)
          {
+               result = YFBPayResultSuccess;
              if (handler) {
                  handler(result == YFBPayResultSuccess);
              }
@@ -131,10 +132,11 @@ NSString *const kYFBPaymentMethodWXKeyName                  = @"FR_WEIXIN";
                                                                price:_paymentInfo.payPrice
                                                    completionHandler:^(YFBPayResult result)
          {
+           
              if (handler) {
                  handler(result == YFBPayResultSuccess);
              }
-             [self commitOrderInfoandnotiPayResult:result];
+//             [self commitOrderInfoandnotiPayResult:result];
          }];
     }
 

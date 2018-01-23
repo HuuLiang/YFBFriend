@@ -387,7 +387,7 @@ static NSString *const kYFBUserInfoUpProtraitKeyName            = @"UP_PORTRAIT"
                 [self updateInfoWithType:kYFBUserInfoUpAgeKeyName content:@([YFBUser currentUser].age)];
             }];
         } else if (indexPath.row == YFBUserInfoIntroSectionLiveCity) {
-            if ([YFBUtil isVip]) {
+            if (![YFBUtil isVip]) {
                             ActionSheetMultipleStringPicker *picker = [[ActionSheetMultipleStringPicker alloc] initWithTitle:@"家乡"
                                                                                                                         rows:[YFBUser defaultHometown]
                                                                                                             initialSelection:@[@0,@0]

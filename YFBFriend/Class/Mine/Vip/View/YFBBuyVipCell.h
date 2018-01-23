@@ -2,7 +2,7 @@
 //  YFBBuyVipCell.h
 //  YFBFriend
 //
-//  Created by Liang on 2017/6/20.
+//  Created by Liang on 2017/5/20.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

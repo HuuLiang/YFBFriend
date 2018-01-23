@@ -2,7 +2,7 @@
 //  UIImage+Blur.h
 //  JYFriend
 //
-//  Created by ylz on 2017/1/19.
+//  Created by Liang on 2017/1/19.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

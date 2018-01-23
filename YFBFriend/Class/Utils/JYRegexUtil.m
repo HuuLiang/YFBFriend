@@ -2,7 +2,7 @@
 //  JYRegexUtil.m
 //  JYFriend
 //
-//  Created by ylz on 2017/1/11.
+//  Created by liang on 2017/1/11.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

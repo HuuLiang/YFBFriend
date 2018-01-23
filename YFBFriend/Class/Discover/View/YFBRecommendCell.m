@@ -31,6 +31,7 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         self.userImgV = [[UIImageView alloc] init];
+        [self.userImgV YPB_addAnimationForImageAppearing];
         [self.contentView addSubview:_userImgV];
         
         self.tagImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"discover_hot"]];

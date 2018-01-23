@@ -2,7 +2,7 @@
 //  YFBMessagePayPopController.h
 //  YFBFriend
 //
-//  Created by ylz on 2017/4/24.
+//  Created by Liang on 2017/4/24.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

@@ -107,6 +107,7 @@
                 }
                 [[YFBHudManager manager] showHudWithText:@"发送成功"];
                 self.textView.text = @"";
+                return;
             }
             [[YFBHudManager manager] showHudWithText:@"发送失败"];
         }];

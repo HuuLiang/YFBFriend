@@ -687,6 +687,7 @@ static CGPoint  delayOffset = {0.0};
     
     if (self.textViewInputViewType != XHInputViewTypeNormal) {
         [self layoutOtherMenuViewHiden:YES];
+        
     }
     
     // remove键盘通知或者手势

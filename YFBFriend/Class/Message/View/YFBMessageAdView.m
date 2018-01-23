@@ -78,7 +78,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)dealloc {
-    
+    [_timer invalidate];
+    _timer = nil;
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource

@@ -2,15 +2,15 @@
 //  YFBSocialViewController.m
 //  YFBFriend
 //
-//  Created by Liang on 2017/6/5.
-//  Copyright © 2017年 Liang. All rights reserved.
+//  Created by ZF on 2017/6/5.
+//  Copyright © 2017年 ZF. All rights reserved.
 //
 
 #import "YFBSocialViewController.h"
 #import "YFBSliderView.h"
 #import "YFBSocialModel.h"
 #import "YFBSocialCell.h"
-
+#import "YFBTabBarController.h"
 #import "YFBShowWXView.h"
 #import "YFBShowPaySuccessView.h"
 
@@ -65,7 +65,8 @@ static NSString *const kYFBSocialCellReusableIdentifier = @"kYFBSocialCellReusab
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBHideChargeNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kYFBHideChargeNotification object:nil];
+    [(YFBTabBarController *)self.tabBarController hideActivityView];
 }
 
 

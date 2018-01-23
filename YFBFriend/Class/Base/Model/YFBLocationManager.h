@@ -2,7 +2,7 @@
 //  YFBLocationManager.h
 //  YFBFriend
 //
-//  Created by Liang on 2017/6/24.
+//  Created by Liang on 2017/5/24.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

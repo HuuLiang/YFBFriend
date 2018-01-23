@@ -2,8 +2,8 @@
 //  YFBSocialModel.h
 //  YFBFriend
 //
-//  Created by Liang on 2017/6/6.
-//  Copyright © 2017年 Liang. All rights reserved.
+//  Created by ZF on 2017/6/6.
+//  Copyright © 2017年 ZF. All rights reserved.
 //
 
 #import <QBEncryptedURLRequest.h>

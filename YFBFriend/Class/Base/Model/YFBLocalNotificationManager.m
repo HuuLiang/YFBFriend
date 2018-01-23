@@ -22,8 +22,6 @@
 
 - (void)startAutoLocalNotification {
     
-    [self checkLocalNotificatin];
-    
     //删除所有本地通知 重新添加新的一轮通知周期
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
@@ -78,27 +76,8 @@
     return arr;
 }
 
-- (void)checkLocalNotificatin {
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0) {
-        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone) {
-//            [self registerLocalNotification];
-            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
-            [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-
-        }
-    } else {
-        if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes] == UIRemoteNotificationTypeNone) {
-            // 定义远程通知类型(Remote.远程 - Badge.标记 Alert.提示 Sound.声音)
-            UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-            
-            // 注册远程通知 -根据远程通知类型
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-        }
-    }
-}
 
 - (void)setAutoNotification {
-    [self checkLocalNotificatin];
     
     NSInteger timeInterval = [[[NSUserDefaults standardUserDefaults] objectForKey:kYFBFriendGetRobotMsgTimeIntervalKeyName] integerValue];
     if (timeInterval <= 60 * 10 && [YFBAutoReplyManager manager].allReplyMsgs.count > 0) {

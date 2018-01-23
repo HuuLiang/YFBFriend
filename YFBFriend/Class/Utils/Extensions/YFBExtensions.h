@@ -26,5 +26,5 @@
 #import "UIImage+Blur.h"
 #import "UIView+PopAnimation.h"
 #import "UIScrollView+Refresh.h"
-
+#import "UIImageView+YPBAnimation.h"
 #endif /* YFBExtensions_h */

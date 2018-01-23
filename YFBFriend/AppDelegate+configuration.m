@@ -2,7 +2,7 @@
 //  AppDelegate+configuration.m
 //  YFBFriend
 //
-//  Created by Liang on 2017/3/6.
+//  Created by Liang on 2017/2/13.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 
@@ -170,6 +170,22 @@ static NSString *const kAliPaySchemeUrl = @"YFBFriendAliPayUrlScheme";
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+        [[AlipayManager shareInstance] sendNotificationByResult:resultDic];
+    }];
+    [WXApi handleOpenURL:url delegate:self];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+        [[AlipayManager shareInstance] sendNotificationByResult:resultDic];
+    }];
+    [WXApi handleOpenURL:url delegate:self];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
     [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
         [[AlipayManager shareInstance] sendNotificationByResult:resultDic];
     }];

@@ -2,7 +2,7 @@
 //  YFBMyDiamondController.m
 //  YFBFriend
 //
-//  Created by ylz on 2017/3/15.
+//  Created by Liang on 2017/3/15.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

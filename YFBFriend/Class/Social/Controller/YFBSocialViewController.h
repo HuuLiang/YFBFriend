@@ -2,7 +2,7 @@
 //  YFBSocialViewController.h
 //  YFBFriend
 //
-//  Created by Liang on 2017/6/5.
+//  Created by Liang on 2017/5/5.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

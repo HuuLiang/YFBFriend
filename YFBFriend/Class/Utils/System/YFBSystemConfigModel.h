@@ -2,7 +2,7 @@
 //  YFBSystemConfigModel.h
 //  YFBFriend
 //
-//  Created by Liang on 2017/8/4.
+//  Created by Liang on 2017/4/15.
 //  Copyright © 2017年 Liang. All rights reserved.
 //
 

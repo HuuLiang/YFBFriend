@@ -380,13 +380,13 @@
             
             // 5.配置消息已读标示
             if (!_readDoneLabel) {
-                UILabel *readDoneLabel = [[UILabel alloc] init];
-                readDoneLabel.text = message.readDone ? @"已读" : @"未读";
-                readDoneLabel.textColor = kColor(@"#666666");
-                readDoneLabel.textAlignment = NSTextAlignmentRight;
-                readDoneLabel.font = [UIFont systemFontOfSize:8];
-                [self addSubview:readDoneLabel];
-                _readDoneLabel = readDoneLabel;
+//                UILabel *readDoneLabel = [[UILabel alloc] init];
+//                readDoneLabel.text = message.readDone ? @"已读" : @"未读";
+//                readDoneLabel.textColor = kColor(@"#666666");
+//                readDoneLabel.textAlignment = NSTextAlignmentRight;
+//                readDoneLabel.font = [UIFont systemFontOfSize:8];
+//                [self addSubview:readDoneLabel];
+//                _readDoneLabel = readDoneLabel;
             }
         }
         

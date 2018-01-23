@@ -1,6 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
 source 'https://git.coding.net/seanyue/QBPodRepo.git'
-source 'https://git.coding.net/Liang-_-/QBStatisticsRepo.git'
 platform :ios, '7.0'
 
 target 'YFBFriend' do

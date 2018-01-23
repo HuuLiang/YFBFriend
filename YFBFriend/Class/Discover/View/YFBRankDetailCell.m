@@ -33,6 +33,7 @@
         [self.contentView addSubview:_rankButton];
         
         self.userImageView = [[UIImageView alloc] init];
+        [_userImageView YPB_addAnimationForImageAppearing];
         _userImageView.layer.cornerRadius = kWidth(42);
         _userImageView.layer.masksToBounds = YES;
         [self.contentView addSubview:_userImageView];
